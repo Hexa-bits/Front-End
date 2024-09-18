@@ -1,9 +1,10 @@
 import './App.css';
+import Login from './components/Login/Login.jsx';
 
 function App () {
     return (
-        <div>   
-            <h1>Hello, World !</h1>
+        <div>  
+            <Login />
         </div>
     );
 }

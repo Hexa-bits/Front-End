@@ -1,0 +1,22 @@
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.login-card {
+    padding: 2rem;
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Principal text style */
+.login-container .login-title {
+    font-size: 4rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
