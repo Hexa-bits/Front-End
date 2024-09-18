@@ -1,0 +1,25 @@
+
+// Formulario generico que indica el label, tipo de input, placeholder, texto de ayuda, id del input y la función onChange
+function Form ({label, type = "text", placeholder, helpText, id, onChange}) {
+    return (
+        <div className="form-container">
+            <div className="col-auto">
+                <label htmlFor={id} className="col-form-label">{label}</label>
+            </div>
+            <div className="col-auto">
+                <input 
+                    type={type} 
+                    className="form-control"
+                    placeholder={placeholder} 
+                    id={id}
+                    onChange={onChange}   
+                />
+            </div>
+            <div className="col-auto">
+                <span id={id} className="form-text">{helpText}</span>
+            </div>
+        </div>
+    );  
+}
+
+export default Form;
