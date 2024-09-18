@@ -1,7 +1,7 @@
 import './Form.css';
 
 // Formulario generico que indica el label, tipo de input, placeholder, texto de ayuda, id del input y la función onChange
-function Form ({label, type = "text", placeholder, helpText, id, onChange}) {
+function Form ({label, type = "text", placeholder, helpText, id, onChange = undefined, value}) {
     return (
         <div className="form-container">
             <div className="col-form-label-container">
@@ -14,6 +14,7 @@ function Form ({label, type = "text", placeholder, helpText, id, onChange}) {
                     placeholder={placeholder} 
                     id={id}
                     onChange={onChange}   
+                    value={value}
                 />
             </div>
             <div className="col-auto">
