@@ -1,0 +1,38 @@
+.List__Items{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    background-color: orange;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.game{
+    width: 400px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 5px;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.game .config{
+    width: 100%;
+    margin: 0px 10px 0px 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.config .range_players{
+    padding: 3px;
+    border-radius: 3px;
+    background-color:#616a6b;
+    color:white;
+}
+
