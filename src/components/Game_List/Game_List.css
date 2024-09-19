@@ -1,0 +1,17 @@
+.GameList{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.list-group{
+    width: 100%;
+    height: auto;
+}
+
+.list-group .list-group-item{
+    width: 600px;
+    display: flex;
+    justify-content: center;
+    
+}

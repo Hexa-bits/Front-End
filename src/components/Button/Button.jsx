@@ -6,7 +6,7 @@ function Button ({label, onClick}){
         <button
             type="button"
             className="btn btn-primary"
-            onCLick={onClick}
+            onClick={onClick}
         >
             {label}
         </button>
