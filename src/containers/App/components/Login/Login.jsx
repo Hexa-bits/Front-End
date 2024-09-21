@@ -44,7 +44,7 @@ function Login () {
             }
 
             const data = await response.json();
-            const { Id } = data;
+            const Id = data.id;
 
             alert(`Usuario ${username} creado exitosamente con Id: ${Id}`);
             localStorage.setItem('username', username); 
