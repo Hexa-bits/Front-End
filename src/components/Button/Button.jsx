@@ -1,12 +1,13 @@
 import './Button.css';
 
 //Botón con funcionalidad al hacer click
-function Button ({label, onClick}){
+function Button ({label, onClick, disabled}){
     return(
         <button
-            type="button"
-            className="btn btn-primary"
+            
+            className={`btn btn-primary ${disabled ? 'disabled btn-ight': ''}`}
             onClick={onClick}
+            disabled={disabled}
         >
             {label}
         </button>

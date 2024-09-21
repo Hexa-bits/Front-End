@@ -1,7 +1,7 @@
 import './Game_List.css';
 import Game_Item from '../Game_Item/Game_Item.jsx';
 
-function GameList({ games }) {
+function GameList({games, handleJoin}) {
     return (
         <div className="GameList">
             {games.length === 0 
@@ -13,11 +13,10 @@ function GameList({ games }) {
                 :   <ul className="list-group">
                         {games.map((game, index) => (
                             
-                            <li className="list-group-item" key={index}>
+                            <li className="list-group-item" key={game.id}>
                                 <Game_Item 
-                                game_name={game.name} 
-                                game_min_players={game.min_players} 
-                                game_max_players={game.max_players}
+                                game={game}
+                                handleJoin={handleJoin}
                                 />
                             </li>
                         ))}
