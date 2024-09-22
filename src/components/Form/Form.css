@@ -1,0 +1,35 @@
+
+.form-container {
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+/* Label style */
+.col-form-label-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    width: 100%;
+    margin-bottom: 1rem;
+}
+.form-container .col-form-label {
+    font-size: 2rem;
+}
+
+/* Input style */
+.form-input {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+.form-input::placeholder {
+    font-style: italic;
+    font-size: 1rem; 
+}
+
+/* Help text style */
+.form-text {
+    font-size: 3rem;
+    margin-bottom: 0.5rem; 
+    display: block; 
+}

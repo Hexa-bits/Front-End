@@ -1,4 +1,5 @@
 import './Button.css';
+import React from "react";
 
 //Botón con funcionalidad al hacer click
 function Button ({label, onClick}){
@@ -6,7 +7,7 @@ function Button ({label, onClick}){
         <button
             type="button"
             className="btn btn-primary"
-            onCLick={onClick}
+            onClick={onClick}
         >
             {label}
         </button>
