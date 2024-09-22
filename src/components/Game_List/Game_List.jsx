@@ -1,6 +1,6 @@
 import React from 'react';
 import Game_Item from '../Game_Item/Game_Item.jsx';
-import './Game_List.css';
+//import './Game_List.css';
 
 function GameList({games = [], handleJoin}) {
     return (

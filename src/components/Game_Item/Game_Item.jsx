@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from '../Button/Button.jsx'
-import './Game_Item.css'
+//import './Game_Item.css'
 
 
 function Game_Item({game, handleJoin}){
@@ -13,10 +13,10 @@ function Game_Item({game, handleJoin}){
                         <div className="range_players">
                             {game.current_players}/{game.max_players}
                         </div>
-                        <Button 
+                        {/* <Button 
                             label="Unirse" 
                             onClick={() => handleJoin(game.id)}
-                            disabled={game.current_players >= game.max_players}/>
+                            disabled={game.current_players >= game.max_players}/> */}
                     </div>
                 </div>
             </div>
