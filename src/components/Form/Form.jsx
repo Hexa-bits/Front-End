@@ -1,4 +1,5 @@
 import './Form.css';
+import React from "react";
 
 // Formulario generico que indica el label, tipo de input, placeholder, texto de ayuda, id del input y la función onChange
 function Form ({label, type = "text", placeholder, helpText, id, onChange = undefined, value}) {

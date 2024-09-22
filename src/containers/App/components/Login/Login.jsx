@@ -1,13 +1,14 @@
-import Button from "../../../../components/Button/Button.jsx";
-import Form from "../../../../components/Form/Form.jsx";
+import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'; 
-import fetchMock from 'fetch-mock';
 
+import Button from "../../../../components/Button/Button.jsx";
+import Form from "../../../../components/Form/Form.jsx";
 import '../../../../utils/Constants.js'
-import './Login.css';
 import { LoginHelpText, LOGIN_URL } from "../../../../utils/Constants.js";
+import './Login.css';
 
+// import fetchMock from 'fetch-mock';
 
 // fetchMock.post(LOGIN_URL, { Id: 3 });   // MOCK TEST 
 
@@ -46,7 +47,7 @@ function Login () {
             const data = await response.json();
             const Id = data.id;
 
-            alert(`Usuario ${username} creado exitosamente con Id: ${Id}`);
+            alert(`Usuario ${username} creado exitosamente con Id: ${Id}.`);
             localStorage.setItem('username', username); 
             localStorage.setItem('id_usser', Id);
             navigate('/home');
