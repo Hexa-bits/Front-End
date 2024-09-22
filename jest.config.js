@@ -5,4 +5,8 @@ export default {
     '^.+\\.jsx?$': 'babel-jest',
   },
   moduleFileExtensions: ['js', 'jsx'],
+  moduleNameMapper: {
+    // Ignora archivos CSS, SCSS, LESS
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+  },
 };
