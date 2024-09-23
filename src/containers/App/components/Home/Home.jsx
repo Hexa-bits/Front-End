@@ -1,20 +1,19 @@
-import Button from "../../../../components/Button/Button";
-import { useNavigate } from 'react-router-dom'; 
-import React from "react";
+import React from 'react';
+import GameList from '../../../../components/Game_List/Game_List.jsx';
+import useGames from '../../../../hooks/Home/useGames.js';
+import { useState } from 'react'
+import './Home.css';
 
 function Home() {
-    const navigate = useNavigate(); 
-   
-    const handleLogOut = () => {
-        navigate('/login');
-    };
-    
-    return ( 
-        <div>
-            <h1>Home</h1>
-            <Button label="Logout" onClick={handleLogOut}/>
-        </div>
+    const { games, handleJoin} = useGames();
+
+    return (
+        <section className="GameList__Home">
+            <GameList games={games} handleJoin={handleJoin} />
+        </section>
     );
 }
+
+
 
 export default Home;
