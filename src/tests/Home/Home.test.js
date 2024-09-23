@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Home from '../containers/App/components/Home/Home';
+import Home from '../../containers/App/components/Home/Home';
 import '@testing-library/jest-dom';
 import useGames from '../hooks/useGames';
 

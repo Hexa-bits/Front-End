@@ -1,5 +1,5 @@
 
-import { LOGIN_URL } from '../utils/constants.js';
+import { LOGIN_URL } from '../../utils/constants.js';
 
 const useAuth = () => {
   const login = async (credentials) => {
