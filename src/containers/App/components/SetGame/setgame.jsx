@@ -21,7 +21,7 @@ function Start() {
 
   const port = 8000;
 
-  const id_usser = localStorage.getItem("id_usser");
+  const id_user = localStorage.getItem("id_usser");
 
   const checkInput = (input) => {
     //va a chequear que el nombre es valido
@@ -39,14 +39,13 @@ function Start() {
   };
 
   async function create() {
-    //esta función va a mandar al back la info de la partida
     try {
       const response = await fetch(CONFIG_URL, {
         method: "POST", //esta función responde al async de handleclick
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id_usser, game_name, max_players }), //creo que acá debería mandar tambien el id del owner
+        body: JSON.stringify({ id_user, game_name, max_players }), //creo que acá debería mandar tambien el id del owner
       });
 
       if (!response.ok) {
@@ -56,15 +55,13 @@ function Start() {
       const data = await response.json(); //va a hacer que espere a que el back devuelva algo (el id) y ahí le va a asignar la data al id de la partida
       const { game_id } = data.id;
 
-      alert(`Partida ${gameName} creada exitosamente con Id: ${gameId}`);
-      //?
+      alert(`Partida ${game_name} creada exitosamente con Id: ${game_id}`);
+
       localStorage.setItem("game_name", game_name); //guardo en el local storage el nombre e id de la partida
       localStorage.setItem("game_id", game_id);
       localStorage.setItem("max_players", max_players);
-      //navigate("/home"); //acá tendría que navegar al lobby
     } catch (error) {
       //EN CASO DE QUE FALLE ALGO
-      console.error();
       alert("Error al crear partida. " + error.message);
     }
   }
