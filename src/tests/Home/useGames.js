@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useGames from '../hooks/useGames';
+import useGames from '../hooks/Home/useGames';
 // Mock de fetch
 global.fetch = jest.fn();
 

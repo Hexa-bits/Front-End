@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import Home from '../../containers/App/components/Home/Home';
 import '@testing-library/jest-dom';
-import useGames from '../hooks/useGames';
+import useGames from '../hooks/Home/useGames';
 
 jest.mock('../hooks/useGames'); // Mockea el hook
 
