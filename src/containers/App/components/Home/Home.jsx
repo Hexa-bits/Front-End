@@ -10,7 +10,7 @@ function Home() {
   };
 
   const handleCrearPartida = () => {
-    navigate("/create-config");
+    navigate("/home/create-config");
   };
 
   return (

@@ -48,6 +48,8 @@ function Start() {
         body: JSON.stringify({ id_user, game_name, max_players }), //creo que acá debería mandar tambien el id del owner
       });
 
+      console.log("Enviando solicitud a:", CONFIG_URL);
+
       if (!response.ok) {
         throw new Error("Error al enviar solicitud 'crear partida'. ");
       }
@@ -55,7 +57,7 @@ function Start() {
       const data = await response.json(); //va a hacer que espere a que el back devuelva algo (el id) y ahí le va a asignar la data al id de la partida
       const { game_id } = data.id;
 
-      alert(`Partida ${game_name} creada exitosamente con Id: ${game_id}`);
+      alert(`Partida ${game_name} creada exitosamente con Id: ${data.id}`);
 
       localStorage.setItem("game_name", game_name); //guardo en el local storage el nombre e id de la partida
       localStorage.setItem("game_id", game_id);
