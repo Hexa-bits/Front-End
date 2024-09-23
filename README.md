@@ -26,3 +26,9 @@ Dependiendo la feature que se quiera testear. En este caso se testea Home. Para 
 npm test
 ```
 
+```bash
+sudo apt install npm
+
+npm install
+
+npm run dev
