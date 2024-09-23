@@ -1,0 +1,56 @@
+.lobby-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(32, 134, 83, 0.514); 
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* z-index: 1000;  */
+}
+.lobby-container {
+    background: rgb(255, 248, 188);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 520px;
+    width: 100%;
+}
+
+.list-title {
+    color: black;
+    font-size: 17px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-style: italic;
+}
+
+
+.list-group .list-group-item {
+    background: rgb(255, 248, 188);
+}
+
+/* BUTTONS */
+.btn-container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin-top: 20px;
+}
+.btn-container button {
+    width: 150px;
+}
+.btn-container button:last-child {
+    background-color: rgba(70, 161, 70, 0.747);
+    border: none;
+
+}
+.btn-container button:first-child {
+    background-color: rgba(255, 0, 0, 0.747);
+    border: none;
+}
+
+

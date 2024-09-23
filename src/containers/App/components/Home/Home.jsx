@@ -13,6 +13,7 @@ function Home() {
         <div>
             <h1>Home</h1>
             <Button label="Logout" onClick={handleLogOut}/>
+            <Button label="Lobby" onClick={() => navigate('/home/lobby')}/>
         </div>
     );
 }
