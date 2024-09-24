@@ -9,7 +9,7 @@ import LobbyList from "../../../../components/Lobby_List/LobbyList.jsx";
 import LobbyButtons from "../../../../components/Lobby_Buttons/LobbyButtons.jsx";
 import { leaveGame } from "../../../../hooks/Lobby/useGameService.js";
 
-function Lobby({ isOwner = false}) {
+function Lobby({ isOwner = true}) {
     
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);

@@ -8,12 +8,12 @@
 .btn-container button {
     width: 150px;
 }
-.btn-container button:last-child {
+.btn-container .btn-start {
     background-color: rgba(70, 161, 70, 0.747);
     border: none;
 
 }
-.btn-container button:first-child {
+.btn-container .btn-leave {
     background-color: rgba(255, 0, 0, 0.747);
     border: none;
 }
