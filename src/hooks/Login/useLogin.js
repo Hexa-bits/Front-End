@@ -26,10 +26,10 @@ export const useLogin = () => {
             if (username !== savedUserName) {                    
                 try { 
                     useReg({ username });
-                    navigate('/home');
+                    navigate('/home/get-lobbies');
                 }
                 catch (error) { alert("Error al crear usuario. " + error.message); }
-            } else { navigate('/home'); }
+            } else { navigate('/home/get-lobbies'); }
         
         } else { alert("Nombre " + LoginHelpText);}
     };

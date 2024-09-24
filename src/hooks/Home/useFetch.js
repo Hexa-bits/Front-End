@@ -1,10 +1,10 @@
 
-import { LOGIN_URL } from '../../utils/constants.js';
+import { HOME_URL } from '../../utils/Constants.js';
 
 const useAuth = () => {
   const login = async (credentials) => {
     try {
-      const response = await fetch(LOGIN_URL, {
+      const response = await fetch(HOME_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

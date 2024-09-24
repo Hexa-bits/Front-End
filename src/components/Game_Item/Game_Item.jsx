@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from '../Button/Button.jsx'
-//import './Game_Item.css'
+import './Game_Item.css'
 
 
 function Game_Item({game, handleJoin}){

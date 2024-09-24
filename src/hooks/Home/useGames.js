@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BASE_URL } from '../..//utils/constants';
+import { HOME_URL } from '../../utils/Constants.js';
 
 function useGames(initialGames = []) {
     const [games, setGames] = useState(initialGames);
@@ -7,7 +7,7 @@ function useGames(initialGames = []) {
 
     const fetchGames = async () => {
         try {
-            const response = await fetch(`${BASE_URL}`);
+            const response = await fetch(`${HOME_URL}`);
             if (!response.ok) {
                 throw new Error('Error en la respuesta del servidor');
             }

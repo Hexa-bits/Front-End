@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import useGames from '../hooks/Home/useGames';
+import { HOME_URL } from '../../utils/Constants';
 // Mock de fetch
 global.fetch = jest.fn();
 
@@ -26,7 +27,7 @@ describe('useGames', () => {
         await waitForNextUpdate(); // Espera a que se actualice el estado después de la llamada
 
         expect(result.current.games).toEqual(mockGames);
-        expect(fetch).toHaveBeenCalledWith(`${BASE_URL}`);
+        expect(fetch).toHaveBeenCalledWith(`${HOME_URL}`);
     });
 
     it('debe manejar errores correctamente', async () => {
@@ -37,7 +38,7 @@ describe('useGames', () => {
         await waitForNextUpdate(); // Espera a que se actualice el estado después de la llamada
 
         expect(result.current.games).toEqual([]); // Asegúrate de que no haya juegos
-        expect(fetch).toHaveBeenCalledWith(`${BASE_URL}`);
+        expect(fetch).toHaveBeenCalledWith(`${HOME_URL}`);
     });
 
     it('debe mostrar error una vez en consola', async () => {
