@@ -1,7 +1,7 @@
 import { HOME, GAME_LEAVE_URL } from '../../utils/Constants.js';
 
-import fetchMock from 'fetch-mock';
-fetchMock.put(GAME_LEAVE_URL, 200);   
+// import fetchMock from 'fetch-mock';
+// fetchMock.put(GAME_LEAVE_URL, 200);   
 
 export const leaveGame = async (gameId, navigate) => {
     try {

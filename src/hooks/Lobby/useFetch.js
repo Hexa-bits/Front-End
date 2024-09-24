@@ -1,14 +1,14 @@
-import fetchMock from "fetch-mock";
-const fullUrl = "http://localhost:8000/home/lobby?game_id=3";
-fetchMock.get(fullUrl, {
-    game_name: "PEPE",
-    max_players: 3,
-    name_players: [
-        { username: "player1" },
-        { username: "player2" },
-        { username: "player3" }
-    ]
-});
+// import fetchMock from "fetch-mock";
+// const fullUrl = "http://localhost:8000/home/lobby?game_id=3";
+// fetchMock.get(fullUrl, {
+//     game_name: "PEPE",
+//     max_players: 3,
+//     name_players: [
+//         { username: "player1" },
+//         { username: "player2" },
+//         { username: "player3" }
+//     ]
+// });
 
 export async function fetchGameInfo(fullUrl) {
     try {
