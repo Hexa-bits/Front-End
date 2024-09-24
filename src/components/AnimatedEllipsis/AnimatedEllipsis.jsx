@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './AnimatedEllipsis.css'; // Asegúrate de crear este archivo
+import './AnimatedEllipsis.css'; 
 
 function AnimatedEllipsis () {
     const [dots, setDots] = useState('');
