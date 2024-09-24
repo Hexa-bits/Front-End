@@ -2,8 +2,8 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 import { MemoryRouter } from 'react-router-dom';
-import Login from '../containers/App/components/Login/Login.jsx';
-import { LoginHelpText} from '../utils/Constants.js';
+import Login from '../../containers/App/components/Login/Login.jsx';
+import { HOME, LoginHelpText} from '../../utils/Constants.js';
 import '@testing-library/jest-dom'; 
 
 
@@ -75,7 +75,7 @@ describe('Login Component', () => {
     const button = screen.getByText('Ingresar');
     fireEvent.click(button);
 
-    expect(mockNavigate).toHaveBeenCalledWith('/home');
+    expect(mockNavigate).toHaveBeenCalledWith(HOME);
   });
 
   it('should call register function if username is valid and not saved', async () => {
