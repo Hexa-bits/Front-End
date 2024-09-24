@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useReg } from './useReg.js';
 import { checkInput } from './loginHelper.js'; 
 import { LoginHelpText } from '../../utils/Constants.js';
+import { HOME } from '../../utils/Constants.js';
 
 export const useLogin = () => {
     const navigate = useNavigate();
@@ -26,10 +27,10 @@ export const useLogin = () => {
             if (username !== savedUserName) {                    
                 try { 
                     useReg({ username });
-                    navigate('/home');
+                    navigate(HOME);
                 }
                 catch (error) { alert("Error al crear usuario. " + error.message); }
-            } else { navigate('/home'); }
+            } else { navigate(HOME); }
         
         } else { alert("Nombre " + LoginHelpText);}
     };

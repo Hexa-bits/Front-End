@@ -1,0 +1,19 @@
+/* BUTTONS */
+.btn-container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin-top: 20px;
+}
+.btn-container button {
+    width: 150px;
+}
+.btn-container .btn-start {
+    background-color: rgba(70, 161, 70, 0.747);
+    border: none;
+
+}
+.btn-container .btn-leave {
+    background-color: rgba(255, 0, 0, 0.747);
+    border: none;
+}

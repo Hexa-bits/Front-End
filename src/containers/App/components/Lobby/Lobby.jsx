@@ -1,111 +1,33 @@
-import React, { useEffect , useState } from "react";
+import React from "react";
 import './Lobby.css';
 
-import LobbyCard from "../../../../components/LobbyCard/LobbyCard.jsx";
-import Button from "../../../../components/Button/Button.jsx";
-import AnimatedEllipsis from "./AnimatedEllipsis.jsx";
-import { useNavigate } from 'react-router-dom';
-import { LOBBY_URL } from "../../../../utils/Constants.js"
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useGameIdUrl } from "../../../../hooks/Lobby/useGameIdUrl.js";
+import { useLobby } from "../../../../hooks/Lobby/useLobby.js";
+import LobbyCard from "../../../../components/Lobby_Card/LobbyCard.jsx";
+import LobbyList from "../../../../components/Lobby_List/LobbyList.jsx";
+import LobbyButtons from "../../../../components/Lobby_Buttons/LobbyButtons.jsx";
+import { leaveGame } from "../../../../hooks/Lobby/useGameService.js";
 
-
-
-import fetchMock from "fetch-mock";
-fetchMock.config.overwriteRoutes = true;
-fetchMock.get(LOBBY_URL, { 
-    name: "PEPE",
-    maxPlayers: 3,
-    players: [
-        { username: "player1" },
-        { username: "player2" },
-        { username: "player3" }
-    ]
-}); 
-
-setTimeout(() => {
-    fetchMock.get(LOBBY_URL, {
-        name: "Juego de prueba",
-        maxPlayers: 2,
-        players: [
-            { username: "player1" },
-            { username: "player3" }
-        ]
-    });
-}, 3000);
-
-
-/*********************************************************************************************** */
-// si entro desde el home a boton "unirme" a un juego, isOwner = false
-// si entro despues de confirmar configuracion de juego, isOwner = true
-function Lobby({ isOwner , gameId }) {
-    isOwner = true;
+function Lobby({ isOwner = true}) {
     
-    const navigate = useNavigate(); 
-    const [players , setPlayers] = useState([]);
-    const [gameName, setGameName] = useState('');
-    const [maxPlayers, setMaxPlayers] = useState(0);
-    
-    useEffect(() => {
-        getGameInfo();
-        const interval = setInterval(getGameInfo, 500);
-        return () => clearInterval(interval);
-    }, []);
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const gameId = queryParams.get("game_id");
+    const fullUrl = useGameIdUrl(gameId);  
 
-    async function getGameInfo() {
- 
-        try {
-            const response = await fetch( LOBBY_URL, {
-                method: "GET", 
-                header: { "Content-Type": "application/json" },
-                body: JSON.stringify({ gameid: 3 })
-            })
-            if (!response.ok) {
-                throw new Error("Error al obtener información del juego.");
-            }
-            const data = await response.json();
-            // RESPUESTA ESPERADA
-            // {
-                //     "name": "Juego de prueba",
-                //     "maxPlayers": 3,
-                //     "players": [
-                    //         { "username": "player1" },
-            //         { "username": "player2" },
-            //         { "username": "player3" }
-            //     ]
-            // }
-            console.log("Obteniendo información del juego...");
-            
-            setPlayers(data.players);
-            setGameName(data.name); // se supone que el "listar" lo deja guardado
-            setMaxPlayers(data.maxPlayers); // se supone que el "listar" lo deja guardado
-            
-        }
-        catch (error) {
-            alert("Error al obtener información del juego. " + error.message);
-        }
-    }
-    
-    
-    return (  
+    const navigate = useNavigate();
+    const { players, gameName, maxPlayers } = useLobby(fullUrl);  
+
+    return (
         <div className="lobby-overlay">
             <div className='lobby-container'>
                 <LobbyCard gameName={gameName} maxPlayers={maxPlayers} />
-
-                <h3 className="list-title">Jugadores en espera<AnimatedEllipsis/></h3>
-                <ul className="list-group list-group-flush">
-                    {players.map((player, index) => (
-                        <li key={index} className="list-group-item">{player.username}</li>
-                    ))}
-                </ul>
-
-                <div className="btn-container">
-                    <Button label="Abandonar" onClick={() => navigate('/home')} />
-                    {isOwner && <Button label="Iniciar" onClick={() => navigate('/game')}/>}
-                </div>
+                <LobbyList players={players} />
+                <LobbyButtons isOwner={isOwner} leaveGame={() => leaveGame(gameId, navigate)} />
             </div>
         </div>
     );
 }
-
-
 
 export default Lobby;
