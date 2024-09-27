@@ -1,5 +1,5 @@
 import React from "react";
-import AnimatedEllipsis from "../AnimatedEllipsis/AnimatedEllipsis.jsx";
+import AnimatedEllipsis from "../AnimatedEllipsis/AnimatedEllipsis";
 import './LobbyList.css';
 
 function LobbyList({ players }) {
@@ -8,7 +8,7 @@ function LobbyList({ players }) {
             <h3 className="list-title">Jugadores en espera<AnimatedEllipsis/></h3>
             <ul className="list-group list-group-flush">
                 {players.map((player, index) => (
-                    <li key={index} className="list-group-item">{player.username}</li>
+                    <li key={index} className="list-group-item">{player}</li>
                 ))}
             </ul>
         </>
@@ -16,3 +16,5 @@ function LobbyList({ players }) {
 }
 
 export default LobbyList;
+
+

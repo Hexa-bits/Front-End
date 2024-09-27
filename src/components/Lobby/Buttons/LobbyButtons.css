@@ -1,4 +1,15 @@
 /* BUTTONS */
+/* .btn-container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin-top: 20px;
+}
+.btn-container button {
+    width: 150px;
+} */
+
+
 .btn-container {
     display: flex;
     gap: 40px;

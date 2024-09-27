@@ -1,19 +1,21 @@
-import React from 'react';
-import GameList from '../../../../components/Game_List/Game_List.jsx';
-import useGames from '../../../../hooks/Home/useGames.js';
-import { useState } from 'react'
-import './Home.css';
+import Button from "../../../../components/Button/Button";
+import { useNavigate } from 'react-router-dom';
+import React from "react";
 
 function Home() {
-    const { games, handleJoin} = useGames();
+    const navigate = useNavigate();
+
+    const handleLogOut = () => {
+        navigate('/login');
+    };
 
     return (
-        <section className="GameList__Home">
-            <GameList games={games} handleJoin={handleJoin} />
-        </section>
+        <div>
+            <h1>Home</h1>
+            <Button label="Logout" onClick={handleLogOut}/>
+            <Button label="Lobby" onClick={() => navigate("/home/lobby")}/>
+        </div>
     );
 }
-
-
 
 export default Home;

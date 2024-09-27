@@ -1,10 +1,10 @@
 import React from "react";
-import Button from "../Button/Button.jsx";
+import Button from "../../Button/Button.jsx";
 import { useNavigate } from 'react-router-dom';
-import { GAME } from  "../../utils/Constants.js";
+import { GAME, HOME } from "../../../utils/Constants.js";
 import './LobbyButtons.css';
 
-function LobbyButtons({ isOwner, leaveGame }) {
+function LobbyButtons({ isOwner }) {
     const navigate = useNavigate();
 
     return (
@@ -12,7 +12,7 @@ function LobbyButtons({ isOwner, leaveGame }) {
             {isOwner ? (
                 <Button label="Iniciar" onClick={() => navigate(GAME)} className="btn-start"/>
             ) : (
-                <Button label="Abandonar" onClick={leaveGame} className="btn-leave"/>
+                <Button label="Abandonar" onClick={() => navigate(HOME)} className="btn-leave"/>
             )}
         </div>
     );
