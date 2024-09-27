@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { HOME_URL } from '../../utils/Constants.js';
+import usePooling from './usePooling.js'
 
 function useGames(initialGames = []) {
     const [games, setGames] = useState(initialGames);
@@ -21,23 +22,9 @@ function useGames(initialGames = []) {
         }
     };
 
-    useEffect(() => {
-        fetchGames();
-        const intervalId = setInterval(fetchGames, 2000); // 2 segundos
-        return () => clearInterval(intervalId);
-    }, []);
-
+    usePooling(fetchGames, 2000);
 
     const handleJoin = () => {};
-    /*const handleJoin = (id) => {
-        setGames(prevGames =>
-            prevGames.map(game =>
-                game.game_id === id && game.current_players < game.max_players
-                    ? { ...game, current_players: game.current_players + 1 }
-                    : game
-            )
-        );
-    };*/
 
     return { games, handleJoin}; // Devuelve el error si lo necesitas
 }
