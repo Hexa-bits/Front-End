@@ -1,4 +1,5 @@
 import "./setgame.css";
+import React from "react";
 import Button from "../../../../components/Button/Button.jsx";
 import Form from "../../../../components/Form/Form.jsx";
 import { useState } from "react";
@@ -48,8 +49,6 @@ function Start() {
         body: JSON.stringify({ id_user, game_name, max_players }), //creo que acá debería mandar tambien el id del owner
       });
 
-      console.log("Enviando solicitud a:", CONFIG_URL);
-
       if (!response.ok) {
         throw new Error("Error al enviar solicitud 'crear partida'. ");
       }
@@ -57,13 +56,13 @@ function Start() {
       const data = await response.json(); //va a hacer que espere a que el back devuelva algo (el id) y ahí le va a asignar la data al id de la partida
       const { game_id } = data.id;
 
-      alert(`Partida ${game_name} creada exitosamente con Id: ${data.id}`);
-
       localStorage.setItem("game_name", game_name); //guardo en el local storage el nombre e id de la partida
       localStorage.setItem("game_id", game_id);
       localStorage.setItem("max_players", max_players);
+
+      alert(`Partida ${game_name} creada exitosamente con Id: ${data.id}`);
+      navigate("/game/join"); //DEBERIA NAVEGAR AL GAME
     } catch (error) {
-      //EN CASO DE QUE FALLE ALGO
       alert("Error al crear partida. " + error.message);
     }
   }
@@ -91,7 +90,12 @@ function Start() {
         id="gameid"
         onChange={handleonchange}
       />
-      <h1>Elegí la cantidad de participantes</h1>
+      <h1>
+        Elige la cantidad de participantes
+        <p data-testid="asd">
+          {max_players > 0 && `Participantes: ${max_players}`}
+        </p>
+      </h1>
       <Button label="2" onClick={() => SetPlayerAmnt(2)} />
       <Button label="3" onClick={() => SetPlayerAmnt(3)} />
       <Button label="4" onClick={() => SetPlayerAmnt(4)} />
