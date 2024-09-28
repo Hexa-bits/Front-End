@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 import { MemoryRouter } from 'react-router-dom';
 import Login from '../../containers/App/components/Login/Login.jsx';
-import { HOME, LoginHelpText} from '../../utils/Constants.js';
+import { LoginHelpText, HOME} from '../../utils/Constants.js';
 import '@testing-library/jest-dom'; 
 
 
