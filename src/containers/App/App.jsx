@@ -1,6 +1,6 @@
 import "./App.css";
 import Login from "./components/Login/Login.jsx";
-import Start from "./components/SetGame/setgame.jsx";
+import Start from "./components/SetGame/setGame.jsx";
 import {
   BrowserRouter as Router,
   Route,
@@ -14,9 +14,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/home/create-config" element={<Start />} />
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/home" element={<Home/>}/>
+        <Route path="/home/create-config" element={<Start/>}/>
       </Routes>
     </Router>
   );

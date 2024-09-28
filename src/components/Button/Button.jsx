@@ -1,4 +1,5 @@
-import './Button.css';
+//import './Button.css';
+import React from 'react';
 
 //Botón con funcionalidad al hacer click
 function Button ({label, onClick}){
