@@ -1,21 +1,19 @@
 import React from "react";
 import Button from "../../Button/Button.jsx";
 import { useNavigate } from 'react-router-dom';
-import { GAME, HOME } from "../../../utils/Constants.js";
+import { GAME, HOME , GAME_LEAVE_URL} from "../../../utils/Constants.js";
 import './LobbyButtons.css';
 
-function LobbyButtons({ isOwner }) {
-    const navigate = useNavigate();
-
+function LobbyButtons({ isOwner, onLeaveGame}) {
     return (
         <div className="btn-container">
             {isOwner ? (
                 <Button label="Iniciar" onClick={() => navigate(GAME)} className="btn-start"/>
             ) : (
-                <Button label="Abandonar" onClick={() => navigate(HOME)} className="btn-leave"/>
+                <Button label="Abandonar" onClick={onLeaveGame} className="btn-leave"/>
             )}
         </div>
     );
-}
+};
 
 export default LobbyButtons;
