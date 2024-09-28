@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'; 
 import { useReg } from './useReg.js';
-import { checkInput } from './loginHelper.js'; 
+import { checkInput } from '../../utils/logics/loginHelper.js'; 
 import { LoginHelpText } from '../../utils/Constants.js';
 import { HOME } from '../../utils/Constants.js';
 

@@ -19,11 +19,10 @@ function Lobby({ isOwner, gameId }) {
     const handleLeaveGame = () => {
         leaveGame(gameId, navigate);
     };
+
     return (
         <div className="lobby-overlay">
             <div className='lobby-container'>
-                {/* <LobbyCard gameName={"juego"} maxPlayers={3} />
-                <LobbyList players={[]} /> */}
                 <LobbyCard gameName={gameName} maxPlayers={maxPlayers} />
                 <LobbyList players={players} />
                 <LobbyButtons isOwner={isOwner} onLeaveGame={handleLeaveGame}/>
