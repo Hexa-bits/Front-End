@@ -1,4 +1,4 @@
-//import "./setGame.css";
+import "./setGame.css";
 import React from "react";
 import Button from "../../../../components/Button/Button.jsx";
 import ConfigGame from "../../../../components/ConfigGame/ConfigGame.jsx";

@@ -1,4 +1,4 @@
-//import "./ConfigGame.css";
+import "./ConfigGame.css";
 import { useState } from "react";
 import Form from "../../components/Form/Form.jsx";
 import Button from "../../components/Button/Button.jsx";

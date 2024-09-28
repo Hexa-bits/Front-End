@@ -1,7 +1,7 @@
 import { CONFIG_URL } from "../../utils/Constants.js";
 
 async function create(game_name, max_players, navigate) {
-  const id_user = localStorage.getItem("id_user"); // Obtenemos el id del usuario
+  const id_user = parseInt(localStorage.getItem("id_user"),10); // Obtenemos el id del usuario
 
   try {
     const response = await fetch(CONFIG_URL, {
