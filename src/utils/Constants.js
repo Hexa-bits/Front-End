@@ -2,14 +2,15 @@ export const PORT = 8000;
 
 /** NAVEGACION */
 export const LOGIN = '/login';
-export const HOME = '/home/get-lobbies';
+export const HOME = '/home';
 export const GAME = '/game';
 export const LOBBY = '/home/lobby';
 
 /** URLS */
+export const CONFIG_URL = `http://localhost:${PORT}/home/create-config`;
 export const LOGIN_URL = `http://localhost:${PORT}${LOGIN}`;
 export const LOBBY_URL = `http://localhost:${PORT}${LOBBY}`;
-export const HOME_URL = `http://localhost:${PORT}${HOME}`;
+export const HOME_URL = `http://localhost:${PORT}${HOME}/get-lobbies`;
 export const GAME_LEAVE_URL = `http://localhost:${PORT}/game/leave`;
 
 /** MENSAJES */

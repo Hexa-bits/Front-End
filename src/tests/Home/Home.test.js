@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import Home from '../../containers/App/components/Home/Home';
 import '@testing-library/jest-dom';
 import useGames from '../../hooks/Home/useGames';
+import { MemoryRouter } from 'react-router-dom';
 
 jest.mock('../../hooks/Home/useGames'); // Mockea el hook
 
@@ -27,13 +28,17 @@ describe('Home', () => {
   });
 
   it('debe mostrar la lista de juegos', () => {
-    render(<Home />);
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>
+    );
+    
     // Verifica que los nombres de los juegos se muestren
     expect(screen.getByText('Juego 1')).toBeInTheDocument();
     expect(screen.getByText('Juego 2')).toBeInTheDocument();
     expect(screen.getByText('Juego 3')).toBeInTheDocument();
     expect(screen.getByText('Juego 4')).toBeInTheDocument();
   });
-
 
 });
