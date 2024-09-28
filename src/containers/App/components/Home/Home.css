@@ -1,0 +1,28 @@
+.Home{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:20px;
+}
+
+.CrearPartida{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.CrearPartida button{
+    width: 600px;
+    height: 70px;
+}
+
+.GameList__Home{
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+
