@@ -1,0 +1,10 @@
+@import "../../../../utils/colores.css";
+
+.game-container {
+    background-color: var(--claro2);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
