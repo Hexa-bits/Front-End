@@ -30,7 +30,7 @@ export const useLobby = ((fullUrl) => {
             setMaxPlayers(data.max_players);
 
         } catch (error) {
-            alert("Error al obtener información del juego. " + error.message);
+            console.log("Error al obtener información del juego. " + error.message);
         }
     }
     return {players, gameName, maxPlayers};
