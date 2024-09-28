@@ -4,17 +4,18 @@ import Login from './components/Login/Login.jsx';
 import Start from "./components/SetGame/setGame.jsx";
 import Home from './components/Home/Home.jsx';
 import Lobby from './components/Lobby/Lobby.jsx';
+import { LOGIN, HOME, SETGAME, LOBBY} from '../../utils/Constants.js';
 
 function App () {
 
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Navigate to="/login"/>} />
-                <Route path="/login" element={<Login/>} />
-                <Route path="/home" element={<Home/>} />
-                <Route path="/home/create-config" element={<Start/>}/>
-                <Route path="/home/lobby" element={<Lobby isOwner={false} gameId={1}/>} />  // modif game_id
+                <Route path="/" element={<Navigate to={LOGIN}/>} />
+                <Route path={LOGIN} element={<Login/>} />
+                <Route path={HOME} element={<Home/>} />
+                <Route path={SETGAME} element={<Start/>}/>
+                <Route path={LOBBY} element={<Lobby />} />  
             </Routes>
         </Router>
 
