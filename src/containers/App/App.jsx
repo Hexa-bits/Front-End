@@ -9,7 +9,7 @@ function App () {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Navigate to="/loggin"/>} />
+                <Route path="/" element={<Navigate to="/login"/>} />
                 <Route path="/login" element={<Login/>} />
                 <Route path="/home" element={<Home/>} />
                 <Route path="/home/lobby" element={<Lobby isOwner={false} gameId={1}/>} />  // modif game_id

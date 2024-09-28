@@ -6,15 +6,14 @@ import { HOME, GAME_LEAVE_URL } from '../../utils/Constants.js';
 
 export const leaveGame = async (gameId, navigate) => {
     try {
-        localStorage.setItem('id_usser', 3);
-        const playerId = parseInt(localStorage.getItem('id_usser'),10); 
-
+        // localStorage.setItem('id_user', 3);
+        const playerId = parseInt(localStorage.getItem('id_user'),10); 
         const response = await fetch(GAME_LEAVE_URL, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ game_id: gameId, id_usser: playerId }),
+            body: JSON.stringify({ game_id: gameId, id_user: playerId }),
         });
 
         if (!response.ok) {
