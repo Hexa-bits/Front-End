@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { HOME_URL } from '../../utils/Constants.js';
 import usePooling from './usePooling.js'
 
@@ -22,11 +22,9 @@ function useGames(initialGames = []) {
         }
     };
 
-    usePooling(fetchGames, 2000);
+    usePooling(fetchGames, 500);
 
-    const handleJoin = () => {};
-
-    return { games, handleJoin}; // Devuelve el error si lo necesitas
+    return { games }; // Devuelve el error si lo necesitas
 }
 
 export default useGames;

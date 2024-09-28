@@ -13,8 +13,8 @@ function App () {
                 <Route path="/" element={<Navigate to="/login"/>} />
                 <Route path="/login" element={<Login/>} />
                 <Route path="/home" element={<Home/>} />
-                <Route path="/home/create-config" element={<Start/>}/>
-                <Route path="/home/lobby" element={<Lobby isOwner={false} gameId={1}/>} />  // modif game_id
+                <Route path="/home/create-config" element={<Start/>} />
+                <Route path="/home/lobby" element={<Lobby />} />
             </Routes>
         </Router>
 
