@@ -8,7 +8,7 @@ function useGames(initialGames = []) {
 
     const fetchGames = async () => {
         try {
-            const response = await fetch(`${HOME_URL}`);
+            const response = await fetch(HOME_URL);
             if (!response.ok) {
                 throw new Error('Error en la respuesta del servidor');
             }

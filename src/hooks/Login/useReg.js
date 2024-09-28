@@ -1,9 +1,6 @@
 import React from "react";
 import { LOGIN_URL } from "../../utils/Constants";
 
-// import fetchMock from 'fetch-mock';
-// fetchMock.post(LOGIN_URL, { id: 3 });   // MOCK TEST 
-
 async function useReg ({ username}) {
     try {            
         const response = await fetch(LOGIN_URL, {
