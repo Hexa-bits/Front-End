@@ -6,7 +6,7 @@ export default {
   },
   moduleFileExtensions: ['js', 'jsx'],
   moduleNameMapper: {
-    // Ignora archivos CSS, SCSS, LESS
+    // Ignora archivos SCSS, LESS y CSS
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
 };
