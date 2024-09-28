@@ -1,0 +1,26 @@
+@import "../../../utils/colores.css";
+
+
+
+.mov-cards-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; /* Centra las cartas verticalmente */
+    height: 300px; /* Ajusta la altura al 100% del contenedor padre */
+    width: 200px; /* Ajusta el ancho al 100% del contenedor padre */
+    background-color: var(--claro2);
+
+}
+
+.mov-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.mov-card img {
+    flex: 1; /* Ocupa todo el espacio disponible */
+    max-width: 150px; 
+    height: auto;  /* Mantiene la proporción de la imagen */
+}
