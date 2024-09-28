@@ -1,48 +1,62 @@
+// Test: useLobby Hook
 import React from 'react';
-import { render } from '@testing-library/react';
-import { useEffect , act} from 'react';
-import { useLobby } from '../../hooks/Lobby/useLobby.js';
-import { fetchGameInfo } from "../../hooks/Lobby/useFetch.js";
+import { render, act } from '@testing-library/react';
+import { useLobby } from "../../hooks/Lobby/useLobby.js";
 import '@testing-library/jest-dom';
 import { describe, it, expect, jest } from '@jest/globals';
 
-jest.mock('../../hooks/Lobby/useFetch.js'); 
+global.fetch = jest.fn(() =>
+    Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({
+            name_players: ['Player1', 'Player2'],
+            game_name: 'Test Game',
+            max_players: 4,
+        }),
+    })
+);
 
-const TestComponent = ({ lobbyUrl, onRender }) => {
-    const lobbyState = useLobby(lobbyUrl);
+beforeAll(() => {
+    global.alert = jest.fn();
+});
 
-    useEffect(() => {
-        onRender(lobbyState);
-    }, [lobbyState]);
+afterAll(() => {
+    global.alert.mockRestore();
+});
 
-    return null; 
+const TestComponent = ({ url }) => {
+    const { players, gameName, maxPlayers } = useLobby(url);
+    return (
+        <div>
+            <div data-testid="players">{players.join(', ')}</div>
+            <div data-testid="gameName">{gameName}</div>
+            <div data-testid="maxPlayers">{maxPlayers}</div>
+        </div>
+    );
 };
 
-describe('useLobby', () => {
-    afterEach(() => {
-        jest.clearAllMocks();
+describe('useLobby Hook', () => {
+    it('should fetch and return game data', async () => {
+        let getByTestId;
+        await act(async () => {
+            ({ getByTestId } = render(<TestComponent url="mockFullUrl" />));
+        });
+
+        expect(getByTestId('players').textContent).toBe('Player1, Player2');
+        expect(getByTestId('gameName').textContent).toBe('Test Game');
+        expect(getByTestId('maxPlayers').textContent).toBe('4');
     });
 
-    it('should fetch game info and set players, gameName, and maxPlayers', async () => {
-        fetchGameInfo.mockResolvedValueOnce({
-            name_players: [{ username: 'Player1' }, { username: 'Player2' }],
-            game_name: 'Mock Game',
-            max_players: 4,
-        });
+    it('should handle fetch errors', async () => {
+        fetch.mockImplementationOnce(() => Promise.reject(new Error('Network error')));
 
-        let result = null;
-
+        let getByTestId;
         await act(async () => {
-            render(
-                <TestComponent 
-                    lobbyUrl="mocked-url"
-                    onRender={(lobbyState) => (result = lobbyState)} 
-                />
-            );
+            ({ getByTestId } = render(<TestComponent url="mockFullUrl" />));
         });
 
-        expect(result.players).toEqual([{ username: 'Player1' }, { username: 'Player2' }]);
-        expect(result.gameName).toBe('Mock Game');
-        expect(result.maxPlayers).toBe(4);
+        expect(getByTestId('players').textContent).toBe(''); // Empty players due to error
+        expect(getByTestId('gameName').textContent).toBe(''); // Default gameName due to error
+        expect(getByTestId('maxPlayers').textContent).toBe('0'); // Default maxPlayers due to error
     });
 });
