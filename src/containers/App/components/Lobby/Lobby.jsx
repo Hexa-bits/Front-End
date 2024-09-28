@@ -9,12 +9,8 @@ import { useGameIdUrl } from "../../../../hooks/Lobby/useGameId.js";
 import LobbyList from "../../../../components/Lobby/List/LobbyList.jsx";
 import LobbyButtons from "../../../../components/Lobby/Buttons/LobbyButtons.jsx";
 
-function Lobby({ isOwner }) {
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const gameId = queryParams.get("game_id");
+function Lobby({ isOwner, gameId }) {
     const fullUrl = useGameIdUrl(gameId);
-
     const {players, gameName, maxPlayers} = useLobby(fullUrl);
 
     return (

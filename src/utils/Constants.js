@@ -2,7 +2,7 @@ export const PORT = 8000;
 
 /** NAVEGACION */
 export const LOGIN = '/login';
-export const HOME = '/home/get-lobbies';
+export const HOME = '/home';
 export const GAME = '/game';
 export const LOBBY = '/home/lobby';
 
