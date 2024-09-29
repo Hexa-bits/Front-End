@@ -5,6 +5,21 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+}
+
+.Fig_Move{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.Butt{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    gap:10px;
+    margin-bottom: 20px;
 }

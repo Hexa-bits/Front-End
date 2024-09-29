@@ -6,21 +6,21 @@
     display: flex;
     justify-content: flex-start;
     align-items: center; /* Centra las cartas verticalmente */
-    height: 300px; /* Ajusta la altura al 100% del contenedor padre */
-    width: 200px; /* Ajusta el ancho al 100% del contenedor padre */
+    height: auto; /* Ajusta la altura al 100% del contenedor padre */
+    width: auto; /* Ajusta el ancho al 100% del contenedor padre */
     background-color: var(--claro2);
-
+    margin-left: 20px;
 }
 
 .mov-card {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
     width: 100%;
 }
 
 .mov-card img {
     flex: 1; /* Ocupa todo el espacio disponible */
-    max-width: 150px; 
+    width: 120px;
     height: auto;  /* Mantiene la proporción de la imagen */
 }
