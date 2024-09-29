@@ -1,8 +1,9 @@
 import React from 'react';
 import '@testing-library/jest-dom';
+import Start from '../../containers/App/components/SetGame/setGame';
+import { MemoryRouter } from 'react-router-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { useSetGame } from '../../hooks/Setgame/useSetGame'; 
-import Start from '../../containers/App/components/SetGame/setGame';
 
 // Mockear el hook useSetGame
 jest.mock('../../hooks/Setgame/useSetGame');
@@ -19,7 +20,11 @@ describe('Start Component', () => {
   });
 
   test('debe renderizar el componente Start', () => {
-    render(<Start />);
+    render(
+      <MemoryRouter>
+          <Start />
+      </MemoryRouter>
+    );
     expect(screen.getByLabelText('Nombre de la partida')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Ingrese un nombre')).toBeInTheDocument();
     expect(screen.getByText('Elige la cantidad de participantes')).toBeInTheDocument();
@@ -34,8 +39,11 @@ describe('Start Component', () => {
       setMaxPlayers: jest.fn(),
       handleClick: jest.fn(),
     });
-
-    render(<Start />);
+    render(
+      <MemoryRouter>
+          <Start />
+      </MemoryRouter>
+    );
     fireEvent.click(screen.getByText('Crear Partida'));
     
     expect(useSetGame().handleClick).toHaveBeenCalledTimes(1);

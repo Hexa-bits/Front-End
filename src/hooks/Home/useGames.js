@@ -4,7 +4,7 @@ import usePooling from './usePooling.js'
 
 function useGames(initialGames = []) {
     const [games, setGames] = useState(initialGames);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState(null); // Cambia el estado inicial a null
 
     const fetchGames = async () => {
         try {
@@ -12,7 +12,7 @@ function useGames(initialGames = []) {
             if (!response.ok) {
                 throw new Error('Error en la respuesta del servidor');
             }
-            const data = await response.json(); 
+            const data = await response.json();
 
             setGames(data);
             setError(null); // Resetea el error si la petición es exitosa
@@ -24,7 +24,7 @@ function useGames(initialGames = []) {
 
     usePooling(fetchGames, 500);
 
-    return { games }; // Devuelve el error si lo necesitas
+    return { games, error }; // Retorna el error
 }
 
 export default useGames;
