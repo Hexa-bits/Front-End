@@ -5,7 +5,7 @@ function MovCards({ movsIds }) {
     return ( 
         <div className="mov-cards-container">
             <div className='mov-card'>
-                {movsIds.map((Id, index) => (
+                {movsIds.slice(0,3).map((Id, index) => (
                     <img key={index} src={`../../../../assets/Movements/mov${Id}.svg`} alt={`mov${Id}`} />
                 ))}              
             </div>

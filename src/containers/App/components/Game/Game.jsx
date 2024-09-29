@@ -1,43 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import MovCards from '../../../../components/Game/MovCards/MovCards.jsx';
-import FigCards from '../../../../components/Game/FigCards/FigCards.jsx'
 import LeaveButton from '../../../../components/Game/LeaveButton/LeaveButton.jsx';
 import Button from '../../../../components/Button/Button.jsx';
 import { getMovements } from '../../../../hooks/Game/getMovements.js';
+import { useState, useEffect } from 'react';
+import './Game.css';
+// import FigCards from '../../../../components/Game/FigCards/FigCards.jsx'
 // import { getFigureCards } from '../../../../hooks/Game/getFigureCards';
+
 
 import './Game.css';
 
 function Game() {
-    //Movemevs
     const [movsIds, setMovsIds] = useState([]);
-    
-    //Figures
-    //const [figsIds, setFigsIds] = useState([]);
 
-    // Fetch and set cards when the component is first rendered
     useEffect(() => {
         const fetchCards = async () => {
+            // MOVIMIENTOS
             const { movs_ids } = await getMovements();
-            // const {figs_ids} = await getFigureCards();
             setMovsIds(movs_ids);
+            
+            // FIGURAS
+            // const {figs_ids} = await getFigureCards();
             // setFigsIds([1,2,3]);
         };
         fetchCards();
     }, []);
 
     const handleTurn = async () => { 
+        // MOVIMIENTOS
         const {movs_ids} = await getMovements();
-        // const {figs_ids} = await getFigureCards();
         setMovsIds(movs_ids);
-        //setFigsIds([1,2,3]);
-        // console.log(cards_ids);
+    
+        // FIGURAS
+        // const {figs_ids} = await getFigureCards();
+        // setFigsIds([1,2,3]);
     };
+
 
 
     return (  
         <div className="game-container">
-            <MovCards movsIds={movsIds}/>
+            <MovCards movsIds = { movsIds }/>
             {/* <FigCards figsIds={figsIds}/> */}
             <Button label="End Turn" onClick={handleTurn}/>
             <LeaveButton />
@@ -46,4 +50,3 @@ function Game() {
 }
 
 export default Game;
-

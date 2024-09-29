@@ -20,10 +20,10 @@ export const getMovements = async () => {
         }
         const data = await response.json();
         console.log(data.id_mov_card)
-        return { cards_ids: data.id_mov_card || [] };  
+        return { movs_ids: data.id_mov_card || [] };  
 
     } catch (error) {
         console.error("Error al obtener las cartas de movimientos del jugador:", error);
-        return { cards_ids: [] };  
+        return { movs_ids: [] };  
     }
 };
