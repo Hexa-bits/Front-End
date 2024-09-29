@@ -13,7 +13,7 @@ function Game() {
     const handleTurn = async () => { 
         const {cards_ids} = await getMovements();
         setCardsIds(cards_ids);
-        console.log(cards_ids);
+        // console.log(cards_ids);
     };
 
     return (  
