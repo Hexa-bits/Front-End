@@ -1,5 +1,4 @@
-// Test: Lobby Component
-
+// Lobby.test.js
 import '@testing-library/jest-dom';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
@@ -7,13 +6,25 @@ import Lobby from '../../containers/App/components/Lobby/Lobby.jsx';
 import { useLobby } from "../../hooks/Lobby/useLobby.js";
 import { useGameIdUrl } from '../../hooks/Lobby/useGameId';
 import { BrowserRouter } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 jest.mock('../../hooks/Lobby/useLobby.js');
 jest.mock('../../hooks/Lobby/useGameId.js');
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useLocation: jest.fn(),
+    useNavigate: jest.fn(),
+}));
 
 describe('Lobby Component', () => {
     beforeEach(() => {
         useGameIdUrl.mockReturnValue('mockFullUrl');
+        useLocation.mockReturnValue({
+            state: {
+                isOwner: true,
+                gameId: 7,
+            },
+        });
     });
 
     it('should render the lobby correctly with players', () => {
@@ -23,7 +34,7 @@ describe('Lobby Component', () => {
             maxPlayers: 4,
         });
 
-        render(<Lobby isOwner={true} />, { wrapper: BrowserRouter });
+        render(<Lobby />, { wrapper: BrowserRouter });
 
         expect(screen.getByText('Test Game')).toBeInTheDocument();
         expect(screen.getByText('Player1')).toBeInTheDocument();
@@ -37,12 +48,19 @@ describe('Lobby Component', () => {
             maxPlayers: 4,
         });
 
-        // checking for owner
-        const { rerender } = render(<Lobby isOwner={true} />, { wrapper: BrowserRouter });
+        const { rerender } = render(<Lobby />, { wrapper: BrowserRouter });
+
+        // Checking for owner
         expect(screen.getByText('Iniciar')).toBeInTheDocument();
 
         // Checking for non-owner
-        rerender(<Lobby isOwner={false} />);
+        useLocation.mockReturnValue({
+            state: {
+                isOwner: false,
+                gameId: 7,
+            },
+        });
+        rerender(<Lobby />);
         expect(screen.getByText('Abandonar')).toBeInTheDocument();
     });
 });
