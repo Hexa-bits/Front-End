@@ -1,4 +1,3 @@
-// Test: useLobby Hook
 import React from 'react';
 import { render, act } from '@testing-library/react';
 import { useLobby } from "../../hooks/Lobby/useLobby.js";
@@ -37,6 +36,8 @@ const TestComponent = ({ url }) => {
 
 describe('useLobby Hook', () => {
     it('should fetch and return game data', async () => {
+        const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+
         let getByTestId;
         await act(async () => {
             ({ getByTestId } = render(<TestComponent url="mockFullUrl" />));
@@ -45,9 +46,14 @@ describe('useLobby Hook', () => {
         expect(getByTestId('players').textContent).toBe('Player1, Player2');
         expect(getByTestId('gameName').textContent).toBe('Test Game');
         expect(getByTestId('maxPlayers').textContent).toBe('4');
+
+        consoleSpy.mockRestore(); // Restaurar console.log
     });
 
-    it('should handle fetch errors', async () => {
+    it('should handle fetch errors and silence console logs', async () => {
+        const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+        const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {}); // Para silenciar también los logs normales
+
         fetch.mockImplementationOnce(() => Promise.reject(new Error('Network error')));
 
         let getByTestId;
@@ -55,8 +61,11 @@ describe('useLobby Hook', () => {
             ({ getByTestId } = render(<TestComponent url="mockFullUrl" />));
         });
 
-        expect(getByTestId('players').textContent).toBe(''); // Empty players due to error
-        expect(getByTestId('gameName').textContent).toBe(''); // Default gameName due to error
-        expect(getByTestId('maxPlayers').textContent).toBe('0'); // Default maxPlayers due to error
+        expect(getByTestId('players').textContent).toBe('');
+        expect(getByTestId('gameName').textContent).toBe('');
+        expect(getByTestId('maxPlayers').textContent).toBe('0');
+
+        consoleErrorSpy.mockRestore(); // Restaurar console.error
+        consoleLogSpy.mockRestore(); // Restaurar console.log
     });
 });
