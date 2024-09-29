@@ -4,7 +4,6 @@ import './Game_Item.css'
 
 
 function Game_Item({game, handleJoin}){
-
     return(
         <div className="List__Items">
                 <div className="game">
@@ -13,10 +12,11 @@ function Game_Item({game, handleJoin}){
                         <div className="range_players">
                             {game.current_players}/{game.max_players}
                         </div>
-                        {/* <Button 
+
+                        <Button 
                             label="Unirse" 
-                            onClick={() => handleJoin(game.id)}
-                            disabled={game.current_players >= game.max_players}/> */}
+                            onClick={() => handleJoin(game.game_id)}
+                            disabled={game.current_players >= game.max_players}/>
                     </div>
                 </div>
             </div>

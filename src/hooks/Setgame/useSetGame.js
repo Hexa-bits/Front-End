@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { create } from "./useCreate.js";
 import { checkInput, checkButtons } from "../../utils/logics/setGame/LogicSetGame.js";
 
-export const useSetGame = () => {
+export const useSetGame = (navigate) => {
     const [game_name, setGameName] = useState("");
     const [max_players, setMaxPlayers] = useState(0);
-    const navigate = useNavigate();
   
     const handleClick = async () => {
       if (checkInput(game_name) && checkButtons(max_players)) {
