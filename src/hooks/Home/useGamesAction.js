@@ -9,7 +9,7 @@ export const useGameActions = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
+        body: JSON.stringify({ 
           game_id: gameId,
           player_id: playerId,
         }),
@@ -19,6 +19,7 @@ export const useGameActions = () => {
         throw new Error(`Error al unirse a la partida: ${errorData.message || 'No se pudo unirse'}`);
       }
 
+      // localSessionStorage.setItem('game_id', gameId);
       const data = await response.json();
       console.log("Unido a la partida con éxito:", data);
       return data;

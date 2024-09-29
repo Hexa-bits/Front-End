@@ -1,13 +1,13 @@
 import React from 'react';
 import './MovCards.css';
 
-function MovCards() {
+function MovCards({ cardsIds }) {
     return ( 
         <div className="mov-cards-container">
             <div className='mov-card'>
-                <img src="../../../../assets/Movements/mov1.svg" alt="mov1" />
-                <img src="../../../../assets/Movements/mov2.svg" alt="mov2" />
-                <img src="../../../../assets/Movements/mov3.svg" alt="mov3" />
+                {cardsIds.map((Id, index) => (
+                    <img key={index} src={`../../../../assets/Movements/mov${Id}.svg`} alt={`mov${Id}`} />
+                ))}              
             </div>
         </div>
     );
