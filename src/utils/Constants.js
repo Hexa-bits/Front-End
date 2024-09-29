@@ -5,6 +5,7 @@ export const LOGIN = '/login';
 export const HOME = '/home';
 export const GAME = '/game';
 export const LOBBY = '/home/lobby';
+export const SETGAME = '/home/create-config';
 
 /** URLS */
 export const CONFIG_URL = `http://localhost:${PORT}/home/create-config`;
