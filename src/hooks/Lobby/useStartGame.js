@@ -1,6 +1,5 @@
 import { GAME_START_URL, GAME } from '../../utils/Constants.js';
-// import fetchMock from 'fetch-mock';
-// fetchMock.put(GAME_START_URL, 200);   // MOCK TEST 
+
 
 
 export const startGame = async (gameId, navigate) => {
