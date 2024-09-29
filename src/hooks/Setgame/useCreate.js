@@ -1,4 +1,4 @@
-import { CONFIG_URL } from "../../utils/Constants.js";
+import { CONFIG_URL , LOBBY } from "../../utils/Constants.js";
 
 async function create(game_name, max_players, navigate) {
   const id_user = parseInt(localStorage.getItem("id_user"),10); // Obtenemos el id del usuario
@@ -17,17 +17,18 @@ async function create(game_name, max_players, navigate) {
     }
 
     const data = await response.json();
-    const { game_id } = data.id;
+    const game_id  = data.id;
 
     // Guardamos la información de la partida en el localStorage
     localStorage.setItem("game_name", game_name);
     localStorage.setItem("game_id", game_id);
     localStorage.setItem("max_players", max_players);
 
-    alert(`Partida ${game_name} creada exitosamente con Id: ${data.id}`);
+    alert(`Partida ${game_name} creada exitosamente con Id: ${game_id}`);
 
     // Navegamos a la página para unirse al juego
-    // navigate(`LOBBY?${game_id}`);
+    const gameId = parseInt(game_id, 10);
+    navigate(LOBBY, {state: {isOwner: true, gameId: gameId}});
   } catch (error) {
     alert("Error al crear partida. " + error.message);
   }

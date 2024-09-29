@@ -6,12 +6,46 @@
     gap:20px;
 }
 
+.NombreUsuario{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.NombreUsuario .dataUser{
+    width: 600px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #58d68d;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.dataUser .user{
+    width: 50%;
+    font-size: 20px;
+    padding: 20px;
+    text-align: left;
+}
+
+.dataUser .id_user{
+    width: 50%;
+    text-align: right;
+    font-size: 20px;
+    padding: 20px;
+}
+
 .CrearPartida{
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .CrearPartida button{

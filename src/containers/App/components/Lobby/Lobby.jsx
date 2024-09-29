@@ -7,10 +7,12 @@ import { useLobby } from "../../../../hooks/Lobby/useLobby.js";
 import { useGameIdUrl } from "../../../../hooks/Lobby/useGameId.js";
 import LobbyList from "../../../../components/Lobby/List/LobbyList.jsx";
 import LobbyButtons from "../../../../components/Lobby/Buttons/LobbyButtons.jsx";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { leaveGame } from "../../../../hooks/Lobby/useLeaveGame.js";
 
-function Lobby({ isOwner, gameId }) {
+function Lobby() {
+    const location = useLocation();
+    const {isOwner, gameId} = location.state || {};
     const fullUrl = useGameIdUrl(gameId);
     const {players, gameName, maxPlayers} = useLobby(fullUrl);
 
