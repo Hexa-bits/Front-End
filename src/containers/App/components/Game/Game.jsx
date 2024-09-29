@@ -1,33 +1,44 @@
-import React, { useEffect } from 'react';
-import MovCard from '../../../../components/Game/MovCards/MovCards.jsx';
+import React, { useEffect, useState } from 'react';
+import MovCards from '../../../../components/Game/MovCards/MovCards.jsx';
+import FigCards from '../../../../components/Game/FigCards/FigCards.jsx'
 import LeaveButton from '../../../../components/Game/LeaveButton/LeaveButton.jsx';
 import Button from '../../../../components/Button/Button.jsx';
 import { getMovements } from '../../../../hooks/Game/getMovements.js';
-import { useState } from 'react';
+// import { getFigureCards } from '../../../../hooks/Game/getFigureCards';
 
 import './Game.css';
 
 function Game() {
-    const [cardsIds, setCardsIds] = useState([]);
+    //Movemevs
+    const [movsIds, setMovsIds] = useState([]);
+    
+    //Figures
+    //const [figsIds, setFigsIds] = useState([]);
 
-    // Fetch and set movement cards when the component is first rendered
+    // Fetch and set cards when the component is first rendered
     useEffect(() => {
-        const fetchMovements = async () => {
-            const { cards_ids } = await getMovements();
-            setCardsIds(cards_ids);
+        const fetchCards = async () => {
+            const { movs_ids } = await getMovements();
+            // const {figs_ids} = await getFigureCards();
+            setMovsIds(movs_ids);
+            // setFigsIds([1,2,3]);
         };
-        fetchMovements();
+        fetchCards();
     }, []);
 
     const handleTurn = async () => { 
-        const {cards_ids} = await getMovements();
-        setCardsIds(cards_ids);
+        const {movs_ids} = await getMovements();
+        // const {figs_ids} = await getFigureCards();
+        setMovsIds(movs_ids);
+        //setFigsIds([1,2,3]);
         // console.log(cards_ids);
     };
 
+
     return (  
         <div className="game-container">
-            <MovCard cardsIds={cardsIds}/>
+            <MovCards movsIds={movsIds}/>
+            {/* <FigCards figsIds={figsIds}/> */}
             <Button label="End Turn" onClick={handleTurn}/>
             <LeaveButton />
         </div>

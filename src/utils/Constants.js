@@ -16,6 +16,8 @@ export const GAME_JOIN_URL = `http://localhost:${PORT}${GAME}/join`;
 export const GAME_LEAVE_URL = `http://localhost:${PORT}/game/leave`;
 export const GAME_START_URL = `http://localhost:${PORT}/game/start-game`;
 export const GET_MOVEMENTS_URL = `http://localhost:${PORT}/game/my-mov-card`;
+export const GET_FIGURES_URL = `http://localhost:${PORT}/game/my-fig-card`;
+
 
 /** MENSAJES */
 export const LoginHelpText = "Debe tener entre 1 y 10 caracteres.";
