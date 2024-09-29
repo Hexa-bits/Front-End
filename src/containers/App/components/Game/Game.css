@@ -1,0 +1,18 @@
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+    background-color: hsl(187, 71%, 77%); /* Fondo claro */
+  }
+  
+  .game-button {
+    padding: 15px 30px; /* Espaciado alrededor del botón */
+    font-size: 1.2em; /* Tamaño de fuente más grande */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s; /* Transición suave */
+  }
+  

@@ -1,5 +1,5 @@
 import React from "react";
-//import "./game.css";
+import "./Game.css";
 import { useNavigate } from "react-router-dom";
 import { leaveGame } from "../../../../hooks/Lobby/useLeaveGame.js";
 import Button from "../../../../components/Button/Button.jsx";
@@ -11,7 +11,11 @@ function Game() {
     leaveGame(gameId, navigate);
   };
 
-  return <Button label="Dejar Partida en juego" onClick={handleClick} />;
+  return (
+    <div className="game-container">
+      <Button label="Dejar Partida en juego" onClick={handleClick} />
+    </div>
+  );
 }
 
 export default Game;
