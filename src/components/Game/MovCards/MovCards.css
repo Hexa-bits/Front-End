@@ -1,7 +1,5 @@
 @import "../../../utils/colores.css";
 
-
-
 .mov-cards-container {
     display: flex;
     justify-content: flex-start;
@@ -17,10 +15,22 @@
     flex-direction: column;
     justify-content: space-around;
     width: 100%;
+    gap: 10px;
 }
 
-.mov-card img {
+.Figures {
+    cursor: pointer; /* Añade un puntero cuando se pasa sobre una carta */
+}
+
+.Figures img {
     flex: 1; /* Ocupa todo el espacio disponible */
-    width: 120px;
-    height: auto;  /* Mantiene la proporción de la imagen */
+    width: 100px;
+    height: auto; /* Mantiene la proporción de la imagen */
+}
+
+/* Estilo para una carta seleccionada */
+.Figures.selected {
+    border: 1px solid black; /* Añade un borde de color para indicar selección */
+    transform: scale(1.1); /* Agranda la carta para resaltar la selección */
+    transition: transform 0.2s, border 0.1s; /* Suaviza la transición */
 }

@@ -45,8 +45,12 @@ function Game() {
                 <FigCards figsIds={figsIds}/>
             </div>
             <div className="Butt">
-                <Button label="End Turn" onClick={handleTurn}/>
-                <LeaveButton />
+                <div className="end">
+                    <Button label="End Turn" onClick={handleTurn}/>
+                </div>
+                <div className="leav">
+                    <LeaveButton />
+                </div>
             </div>
         </div>
     );

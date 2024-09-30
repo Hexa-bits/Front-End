@@ -13,7 +13,7 @@ function FigCards({ figsIds }) {
     return (
         <div className="fig-cards-container">
             <div className='fig-card'>
-                {figsIds.map((Id, index) => {
+                {figsIds.slice(0,3).map((Id, index) => {
                     const formattedId = Id.toString().padStart(2, '0'); // Convierte el número a cadena con dos dígitos
                     const isSelected = index === selectedIndex; // Verifica si esta carta está seleccionada
                     return (
