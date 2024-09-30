@@ -1,24 +1,48 @@
-import React from "react";
-import "./Game.css";
-import { useNavigate } from "react-router-dom";
-import { leaveGame } from "../../../../hooks/Lobby/useLeaveGame.js";
-import Button from "../../../../components/Button/Button.jsx";
+import React from 'react';
+import Button from '../../../../components/Button/Button.jsx';
+import MovCards from '../../../../components/Game/MovCards/MovCards.jsx';
+import FigCards from '../../../../components/Game/FigCards/FigCards.jsx'
+import LeaveButton from '../../../../components/Game/LeaveButton/LeaveButton.jsx';
+import SeePlayer from '../../../../components/Game/seePlayer_Turn/seePlayer.jsx';
+import useGameData from '../../../../utils/logics/Game/LogicDataGame.js';
+import './Game.css';
 
 function Game() {
-  const gameId = localStorage.getItem("game_id");
-  const navigate = useNavigate();
-  const handleClick = () => {
+    //Manejo el fetch de las cartas
+    const { movsIds, figsIds, handleTurn, currentPlayer} = useGameData();
 
-    // if (localStorage.getItem("active") === true) {
-    // }
-    leaveGame(gameId, navigate);
-  };
+    return (  
+        <div className="game-container">
+            <div className="left-box">
+                <div className="seePlayer">
+                    <SeePlayer player={currentPlayer || "??????"}/>
+                </div>
+                <div className="Game_Area">
+                    <div className="Fig">
+                        <FigCards figsIds={figsIds}/>
+                    </div>
+                    <div className="board">
+                    </div>
+                    <div className="Mov">
+                        <MovCards movsIds = { movsIds }/>
 
-  return (
-    <div className="game-container">
-      <Button label="Dejar Partida en juego" onClick={handleClick} />
-    </div>
-  );
+                    </div>
+
+                </div>
+            </div>
+            <div className="right-box">
+                <div className="Butt">
+                    <div className="end">
+                        <Button label="End Turn" onClick={handleTurn}/>
+                    </div>
+                    <div className="leav">
+                        <LeaveButton />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    );
 }
 
 export default Game;

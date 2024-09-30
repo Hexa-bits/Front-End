@@ -1,18 +1,104 @@
+@import "../../../../utils/colores.css";
+
 .game-container {
+    background-color: var(--claro2);
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    overflow: hidden;
+}
+
+/* Parte Izquierda */
+.left-box{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+.seePlayer{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Ocupa toda la altura de la ventana */
-    background-color: hsl(187, 71%, 77%); /* Fondo claro */
-  }
-  
-  .game-button {
-    padding: 15px 30px; /* Espaciado alrededor del botón */
-    font-size: 1.2em; /* Tamaño de fuente más grande */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
-    transition: background-color 0.3s; /* Transición suave */
-  }
-  
+    margin-top: 10px;
+    width: 100%;
+    height: auto;
+}
+
+.Game_Area{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.Fig{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 50px;
+}
+
+.board{
+    background-color: #73302e;
+    width: 60%;
+    height: 90%;
+    border-radius: 20px;
+}
+
+.Mov{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+
+/* Parte Derecha */
+.right-box{
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+
+.Butt{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-around
+    ;
+    gap:10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+
+.Butt button{
+    height: 60px;
+    width: 150px;
+}
+
+.leav button{
+    background-color: #f4143f;
+    border: 2px solid black;
+    color: black;
+}
+
+.leav button:hover {
+    transform: none; /* Elimina cualquier transformación */
+}
+
+.leav button:active {
+    transform: none; /* Elimina cualquier transformación al hacer clic */
+}
+
+.leav button:focus {
+    outline: none;
+    transform: none;
+}

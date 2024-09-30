@@ -29,7 +29,6 @@ async function create(game_name, max_players, navigate) {
     // Navegamos a la página para unirse al juego
     const gameId = parseInt(game_id, 10);
     navigate(LOBBY, {state: {isOwner: true, gameId: gameId}});
-
   } catch (error) {
     alert("Error al crear partida. " + error.message);
   }
