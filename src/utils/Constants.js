@@ -1,11 +1,11 @@
 export const PORT = 8000;
 
 /** NAVEGACION */
-export const LOGIN = '/login';
-export const HOME = '/home';
-export const GAME = '/game';
-export const LOBBY = '/home/lobby';
-export const SETGAME = '/home/create-config';
+export const LOGIN = "/login";
+export const HOME = "/home";
+export const GAME = "/game";
+export const LOBBY = "/home/lobby";
+export const SETGAME = "/home/create-config";
 
 /** URLS */
 export const CONFIG_URL = `http://localhost:${PORT}/home/create-config`;
@@ -15,6 +15,7 @@ export const HOME_URL = `http://localhost:${PORT}${HOME}/get-lobbies`;
 export const GAME_JOIN_URL = `http://localhost:${PORT}${GAME}/join`;
 export const GAME_LEAVE_URL = `http://localhost:${PORT}/game/leave`;
 export const GAME_START_URL = `http://localhost:${PORT}/game/start-game`;
+export const GAME_PASS_URL = `http://localhost:${PORT}/game/end-turn`;
 export const GET_MOVEMENTS_URL = `http://localhost:${PORT}/game/my-mov-card`;
 export const GET_FIGURES_URL = `http://localhost:${PORT}/game/my-fig-card/`;
 export const GET_TURN_PLAYER_URL = `http://localhost:${PORT}/game/current-turn`;
