@@ -1,7 +1,5 @@
 import { GAME_START_URL, GAME } from '../../utils/Constants.js';
 
-
-
 export const startGame = async (gameId, navigate) => {
     const game_id = parseInt(gameId, 10);
     try {
@@ -17,6 +15,7 @@ export const startGame = async (gameId, navigate) => {
             throw new Error(errorMessage || response.statusText);
         }
         console.log(`Juego ${game_id} iniciado exitosamente`);
+        localStorage.setItem('active', true);
         navigate(GAME);
     }
     catch (error) {
