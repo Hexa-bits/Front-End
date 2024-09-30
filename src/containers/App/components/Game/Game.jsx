@@ -6,13 +6,13 @@ import LeaveButton from "../../../../components/Game/LeaveButton/LeaveButton.jsx
 import SeePlayer from "../../../../components/Game/seePlayer_Turn/seePlayer.jsx";
 import useGameData from "../../../../utils/logics/Game/LogicDataGame.js";
 import "./Game.css";
-import { leave } from "../../../../hooks/Game/leave.js";
+import { pass } from "../../../../hooks/Game/pass.js";
 
 function Game() {
   //Manejo el fetch de las cartas
   const { movsIds, figsIds, currentPlayer } = useGameData();
   const handleTurn = async () => {
-    leave();
+    pass();
   };
   return (
     <div className="game-container">

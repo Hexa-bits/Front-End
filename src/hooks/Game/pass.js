@@ -1,16 +1,15 @@
 import React from "react";
 import { GAME_PASS_URL } from "../../utils/Constants";
 
-const game_id = localStorage.getItem("game_id");
-
-export const leave = async () => {
+export const pass = async () => {
+  const game_id = localStorage.getItem("game_id");
   try {
     const response = await fetch(GAME_PASS_URL, {
-      method: "PUT", //esta función responde al async de handleclick
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ game_id }), //creo que acá debería mandar tambien el id del owner
+      body: JSON.stringify({ game_id }),
     });
 
     if (!response.ok) {

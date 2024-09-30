@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { useNavigate } from "react-router-dom";
 import Game from "../../containers/App/components/Game/Game.jsx";
 import { leaveGame } from "../../hooks/Lobby/useLeaveGame.js";
-import { leave } from "../../hooks/Game/leave.js";
+import { leave } from "../../hooks/Game/pass.js";
 import "@testing-library/jest-dom";
 
 // Mock del hook useNavigate
