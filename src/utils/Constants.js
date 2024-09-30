@@ -13,11 +13,12 @@ export const LOGIN_URL = `http://localhost:${PORT}${LOGIN}`;
 export const LOBBY_URL = `http://localhost:${PORT}${LOBBY}`;
 export const HOME_URL = `http://localhost:${PORT}${HOME}/get-lobbies`;
 export const GAME_JOIN_URL = `http://localhost:${PORT}${GAME}/join`;
-export const GAME_LEAVE_URL = `http://localhost:${PORT}/game/leave`;
-export const GAME_START_URL = `http://localhost:${PORT}/game/start-game`;
-export const GET_MOVEMENTS_URL = `http://localhost:${PORT}/game/my-mov-card`;
-export const GET_FIGURES_URL = `http://localhost:${PORT}/game/my-fig-card/`;
-export const GET_TURN_PLAYER_URL = `http://localhost:${PORT}/game/current-turn`;
+export const GAME_LEAVE_URL = `http://localhost:${PORT}${GAME}/leave`;
+export const GAME_START_URL = `http://localhost:${PORT}${GAME}/start-game`;
+export const GET_MOVEMENTS_URL = `http://localhost:${PORT}${GAME}/my-mov-card`;
+export const GET_FIGURES_URL = `http://localhost:${PORT}${GAME}/my-fig-card/`;
+export const GET_TURN_PLAYER_URL = `http://localhost:${PORT}${GAME}/current-turn`;
+export const GET_WINNER_URL = `http://localhost:${PORT}${GAME}/get-winner`;
 
 /** MENSAJES */
 export const LoginHelpText = "Debe tener entre 1 y 10 caracteres.";
