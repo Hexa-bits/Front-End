@@ -17,7 +17,7 @@ const useWinnerPolling = (gameId, pollingInterval = 500) => {
 
             // Maneja el caso 204 No Content
             if (response.status === 204) {
-                return false;
+                return false; 
             }
 
             if (!response.ok) {
