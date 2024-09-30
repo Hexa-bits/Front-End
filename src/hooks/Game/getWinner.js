@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useWinner } from './useWinnerUrl.js';
 
-const useWinnerPolling = (gameId, pollingInterval = 5000) => {
+const useWinnerPolling = (gameId, pollingInterval = 500) => {
     const [winner, setWinner] = useState(null);
 
     const getWinner = async () => {
@@ -15,18 +15,23 @@ const useWinnerPolling = (gameId, pollingInterval = 5000) => {
                 },
             });
 
+            // Maneja el caso 204 No Content
+            if (response.status === 204) {
+                return false;
+            }
+
             if (!response.ok) {
-                if (response.status === 204) {
-                    return null; // No hay ganador
-                }
                 throw new Error('Network response was not ok');
             }
 
             const data = await response.json();
-            return data; // Retorna el ganador si lo hay
+            if (!data || Object.keys(data).length === 0) {
+                return false;
+            }
+
+            return data;
         } catch (error) {
-            console.error('Error fetching winner:', error);
-            return null; // En caso de error
+            return false; 
         }
     };
 
@@ -34,18 +39,18 @@ const useWinnerPolling = (gameId, pollingInterval = 5000) => {
         const fetchWinner = async () => {
             const result = await getWinner();
             if (result) {
-                setWinner(result); // Actualiza el ganador si se encuentra uno
+                setWinner(result); 
             }
         };
 
         fetchWinner(); // Llama inicialmente
 
-        const interval = setInterval(fetchWinner, pollingInterval); // Configura el polling
+        const interval = setInterval(fetchWinner, pollingInterval);
 
-        return () => clearInterval(interval); // Limpia el intervalo al desmontar
+        return () => clearInterval(interval);
     }, [gameId, pollingInterval]);
 
-    return winner; // Devuelve el ganador
+    return winner;
 };
 
 export default useWinnerPolling;
