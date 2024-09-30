@@ -1,0 +1,23 @@
+.card .card-header {
+    color: rgb(216, 255, 125);
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.card .card-body  {
+    color: rgb(63, 63, 66);
+}
+.card .card-body .card-title {
+    font-size: 1rem;
+}
+.card .card-body .game-name{
+    font-weight: bold;
+    color: rgb(20, 55, 153); 
+}
+
+.card .card-body .max-players{
+    font-weight: bold;
+    color: rgb(20, 55, 153); 
+}

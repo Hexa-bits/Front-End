@@ -1,0 +1,9 @@
+@import "../../../utils/colores.css";
+
+.btn-leave-game {
+    background-color: red; /* Cambia el color de fondo a rojo */
+    display: flex;
+    justify-content: flex-end;
+}
+
+
