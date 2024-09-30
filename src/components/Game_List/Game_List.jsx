@@ -29,3 +29,28 @@ function GameList({games = [], handleJoin}) {
 
 
 export default GameList;
+
+
+
+// function GameList({ games = [], handleJoin }) {
+//     return (
+//         <div className="GameList">
+//             <ul className="list-group">
+//                 {games.length === 0 ? (
+//                     <li className="list-group-item">No se encontraron partidas.</li>
+//                 ) : (
+//                     games.map((game) => (
+//                         <li className="list-group-item" key={game.game_id}>
+//                             <Game_Item 
+//                                 game={game}
+//                                 handleJoin={handleJoin}
+//                             />
+//                         </li>
+//                     ))
+//                 )}
+//             </ul>
+//         </div>
+//     );
+// }
+
+// export default GameList;
