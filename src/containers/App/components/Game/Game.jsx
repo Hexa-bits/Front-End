@@ -6,15 +6,23 @@ import VictoryBox from '../../../../components/VictoryBox/VictoryBox.jsx';
 import useWinnerPolling from '../../../../hooks/Game/getWinner.js';
 import LeaveButton from '../../../../components/Game/LeaveButton/LeaveButton.jsx';
 import SeePlayer from '../../../../components/Game/seePlayer_Turn/seePlayer.jsx';
-import useGameData from '../../../../utils/logics/Game/LogicDataGame.js';
+import DataGame from "../../../../utils/logics/Game/DataGame.js";
+import { passTurn } from "../../../../hooks/Game/passTurn.js";
 import Confetti from 'react-confetti';
 import './Game.css';
 
+
 function Game() {
     //Manejo el fetch de las cartas
-    const { movsIds, figsIds, handleTurn, currentPlayer} = useGameData();
+    const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
     const gameId = localStorage.getItem('game_id');
     const winner = useWinnerPolling(gameId);
+    const { movsIds, figsIds, currentPlayer, playerId } = DataGame();
+
+    // Función para manejar el fin del turno
+    const handleEndTurn = async () => {
+      await passTurn(); // Cambia el turno
+    };
 
     return (
         <div>
@@ -45,7 +53,6 @@ function Game() {
                         </div>
                         <div className="Mov">
                             <MovCards movsIds = { movsIds }/>
-
                         </div>
 
                     </div>
@@ -53,7 +60,11 @@ function Game() {
                 <div className="right-box">
                     <div className="Butt">
                         <div className="end">
-                            <Button label="End Turn" onClick={handleTurn}/>
+                            <Button 
+                              label="Terminar Turno"
+                              onClick={handleEndTurn}
+                              disabled={localPlayerId !== playerId}
+                              />
                         </div>
                         <div className="leav">
                             <LeaveButton />
@@ -63,7 +74,7 @@ function Game() {
                 </div>
             </div>
         </div>
-    );
-}
+        );
+    }
 
 export default Game;

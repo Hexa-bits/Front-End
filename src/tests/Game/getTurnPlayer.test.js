@@ -1,47 +1,86 @@
 import getTurnPlayer from '../../hooks/Game/getTurnPlayer';
-import '@testing-library/jest-dom';
+import { useNameTurnPlayerUrl } from '../../hooks/Game/useTurnPlayerUrl';
 
-jest.mock("../../hooks/Game/useTurnPlayerUrl.js");
+// Mockear fetch y useNameTurnPlayerUrl
+global.fetch = jest.fn();
+jest.mock('../../hooks/Game/useTurnPlayerUrl');
 
 describe('getTurnPlayer', () => {
-    it('Debería retornar los datos del jugador cuando la llamada a la API sea exitosa', async () => {
-        const mockData = { id_player: 1, name_player: 'Player 1' };
-        
-        global.fetch = jest.fn(() =>
-            Promise.resolve({
-                ok: true,
-                json: () => Promise.resolve(mockData)
-            })
-        );
+  beforeEach(() => {
+    jest.clearAllMocks();  // Limpiar mocks entre tests
+  });
 
-        const result = await getTurnPlayer(1);
-        expect(result).toEqual(mockData);
+  test('debe retornar playerId y namePlayer cuando el fetch es exitoso', async () => {
+    // Mock de la URL
+    const mockUrl = 'http://fake-url.com/player-turn';
+    useNameTurnPlayerUrl.mockReturnValue(mockUrl);
+
+    // Mock de la respuesta del fetch
+    const mockData = {
+      id_player: 1,
+      name_player: 'Player 1',
+    };
+    fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockData,
     });
 
-    it('Debería retornar null cuando la llamada a la API falle', async () => {
-        const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const gameId = 123;
+    const result = await getTurnPlayer(gameId);
 
-        global.fetch = jest.fn(() =>
-            Promise.resolve({
-                ok: false
-            })
-        );
+    // Aserciones
+    expect(fetch).toHaveBeenCalledWith(mockUrl, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    expect(result).toEqual({ playerId: mockData.id_player, namePlayer: mockData.name_player });
+  });
 
-        const result = await getTurnPlayer(1);
-        expect(result).toBeNull();
+  test('debe manejar errores si la respuesta de fetch no es exitosa', async () => {
+    const mockUrl = 'http://fake-url.com/player-turn';
+    useNameTurnPlayerUrl.mockReturnValue(mockUrl);
 
-        consoleErrorSpy.mockRestore();
+    // Simular un error en el fetch
+    fetch.mockResolvedValueOnce({
+      ok: false,
     });
 
-    it('Debería registrar un error cuando falle el fetch', async () => {
-        const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});  // Espiar el error
 
-        global.fetch = jest.fn(() => Promise.reject(new Error('Fetch failed')));
+    const gameId = 123;
+    const result = await getTurnPlayer(gameId);
 
-        const result = await getTurnPlayer(1);
-        expect(result).toBeNull();
-        expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching player turn:', expect.any(Error));
-
-        consoleErrorSpy.mockRestore();
+    // Aserciones
+    expect(fetch).toHaveBeenCalledWith(mockUrl, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
     });
+    expect(result).toBeNull();  // Debe retornar null si hay error
+    expect(consoleSpy).toHaveBeenCalledWith('Error fetching player turn:', expect.any(Error));
+
+    consoleSpy.mockRestore();  // Restaurar el comportamiento original de console.error
+  });
+
+  test('debe manejar excepciones durante el fetch', async () => {
+    const mockUrl = 'http://fake-url.com/player-turn';
+    useNameTurnPlayerUrl.mockReturnValue(mockUrl);
+
+    // Simular un fetch que lanza una excepción
+    fetch.mockRejectedValueOnce(new Error('Fetch failed'));
+
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});  // Espiar el error
+
+    const gameId = 123;
+    const result = await getTurnPlayer(gameId);
+
+    // Aserciones
+    expect(fetch).toHaveBeenCalledWith(mockUrl, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    expect(result).toBeNull();  // Debe retornar null si hay excepción
+    expect(consoleSpy).toHaveBeenCalledWith('Error fetching player turn:', expect.any(Error));
+
+    consoleSpy.mockRestore();
+  });
 });

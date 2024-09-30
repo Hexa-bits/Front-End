@@ -1,11 +1,11 @@
 export const PORT = 8000;
 
 /** NAVEGACION */
-export const LOGIN = '/login';
-export const HOME = '/home';
-export const GAME = '/game';
-export const LOBBY = '/home/lobby';
-export const SETGAME = '/home/create-config';
+export const LOGIN = "/login";
+export const HOME = "/home";
+export const GAME = "/game";
+export const LOBBY = "/home/lobby";
+export const SETGAME = "/home/create-config";
 
 /** URLS */
 export const CONFIG_URL = `http://localhost:${PORT}/home/create-config`;
@@ -19,6 +19,7 @@ export const GET_MOVEMENTS_URL = `http://localhost:${PORT}${GAME}/my-mov-card`;
 export const GET_FIGURES_URL = `http://localhost:${PORT}${GAME}/my-fig-card/`;
 export const GET_TURN_PLAYER_URL = `http://localhost:${PORT}${GAME}/current-turn`;
 export const GET_WINNER_URL = `http://localhost:${PORT}${GAME}/get-winner`;
+export const GAME_PASS_URL = `http://localhost:${PORT}${GAME}/end-turn`;
 
 /** MENSAJES */
 export const LoginHelpText = "Debe tener entre 1 y 10 caracteres.";
