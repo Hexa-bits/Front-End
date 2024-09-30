@@ -17,6 +17,11 @@ export const leaveGame = async (gameId, navigate) => {
         }
     
         alert(`Jugador ${playerId} abandonaste el juego ${gameId} exitosamente`);
+        
+        sessionStorage.removeItem('game_id');
+        if (sessionStorage.getItem('active')) {sessionStorage.removeItem('active');} 
+        // localStorage.removeItem('game_id');
+
         navigate(HOME);
     } catch (error) {
         alert("No se pudo abandonar el juego. " + error.message);

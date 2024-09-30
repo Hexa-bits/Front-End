@@ -20,15 +20,17 @@ async function create(game_name, max_players, navigate) {
     const game_id  = data.id;
 
     // Guardamos la información de la partida en el localStorage
-    localStorage.setItem("game_name", game_name);
-    localStorage.setItem("game_id", game_id);
-    localStorage.setItem("max_players", max_players);
+    // localStorage.setItem("game_id", game_id);
+    sessionStorage.setItem("game_name", game_name);
+    sessionStorage.setItem("max_players", max_players);
+    sessionStorage.setItem('game_id', true);
 
     alert(`Partida ${game_name} creada exitosamente con Id: ${game_id}`);
 
     // Navegamos a la página para unirse al juego
     const gameId = parseInt(game_id, 10);
     navigate(LOBBY, {state: {isOwner: true, gameId: gameId}});
+    
   } catch (error) {
     alert("Error al crear partida. " + error.message);
   }

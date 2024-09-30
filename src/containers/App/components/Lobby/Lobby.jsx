@@ -19,8 +19,17 @@ function Lobby() {
     const {players, gameName, maxPlayers} = useLobby(fullUrl);
 
     const navigate = useNavigate();
-    const handleLeaveGame = () => {leaveGame(gameId, navigate);};
-    const handleStartGame = () => {startGame(gameId, navigate);};
+    const handleLeaveGame = () => {
+        // if (sessionStorage.getItem('game_id')) {
+        // }
+        leaveGame(gameId, navigate);    
+    };
+
+    const handleStartGame = () => {
+        // if (sessionStorage.getItem('game_id')) {
+        // }
+        startGame(gameId, navigate);
+    };
 
     return (
         <div className="lobby-overlay">

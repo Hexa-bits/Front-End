@@ -17,6 +17,7 @@ export const startGame = async (gameId, navigate) => {
             throw new Error(errorMessage || response.statusText);
         }
         console.log(`Juego ${game_id} iniciado exitosamente`);
+        sessionStorage.setItem('active', true);
         navigate(GAME);
     }
     catch (error) {
