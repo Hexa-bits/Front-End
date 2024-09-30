@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { useNavigate } from "react-router-dom";
 import Game from "../../containers/App/components/Game/Game.jsx";
 import { leaveGame } from "../../hooks/Lobby/useLeaveGame.js";
-import { leave } from "../../hooks/Game/pass.js";
+import { pass } from "../../hooks/Game/pass.js";
 import "@testing-library/jest-dom";
 
 // Mock del hook useNavigate
@@ -17,8 +17,8 @@ jest.mock("../../hooks/Lobby/useLeaveGame.js", () => ({
 }));
 
 //mock del leave
-jest.mock("../../hooks/Game/leave.js", () => ({
-  leave: jest.fn(),
+jest.mock("../../hooks/Game/pass.js", () => ({
+  pass: jest.fn(),
 }));
 
 describe("Game component", () => {
@@ -63,7 +63,7 @@ describe("Game component", () => {
 
     fireEvent.click(button);
 
-    expect(leave).toHaveBeenCalled();
+    expect(pass).toHaveBeenCalled();
   });
 });
 //PARA Q FUNCIONEN LOS TESTS COMENTAR TODO LO QUE TIENE QUE VER CON FIGURA
