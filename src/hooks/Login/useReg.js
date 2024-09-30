@@ -24,7 +24,8 @@ async function useReg ({ username}) {
         alert(`Usuario ${username} creado exitosamente con Id: ${Id}.`);
         localStorage.setItem('username', username); 
         localStorage.setItem('id_user', Id);
-        
+        localStorage.setItem('active', false);
+
     } catch (error) {
         throw error;
     }
