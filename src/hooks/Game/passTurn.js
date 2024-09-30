@@ -1,7 +1,7 @@
 import React from "react";
 import { GAME_PASS_URL } from "../../utils/Constants";
 
-export const pass = async () => {
+export const passTurn = async () => {
   const game_id = localStorage.getItem("game_id");
   try {
     const response = await fetch(GAME_PASS_URL, {

@@ -13,9 +13,9 @@ const getTurnPlayer = async (gameId) => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-
         const data = await response.json();
-        return data; 
+        return { playerId: data.id_player, namePlayer: data.name_player }; 
+
     } catch (error) {
         console.error('Error fetching player turn:', error);
         return null;

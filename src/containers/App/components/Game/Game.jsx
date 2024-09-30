@@ -4,16 +4,19 @@ import MovCards from "../../../../components/Game/MovCards/MovCards.jsx";
 import FigCards from "../../../../components/Game/FigCards/FigCards.jsx";
 import LeaveButton from "../../../../components/Game/LeaveButton/LeaveButton.jsx";
 import SeePlayer from "../../../../components/Game/seePlayer_Turn/seePlayer.jsx";
-import useGameData from "../../../../utils/logics/Game/LogicDataGame.js";
+import DataGame from "../../../../utils/logics/Game/DataGame.js";
 import "./Game.css";
-import { pass } from "../../../../hooks/Game/pass.js";
+import { passTurn } from "../../../../hooks/Game/passTurn.js";
 
 function Game() {
-  //Manejo el fetch de las cartas
-  const { movsIds, figsIds, currentPlayer } = useGameData();
-  const handleTurn = async () => {
-    pass();
+  const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
+  const { movsIds, figsIds, currentPlayer, playerId } = DataGame();
+
+  // Función para manejar el fin del turno
+  const handleEndTurn = async () => {
+    await passTurn(); // Cambia el turno
   };
+
   return (
     <div className="game-container">
       <div className="left-box">
@@ -33,7 +36,11 @@ function Game() {
       <div className="right-box">
         <div className="Butt">
           <div className="end">
-            <Button label="End Turn" onClick={handleTurn} />
+            <Button
+              label="End Turn"
+              onClick={handleEndTurn}
+              disabled={localPlayerId !== playerId} 
+            />
           </div>
           <div className="leav">
             <LeaveButton />
