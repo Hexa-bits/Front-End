@@ -10,10 +10,11 @@ import "./Game.css";
 
 function Game() {
   //Manejo el fetch de las cartas
-  const { movsIds, figsIds, handleTurn, currentPlayer } = useGameData();
+  const { movsIds, figsIds, currentPlayer } = useGameData();
   const handleLeave = async () => {
     leave();
   };
+
   return (
     <div className="game-container">
       <div className="left-box">
