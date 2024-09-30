@@ -28,3 +28,4 @@ function useGames(initialGames = []) {
 }
 
 export default useGames;
+

@@ -1,5 +1,6 @@
 import React from "react";
-import Button from '../Button/Button.jsx';
+import LeaveButton from "../../components/Game/LeaveButton/LeaveButton.jsx";
+
 import './VictoryBox.css';
 
 function VictoryBox({ winnerName }) {
@@ -7,10 +8,10 @@ function VictoryBox({ winnerName }) {
       <div className="victory-overlay">
         <div className="victory-box">
           <div className="text">
-            You win, {winnerName}!
+            ¡ {winnerName} es ganador !
           </div>
           <div className="but">
-            <Button label="Volver a Home" onClick={()=>{}}/>
+            <LeaveButton/>
           </div>
         </div>
       </div>
