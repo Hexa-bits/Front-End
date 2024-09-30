@@ -1,0 +1,39 @@
+.fig-cards-container {
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.fig-card {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.Figures {
+    width: auto;
+    padding: 1px;
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid transparent; 
+    display: inline-block;
+    cursor: pointer; /* Cambia el cursor para indicar que se puede hacer clic */
+    transition: transform 0.1s ease, border-color 0.1s ease;
+    border: 1px solid black;
+}
+
+.Figures.selected {
+    border-color: black;
+    transform: scale(1.05); 
+    z-index: 1;
+}
+
+.Figures img {
+    width: 100px;
+    height: auto;  
+}
