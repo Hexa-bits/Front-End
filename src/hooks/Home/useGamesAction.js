@@ -21,7 +21,7 @@ export const useGameActions = () => {
 
       const data = await response.json();
       console.log("Unido a la partida con éxito:", data);
-      sessionStorage.setItem('game_id', gameId);
+      localStorage.setItem('game_id', gameId);
 
       return data;
     } catch (error) {

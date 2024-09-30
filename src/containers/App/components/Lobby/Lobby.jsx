@@ -20,15 +20,15 @@ function Lobby() {
 
     const navigate = useNavigate();
     const handleLeaveGame = () => {
-        // if (sessionStorage.getItem('game_id')) {
-        // }
-        leaveGame(gameId, navigate);    
+        if (localStorage.getItem('game_id')) {
+            leaveGame(gameId, navigate);    
+        }
     };
 
     const handleStartGame = () => {
-        // if (sessionStorage.getItem('game_id')) {
-        // }
-        startGame(gameId, navigate);
+        if (localStorage.getItem('game_id')) {
+            startGame(gameId, navigate);
+        }
     };
 
     return (

@@ -8,6 +8,9 @@ function Game() {
   const gameId = localStorage.getItem("game_id");
   const navigate = useNavigate();
   const handleClick = () => {
+
+    // if (localStorage.getItem("active") === true) {
+    // }
     leaveGame(gameId, navigate);
   };
 

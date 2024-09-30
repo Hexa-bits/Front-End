@@ -12,9 +12,9 @@ export const useLobby = ((fullUrl, gameId) => {
 
     useEffect(() => {
         let interval;
-        interval = setInterval(getGameInfo, 1000);
-        // if (!activeGame) {
-        // } 
+        if (!activeGame) {
+            interval = setInterval(getGameInfo, 1000);
+        } 
         
         return () => clearInterval(interval); 
     }, [fullUrl, gameId, activeGame]);
@@ -35,10 +35,9 @@ export const useLobby = ((fullUrl, gameId) => {
             setMaxPlayers(data.max_players);
             setActiveGame(data.game_status); 
 
-
             // Verifica si el juego ha comenzado
             if (activeGame === true) {
-                sessionStorage.setItem('active', true);
+                localStorage.setItem('active', true);
                 navigate(GAME); 
             }
 

@@ -1,3 +1,4 @@
+import { act } from 'react';
 import { HOME, GAME_LEAVE_URL } from '../../utils/Constants.js';
 
 export const leaveGame = async (gameId, navigate) => {
@@ -17,10 +18,13 @@ export const leaveGame = async (gameId, navigate) => {
         }
     
         alert(`Jugador ${playerId} abandonaste el juego ${gameId} exitosamente`);
-        
-        sessionStorage.removeItem('game_id');
-        if (sessionStorage.getItem('active')) {sessionStorage.removeItem('active');} 
-        // localStorage.removeItem('game_id');
+
+        // desde looby o game
+        localStorage.removeItem('game_id');
+
+        // solo game
+        const active = localStorage.getItem('active');
+        if (active === true) {localStorage.setItem('active', false);} 
 
         navigate(HOME);
     } catch (error) {
