@@ -73,7 +73,7 @@ function Login () {
     return ( 
         <div className="login-container">
             <h1 className="login-title"> El Switcher </h1>
-            <div className="card login-card">
+            <div className="card">
                 <Form
                     label="Registro de Usuario"
                     type="text"
@@ -83,7 +83,7 @@ function Login () {
                     onChange={handleChange}
                     value={username}
                 /> 
-                <Button label="Ingresar" onClick={handleInput}/>
+                <Button class="btn btn-secondary" label="Ingresar" onClick={handleInput}/>
             </div>
         </div>
     );
