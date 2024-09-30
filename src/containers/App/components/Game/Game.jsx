@@ -1,56 +1,45 @@
 import React from 'react';
-import MovCards from '../../../../components/Game/MovCards/MovCards.jsx';
-import LeaveButton from '../../../../components/Game/LeaveButton/LeaveButton.jsx';
 import Button from '../../../../components/Button/Button.jsx';
-import { getMovements } from '../../../../hooks/Game/getMovements.js';
-import { useState, useEffect } from 'react';
-import './Game.css';
+import MovCards from '../../../../components/Game/MovCards/MovCards.jsx';
 import FigCards from '../../../../components/Game/FigCards/FigCards.jsx'
-import { getFigureCards } from '../../../../hooks/Game/getFigureCards';
-
-
+import LeaveButton from '../../../../components/Game/LeaveButton/LeaveButton.jsx';
+import SeePlayer from '../../../../components/Game/seePlayer_Turn/seePlayer.jsx';
+import useGameData from '../../../../utils/logics/Game/LogicDataGame.js';
 import './Game.css';
 
 function Game() {
-    const [movsIds, setMovsIds] = useState([]);
-    const [figsIds, setFigsIds] = useState([]);
-
-    useEffect(() => {
-        const fetchCards = async () => {
-            // MOVIMIENTOS
-            const { movs_ids } = await getMovements();
-            setMovsIds(movs_ids);
-            
-            // FIGURAS
-            const {figs_ids} = await getFigureCards();
-            setFigsIds(figs_ids);
-        };
-        fetchCards();
-    }, []);
-
-    const handleTurn = async () => { 
-        // MOVIMIENTOS
-        const {movs_ids} = await getMovements();
-        setMovsIds(movs_ids);
-    
-        // FIGURAS
-        const {figs_ids} = await getFigureCards();
-        setFigsIds(figs_ids);
-    };
+    //Manejo el fetch de las cartas
+    const { movsIds, figsIds, handleTurn, currentPlayer} = useGameData();
 
     return (  
         <div className="game-container">
-            <div className="Fig_Move">
-                <MovCards movsIds = { movsIds }/>
-                <FigCards figsIds={figsIds}/>
+            <div className="left-box">
+                <div className="seePlayer">
+                    <SeePlayer player={currentPlayer || "??????"}/>
+                </div>
+                <div className="Game_Area">
+                    <div className="Fig">
+                        <FigCards figsIds={figsIds}/>
+                    </div>
+                    <div className="board">
+                    </div>
+                    <div className="Mov">
+                        <MovCards movsIds = { movsIds }/>
+
+                    </div>
+
+                </div>
             </div>
-            <div className="Butt">
-                <div className="end">
-                    <Button label="End Turn" onClick={handleTurn}/>
+            <div className="right-box">
+                <div className="Butt">
+                    <div className="end">
+                        <Button label="End Turn" onClick={handleTurn}/>
+                    </div>
+                    <div className="leav">
+                        <LeaveButton />
+                    </div>
                 </div>
-                <div className="leav">
-                    <LeaveButton />
-                </div>
+
             </div>
         </div>
     );

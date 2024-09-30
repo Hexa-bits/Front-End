@@ -7,7 +7,6 @@
     height: auto; /* Ajusta la altura al 100% del contenedor padre */
     width: auto; /* Ajusta el ancho al 100% del contenedor padre */
     background-color: var(--claro2);
-    margin-left: 20px;
 }
 
 .mov-card {
