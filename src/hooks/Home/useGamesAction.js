@@ -22,6 +22,8 @@ export const useGameActions = () => {
       // localSessionStorage.setItem('game_id', gameId);
       const data = await response.json();
       console.log("Unido a la partida con éxito:", data);
+      localStorage.setItem('game_id', gameId);
+
       return data;
     } catch (error) {
       console.error("Error al unirse a la partida:", error);
