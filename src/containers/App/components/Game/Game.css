@@ -3,10 +3,12 @@
 .game-container {
     background-color: var(--claro2);
     height: 100vh;
+    width: 100vw; /* Asegúrate de que el ancho sea del 100% */
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     overflow: hidden;
+    position: relative; /* Asegúrate de que el contenedor sea relativo */
 }
 
 /* Parte Izquierda */
@@ -101,4 +103,18 @@
 .leav button:focus {
     outline: none;
     transform: none;
+}
+
+/* Victoria */
+.victory-overlay {
+    position: fixed; /* Permite que el overlay ocupe toda la pantalla */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    display: flex;
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    z-index: 999; /* Asegúrate de que esté encima de otros elementos */
 }
