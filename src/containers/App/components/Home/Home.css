@@ -4,6 +4,7 @@
     justify-content: center;
     align-items: center;
     gap:20px;
+    background-color: #3d293f;
 }
 
 .NombreUsuario{
@@ -21,7 +22,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: #58d68d;
+    background-color: #ffc548;
     border: 1px solid black;
     border-radius: 10px;
 }
@@ -29,6 +30,7 @@
 .dataUser .user{
     width: 50%;
     font-size: 20px;
+    font-weight: 500;
     padding: 20px;
     text-align: left;
 }
@@ -37,6 +39,7 @@
     width: 50%;
     text-align: right;
     font-size: 20px;
+    font-weight: 500;
     padding: 20px;
 }
 
@@ -51,12 +54,37 @@
 .CrearPartida button{
     width: 600px;
     height: 70px;
+    background-color: #27ae60;
+    border-color: #27ae60;
+}
+
+
+.CrearPartida button:hover {
+    background-color: #27ae60;
+    outline: none;
+    transform: none; 
+}
+
+.CrearPartida button:active {
+    background-color: #27ae60;
+    outline: none;
+    transform: none; 
+}
+
+.CrearPartida button:focus {
+    outline: none;
+    transform: none;
 }
 
 .GameList__Home{
     height: auto;
     display: flex;
     justify-content: center;
+    margin-bottom: 30px;
 }
 
+.GameList__Home button{
+    background-color: #3d293f;
+    border-color: #3d293f;
+}
 
