@@ -54,6 +54,26 @@
 .CrearPartida button{
     width: 600px;
     height: 70px;
+    background-color: #27ae60;
+    border-color: #27ae60;
+}
+
+
+.CrearPartida button:hover {
+    background-color: #27ae60;
+    outline: none;
+    transform: none; 
+}
+
+.CrearPartida button:active {
+    background-color: #27ae60;
+    outline: none;
+    transform: none; 
+}
+
+.CrearPartida button:focus {
+    outline: none;
+    transform: none;
 }
 
 .GameList__Home{
@@ -63,4 +83,8 @@
     margin-bottom: 30px;
 }
 
+.GameList__Home button{
+    background-color: #3d293f;
+    border-color: #3d293f;
+}
 
