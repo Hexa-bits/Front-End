@@ -1,10 +1,12 @@
+@import "../../../../utils/colores.css";
+
 .lobby-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(32, 134, 83, 0.514); 
+    background: var(--marronsito);
     color: white;
     display: flex;
     justify-content: center;

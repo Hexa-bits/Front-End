@@ -1,3 +1,4 @@
+
 .GameList{
     display: flex;
     justify-content: center;
@@ -7,7 +8,7 @@
 }
 
 .GameList .list-group .list-group-item{
-    background-color: white;
+    background-color: #ffc548;
     width: 600px;
     display: flex;
     justify-content: center;
