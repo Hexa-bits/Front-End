@@ -1,6 +1,17 @@
 # Front-End React: El Switcher
 
-## Cómo correr el Front-End
+## Cómo correr en docker 
+
+### Construir la imagen Docker
+
+    docker build -t switcher-frontend .
+
+### Correr el contenedor
+
+    docker run -d -p 5173:5173 switcher-frontend
+
+
+## Cómo correr el Front-End en la terminal
 
 Primero es necesario tener instalado npm
 
