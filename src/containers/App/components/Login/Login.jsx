@@ -8,18 +8,11 @@ import '../../../../utils/Constants.js'
 import { LoginHelpText, LOGIN_URL } from "../../../../utils/Constants.js";
 import './Login.css';
 
-// import fetchMock from 'fetch-mock';
-
-// fetchMock.post(LOGIN_URL, { Id: 3 });   // MOCK TEST 
 
 function Login () {
     const navigate = useNavigate(); 
     const [username, setUsername] = useState('');  
 
-    /**
-     *  Hook that executes when the component is rendered
-     *  It is used to get the username from the local storage if it exists
-    */
     useEffect(() => {
        const savedUserName = localStorage.getItem('username');
         if (savedUserName) {
