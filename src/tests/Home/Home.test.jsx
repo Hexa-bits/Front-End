@@ -2,19 +2,12 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import Home from '../../containers/App/components/Home/Home';
 import useGames from '../../hooks/Home/useGames';
-import { useGameActions } from '../../hooks/Home/useGamesAction';
 import { useHomeLogic } from '../../utils/logics/Home/LogicJoinGame';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-jest.mock('../../hooks/Home/useGames');
-jest.mock('../../hooks/Home/useGamesAction', () => ({
-  useGameActions: jest.fn(() => ({
-    joinGame: jest.fn(),
-  })),
-}));
-
-jest.mock('../../utils/logics/Home/LogicJoinGame');
+vi.mock('../../hooks/Home/useGames');
+vi.mock('../../utils/logics/Home/LogicJoinGame');
 
 describe('Home', () => {
   const mockGames = [
@@ -33,7 +26,7 @@ describe('Home', () => {
     });
 
     // Mock para useHomeLogic
-    mockHandleJoin = jest.fn((id) => {
+    mockHandleJoin = vi.fn((id) => {
       const game = mockGames.find(game => game.game_id === id);
       if (game && game.current_players < game.max_players) {
         game.current_players += 1; // Simular el incremento de jugadores
