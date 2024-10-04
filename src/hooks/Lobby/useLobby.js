@@ -12,7 +12,6 @@ export const useLobby = ((gameId) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-
         const getGameInfo = async () => {
             try {
                 const response = await fetch( LOBBY_URL + gameId, {
@@ -29,14 +28,11 @@ export const useLobby = ((gameId) => {
                 setMaxPlayers(data.max_players);
                 setActiveGame(data.start_owner);
                 setCancelGame(data.cancel_owner);
-
-    
             } catch (error) {
                 console.log("Error al obtener información del juego. " + error.message);
             }
         }
         getGameInfo();
-
     }, []);
 
     useEffect(() => {
@@ -59,12 +55,8 @@ export const useLobby = ((gameId) => {
                 console.error('Error parsing JSON:', error);
                 setError('Error al procesar los datos del juego');
             }
-            if (cancelGame){
-                navigate(HOME);
-            }
-            if (activeGame){
-                navigate(GAME);
-            }
+            if (cancelGame){ navigate(HOME); }
+            if (activeGame){ navigate(GAME); }
         };
 
         ws.onclose = (event) => {
