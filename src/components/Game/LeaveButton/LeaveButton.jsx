@@ -1,20 +1,14 @@
 import React from "react";
 import Button from "../../Button/Button.jsx";
 import "./LeaveButton.css";
-import { leaveGame } from "../../../hooks/Lobby/useLeaveGame.js";
-import { useNavigate } from "react-router-dom";
+import { useLeaveGame } from "../../../services/Lobby/leaveGame.jsx";
 
 function LeaveButton() {
-  const gameId = localStorage.getItem("game_id");
-  const navigate = useNavigate();
-  const handleClick = async () => {
-    leaveGame(gameId, navigate);
-  };
   return (
     <Button
       label="Abandonar Juego"
       className="btn-leave-game"
-      onClick={handleClick}
+      onClick={useLeaveGame()}
     />
   );
 }
