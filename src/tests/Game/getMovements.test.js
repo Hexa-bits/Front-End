@@ -1,9 +1,8 @@
 import { getMovements } from '../../hooks/Game/getMovements.js';
-import '@testing-library/jest-dom';
 
-jest.mock("../../hooks/Game/useMovUrl.js");
+vi.mock("../../hooks/Game/useMovUrl.js");
 
-describe('getMovements', () => {
+describe('Obtener cartas de movimiento', () => {
     beforeEach(() => {
         localStorage.setItem("id_user", "1"); // Simular que hay un usuario logueado
     });
@@ -12,12 +11,12 @@ describe('getMovements', () => {
         localStorage.clear();
     });
 
-    it('should return movs_ids when API call is successful', async () => {
-        const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    it('Debe devolver movs_ids cuando la llamada a la API tiene éxito.', async () => {
+        const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
         const mockData = { id_mov_card: [1, 2, 3] };
         
-        global.fetch = jest.fn(() =>
+        global.fetch = vi.fn(() =>
             Promise.resolve({
                 ok: true,
                 json: () => Promise.resolve(mockData)
@@ -30,10 +29,10 @@ describe('getMovements', () => {
         consoleSpy.mockRestore(); // Restaurar el comportamiento de console.log
     });
 
-    it('should return an empty array when API call fails', async () => {
-        const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    it('Debe devolver un arreglo vacío cuando falla la llamada a la API.', async () => {
+        const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-        global.fetch = jest.fn(() =>
+        global.fetch = vi.fn(() =>
             Promise.resolve({
                 ok: false
             })

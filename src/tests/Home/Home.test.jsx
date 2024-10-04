@@ -1,9 +1,8 @@
-import '@testing-library/jest-dom';
 import React from 'react';
-import Home from '../../containers/App/components/Home/Home';
 import useGames from '../../hooks/Home/useGames';
-import { useHomeLogic } from '../../utils/logics/Home/LogicJoinGame';
+import Home from '../../containers/App/components/Home/Home';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { useHomeLogic } from '../../utils/logics/Home/LogicJoinGame';
 import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('../../hooks/Home/useGames');
@@ -37,7 +36,7 @@ describe('Home', () => {
     });
   });
 
-  it('debe mostrar la lista de juegos', () => {
+  it('Debe mostrar la lista de juegos.', () => {
     render(
       <MemoryRouter>
         <Home />
@@ -51,7 +50,7 @@ describe('Home', () => {
     expect(screen.getByText('Juego 4')).toBeInTheDocument();
   });
 
-  it('debe llamar a handleJoin cuando se hace clic en el botón "Unirse"', () => {
+  it('Debe llamar a handleJoin cuando se hace clic en el botón "Unirse".', () => {
     render(
       <MemoryRouter>
         <Home />
@@ -66,7 +65,7 @@ describe('Home', () => {
     expect(mockHandleJoin).toHaveBeenCalledWith("1");
   });
 
-  it('debe deshabilitar el botón "Unirse" si el juego está lleno', () => {
+  it('Debe deshabilitar el botón "Unirse" si el juego está lleno.', () => {
     render(
       <MemoryRouter>
         <Home />

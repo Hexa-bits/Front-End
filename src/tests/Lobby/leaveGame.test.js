@@ -1,13 +1,13 @@
 import { leaveGame } from "../../hooks/Lobby/useLeaveGame.js";
 import { HOME } from '../../utils/Constants.js';
 
-global.fetch = jest.fn();
+global.fetch = vi.fn();
 
-const mockAlert = jest.spyOn(global, 'alert').mockImplementation(() => {});
-const mockNavigate = jest.fn();
+const mockAlert = vi.spyOn(global, 'alert').mockImplementation(() => {});
+const mockNavigate = vi.fn();
 
 beforeEach(() => {
-    jest.clearAllMocks(); // Limpiar mocks antes de cada prueba
+    vi.clearAllMocks(); // Limpiar mocks antes de cada prueba
     localStorage.setItem('id_user', '123'); // Simular que hay un ID de usuario en el localStorage
 });
 
@@ -28,7 +28,7 @@ describe('leaveGame function', () => {
         fetch.mockResolvedValueOnce({
             ok: false,
             statusText: 'Internal Server Error',
-            text: jest.fn().mockResolvedValueOnce('Error details from the server'),
+            text: vi.fn().mockResolvedValueOnce('Error details from the server'),
         });
 
         await leaveGame('456', mockNavigate);
