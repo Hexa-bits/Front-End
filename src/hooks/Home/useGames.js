@@ -9,7 +9,13 @@ function useGames() {
     useEffect(() => {
         const fetchGames = async () => {
             try {
-                const response = await fetch(HOME_URL);
+                const response = await fetch(HOME_URL, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }
+                );
                 if (!response.ok) {
                     throw new Error('Error en la respuesta del servidor');
                 }
