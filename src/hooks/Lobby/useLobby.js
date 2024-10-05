@@ -11,6 +11,7 @@ export const useLobby = ((gameId) => {
 
     const navigate = useNavigate();
 
+    // Seteo info del lobby al montar el componente
     useEffect(() => {
         const getGameInfo = async () => {
             try {
@@ -35,6 +36,7 @@ export const useLobby = ((gameId) => {
         getGameInfo();
     }, []);
 
+    // Mantener actualizado el lobby con WebSocket
     useEffect(() => {
         const ws = new WebSocket(WS_LOBBY_URL + gameId);
 
@@ -67,9 +69,7 @@ export const useLobby = ((gameId) => {
             console.error('WebSocket error:', error);
         };
 
-        return () => {
-            ws.close();
-        }
+        return () => { ws.close(); }
 
     }, [players, gameName, maxPlayers, activeGame, cancelGame]);
 

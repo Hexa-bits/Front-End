@@ -1,7 +1,7 @@
 import { GAME_START_URL, GAME } from '../../utils/Constants.js';
 import { useNavigate } from 'react-router-dom';
 
-export const useStartGame = () => { 
+export const StartGame = () => { 
     const navigate = useNavigate();
     
     const startGame = async () => {

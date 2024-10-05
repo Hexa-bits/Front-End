@@ -1,7 +1,7 @@
 import { HOME, GAME_LEAVE_URL } from '../../utils/Constants.js';
 import { useNavigate } from 'react-router-dom';
 
-export const useLeaveGame = () => { 
+export const LeaveGame = () => { 
     const navigate = useNavigate();
 
     const leaveGame = async () => {
@@ -29,7 +29,7 @@ export const useLeaveGame = () => {
     
             // solo game
             const active = localStorage.getItem('active');
-            if (active === true) {localStorage.setItem('active', false);} 
+            if (active) {localStorage.setItem('active', false);} 
     
             navigate(HOME);
         } catch (error) {

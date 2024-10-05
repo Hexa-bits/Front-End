@@ -7,8 +7,8 @@ import { useLobby } from "../../../../hooks/Lobby/useLobby.js";
 import LobbyList from "../../../../components/Lobby/List/LobbyList.jsx";
 import LobbyButtons from "../../../../components/Lobby/Buttons/LobbyButtons.jsx";
 import { useLocation } from "react-router-dom";
-import { useLeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
-import { useStartGame } from "../../../../services/Lobby/startGame.jsx";
+import { LeaveGame } from "../../../../hooks/Lobby/leaveGame.jsx";
+import { StartGame } from "../../../../hooks/Lobby/startGame.jsx";
 
 function Lobby() {
     const location = useLocation();
@@ -20,7 +20,7 @@ function Lobby() {
             <div className='lobby-container'>
                 <LobbyCard gameName={gameName} maxPlayers={maxPlayers} />
                 <LobbyList players={players} />
-                <LobbyButtons isOwner={isOwner} onLeaveGame={useLeaveGame()} onStartGame={useStartGame()}/>
+                <LobbyButtons isOwner={isOwner} onLeaveGame={LeaveGame()} onStartGame={StartGame()}/>
             </div>
         </div>
     );
