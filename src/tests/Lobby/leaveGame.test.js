@@ -11,8 +11,8 @@ beforeEach(() => {
     localStorage.setItem('id_user', '123'); // Simular que hay un ID de usuario en el localStorage
 });
 
-describe('leaveGame function', () => {
-    it('should successfully leave the game and navigate', async () => {
+describe('Función leaveGame', () => {
+    it('Debe salir con éxito del juego y navegar.', async () => {
         fetch.mockResolvedValueOnce({
             ok: true,
             statusText: 'OK',
@@ -24,7 +24,7 @@ describe('leaveGame function', () => {
         expect(mockNavigate).toHaveBeenCalledWith(HOME);
     });
 
-    it('should handle server errors correctly', async () => {
+    it('Debe gestionar correctamente los errores del servidor.', async () => {
         fetch.mockResolvedValueOnce({
             ok: false,
             statusText: 'Internal Server Error',
@@ -37,7 +37,7 @@ describe('leaveGame function', () => {
         expect(mockNavigate).not.toHaveBeenCalled(); // No debe navegar si hubo un error
     });
 
-    it('should handle other fetch errors', async () => {
+    it('Debe manejar errores de fetch.', async () => {
         fetch.mockRejectedValueOnce(new Error('Network error'));
 
         await leaveGame('456', mockNavigate);

@@ -6,6 +6,6 @@ describe('useGameIdUrl Hook', () => {
     it('should construct the correct game URL', () => {
         const gameId = '12345';
         const url = useGameIdUrl(gameId);
-        expect(url).toBe(`${LOBBY_URL}?game_id=12345`); // Reemplaza `LOBBY_URL` por la constante real si es necesario
+        expect(url).toBe(`${LOBBY_URL}?game_id=12345`); 
     });
 });
