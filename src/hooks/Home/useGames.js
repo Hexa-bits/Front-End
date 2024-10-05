@@ -1,59 +1,52 @@
 import { useState, useEffect } from 'react';
 import { HOME_URL, HOME_URL_WS } from '../../utils/Constants.js';
 
-function useGames(initialGames = []) {
-    const [games, setGames] = useState(initialGames);
-    const [error, setError] = useState(null);
+function useGames() {
+    const [games, setGames] = useState([]);
+    const [isWsConnected, setIsWsConnected] = useState(false);
 
     // Solicitud REST para obtener el estado inicial de las partidas
     useEffect(() => {
         const fetchGames = async () => {
             try {
-                const response = await fetch(HOME_URL);
+                const response = await fetch(HOME_URL, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }
+                );
                 if (!response.ok) {
                     throw new Error('Error en la respuesta del servidor');
                 }
                 const data = await response.json();
                 setGames(data);
-                setError(null); 
+                setIsWsConnected(true); // Indica que ya se han obtenido los juegos y se puede establecer la conexión WebSocket
             } catch (error) {
                 console.error("Error fetching lobbies:", error);
-                setError(error.message); 
             }
         };
-
         fetchGames();
-    }, []); 
+    }, []);
 
+    // Conectar al WebSocket después de obtener los datos iniciales
     useEffect(() => {
+        if (!isWsConnected) return;
+
         const ws = new WebSocket(HOME_URL_WS);
 
-        ws.onopen = () => {
-            console.log('Connected to WebSocket server');
-        };
-
         ws.onmessage = (event) => {
-            console.log('Mensaje recibido:', event.data);
-            try {
-                // Verifica si el mensaje es un JSON válido
-                const gamesData = JSON.parse(event.data);
-
-                // Verifica si los datos recibidos son diferentes a los actuales
-                const isDifferent = JSON.stringify(games) !== JSON.stringify(gamesData);
-                if (isDifferent) {
-                    console.log('Actualizando juegos:', gamesData.length);
-                    setGames(gamesData); 
-                } else {
-                    console.log('Datos recibidos son iguales a los actuales, no se actualiza el estado');
+            const message = event.data;
+            if (message){console.log('Actualización de Partidas.')}
+            
+            if (message.startsWith('{') || message.startsWith('[')) {
+                try {
+                    const gamesData = JSON.parse(message);
+                    setGames(gamesData);
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
                 }
-            } catch (error) {
-                console.error('Error parsing JSON:', error);
-                setError('Error al procesar los datos del juego');
             }
-        };
-
-        ws.onclose = (event) => {
-            console.log('Disconnected from WebSocket server', event);
         };
 
         ws.onerror = (error) => {
@@ -61,13 +54,11 @@ function useGames(initialGames = []) {
         };
 
         return () => {
-            setTimeout(() => {
-                ws.close();
-            }, 1000);
+            ws.close();
         };
-    }, [games]);
+    }, [isWsConnected]);
 
-    return { games, error };
+    return { games };
 }
 
 export default useGames;
