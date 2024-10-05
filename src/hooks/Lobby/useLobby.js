@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { LOBBY_URL, WS_LOBBY_URL, HOME, GAME } from '../../utils/Constants.js';
 
-export const useLobby = ((gameId) => {
+export const useLobby = ((gameId, navigate) => {
     const [players, setPlayers] = useState([]);
     const [gameName, setGameName] = useState('');
     const [maxPlayers, setMaxPlayers] = useState(0);
     const [activeGame , setActiveGame] = useState(false); 
     const [cancelGame, setCancelGame] = useState(false);
 
-    const navigate = useNavigate();
 
     // Seteo info del lobby al montar el componente
     useEffect(() => {
@@ -39,11 +37,6 @@ export const useLobby = ((gameId) => {
     // Mantener actualizado el lobby con WebSocket
     useEffect(() => {
         const ws = new WebSocket(WS_LOBBY_URL + gameId);
-
-        ws.onopen = () => {
-            console.log('Connected to WebSocket server');
-        };
-
         ws.onmessage = (event) => {
             console.log('Mensaje recibido:', event.data);
             try {
@@ -60,21 +53,15 @@ export const useLobby = ((gameId) => {
             if (cancelGame){ navigate(HOME); }
             if (activeGame){ navigate(GAME); }
         };
-
-        ws.onclose = (event) => {
-            console.log('Disconnected from WebSocket server', event);
-        };
-
         ws.onerror = (error) => {
             console.error('WebSocket error:', error);
         };
-
         return () => { ws.close(); }
 
     }, [players, activeGame, cancelGame]);
 
 
-    return {players, gameName, maxPlayers, activeGame};
+    return {players, gameName, maxPlayers, activeGame, cancelGame};
 });
 
 

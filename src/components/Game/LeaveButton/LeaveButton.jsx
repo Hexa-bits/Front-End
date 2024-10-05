@@ -1,14 +1,13 @@
 import React from "react";
 import Button from "../../Button/Button.jsx";
 import "./LeaveButton.css";
-import { LeaveGame } from "../../../hooks/Lobby/leaveGame.jsx";
 
-function LeaveButton() {
+function LeaveButton({onLeave}) {
   return (
     <Button
       label="Abandonar Juego"
       className="btn-leave-game"
-      onClick={LeaveGame()}
+      onClick={onLeave}
     />
   );
 }

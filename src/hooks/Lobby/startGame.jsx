@@ -1,8 +1,6 @@
 import { GAME_START_URL, GAME } from '../../utils/Constants.js';
-import { useNavigate } from 'react-router-dom';
 
-export const StartGame = () => { 
-    const navigate = useNavigate();
+export const StartGame = (navigate) => { 
     
     const startGame = async () => {
         const game_id = parseInt(localStorage.getItem("game_id"), 10);
@@ -30,5 +28,3 @@ export const StartGame = () => {
         
     return startGame; 
 };
-
-

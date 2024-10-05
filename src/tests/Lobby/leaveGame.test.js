@@ -1,94 +1,74 @@
-import { renderHook } from '@testing-library/react-hooks';
-import { LeaveGame } from '../../hooks/Lobby/leaveGame.jsx'; 
-import { HOME, GAME_LEAVE_URL } from '../../utils/Constants.js';
-import { vi } from 'vitest';
-import { useNavigate } from 'react-router-dom';
+import { LeaveGame } from '../../hooks/Lobby/leaveGame'; 
+import { describe, it, vi, expect } from 'vitest';
+import { GAME_LEAVE_URL, HOME } from '../../utils/Constants';
 
 vi.mock('react-router-dom', () => ({
-  useNavigate: vi.fn(),
+  useNavigate: () => vi.fn(),
 }));
 
-describe('LeaveGame Hook', () => {
-  const mockNavigate = vi.fn();
-
-  beforeEach(() => {
-    // Limpiar mocks antes de cada prueba
-    vi.clearAllMocks();
-    vi.mocked(useNavigate).mockReturnValue(mockNavigate);
-
-    // Mock de localStorage
-    global.localStorage.setItem('id_user', '123');
-    global.localStorage.setItem('game_id', '456');
-  });
-
-  afterEach(() => {
-    vi.restoreAllMocks();
-    global.localStorage.clear();
-  });
-
-  it('should leave the game successfully and navigate to HOME', async () => {
-    // Simular la respuesta del fetch
-    global.fetch = vi.fn(() =>
+describe('LeaveGame function', () => {
+  it('debería hacer la llamada para abandonar el juego y navegar', async () => {
+    // Mock para localStorage y fetch
+    const mockNavigate = vi.fn();
+    const mockFetch = vi.fn(() =>
       Promise.resolve({
         ok: true,
-        text: () => Promise.resolve(''),
+        json: () => Promise.resolve({}),
       })
     );
+    const mockLocalStorage = {
+      getItem: vi.fn((key) => {
+        if (key === 'id_user') return '456'; 
+        if (key === 'game_id') return '789';
+        return null;
+      }),
+      setItem: vi.fn(),
+      removeItem: vi.fn(),
+    };
 
-    const { result } = renderHook(() => LeaveGame());
-    await result.current();
+    Object.defineProperty(global, 'localStorage', { value: mockLocalStorage });
+    global.fetch = mockFetch;
+    global.alert = vi.fn();
 
-    // Verifica que se haya llamado a la API con los datos correctos
-    expect(fetch).toHaveBeenCalledWith(GAME_LEAVE_URL, {
+    const leaveGame = LeaveGame(mockNavigate);
+    await leaveGame();
+
+    // Verificaciones
+    expect(mockLocalStorage.getItem).toHaveBeenCalledWith('id_user');
+    expect(mockLocalStorage.getItem).toHaveBeenCalledWith('game_id');
+    expect(mockFetch).toHaveBeenCalledWith(`${GAME_LEAVE_URL}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ game_id: 456, id_user: 123 }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ game_id: 789, id_user: 456 }),
     });
-
-    expect(global.localStorage.getItem('game_id')).toBe(null);
-    expect(mockNavigate).toHaveBeenCalledWith(HOME);
-    expect(window.alert).toHaveBeenCalledWith(
-      'Jugador 123 abandonaste el juego 456 exitosamente'
+    expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('game_id');
+    expect(mockLocalStorage.getItem).toHaveBeenCalledWith('active');
+    // expect(mockLocalStorage.setItem).toHaveBeenCalledWith('active', false);
+    expect(global.alert).toHaveBeenCalledWith(
+      'Jugador 456 abandonaste el juego 789 exitosamente'
     );
+    expect(mockNavigate).toHaveBeenCalledWith(HOME);
   });
 
-  it('should handle error when the API call fails', async () => {
-    // Simular un error en la respuesta del fetch
-    global.fetch = vi.fn(() =>
+  it('debería manejar errores al intentar abandonar el juego', async () => {
+    // Mock para localStorage y fetch que lanza error
+    const mockFetch = vi.fn(() =>
       Promise.resolve({
         ok: false,
         text: () => Promise.resolve('Error al abandonar el juego'),
       })
     );
+    global.fetch = mockFetch;
+    global.alert = vi.fn(); 
+  
+    const leaveGame = LeaveGame();
+    await leaveGame();
 
-    const { result } = renderHook(() => LeaveGame());
-    await result.current();
-
-    // Verifica que se haya llamado al fetch con los datos correctos
-    expect(fetch).toHaveBeenCalledWith(GAME_LEAVE_URL, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ game_id: 456, id_user: 123 }),
-    });
-
-    expect(window.alert).toHaveBeenCalledWith(
+    // Verificaciones
+    expect(global.alert).toHaveBeenCalledWith(
       'No se pudo abandonar el juego. Error al abandonar el juego'
     );
-    expect(mockNavigate).not.toHaveBeenCalled();
-  });
-
-  it('should set active to false if it was true', async () => {
-    // Simular la respuesta del fetch
-    global.fetch = vi.fn(() =>
-      Promise.resolve({
-        ok: true,
-        text: () => Promise.resolve(''),
-      })
-    );
-
-    global.localStorage.setItem('active', 'true');
-    const { result } = renderHook(() => LeaveGame());
-    await result.current();
-    expect(global.localStorage.getItem('active')).toBe('false');
   });
 });

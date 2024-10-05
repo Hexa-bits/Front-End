@@ -1,8 +1,6 @@
 import { HOME, GAME_LEAVE_URL } from '../../utils/Constants.js';
-import { useNavigate } from 'react-router-dom';
 
-export const LeaveGame = () => { 
-    const navigate = useNavigate();
+export const LeaveGame = (navigate) => { 
 
     const leaveGame = async () => {
         const playerId = parseInt(localStorage.getItem('id_user'),10); 
