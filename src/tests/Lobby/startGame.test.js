@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { StartGame } from './startGame.jsx';  // Ruta del hook
+import { StartGame } from '../../hooks/Lobby/startGame.jsx';
 import { GAME_START_URL, GAME } from '../../utils/Constants.js';
 import { vi } from 'vitest';
 import { useNavigate } from 'react-router-dom';

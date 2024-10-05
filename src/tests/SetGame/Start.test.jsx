@@ -1,25 +1,24 @@
 import React from 'react';
-import '@testing-library/jest-dom';
 import Start from '../../containers/App/components/SetGame/setGame';
-import { MemoryRouter } from 'react-router-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { useSetGame } from '../../hooks/Setgame/useSetGame'; 
 
 // Mockear el hook useSetGame
-jest.mock('../../hooks/Setgame/useSetGame');
+vi.mock('../../hooks/Setgame/useSetGame');
 
-describe('Start Component', () => {
+describe('Component Start', () => {
   beforeEach(() => {
     useSetGame.mockReturnValue({
       game_name: '',
-      setGameName: jest.fn(),
+      setGameName: vi.fn(),
       max_players: 0,
-      setMaxPlayers: jest.fn(),
-      handleClick: jest.fn(),
+      setMaxPlayers: vi.fn(),
+      handleClick: vi.fn(),
     });
   });
 
-  test('debe renderizar el componente Start', () => {
+  test('Debe renderizar el componente Start.', () => {
     render(
       <MemoryRouter>
           <Start />
@@ -31,13 +30,13 @@ describe('Start Component', () => {
     expect(screen.getByText('Crear Partida')).toBeInTheDocument();
   });
 
-  test('debe llamar handleClick al hacer clic en Crear Partida', () => {
+  test('Debe llamar handleClick al hacer clic en Crear Partida.', () => {
     useSetGame.mockReturnValue({
       game_name: 'Juego Test',
-      setGameName: jest.fn(),
+      setGameName: vi.fn(),
       max_players: 2,
-      setMaxPlayers: jest.fn(),
-      handleClick: jest.fn(),
+      setMaxPlayers: vi.fn(),
+      handleClick: vi.fn(),
     });
     render(
       <MemoryRouter>

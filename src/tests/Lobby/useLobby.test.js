@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import { useLobby } from './useLobby';  // El hook que estás probando
+import { useLobby } from '../../hooks/Lobby/useLobby';  // El hook que estás probando
 import { vi } from 'vitest';
 import { useNavigate } from 'react-router-dom';
 

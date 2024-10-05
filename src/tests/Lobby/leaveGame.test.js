@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { LeaveGame } from './leaveGame.jsx'; 
+import { LeaveGame } from '../../hooks/Lobby/leaveGame.jsx'; 
 import { HOME, GAME_LEAVE_URL } from '../../utils/Constants.js';
 import { vi } from 'vitest';
 import { useNavigate } from 'react-router-dom';
