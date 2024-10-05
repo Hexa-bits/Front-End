@@ -71,7 +71,7 @@ export const useLobby = ((gameId) => {
 
         return () => { ws.close(); }
 
-    }, [players, gameName, maxPlayers, activeGame, cancelGame]);
+    }, [players, activeGame, cancelGame]);
 
 
     return {players, gameName, maxPlayers, activeGame};
