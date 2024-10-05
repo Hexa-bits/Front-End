@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { getMovements } from '../../../hooks/Game/getMovements.js';
-import { getFigureCards } from '../../../hooks/Game/getFigureCards.js';
+import getMovements from '../../../hooks/Game/getMovements.js';
+import getFigureCards from '../../../hooks/Game/getFigureCards.js';
 import getTurnPlayer from '../../../hooks/Game/getTurnPlayer.js';
 
 const DataGame = () => {

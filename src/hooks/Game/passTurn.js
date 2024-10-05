@@ -1,4 +1,3 @@
-import React from "react";
 import { GAME_PASS_URL } from "../../utils/Constants";
 
 export const passTurn = async () => {
