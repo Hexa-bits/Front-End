@@ -1,6 +1,6 @@
-import { useNameTurnPlayerUrl_WS } from '../../hooks/Game/useTurnPlayerUrl.js';
+import { useNameTurnPlayerUrl_WS } from '../../utils/logics/Game/useTurnPlayerUrls.js';
 import { useState, useEffect } from 'react';
-import getTurnPlayer from '../../../hooks/Game/getTurnPlayer.js';
+import getTurnPlayer from './getTurnPlayer.js';
 
 function getCurrentTurnPlayer() {
   const [currentPlayer, setCurrentPlayer] = useState(null);
@@ -50,17 +50,17 @@ function getCurrentTurnPlayer() {
   }, [isWsConnected, gameId]);
 
 
-  const refreshPlayer = async () => {
-    try {
-      const { playerId: newPlayerId, namePlayer: newNamePlayer } = await getTurnPlayer(gameId);
-      setCurrentPlayer(newNamePlayer);
-      setPlayerId(newPlayerId);
-    } catch (error) {
-      console.error('Error refreshing player data:', error);
-    }
-  };
+  // const refreshPlayer = async () => {
+  //   try {
+  //     const { playerId: newPlayerId, namePlayer: newNamePlayer } = await getTurnPlayer(gameId);
+  //     setCurrentPlayer(newNamePlayer);
+  //     setPlayerId(newPlayerId);
+  //   } catch (error) {
+  //     console.error('Error refreshing player data:', error);
+  //   }
+  // };
 
-  return { currentPlayer, playerId, refreshPlayer };
+  return { currentPlayer, playerId };
 }
 
 export default getCurrentTurnPlayer;
