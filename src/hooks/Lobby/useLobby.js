@@ -7,6 +7,7 @@ export const useLobby = ((gameId, navigate) => {
     const [maxPlayers, setMaxPlayers] = useState(0);
     const [activeGame , setActiveGame] = useState(false); 
     const [cancelGame, setCancelGame] = useState(false);
+    const [isWsConnected, setIsWsConnected] = useState(false);
 
 
     // Seteo info del lobby al montar el componente
@@ -36,19 +37,21 @@ export const useLobby = ((gameId, navigate) => {
 
     // Mantener actualizado el lobby con WebSocket
     useEffect(() => {
+        if (!isWsConnected) return;
+
         const ws = new WebSocket(WS_LOBBY_URL + gameId);
         ws.onmessage = (event) => {
-            console.log('Mensaje recibido:', event.data);
-            try {
-                // Verifica si el mensaje es un JSON válido
-                const new_data = JSON.parse(event.data);
-                setActiveGame(new_data.start_owner);
-                setCancelGame(new_data.cancel_owner);
-                setPlayers(new_data.name_players || []);
-                
-            } catch (error) {
-                console.error('Error parsing JSON:', error);
-                setError('Error al procesar los datos del juego');
+            const message = event.data;
+            if (message){console.log('Actualización de Lobby.')}
+            if (message.startsWith('{') || message.startsWith('[')) {
+                try {
+                    const lobbyData = JSON.parse(message);
+                    setPlayers(lobbyData.name_players || []);
+                    setActiveGame(lobbyData.start_owner);
+                    setCancelGame(lobbyData.cancel_owner);
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
+                }
             }
             if (cancelGame){ navigate(HOME); }
             if (activeGame){ navigate(GAME); }
@@ -58,7 +61,7 @@ export const useLobby = ((gameId, navigate) => {
         };
         return () => { ws.close(); }
 
-    }, [players, activeGame, cancelGame]);
+    }, [isWsConnected]);
 
 
     return {players, gameName, maxPlayers, activeGame, cancelGame};
