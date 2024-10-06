@@ -6,7 +6,7 @@ import VictoryBox from '../../../../components/VictoryBox/VictoryBox.jsx';
 import useWinnerPolling from '../../../../hooks/Game/getWinner.js';
 import LeaveButton from '../../../../components/Game/LeaveButton/LeaveButton.jsx';
 import SeePlayer from '../../../../components/Game/seePlayer_Turn/seePlayer.jsx';
-import DataGame from "../../../../utils/logics/Game/DataGame.js";
+import getCurrentTurnPlayer from "../../../../hooks/Game/getCurrentTurnPlayer.js";
 import CardsGame from '../../../../utils/logics/Game/CardsGame.js';
 import { passTurn } from "../../../../hooks/Game/passTurn.js";
 import Confetti from 'react-confetti';
@@ -18,12 +18,12 @@ function Game() {
     const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
     const gameId = localStorage.getItem('game_id');
     const winner = useWinnerPolling(gameId);
-    const {currentPlayer, playerId } = DataGame();
+    const {currentPlayer, playerId, refreshPlayer } = getCurrentTurnPlayer();
     const { movsIds, figsIds } = CardsGame();
 
-    // Función para manejar el fin del turno
     const handleEndTurn = async () => {
-      await passTurn(); // Cambia el turno
+      await passTurn(); 
+      refreshPlayer(); 
     };
 
     return (

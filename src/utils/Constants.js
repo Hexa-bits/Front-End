@@ -19,6 +19,7 @@ export const GAME_START_URL = `http://localhost:${PORT}${GAME}/start-game`;
 export const GET_MOVEMENTS_URL = `http://localhost:${PORT}${GAME}/my-mov-card`;
 export const GET_FIGURES_URL = `http://localhost:${PORT}${GAME}/my-fig-card/`;
 export const GET_TURN_PLAYER_URL = `http://localhost:${PORT}${GAME}/current-turn`;
+export const GAME_TURN_PLAYER_WS_URL = `ws://localhost:${PORT}${GAME}/info`;
 export const GET_WINNER_URL = `http://localhost:${PORT}${GAME}/get-winner`;
 export const GAME_PASS_URL = `http://localhost:${PORT}${GAME}/end-turn`;
 
