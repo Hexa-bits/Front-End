@@ -28,6 +28,7 @@ export const useLobby = ((gameId, navigate) => {
                 setMaxPlayers(data.max_players);
                 setActiveGame(data.start_owner);
                 setCancelGame(data.cancel_owner);
+                setIsWsConnected(true);
             } catch (error) {
                 console.log("Error al obtener información del juego. " + error.message);
             }
