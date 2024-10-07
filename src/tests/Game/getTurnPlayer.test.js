@@ -1,86 +1,76 @@
-import getTurnPlayer from '../../hooks/Game/getTurnPlayer';
-import { useNameTurnPlayerUrl } from '../../hooks/Game/useTurnPlayerUrl';
+import getTurnPlayer from '../../hooks/Game/TurnPlayer/getTurnPlayer.js';
+import { useNameTurnPlayerUrl } from '../../utils/logics/Game/useTurnPlayerUrls.js';
 
-// Mockear fetch y useNameTurnPlayerUrl
-global.fetch = vi.fn();
-vi.mock('../../hooks/Game/useTurnPlayerUrl');
+// Mockear la función useNameTurnPlayerUrl y fetch
+vi.mock('../../utils/logics/Game/useTurnPlayerUrls.js', () => ({
+    useNameTurnPlayerUrl: vi.fn(),
+}));
 
-describe('Obtener jugador en turno', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();  // Limpiar mocks entre tests
-  });
-
-  test('Debe retornar playerId y namePlayer cuando el fetch es exitoso', async () => {
-    // Mock de la URL
-    const mockUrl = 'http://fake-url.com/player-turn';
-    useNameTurnPlayerUrl.mockReturnValue(mockUrl);
-
-    // Mock de la respuesta del fetch
-    const mockData = {
-      id_player: 1,
-      name_player: 'Player 1',
+describe('getTurnPlayer', () => {
+    const mockGameId = 'mockGameId';
+    const mockUrl = 'http://mockapi.com/turnPlayer';
+    const mockResponseData = {
+        id_player: 'mockPlayerId',
+        name_player: 'Player1',
     };
-    fetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockData,
+
+    let consoleErrorSpy;
+
+    beforeEach(() => {
+        // Configurar mocks antes de cada prueba
+        useNameTurnPlayerUrl.mockReturnValue(mockUrl);
+        // Crear un spy para console.error
+        consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
-    const gameId = 123;
-    const result = await getTurnPlayer(gameId);
-
-    // Aserciones
-    expect(fetch).toHaveBeenCalledWith(mockUrl, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    });
-    expect(result).toEqual({ playerId: mockData.id_player, namePlayer: mockData.name_player });
-  });
-
-  test('Debe manejar errores si la respuesta de fetch no es exitosa', async () => {
-    const mockUrl = 'http://fake-url.com/player-turn';
-    useNameTurnPlayerUrl.mockReturnValue(mockUrl);
-
-    // Simular un error en el fetch
-    fetch.mockResolvedValueOnce({
-      ok: false,
+    afterEach(() => {
+        // Limpiar mocks después de cada prueba
+        vi.clearAllMocks();
     });
 
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});  // Espiar el error
+    test('Debe hacer fetch para pedir por GET el playerId y namePlayer', async () => {
+        // Mockear fetch para que devuelva un resultado exitoso
+        global.fetch = vi.fn().mockResolvedValue({
+            ok: true,
+            json: async () => mockResponseData,
+        });
 
-    const gameId = 123;
-    const result = await getTurnPlayer(gameId);
+        const result = await getTurnPlayer(mockGameId);
 
-    // Aserciones
-    expect(fetch).toHaveBeenCalledWith(mockUrl, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+        // Verificar que el resultado sea el esperado
+        expect(result).toEqual({
+            playerId: 'mockPlayerId',
+            namePlayer: 'Player1',
+        });
+        expect(fetch).toHaveBeenCalledWith(mockUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
     });
-    expect(result).toBeNull();  // Debe retornar null si hay error
-    expect(consoleSpy).toHaveBeenCalledWith('Error fetching player turn:', expect.any(Error));
 
-    consoleSpy.mockRestore();  // Restaurar el comportamiento original de console.error
-  });
+    test('Gestionar errores de conexión de red.', async () => {
+        // Mockear fetch para que devuelva un error de red
+        global.fetch = vi.fn().mockResolvedValue({
+            ok: false,
+        });
 
-  test('Debe manejar excepciones durante el fetch.', async () => {
-    const mockUrl = 'http://fake-url.com/player-turn';
-    useNameTurnPlayerUrl.mockReturnValue(mockUrl);
+        const result = await getTurnPlayer(mockGameId);
 
-    // Simular un fetch que lanza una excepción
-    fetch.mockRejectedValueOnce(new Error('Fetch failed'));
-
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});  // Espiar el error
-
-    const gameId = 123;
-    const result = await getTurnPlayer(gameId);
-
-    // Aserciones
-    expect(fetch).toHaveBeenCalledWith(mockUrl, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+        // Verificar que el resultado sea null en caso de error
+        expect(result).toBe(null);
+        expect(consoleErrorSpy).toHaveBeenCalledWith(expect.stringContaining('Error fetching player turn:'), expect.any(Error));
     });
-    expect(result).toBeNull();  // Debe retornar null si hay excepción
-    expect(consoleSpy).toHaveBeenCalledWith('Error fetching player turn:', expect.any(Error));
 
-    consoleSpy.mockRestore();
-  });
+    test('Gestionar errores de fetch.', async () => {
+        // Mockear fetch para que lance un error
+        global.fetch = vi.fn().mockRejectedValue(new Error('Fetch failed'));
+
+        const result = await getTurnPlayer(mockGameId);
+
+        // Verificar que el resultado sea null en caso de error
+        expect(result).toBe(null);
+        expect(consoleErrorSpy).toHaveBeenCalledWith(expect.stringContaining('Error fetching player turn:'), expect.any(Error));
+    });
 });
