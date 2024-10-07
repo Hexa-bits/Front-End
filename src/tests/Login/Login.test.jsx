@@ -1,25 +1,25 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, jest, beforeEach } from '@jest/globals';
+import { LoginHelpText, HOME } from '../../utils/Constants.js';
 import { MemoryRouter } from 'react-router-dom';
 import Login from '../../containers/App/components/Login/Login.jsx';
-import { LoginHelpText, HOME} from '../../utils/Constants.js';
-import '@testing-library/jest-dom'; 
 
+const mockNavigate = vi.fn();
 
-const mockNavigate = jest.fn();
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  };
+});
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockNavigate,
-}));
-
-describe('Login Component', () => {
+describe('Componente de Login', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
-  it('should render the login form', () => {
+  it('Debería mostrar el formulario de logueo.', () => {
     render(
       <MemoryRouter>
         <Login />
@@ -32,7 +32,7 @@ describe('Login Component', () => {
     expect(screen.getByText('Ingresar')).toBeInTheDocument();
   });
 
-  it('should update username on input change', () => {
+  it('Debería actualizar el nombre de usuario al cambiar la entrada.', () => {
     render(
       <MemoryRouter>
         <Login />
@@ -45,8 +45,8 @@ describe('Login Component', () => {
     expect(input.value).toBe('testuser');
   });
 
-  it('should show alert if username is invalid', () => {
-    window.alert = jest.fn();
+  it('Debería mostrar una alerta si el nombre de usuario no es válido', () => {
+    window.alert = vi.fn();
 
     render(
       <MemoryRouter>
@@ -60,7 +60,7 @@ describe('Login Component', () => {
     expect(window.alert).toHaveBeenCalledWith('Nombre ' + LoginHelpText);
   });
 
-  it('should navigate to home if username is valid and already saved', () => {
+  it('Debe navegar a HOME si el nombre de usuario es válido y ya está guardado.', () => {
     localStorage.setItem('username', 'testuser');
 
     render(
@@ -78,14 +78,14 @@ describe('Login Component', () => {
     expect(mockNavigate).toHaveBeenCalledWith(HOME);
   });
 
-  it('should call register function if username is valid and not saved', async () => {
+  it('Debe llamar a la función de logueo si el nombre de usuario es válido y no está guardado.', async () => {
     localStorage.removeItem('username');
-    window.alert = jest.fn(); // Mocks alert
+    window.alert = vi.fn();
 
-    global.fetch = jest.fn(() =>
+    global.fetch = vi.fn(() =>
       Promise.resolve({
         ok: true,
-        json: () => Promise.resolve({ id: 39 }), // Asegúrate de que la propiedad es 'Id'
+        json: () => Promise.resolve({ id: 39 }),
       })
     );
 

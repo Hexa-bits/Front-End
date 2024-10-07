@@ -1,12 +1,11 @@
-import useWinnerPolling from '../../hooks/Game/getWinner.js';
 import { useWinner } from '../../hooks/Game/useWinnerUrl.js';
-import '@testing-library/jest-dom';
 
 // Simula la función useWinner para que devuelva una URL válida
-jest.mock('../../hooks/Game/useWinnerUrl.js');
+vi.mock('../../hooks/Game/useWinnerUrl.js');
 
-describe('useWinnerPolling', () => {
+describe('Obtener Ganador', () => {
     let originalFetch;
+    let consoleErrorSpy;
 
     beforeAll(() => {
         // Guarda la implementación original de fetch
@@ -14,8 +13,12 @@ describe('useWinnerPolling', () => {
     });
 
     beforeEach(() => {
-        jest.clearAllMocks(); // Limpia los mocks antes de cada prueba
-        consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+        vi.clearAllMocks(); // Limpia los mocks antes de cada prueba
+        consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    });
+
+    afterEach(() => {
+        consoleErrorSpy.mockRestore(); // Restaura console.error después de cada prueba
     });
 
     afterAll(() => {
@@ -59,7 +62,7 @@ describe('useWinnerPolling', () => {
         useWinner.mockReturnValue(`http://fake-url.com/game/winner?game_id=${gameId}`);
         
         // Simula la respuesta de fetch
-        global.fetch = jest.fn(() =>
+        global.fetch = vi.fn(() =>
             Promise.resolve({
                 status: 204,
             })
@@ -74,7 +77,7 @@ describe('useWinnerPolling', () => {
         const gameId = '1';
         useWinner.mockReturnValue(`http://fake-url.com/game/winner?game_id=${gameId}`);
 
-        global.fetch = jest.fn(() =>
+        global.fetch = vi.fn(() =>
             Promise.resolve({
                 ok: false,
                 status: 500,
@@ -91,7 +94,7 @@ describe('useWinnerPolling', () => {
         const gameId = '1';
         useWinner.mockReturnValue(`http://fake-url.com/game/winner?game_id=${gameId}`);
 
-        global.fetch = jest.fn(() =>
+        global.fetch = vi.fn(() =>
             Promise.resolve({
                 ok: true,
                 json: () => Promise.resolve(mockWinner),
@@ -107,7 +110,7 @@ describe('useWinnerPolling', () => {
         const gameId = '1';
         useWinner.mockReturnValue(`http://fake-url.com/game/winner?game_id=${gameId}`);
 
-        global.fetch = jest.fn(() =>
+        global.fetch = vi.fn(() =>
             Promise.resolve({
                 ok: true,
                 json: () => Promise.resolve({}), // Respuesta vacía
@@ -120,18 +123,14 @@ describe('useWinnerPolling', () => {
     });
 
     it('Debería registrar un error cuando falle el fetch', async () => {
-        const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-
         const gameId = '1';
         useWinner.mockReturnValue(`http://fake-url.com/game/winner?game_id=${gameId}`);
 
-        global.fetch = jest.fn(() => Promise.reject(new Error('Fetch failed')));
+        global.fetch = vi.fn(() => Promise.reject(new Error('Fetch failed')));
 
         const result = await getWinner(gameId);
 
         expect(result).toBe(false); // Debe devolver false por el error
         expect(consoleErrorSpy).toHaveBeenCalledWith('Error fetching winner:', expect.any(Error));
-
-        consoleErrorSpy.mockRestore();
     });
 });

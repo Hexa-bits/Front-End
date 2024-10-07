@@ -1,32 +1,31 @@
-import { startGame } from "../../hooks/Lobby/useStartGame.js";  // Actualiza con la ruta correcta
 import { GAME_START_URL, GAME } from '../../utils/Constants.js';
+import { startGame } from "../../hooks/Lobby/useStartGame.js";
 
-jest.mock('react-router-dom', () => ({
-    useNavigate: jest.fn(),
+vi.mock('react-router-dom', () => ({
+    useNavigate: vi.fn(),
 }));
 
 describe('startGame', () => {
-    const mockNavigate = jest.fn();
+    const mockNavigate = vi.fn();
     const originalConsoleLog = console.log;
 
     beforeEach(() => {
         mockNavigate.mockClear();
-        global.fetch = jest.fn();  // Mockear fetch para evitar llamadas reales a la API
-        console.log = jest.fn();  // Mockear console.log
+        global.fetch = vi.fn();
+        console.log = vi.fn(); 
     });
 
     afterEach(() => {
-        jest.clearAllMocks();
-        console.log = originalConsoleLog;  // Restaurar console.log original
+        vi.clearAllMocks();
+        console.log = originalConsoleLog; 
     });
 
-    it('should start the game and navigate to the game page on success', async () => {
+    it('Debe iniciar el juego y navegar a la página del juego.', async () => {
         const mockResponse = { ok: true };
         fetch.mockResolvedValueOnce(mockResponse);
 
         await startGame(7, mockNavigate);
 
-        // Verifica que la solicitud fue hecha correctamente
         expect(fetch).toHaveBeenCalledWith(GAME_START_URL, {
             method: 'PUT',
             headers: {
@@ -35,16 +34,15 @@ describe('startGame', () => {
             body: JSON.stringify({ game_id: 7 }),
         });
 
-        // Verifica que se haya llamado a navigate
         expect(mockNavigate).toHaveBeenCalledWith(GAME);
         expect(console.log).toHaveBeenCalledWith('Juego 7 iniciado exitosamente');
     });
 
-    it('should handle errors and log an error message when the request fails', async () => {
+    it('Debe gestionar los errores y registrar un mensaje de error cuando la solicitud falla', async () => {
         const mockErrorMessage = 'Error de prueba';
         const mockResponse = {
             ok: false,
-            text: jest.fn().mockResolvedValueOnce(mockErrorMessage),
+            text: vi.fn().mockResolvedValueOnce(mockErrorMessage),
         };
         fetch.mockResolvedValueOnce(mockResponse);
 
