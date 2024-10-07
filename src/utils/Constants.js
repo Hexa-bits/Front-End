@@ -16,14 +16,15 @@ export const HOME_URL_WS = `ws://localhost:${PORT}${HOME}/get-lobbies`;
 export const GAME_JOIN_URL = `http://localhost:${PORT}${GAME}/join`;
 export const GAME_LEAVE_URL = `http://localhost:${PORT}${GAME}/leave`;
 export const GAME_START_URL = `http://localhost:${PORT}${GAME}/start-game`;
-export const GET_MOVEMENTS_URL = `http://localhost:${PORT}${GAME}/my-mov-card`;
+export const GET_MOVEMENTS_URL = `http://localhost:${PORT}${GAME}/my-mov-card?player_id=`;
 export const GET_FIGURES_URL = `http://localhost:${PORT}${GAME}/my-fig-card/`;
 export const GET_TURN_PLAYER_URL = `http://localhost:${PORT}${GAME}/current-turn`;
-export const GET_WINNER_URL = `http://localhost:${PORT}${GAME}/get-winner`;
+export const GET_WINNER_URL = `http://localhost:${PORT}${GAME}/get-winner?game_id=`;
 export const GAME_PASS_URL = `http://localhost:${PORT}${GAME}/end-turn`;
 
 /** MENSAJES */
 export const LoginHelpText = "Debe tener entre 1 y 10 caracteres.";
+export const GAME_INFO_WS = `ws://localhost:${PORT}${GAME}/info`;
 
 /** Otras constantes */
 export const MAX_PLAYERS = 4;

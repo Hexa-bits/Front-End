@@ -3,7 +3,7 @@ import Button from '../../../../components/Button/Button.jsx';
 import MovCards from '../../../../components/Game/MovCards/MovCards.jsx';
 import FigCards from '../../../../components/Game/FigCards/FigCards.jsx'
 import VictoryBox from '../../../../components/VictoryBox/VictoryBox.jsx';
-import useWinnerPolling from '../../../../hooks/Game/getWinner.js';
+import WinnerExists from '../../../../hooks/Game/WinnerExists.js';
 import LeaveButton from '../../../../components/Game/LeaveButton/LeaveButton.jsx';
 import SeePlayer from '../../../../components/Game/seePlayer_Turn/seePlayer.jsx';
 import DataGame from "../../../../utils/logics/Game/DataGame.js";
@@ -16,7 +16,7 @@ function Game() {
     //Manejo el fetch de las cartas
     const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
     const gameId = localStorage.getItem('game_id');
-    const winner = useWinnerPolling(gameId);
+    const winner = WinnerExists(gameId);
     const { movsIds, figsIds, currentPlayer, playerId } = DataGame();
 
     // Función para manejar el fin del turno
