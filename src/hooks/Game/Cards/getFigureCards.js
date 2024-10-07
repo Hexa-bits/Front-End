@@ -2,7 +2,7 @@ import { useFigCardUrl } from "./useFigCardUrl.js";
 
 const getFigureCards = async () => {
   const playerId = parseInt(localStorage.getItem("id_user"), 10);
-  //podría pasarle el id del jugador desde getall cards?
+  //podría pasarle el id del jugador desde getall cards? SI
   const fullUrl = useFigCardUrl(playerId);
 
   try {

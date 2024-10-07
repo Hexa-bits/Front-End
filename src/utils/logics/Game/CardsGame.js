@@ -1,3 +1,4 @@
+//todo esto se borra
 import getMovements from "../../../hooks/Game/Cards/getMovements.js";
 import getFigureCards from "../../../hooks/Game/Cards/getFigureCards.js";
 import getTurnPlayer from "../../../hooks/Game/TurnPlayer/getTurnPlayer.js";
@@ -8,7 +9,7 @@ const CardsGame = () => {
   const [figsIds, setFigsIds] = useState([]);
   const playerId = parseInt(localStorage.getItem("id_user"), 10);
   const gameId = localStorage.getItem("game_id");
-  const pollingInterval = 2000;
+  //const pollingInterval = 2000;
 
   const fetchData = async () => {
     try {

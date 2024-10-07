@@ -3,7 +3,7 @@ import getFigureCards from "./getFigureCards";
 import { useFigCardWs } from "./useFigCardUrl";
 
 function getAllCards() {
-  const [figId, setFigId] = useState(null);
+  const [figsIds, setFigId] = useState(null);
   const [isWsConnected, setIsWsConnected] = useState(null);
   const playerId = localStorage.getItem("id_player");
   const fullUrl = useFigCardWs(playerId);
@@ -12,7 +12,7 @@ function getAllCards() {
   useEffect(() => {
     const fetchFigs = async () => {
       try {
-        const { figId: newFigId } = await getFigureCards();
+        const { figsIds: newFigId } = await getFigureCards();
         setFigId(newFigId);
         setIsWsConnected(true); // Indica que ya se han obtenido las cartas y se puede establecer la conexión WebSocket
       } catch (error) {
@@ -46,9 +46,9 @@ function getAllCards() {
     return () => {
       websocket.close();
     };
-  }, [isConnectWS]);
+  }, [isWsConnected]);
 
-  return { figId };
+  return { figsIds };
 }
 
 export default getAllCards;
