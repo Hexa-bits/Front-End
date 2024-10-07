@@ -1,66 +1,53 @@
-import { useNameTurnPlayerUrl_WS } from '../../utils/logics/Game/useTurnPlayerUrls.js';
 import { useState, useEffect } from 'react';
 import getTurnPlayer from './getTurnPlayer.js';
+import { useNameTurnPlayerUrl_WS } from '../../utils/logics/Game/useTurnPlayerUrls.js';
 
 function getCurrentTurnPlayer() {
-  const [currentPlayer, setCurrentPlayer] = useState(null);
-  const [playerId, setPlayerId] = useState(null);
-  const [isWsConnected, setIsWsConnected] = useState(false);
-  const gameId = localStorage.getItem('game_id');
+    const [currentPlayer, setCurrentPlayer] = useState(null);
+    const [playerId, setPlayerId] = useState(null);
+    const gameId = localStorage.getItem('game_id');
+    const fullUrl = useNameTurnPlayerUrl_WS(gameId);
+    const [isConnectWS, setisConnectWS] = useState(null);
 
-  const fullUrl = useNameTurnPlayerUrl_WS(gameId);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const { playerId: newPlayerId, namePlayer: newNamePlayer } = await getTurnPlayer(gameId);
+                setCurrentPlayer(newNamePlayer);
+                setPlayerId(newPlayerId);
+                setisConnectWS(true);
+            } catch (error) {
+                console.error('Error fetching game data:', error);
+            }
+        };
+        fetchData();
+    }, [gameId]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { playerId: newPlayerId, namePlayer: newNamePlayer } = await getTurnPlayer(gameId);
-        setCurrentPlayer(newNamePlayer);
-        setPlayerId(newPlayerId);
-        setIsWsConnected(true); // Indicar que podemos conectar el WebSocket
-      } catch (error) {
-        console.error('Error fetching game data:', error);
-      }
-    };
-    fetchData();
-  }, [gameId]);
+    useEffect(() => {
+        if (!isConnectWS) {return;}
 
-  useEffect(() => {
-    if (!isWsConnected) return;
+        console.log('Connecting to WebSocket:');
+        const websocket = new WebSocket(fullUrl);
 
-    const ws = new WebSocket(fullUrl);
+        websocket.onmessage = (event) => {
+            const message = event.data;
+            if (message && message.startsWith('{')) {
+                try {
+                    const data = JSON.parse(message);
+                    setCurrentPlayer(data.name_player);
+                    setPlayerId(data.id_player);
+                } catch (error) {
+                    console.error('Error parsing WebSocket message:', error);
+                }
+            }
+        };
 
-    ws.onmessage = (event) => {
-      const message = event.data;
-      try {
-        const { playerId: newPlayerId, namePlayer: newNamePlayer } = JSON.parse(message);
-        setCurrentPlayer(newNamePlayer);
-        setPlayerId(newPlayerId);
-      } catch (error) {
-        console.error('Error parsing WebSocket message:', error);
-      }
-    };
+        return () => {
+                websocket.close();
+        };    
+    }, [isConnectWS]);
 
-    ws.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-
-    return () => {
-      ws.close();
-    };
-  }, [isWsConnected, gameId]);
-
-
-  // const refreshPlayer = async () => {
-  //   try {
-  //     const { playerId: newPlayerId, namePlayer: newNamePlayer } = await getTurnPlayer(gameId);
-  //     setCurrentPlayer(newNamePlayer);
-  //     setPlayerId(newPlayerId);
-  //   } catch (error) {
-  //     console.error('Error refreshing player data:', error);
-  //   }
-  // };
-
-  return { currentPlayer, playerId };
+    return { currentPlayer, playerId };
 }
 
 export default getCurrentTurnPlayer;
