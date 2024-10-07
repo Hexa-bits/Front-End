@@ -4,10 +4,10 @@ import { useNameTurnPlayerUrl_WS } from '../../../utils/logics/Game/useTurnPlaye
 
 function getCurrentTurnPlayer() {
     const [currentPlayer, setCurrentPlayer] = useState(null);
+    const [isConnectWS, setisConnectWS] = useState(null);
     const [playerId, setPlayerId] = useState(null);
     const gameId = localStorage.getItem('game_id');
     const fullUrl = useNameTurnPlayerUrl_WS(gameId);
-    const [isConnectWS, setisConnectWS] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
