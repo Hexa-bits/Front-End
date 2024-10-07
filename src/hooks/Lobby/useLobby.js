@@ -1,5 +1,5 @@
 import { useState, useEffect, act } from 'react';
-import { LOBBY_URL, WS_LOBBY_URL, HOME, GAME } from '../../utils/Constants.js';
+import { LOBBY_URL, WS_LOBBY_URL } from '../../utils/Constants.js';
 
 export const useLobby = (gameId) => {
     const [players, setPlayers] = useState([]);
@@ -12,7 +12,7 @@ export const useLobby = (gameId) => {
     useEffect(() => {
         const getGameInfo = async () => {
             try {
-                const response = await fetch(`${LOBBY_URL}${gameId}`, {
+                const response = await fetch(LOBBY_URL + gameId, {
                     method: "GET",
                 });
                 if (!response.ok) {
@@ -35,7 +35,7 @@ export const useLobby = (gameId) => {
 
     // Mantener actualizado el lobby con WebSocket
     useEffect(() => {
-        const ws = new WebSocket(`${WS_LOBBY_URL}${gameId}`);
+        const ws = new WebSocket(WS_LOBBY_URL + gameId);
         
         ws.onmessage = (event) => {
             const message = event.data;
@@ -65,7 +65,7 @@ export const useLobby = (gameId) => {
                 ws.close();
             }
         };
-    }, [gameId]);
+    }, []);
 
     return { players, gameName, maxPlayers, activeGame, cancelGame };
 };
