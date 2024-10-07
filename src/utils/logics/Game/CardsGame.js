@@ -1,6 +1,6 @@
 import getMovements from '../../../hooks/Game/getMovements.js';
 import getFigureCards from '../../../hooks/Game/getFigureCards.js';
-import getTurnPlayer from '../../../hooks/Game/getTurnPlayer.js';
+import getTurnPlayer from '../../../hooks/Game/TurnPlayer/getTurnPlayer.js';
 import { useState, useEffect } from 'react';
 
 const CardsGame = () => {

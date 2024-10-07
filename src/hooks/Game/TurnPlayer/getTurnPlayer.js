@@ -1,4 +1,4 @@
-import { useNameTurnPlayerUrl } from "../../utils/logics/Game/useTurnPlayerUrls.js";
+import { useNameTurnPlayerUrl } from "../../../utils/logics/Game/useTurnPlayerUrls.js";
 
 //Obtener id y nombre del jugador en turno
 const getTurnPlayer = async (gameId) => {

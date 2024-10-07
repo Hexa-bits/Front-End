@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import getTurnPlayer from './getTurnPlayer.js';
-import { useNameTurnPlayerUrl_WS } from '../../utils/logics/Game/useTurnPlayerUrls.js';
+import { useNameTurnPlayerUrl_WS } from '../../../utils/logics/Game/useTurnPlayerUrls.js';
 
 function getCurrentTurnPlayer() {
     const [currentPlayer, setCurrentPlayer] = useState(null);

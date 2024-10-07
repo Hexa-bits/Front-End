@@ -1,0 +1,12 @@
+.Player{
+    background-color: #008bd0;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 20px;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    color: white;
+}

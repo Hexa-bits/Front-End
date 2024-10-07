@@ -1,4 +1,4 @@
-import { GAME_PASS_URL } from "../../utils/Constants";
+import { GAME_PASS_URL } from "../../../utils/Constants";
 
 const passTurn = async () => {
     const game_id = localStorage.getItem("game_id");

@@ -2,10 +2,14 @@ import React from 'react';
 import Button from '../../../../components/Button/Button.jsx';
 import VictoryBox from '../../../../components/VictoryBox/VictoryBox.jsx';
 import useWinnerPolling from '../../../../hooks/Game/getWinner.js';
+import FigCards from '../../../../components/Game/FigCards/FigCards.jsx';
+import MovCards from '../../../../components/Game/MovCards/MovCards.jsx';
+import CardsGame from '../../../../utils/logics/Game/CardsGame.js';
 import LeaveButton from '../../../../components/Game/LeaveButton/LeaveButton.jsx';
 import SeePlayer from '../../../../components/Game/seePlayer_Turn/seePlayer.jsx';
-import getCurrentTurnPlayer from "../../../../hooks/Game/getCurrentTurnPlayer.js";
-import passTurn from "../../../../hooks/Game/passTurn.js";
+import getCurrentTurnPlayer from "../../../../hooks/Game/TurnPlayer/getCurrentTurnPlayer.js";
+import PlayerName from '../../../../components/Game/PlayerName/PlayerName.jsx';
+import passTurn from "../../../../hooks/Game/TurnPlayer/passTurn.js";
 import Confetti from 'react-confetti';
 import './Game.css';
 
@@ -13,8 +17,10 @@ import './Game.css';
 function Game() {
     //Manejo el fetch de las cartas
     const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
+    const localPlayerName = localStorage.getItem("username");
     const gameId = localStorage.getItem('game_id');
     const winner = useWinnerPolling(gameId);
+    const { movsIds, figsIds } = CardsGame();
     const { currentPlayer, playerId } = getCurrentTurnPlayer();
     
     const handleEndTurn = async () => {
@@ -44,17 +50,21 @@ function Game() {
                     </div>
                     <div className="Game_Area">
                         <div className="Fig">
-                            {/* <FigCards figsIds={figsIds}/> */}
+                            <FigCards figsIds={figsIds}/>
                         </div>
                         <div className="board">
                         </div>
                         <div className="Mov">
-                            {/* <MovCards movsIds = { movsIds }/> */}
+                            <MovCards movsIds = { movsIds }/>
                         </div>
 
                     </div>
                 </div>
                 <div className="right-box">
+                    <div className="PlayerInfo-Area">
+                        <PlayerName player={localPlayerName}/>
+                    </div>
+
                     <div className="Butt">
                         <div className="end">
                             <Button 
