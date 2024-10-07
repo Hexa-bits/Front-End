@@ -12,9 +12,12 @@ import PlayerName from '../../../../components/Game/PlayerName/PlayerName.jsx';
 import passTurn from "../../../../hooks/Game/TurnPlayer/passTurn.js";
 import Confetti from 'react-confetti';
 import './Game.css';
+import { useNavigate } from 'react-router-dom';
+import { LeaveGame } from '../../../../hooks/Lobby/leaveGame.jsx';
 
 
 function Game() {
+    const navigate = useNavigate();
     //Manejo el fetch de las cartas
     const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
     const localPlayerName = localStorage.getItem("username");
@@ -40,7 +43,7 @@ function Game() {
                         recycle={false}
                         style={{ position: 'fixed', top: 0, left: 0 }}
                     />
-                    <VictoryBox winnerName={winner.name_player}/>
+                    <VictoryBox winnerName={winner.name_player} onLeave={LeaveGame(navigate)}/>
                 </>
             )}
             <div className="game-container">
@@ -74,7 +77,7 @@ function Game() {
                               />
                         </div>
                         <div className="leav">
-                            <LeaveButton />
+                            <LeaveButton onLeave={LeaveGame(navigate)}/>
                         </div>
                     </div>
 

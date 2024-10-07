@@ -1,48 +1,74 @@
-import { leaveGame } from "../../hooks/Lobby/useLeaveGame.js";
-import { HOME } from '../../utils/Constants.js';
+import { LeaveGame } from '../../hooks/Lobby/leaveGame'; 
+import { describe, it, vi, expect } from 'vitest';
+import { GAME_LEAVE_URL, HOME } from '../../utils/Constants';
 
-global.fetch = vi.fn();
+vi.mock('react-router-dom', () => ({
+  useNavigate: () => vi.fn(),
+}));
 
-const mockAlert = vi.spyOn(global, 'alert').mockImplementation(() => {});
-const mockNavigate = vi.fn();
+describe('LeaveGame function', () => {
+  it('debería hacer la llamada para abandonar el juego y navegar', async () => {
+    // Mock para localStorage y fetch
+    const mockNavigate = vi.fn();
+    const mockFetch = vi.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({}),
+      })
+    );
+    const mockLocalStorage = {
+      getItem: vi.fn((key) => {
+        if (key === 'id_user') return '456'; 
+        if (key === 'game_id') return '789';
+        return null;
+      }),
+      setItem: vi.fn(),
+      removeItem: vi.fn(),
+    };
 
-beforeEach(() => {
-    vi.clearAllMocks(); // Limpiar mocks antes de cada prueba
-    localStorage.setItem('id_user', '123'); // Simular que hay un ID de usuario en el localStorage
-});
+    Object.defineProperty(global, 'localStorage', { value: mockLocalStorage });
+    global.fetch = mockFetch;
+    global.alert = vi.fn();
 
-describe('Función leaveGame', () => {
-    it('Debe salir con éxito del juego y navegar.', async () => {
-        fetch.mockResolvedValueOnce({
-            ok: true,
-            statusText: 'OK',
-        });
+    const leaveGame = LeaveGame(mockNavigate);
+    await leaveGame();
 
-        await leaveGame('456', mockNavigate);
-
-        expect(mockAlert).toHaveBeenCalledWith('Jugador 123 abandonaste el juego 456 exitosamente');
-        expect(mockNavigate).toHaveBeenCalledWith(HOME);
+    // Verificaciones
+    expect(mockLocalStorage.getItem).toHaveBeenCalledWith('id_user');
+    expect(mockLocalStorage.getItem).toHaveBeenCalledWith('game_id');
+    expect(mockFetch).toHaveBeenCalledWith(`${GAME_LEAVE_URL}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ game_id: 789, id_user: 456 }),
     });
+    expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('game_id');
+    expect(mockLocalStorage.getItem).toHaveBeenCalledWith('active');
+    // expect(mockLocalStorage.setItem).toHaveBeenCalledWith('active', false);
+    expect(global.alert).toHaveBeenCalledWith(
+      'Jugador 456 abandonaste el juego 789 exitosamente'
+    );
+    expect(mockNavigate).toHaveBeenCalledWith(HOME);
+  });
 
-    it('Debe gestionar correctamente los errores del servidor.', async () => {
-        fetch.mockResolvedValueOnce({
-            ok: false,
-            statusText: 'Internal Server Error',
-            text: vi.fn().mockResolvedValueOnce('Error details from the server'),
-        });
+  it('debería manejar errores al intentar abandonar el juego', async () => {
+    // Mock para localStorage y fetch que lanza error
+    const mockFetch = vi.fn(() =>
+      Promise.resolve({
+        ok: false,
+        text: () => Promise.resolve('Error al abandonar el juego'),
+      })
+    );
+    global.fetch = mockFetch;
+    global.alert = vi.fn(); 
+  
+    const leaveGame = LeaveGame();
+    await leaveGame();
 
-        await leaveGame('456', mockNavigate);
-
-        expect(mockAlert).toHaveBeenCalledWith('No se pudo abandonar el juego. Error details from the server');
-        expect(mockNavigate).not.toHaveBeenCalled(); // No debe navegar si hubo un error
-    });
-
-    it('Debe manejar errores de fetch.', async () => {
-        fetch.mockRejectedValueOnce(new Error('Network error'));
-
-        await leaveGame('456', mockNavigate);
-
-        expect(mockAlert).toHaveBeenCalledWith('No se pudo abandonar el juego. Network error');
-        expect(mockNavigate).not.toHaveBeenCalled(); // No debe navegar si hubo un error
-    });
+    // Verificaciones
+    expect(global.alert).toHaveBeenCalledWith(
+      'No se pudo abandonar el juego. Error al abandonar el juego'
+    );
+  });
 });
