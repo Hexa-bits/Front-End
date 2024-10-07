@@ -75,7 +75,7 @@ describe('useLobby hook', () => {
     // Verificar que se haya registrado el error en la consola
     await waitFor(() => {
       expect(consoleSpy).toHaveBeenCalledWith(
-        'Error al obtener información del juego. Error al obtener información del juego.'
+        'http: Error al obtener información del juego. http: Error al obtener información del juego.'
       );
     });
 
