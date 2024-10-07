@@ -1,7 +1,6 @@
 import { useFigCardUrl } from "./useFigCardUrl.js";
-import { GET_FIGURES_URL } from "../../utils/Constants.js";
 
-export const getFigureCards = async () => {
+const getFigureCards = async () => {
     const playerId = parseInt(localStorage.getItem("id_user"), 10);
     const fullUrl = useFigCardUrl(playerId);
 
@@ -22,3 +21,5 @@ export const getFigureCards = async () => {
         return { figs_ids: [] };
     }
 };
+
+export default getFigureCards;
