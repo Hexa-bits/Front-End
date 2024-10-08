@@ -1,6 +1,6 @@
 import { HOME, GAME_LEAVE_URL } from '../../utils/Constants.js';
 
-export const LeaveGame = (navigate) => { 
+export const LeaveGame = (ws, navigate) => { 
 
     const leaveGame = async () => {
         const playerId = parseInt(localStorage.getItem('id_user'),10); 
@@ -28,7 +28,7 @@ export const LeaveGame = (navigate) => {
             // solo game
             const active = localStorage.getItem('active');
             if (active) {localStorage.setItem('active', false);} 
-    
+            ws && ws.close();
             navigate(HOME);
         } catch (error) {
             alert("No se pudo abandonar el juego. " + error.message);

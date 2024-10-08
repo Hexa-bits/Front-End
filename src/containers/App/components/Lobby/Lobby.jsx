@@ -31,7 +31,7 @@ function Lobby() {
                 <LobbyList players={players} />
                 <LobbyButtons 
                     isOwner={isOwner} 
-                    onLeaveGame={LeaveGame(navigate)} 
+                    onLeaveGame={LeaveGame(ws, navigate)} 
                     onStartGame={StartGame(navigate)}
                 />
             </div>
