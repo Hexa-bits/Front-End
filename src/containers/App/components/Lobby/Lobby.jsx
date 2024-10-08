@@ -14,7 +14,8 @@ function Lobby() {
     const location = useLocation();
     const navigate = useNavigate();
     const {isOwner, gameId} = location.state || {};
-    const ws = new WebSocket(WS_GAME);
+    
+    const ws = new WebSocket(WS_GAME + gameId);
     const {players, gameName, maxPlayers, activeGame, cancelGame} = useLobby(ws, gameId);
 
     useEffect(() => {
