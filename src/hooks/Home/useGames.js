@@ -16,6 +16,7 @@ function useGames(ws) {
                 throw new Error('Error en la respuesta del servidor');
             }
             const data = await response.json();
+            console.log("Se pidió por GET: ", data);
             setGames(data);
         } catch (error) {
             console.error("Error fetching lobbies:", error);
@@ -23,20 +24,32 @@ function useGames(ws) {
 
     }
 
+    // useEffect para manejar WebSocket y actualizaciones
     useEffect(() => {
+        if (!ws) return; // Verificamos que el WebSocket esté definido
+
+        // Obtener lista inicial de juegos
         getListGames();
-    }, []);
 
-    ws.onmessage = (event) =>{
+        // Establecer los manejadores de eventos del WebSocket
+        ws.onmessage = (event) => {
         const message = event.data;
-        if(message && message == "Actualizar lista de partidas"){
-            getListGames();
+        if (message && message === "Actualizar lista de partidas") {
+            getListGames(); // Refrescar la lista si se recibe la notificación de actualización
         }
-    }
+        };
 
-    ws.onerror = (error) => {
+        ws.onerror = (error) => {
         console.error('WebSocket error:', error);
-    };
+        };
+
+        // Limpiar cuando se desmonte el componente
+        return () => {
+        if (ws.readyState === WebSocket.OPEN) {
+            ws.close(); // Cerrar el WebSocket si sigue abierto
+        }
+        };
+    }, [ws]); // Solo se ejecuta cuando `ws` cambia
 
     return { games };
 }

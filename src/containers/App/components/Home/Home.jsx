@@ -2,28 +2,43 @@ import './Home.css';
 import useGames from '../../../../hooks/Home/useGames.js';
 import Button from "../../../../components/Button/Button";
 import GameList from '../../../../components/Game_List/Game_List.jsx';
-import { useHomeLogic } from '../../../../utils/logics/Home/LogicJoinGame.js';
+import JoinGame from '../../../../utils/logics/Home/JoinGame.js';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import { WS_HOME } from '../../../../utils/Constants.js';
 
 function Home() {
 
-    //Establezco conexión WS para HOME
-    const ws = new WebSocket(WS_HOME);
     const gameId = localStorage.getItem('game_id');
-    const username = localStorage.getItem("username");
     const playerId = parseInt(localStorage.getItem("id_user"),10);
-
+    const username = localStorage.getItem("username");
     const navigate = useNavigate();
+
+    // Crear conexión al WebSocket
+    const ws = useRef(new WebSocket(WS_HOME)).current;
+    // Lista de Partidas
+    const { games } = useGames(ws);
+
+    
     const handleCrearPartida = () => {
-    ws.close();
-    navigate("/home/create-config");
+        ws.close();
+        navigate("/home/create-config");
+    };
+    
+    const { joinGame } = JoinGame(ws);
+    // Manejador de unirse a partida
+    const handleJoin = (gameId) => {
+        joinGame(gameId, playerId);
     };
 
-    //Lista de Partidas
-    const { games } = useGames(ws);
-    //Manejador de unirse a partida
-    const handleJoin = () => { useHomeLogic(ws, gameId, playerId); };
+    useEffect(() => {
+        // Limpiar la conexión del WebSocket al desmontar el componente
+        return () => {
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.close();
+            }
+        };
+    }, [ws]);
 
     return (
         <div className="Home">
