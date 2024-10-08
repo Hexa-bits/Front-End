@@ -8,10 +8,7 @@ export const useLobby = (ws, gameId) => {
     const [activeGame, setActiveGame] = useState(false);
     const [cancelGame, setCancelGame] = useState(false);
 
-    useEffect(() => { 
-        getLobbyInfo();
-    }, []);
-
+    
     const getLobbyInfo = async () => {
         try {
             const response = await fetch(LOBBY_URL + gameId, { method: "GET", });
@@ -23,11 +20,14 @@ export const useLobby = (ws, gameId) => {
             setPlayers(data.name_players || []);
             setGameName(data.game_name);
             setMaxPlayers(data.max_players);
-
+            
         } catch (error) {
             console.log("http: Error al obtener información del juego. " + error.message);
         }
     }
+    useEffect(() => { 
+        getLobbyInfo();
+    }, []);
 
     ws.onmessage = (event) => {
         const message = event.data;

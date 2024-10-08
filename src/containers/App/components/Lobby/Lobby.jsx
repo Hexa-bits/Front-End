@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import './Lobby.css';
 
@@ -16,11 +16,12 @@ function Lobby() {
     const {isOwner, gameId} = location.state || {};
     
     const ws = new WebSocket(WS_GAME + gameId);
+    
     const {players, gameName, maxPlayers, activeGame, cancelGame} = useLobby(ws, gameId);
 
     useEffect(() => {
         if (activeGame) { navigate(GAME); }
-        if (cancelGame) { navigate(HOME); ws.close(); }
+        if (cancelGame) { navigate(HOME); ws && ws.close(); }
     }, [cancelGame, activeGame]);
 
     return (
