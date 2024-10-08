@@ -1,12 +1,11 @@
-import { useFigCardUrl } from "./useFigCardUrl.js";
+import { GET_FIGURES_URL } from "../../../utils/Constants.js";
 
 const getFigureCards = async () => {
   const playerId = parseInt(localStorage.getItem("id_user"), 10);
   //podría pasarle el id del jugador desde getall cards? SI
-  const fullUrl = useFigCardUrl(playerId);
 
   try {
-    const response = await fetch(fullUrl, {
+    const response = await fetch(GET_FIGURES_URL + playerId, {
       method: "GET",
     });
 
