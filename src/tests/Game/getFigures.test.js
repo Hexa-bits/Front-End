@@ -1,4 +1,4 @@
-import { getFigureCards } from '../../hooks/Game/getFigureCards.js';
+import  getFigureCards  from '../../hooks/Game/getFigureCards.js';
 import { useFigCardUrl } from '../../hooks/Game/useFigCardUrl.js';
 
 vi.mock("../../hooks/Game/useFigCardUrl.js");

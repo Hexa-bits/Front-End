@@ -1,16 +1,18 @@
 import React from 'react';
 import Button from '../../../../components/Button/Button.jsx';
-import MovCards from '../../../../components/Game/MovCards/MovCards.jsx';
-import FigCards from '../../../../components/Game/FigCards/FigCards.jsx'
 import VictoryBox from '../../../../components/VictoryBox/VictoryBox.jsx';
 import WinnerExists from '../../../../hooks/Game/WinnerExists.js';
+import FigCards from '../../../../components/Game/FigCards/FigCards.jsx';
+import MovCards from '../../../../components/Game/MovCards/MovCards.jsx';
+import CardsGame from '../../../../utils/logics/Game/CardsGame.js';
 import LeaveButton from '../../../../components/Game/LeaveButton/LeaveButton.jsx';
 import SeePlayer from '../../../../components/Game/seePlayer_Turn/seePlayer.jsx';
-import DataGame from "../../../../utils/logics/Game/DataGame.js";
-import { useNavigate } from 'react-router-dom';
-import { passTurn } from "../../../../hooks/Game/passTurn.js";
+import getCurrentTurnPlayer from "../../../../hooks/Game/TurnPlayer/getCurrentTurnPlayer.js";
+import PlayerName from '../../../../components/Game/PlayerName/PlayerName.jsx';
+import passTurn from "../../../../hooks/Game/TurnPlayer/passTurn.js";
 import Confetti from 'react-confetti';
 import './Game.css';
+import { useNavigate } from 'react-router-dom';
 import { LeaveGame } from '../../../../hooks/Lobby/leaveGame.jsx';
 
 
@@ -18,13 +20,14 @@ function Game() {
     const navigate = useNavigate();
     //Manejo el fetch de las cartas
     const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
+    const localPlayerName = localStorage.getItem("username");
     const gameId = localStorage.getItem('game_id');
     const winner = WinnerExists(gameId);
-    const { movsIds, figsIds, currentPlayer, playerId } = DataGame();
-
-    // Función para manejar el fin del turno
+    const { movsIds, figsIds } = CardsGame();
+    const { currentPlayer, playerId } = getCurrentTurnPlayer();
+    
     const handleEndTurn = async () => {
-      await passTurn(); // Cambia el turno
+        await passTurn(); 
     };
 
     return (
@@ -61,6 +64,10 @@ function Game() {
                     </div>
                 </div>
                 <div className="right-box">
+                    <div className="PlayerInfo-Area">
+                        <PlayerName player={localPlayerName}/>
+                    </div>
+
                     <div className="Butt">
                         <div className="end">
                             <Button 

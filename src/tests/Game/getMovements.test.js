@@ -1,4 +1,4 @@
-import { getMovements } from '../../hooks/Game/getMovements.js';
+import getMovements  from '../../hooks/Game/getMovements.js';
 
 vi.mock("../../hooks/Game/useMovUrl.js");
 
