@@ -8,18 +8,18 @@ import LobbyButtons from "../../../../components/Lobby/Buttons/LobbyButtons.jsx"
 import { useLobby } from "../../../../hooks/Lobby/useLobby.js";
 import { LeaveGame } from "../../../../hooks/Lobby/leaveGame.jsx";
 import { StartGame } from "../../../../hooks/Lobby/startGame.jsx";
-import { HOME, GAME } from "../../../../utils/Constants.js";
+import { HOME, GAME, WS_GAME} from "../../../../utils/Constants.js";
 
 function Lobby() {
     const location = useLocation();
     const navigate = useNavigate();
     const {isOwner, gameId} = location.state || {};
-
-    const {players, gameName, maxPlayers, activeGame, cancelGame} = useLobby(gameId, navigate);
+    const ws = new WebSocket(WS_GAME);
+    const {players, gameName, maxPlayers, activeGame, cancelGame} = useLobby(ws, gameId);
 
     useEffect(() => {
-        if (cancelGame) { navigate(HOME); }
         if (activeGame) { navigate(GAME); }
+        if (cancelGame) { navigate(HOME); ws.close(); }
     }, [cancelGame, activeGame]);
 
     return (
@@ -30,7 +30,8 @@ function Lobby() {
                 <LobbyButtons 
                     isOwner={isOwner} 
                     onLeaveGame={LeaveGame(navigate)} 
-                    onStartGame={StartGame(navigate)}/>
+                    onStartGame={StartGame(navigate)}
+                />
             </div>
         </div>
     );
