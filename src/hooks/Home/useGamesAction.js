@@ -1,8 +1,8 @@
 // hooks/useGameActions.js
 import { GAME_JOIN_URL } from '../../utils/Constants';
 
-export const useGameActions = () => {
-  const joinGame = async (gameId, playerId) => {
+function useGameActions (gameId, playerId)  {
+  const joinGame = async () => {
     try {
       const response = await fetch(GAME_JOIN_URL, {
         method: 'POST',
@@ -30,6 +30,39 @@ export const useGameActions = () => {
       throw error;
     }
   };
-
-  return { joinGame };
 };
+
+export default useGameActions;
+
+// export const useGameActions = () => {
+//   const joinGame = async (gameId, playerId) => {
+//     try {
+//       const response = await fetch(GAME_JOIN_URL, {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ 
+//           game_id: gameId,
+//           player_id: playerId,
+//         }),
+//       });
+//       if (!response.ok) {
+//         const errorData = await response.json();
+//         throw new Error(`Error al unirse a la partida: ${errorData.message || 'No se pudo unirse'}`);
+//       }
+
+//       // localSessionStorage.setItem('game_id', gameId);
+//       const data = await response.json();
+//       console.log("Unido a la partida con éxito:", data);
+//       localStorage.setItem('game_id', gameId);
+
+//       return data;
+//     } catch (error) {
+//       console.error("Error al unirse a la partida:", error);
+//       throw error;
+//     }
+//   };
+
+//   return { joinGame };
+// };
