@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../../../../components/Button/Button.jsx';
 import VictoryBox from '../../../../components/VictoryBox/VictoryBox.jsx';
-import WinnerExists from '../../../../hooks/Game/WinnerExists.js';
+import WinnerExists from '../../../../hooks/Game/winnerExists.js';
 import FigCards from '../../../../components/Game/FigCards/FigCards.jsx';
 import MovCards from '../../../../components/Game/MovCards/MovCards.jsx';
 import CardsGame from '../../../../utils/logics/Game/CardsGame.js';
@@ -14,15 +14,20 @@ import Confetti from 'react-confetti';
 import './Game.css';
 import { useNavigate } from 'react-router-dom';
 import { LeaveGame } from '../../../../hooks/Lobby/leaveGame.jsx';
+import { getWSInstance } from '../../../../services/WsGameInstance.js';
+import { WS_GAME } from '../../../../utils/Constants.js';
 
 
 function Game() {
+    const location = useLocation();
+    const { ws, gameId } = location.state || {};
+
     const navigate = useNavigate();
     //Manejo el fetch de las cartas
     const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
     const localPlayerName = localStorage.getItem("username");
-    const gameId = localStorage.getItem('game_id');
-    const winner = WinnerExists(gameId);
+
+    const { winnerName } = WinnerExists(ws, gameId);
     const { movsIds, figsIds } = CardsGame();
     const { currentPlayer, playerId } = getCurrentTurnPlayer();
     
@@ -32,7 +37,7 @@ function Game() {
 
     return (
         <div>
-            {winner && (
+            {winnerName && (
                 <>
                     <Confetti
                         width={2500} 
@@ -43,7 +48,7 @@ function Game() {
                         recycle={false}
                         style={{ position: 'fixed', top: 0, left: 0 }}
                     />
-                    <VictoryBox winnerName={winner.name_player} onLeave={LeaveGame(navigate)}/>
+                    <VictoryBox winnerName={winnerName} onLeave={LeaveGame(navigate)}/>
                 </>
             )}
             <div className="game-container">

@@ -9,17 +9,19 @@ import { useLobby } from "../../../../hooks/Lobby/useLobby.js";
 import { LeaveGame } from "../../../../hooks/Lobby/leaveGame.jsx";
 import { StartGame } from "../../../../hooks/Lobby/startGame.jsx";
 import { HOME, GAME, WS_GAME} from "../../../../utils/Constants.js";
+import { getWSInstance, closeWSInstance } from "../../../../services/WsGameInstance.js";
 
 function Lobby() {
     const location = useLocation();
     const navigate = useNavigate();
     const {isOwner, gameId} = location.state || {};
-    const ws = new WebSocket(WS_GAME);
+    
+    const ws = getWSInstance(WS_GAME + gameId);
     const {players, gameName, maxPlayers, activeGame, cancelGame} = useLobby(ws, gameId);
 
     useEffect(() => {
-        if (activeGame) { navigate(GAME); }
-        if (cancelGame) { navigate(HOME); ws.close(); }
+        if (activeGame) { navigate(GAME, { state: { gameId, ws } }); }
+        if (cancelGame) { navigate(HOME); closeWSInstance(); }
     }, [cancelGame, activeGame]);
 
     return (

@@ -1,41 +1,38 @@
-import { useEffect, useState } from 'react';
-import { GAME_INFO_WS } from '../../utils/Constants.js';
+import { useState } from 'react';
+import { GET_WINNER_URL } from '../../utils/Constants.js';
 
 // Acordar con back que se envie player_name en label "winner" por GAME_INFO_WS
-export const WinnerExists = (gameId) => {
+const WinnerExists = (ws, gameId) => {
     const [winner, setWinner] = useState(null);
 
-    useEffect(() => {
-        const ws = new WebSocket(GAME_INFO_WS + gameId);
-
-        ws.onmessage = (event) => {
-            const message = event.data;
-            if (message) { 
-                if (message.startsWith('{') || message.startsWith('[')) {
-                    try {
-                        const gameInfo = JSON.parse(message);
-                        if (gameInfo.winner !== null) {
-                            console.log('Se encontro Ganador.');
-                            setWinner(gameInfo.winner); 
-                        }
-                    } catch (error) {
-                        console.error('Error parsing JSON:', error);
-                    }
-                }
+    const fetchWinner = async () => {
+        try {
+            const response = await fetch(GET_WINNER_URL + gameId, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                throw new Error('Response was not ok');
             }
-        };
-        ws.onerror = (error) => {
-            console.error('WebSocket error:', error);
-        };
-        return () => {
-            if (ws.readyState === WebSocket.OPEN) { 
-                ws.close();
-            }
-        };
-    }, []);
+            const data = await response.json();
+            setWinner(data.name_player);
+        } catch (error) {
+            console.error('Error fetching winner:', error);
+        }
+    };
 
-    return winner ;
+    ws.onmessage = (event) => {
+        const message = event.data;
+        if (message == "Hay Ganador") { fetchWinner(); }
+    };
+    ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+    };
+
+    return {winner} ;
 };
-
+export default WinnerExists;
 
 

@@ -1,9 +1,14 @@
 import { LeaveGame } from '../../hooks/Lobby/leaveGame'; 
 import { describe, it, vi, expect } from 'vitest';
 import { GAME_LEAVE_URL, HOME } from '../../utils/Constants';
+import { closeWSInstance } from '../../services/WsGameInstance';
 
 vi.mock('react-router-dom', () => ({
   useNavigate: () => vi.fn(),
+}));
+
+vi.mock('../../services/WsGameInstance', () => ({
+  closeWSInstance: vi.fn(),
 }));
 
 describe('LeaveGame function', () => {
@@ -22,7 +27,6 @@ describe('LeaveGame function', () => {
         if (key === 'game_id') return '789';
         return null;
       }),
-      setItem: vi.fn(),
       removeItem: vi.fn(),
     };
 
@@ -44,8 +48,7 @@ describe('LeaveGame function', () => {
       body: JSON.stringify({ game_id: 789, id_user: 456 }),
     });
     expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('game_id');
-    expect(mockLocalStorage.getItem).toHaveBeenCalledWith('active');
-    // expect(mockLocalStorage.setItem).toHaveBeenCalledWith('active', false);
+    expect(closeWSInstance).toHaveBeenCalled();
     expect(global.alert).toHaveBeenCalledWith(
       'Jugador 456 abandonaste el juego 789 exitosamente'
     );

@@ -1,3 +1,4 @@
+import { closeWSInstance } from '../../services/WsGameInstance.js';
 import { HOME, GAME_LEAVE_URL } from '../../utils/Constants.js';
 
 export const LeaveGame = (navigate) => { 
@@ -24,11 +25,7 @@ export const LeaveGame = (navigate) => {
     
             // desde looby o game
             localStorage.removeItem('game_id');
-    
-            // solo game
-            const active = localStorage.getItem('active');
-            if (active) {localStorage.setItem('active', false);} 
-    
+            closeWSInstance();
             navigate(HOME);
         } catch (error) {
             alert("No se pudo abandonar el juego. " + error.message);
