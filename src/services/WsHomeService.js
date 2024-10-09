@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-function WebSocket_HOME (url) {
+function WsHomeService (url) {
     const ws = useRef(null);
     const [isWsOpen, setIsWsOpen] = useState(false);
     const [messages, setMessages] = useState([]);
@@ -45,7 +45,7 @@ function WebSocket_HOME (url) {
         }
     };
 
-    return { ws: ws.current, isWsOpen, messages, sendMessage };
+    return { ws: ws.current };
 };
 
-export default WebSocket_HOME;
+export default WsHomeService;

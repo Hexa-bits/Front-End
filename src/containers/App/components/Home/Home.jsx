@@ -3,18 +3,17 @@ import useGames from '../../../../hooks/Home/useGames.js';
 import Button from "../../../../components/Button/Button";
 import GameList from '../../../../components/Game_List/Game_List.jsx';
 import JoinGame from '../../../../utils/logics/Home/JoinGame.js';
-import WebSocket_HOME from '../../../../services/WsHomeInstance.js';
+import WsHomeService from '../../../../services/WsHomeService.js';
 import { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { WS_HOME } from '../../../../utils/Constants.js';
 
 function Home() {
-    // const gameId = localStorage.getItem('game_id');
     const playerId = parseInt(localStorage.getItem("id_user"),10);
     const username = localStorage.getItem("username");
     const navigate = useNavigate();
 
-    const { ws, isWsOpen, messages, sendMessage } = WebSocket_HOME(WS_HOME);
+    const { ws } = WsHomeService(WS_HOME);
 
     const { games } = useGames(ws);
 
