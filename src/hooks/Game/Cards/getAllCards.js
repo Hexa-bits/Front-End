@@ -1,9 +1,12 @@
-import { useEffect } from "react";
-import { GET_MOVEMENTS_URL, GET_FIGURES_URL } from "../../utils/Constants.js";
+import { useState, useEffect } from "react";
+import {
+  GET_MOVEMENTS_URL,
+  GET_FIGURES_URL,
+} from "../../../utils/Constants.js";
 
 function renewAllCards(ws, playerId) {
-  //esta funcion va a recibir x ws q tiene q renovar cartas del jugador x
-  //nO TENGO QUE TENER UNA VARIABLE USESTATE, NO?
+  const [movs_ids, setMovsIds] = useState([]);
+  const [figs_ids, setFigsIds] = useState([]);
   const renewMovs = async () => {
     try {
       //puedo poner dos try? o si o si tengo que pedir las cartas de figura en su propio archivo?
@@ -18,13 +21,14 @@ function renewAllCards(ws, playerId) {
       }
       const data = await response.json();
       console.log("Movimientos: ", data.id_mov_card);
-      return { movs_ids: data.id_mov_card || [] };
+      setMovsIds(data.id_mov_card);
+      //return { movs_ids: data.id_mov_card || [] };
     } catch (error) {
       console.error(
         "Error al obtener las cartas de movimientos del jugador:",
         error
       );
-      return { movs_ids: [] };
+      //return { movs_ids: [] };
     }
   };
 
@@ -40,13 +44,14 @@ function renewAllCards(ws, playerId) {
       }
       const data = await response.json();
       console.log("Figuras: ", data.id_fig_card);
-      return { figs_ids: data.id_fig_card || [] };
+      setFigsIds(data.id_fig_card);
+      //return { figs_ids: data.id_fig_card || [] };
     } catch (error) {
       console.error(
         "Error al obtener las cartas de figuras del jugador:",
         error
       );
-      return { figs_ids: [] };
+      //return { figs_ids: [] };
     }
   };
 
@@ -63,6 +68,6 @@ function renewAllCards(ws, playerId) {
       console.error("ws error:", error);
     };
   }, [ws]); //por qué ws?
-  return { renewMovs, renewFigs };
+  return { movs_ids, figs_ids };
 }
 export default renewAllCards;

@@ -4,7 +4,7 @@ import VictoryBox from "../../../../components/VictoryBox/VictoryBox.jsx";
 import useWinnerPolling from "../../../../hooks/Game/getWinner.js";
 import FigCards from "../../../../components/Game/FigCards/FigCards.jsx";
 import MovCards from "../../../../components/Game/MovCards/MovCards.jsx";
-import CardsGame from "../../../../utils/logics/Game/CardsGame.js";
+import CardsGame from "../../../../hooks/Game/Cards/CardsGame.js";
 import LeaveButton from "../../../../components/Game/LeaveButton/LeaveButton.jsx";
 import SeePlayer from "../../../../components/Game/seePlayer_Turn/seePlayer.jsx";
 import getCurrentTurnPlayer from "../../../../hooks/Game/TurnPlayer/getCurrentTurnPlayer.js";
@@ -19,6 +19,7 @@ import {
   getWsGameInstance,
 } from "../../../../services/WsGameService.js";
 import { WS_GAME } from "../../../../utils/Constants.js";
+import renewAllCards from "../../../../hooks/Game/Cards/getAllCards.js";
 
 function Game() {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ function Game() {
 
   const ws = getWsGameInstance(WS_GAME + gameId);
   const winner = useWinnerPolling(gameId);
-  const { movsIds, figsIds } = CardsGame();
+  const { movs_ids, figs_ids } = renewAllCards(ws, playerId);
   const { currentPlayer, playerId } = getCurrentTurnPlayer();
 
   const handleEndTurn = async () => {
@@ -63,11 +64,11 @@ function Game() {
           </div>
           <div className="Game_Area">
             <div className="Fig">
-              <FigCards figsIds={figsIds} />
+              <FigCards figsIds={figs_ids} />
             </div>
             <div className="board"></div>
             <div className="Mov">
-              <MovCards movsIds={movsIds} />
+              <MovCards movsIds={movs_ids} />
             </div>
           </div>
         </div>
@@ -80,7 +81,7 @@ function Game() {
             <div className="end">
               <Button
                 label="Terminar Turno"
-                onClick={handleEndTurn} //aca tendria que ir un if?
+                onClick={handleEndTurn}
                 disabled={localPlayerId !== playerId}
               />
             </div>
