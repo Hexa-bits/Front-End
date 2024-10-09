@@ -1,28 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import './Lobby.css';
 
 import LobbyCard from "../../../../components/Lobby/Card/LobbyCard.jsx"
 import LobbyList from "../../../../components/Lobby/List/LobbyList.jsx";
 import LobbyButtons from "../../../../components/Lobby/Buttons/LobbyButtons.jsx";
-import { useLobby } from "../../../../hooks/Lobby/useLobby.js";
+import useLobby from "../../../../hooks/Lobby/useLobby.js";
 import { LeaveGame } from "../../../../hooks/Lobby/leaveGame.jsx";
 import { StartGame } from "../../../../hooks/Lobby/startGame.jsx";
 import { HOME, GAME, WS_GAME} from "../../../../utils/Constants.js";
-import { getWSInstance, closeWSInstance } from "../../../../services/WsGameInstance.js";
+import  { closeWsGameInstance, createWsGameInstance } from "../../../../services/WsGameService.js";
 
 function Lobby() {
     const location = useLocation();
     const navigate = useNavigate();
     const {isOwner, gameId} = location.state || {};
-    
-    const ws = getWSInstance(WS_GAME + gameId);
+
+    const ws = createWsGameInstance(WS_GAME + gameId);
     const {players, gameName, maxPlayers, activeGame, cancelGame} = useLobby(ws, gameId);
 
     useEffect(() => {
-        if (activeGame) { navigate(GAME, { state: { gameId, ws } }); }
-        if (cancelGame) { navigate(HOME); closeWSInstance(); }
+        if (activeGame) { navigate(GAME); }
+        if (cancelGame) { 
+            closeWsGameInstance();
+            navigate(HOME); 
+        }
     }, [cancelGame, activeGame]);
+
+    const handleLeave = async () => { 
+        await LeaveGame(navigate);
+    };
 
     return (
         <div className="lobby-overlay">
@@ -31,7 +38,7 @@ function Lobby() {
                 <LobbyList players={players} />
                 <LobbyButtons 
                     isOwner={isOwner} 
-                    onLeaveGame={LeaveGame(navigate)} 
+                    onLeaveGame={handleLeave} 
                     onStartGame={StartGame(navigate)}
                 />
             </div>

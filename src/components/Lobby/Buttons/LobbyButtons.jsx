@@ -7,8 +7,8 @@ function LobbyButtons({ isOwner, onLeaveGame, onStartGame}) {
         <div className="btn-container">
             {isOwner ? (
                 <>
-                    <Button label="Abandonar" onClick={onLeaveGame} className="btn-leave"/>
-                    <Button label="Iniciar" onClick={onStartGame} className="btn-start"/>
+                    <Button label="Abandonar" onClick={onLeaveGame} className="btn-leave" disabled={true}/>
+                    <Button label="Iniciar" onClick={onStartGame} className="btn-start" />
                 </>
             ) : (
                 <Button label="Abandonar" onClick={onLeaveGame} className="btn-leave"/>

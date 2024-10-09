@@ -1,45 +1,56 @@
 import './Home.css';
-import React from 'react';
 import useGames from '../../../../hooks/Home/useGames.js';
 import Button from "../../../../components/Button/Button";
 import GameList from '../../../../components/Game_List/Game_List.jsx';
-import { useHomeLogic } from '../../../../utils/logics/Home/LogicJoinGame.js';
+import JoinGame from '../../../../utils/logics/Home/JoinGame.js';
+import WsHomeService from '../../../../services/WsHomeService.js';
+import { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { WS_HOME } from '../../../../utils/Constants.js';
 
 function Home() {
-  const navigate = useNavigate();
-  const handleCrearPartida = () => {
-    navigate("/home/create-config");
-  };
+    const playerId = parseInt(localStorage.getItem("id_user"),10);
+    const username = localStorage.getItem("username");
+    const navigate = useNavigate();
 
-  const { games } = useGames();
-  const { handleJoin } = useHomeLogic(games);
-  const user = localStorage.getItem("username");
-  const user_id = localStorage.getItem("id_user");
-  return (
-      <div className="Home">
-        <section className="NombreUsuario">
-            <div className="dataUser">
-              <div className="user">Usuario: {user}</div>
-              <div className="id_user"> Id_Usuario: {user_id}</div>
-          </div>
-        </section>
+    const { ws } = WsHomeService(WS_HOME);
 
-        <section className="CrearPartida">
-          <Button 
-            label="Crear Partida" 
-            onClick={handleCrearPartida} 
-          />
-        </section>
-        
-        <section className="GameList__Home">
-            <GameList 
-            games={games} 
-            handleJoin={handleJoin} 
+    const { games } = useGames(ws);
+
+    const handleCrearPartida = () => {
+        navigate("/home/create-config");
+    };
+
+    const { joinGame } = JoinGame(ws);
+    const handleJoin = (gameId) => {
+        joinGame(gameId, playerId);
+    };
+
+
+    return (
+        <div className="Home">
+            <section className="NombreUsuario">
+                <div className="dataUser">
+                <div className="user">Usuario: {username}</div>
+                <div className="id_user"> Id_Usuario: {playerId}</div>
+            </div>
+            </section>
+
+            <section className="CrearPartida">
+            <Button 
+                label="Crear Partida" 
+                onClick={handleCrearPartida} 
             />
-        </section>
-      </div>
-  );
+            </section>
+            
+            <section className="GameList__Home">
+                <GameList 
+                games={games} 
+                handleJoin={handleJoin} 
+                />
+            </section>
+        </div>
+    );
 }
 
 export default Home;

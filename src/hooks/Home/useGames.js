@@ -1,62 +1,56 @@
 import { useState, useEffect } from 'react';
-import { HOME_URL, HOME_URL_WS } from '../../utils/Constants.js';
+import { HOME_URL } from '../../utils/Constants.js';
 
-function useGames() {
+function useGames(ws) {
     const [games, setGames] = useState([]);
-    const [isWsConnected, setIsWsConnected] = useState(false);
-
-    // Solicitud REST para obtener el estado inicial de las partidas
-    useEffect(() => {
-        const fetchGames = async () => {
-            try {
-                const response = await fetch(HOME_URL, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
+    
+    const getListGames = async () => {
+        try {
+            const response = await fetch(HOME_URL, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
                 }
-                );
-                if (!response.ok) {
-                    throw new Error('Error en la respuesta del servidor');
-                }
-                const data = await response.json();
-                setGames(data);
-                setIsWsConnected(true); // Indica que ya se han obtenido los juegos y se puede establecer la conexión WebSocket
-            } catch (error) {
-                console.error("Error fetching lobbies:", error);
+            });
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor');
             }
-        };
-        fetchGames();
-    }, []);
+            const data = await response.json();
+            console.log("Se pidió por GET: ", data);
+            setGames(data);
+        } catch (error) {
+            console.error("Error fetching lobbies:", error);
+        }
+    }
 
-    // Conectar al WebSocket después de obtener los datos iniciales
     useEffect(() => {
-        if (!isWsConnected) return;
-
-        const ws = new WebSocket(HOME_URL_WS);
-
+        if (!ws) return; // Verificamos que el WebSocket esté definido
+    
+        console.log("Primer llamado a getListGames");
+        getListGames(); // Cargar juegos inicialmente
+    
+        // Establecer los manejadores de eventos del WebSocket
         ws.onmessage = (event) => {
             const message = event.data;
-            if (message){console.log('Actualización de Partidas.')}
-            
-            if (message.startsWith('{') || message.startsWith('[')) {
-                try {
-                    const gamesData = JSON.parse(message);
-                    setGames(gamesData);
-                } catch (error) {
-                    console.error('Error parsing JSON:', error);
-                }
+            console.log("Mensaje recibido:", message);
+            if (message && message === "Actualizar lista de partidas") {
+                console.log("Llamado de mensajes de actualización.");
+                getListGames(); // Refrescar la lista si se recibe la notificación de actualización
             }
         };
-
+    
         ws.onerror = (error) => {
             console.error('WebSocket error:', error);
         };
-
+    
+        // Limpiar cuando se desmonte el componente
         return () => {
-            ws.close();
+            console.log("Limpiando WebSocket");
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.close();
+            }
         };
-    }, [isWsConnected]);
+    }, [ws]);
 
     return { games };
 }

@@ -13,26 +13,31 @@ import passTurn from "../../../../hooks/Game/TurnPlayer/passTurn.js";
 import Confetti from 'react-confetti';
 import './Game.css';
 import { useNavigate } from 'react-router-dom';
-import { LeaveGame } from '../../../../hooks/Lobby/leaveGame.jsx';
-import { getWSInstance } from '../../../../services/WsGameInstance.js';
+import { LeaveGame }  from '../../../../hooks/Lobby/leaveGame.jsx';
+import { getWsGameInstance } from '../../../../services/WsGameService.js';
 import { WS_GAME } from '../../../../utils/Constants.js';
 
 
 function Game() {
-    const location = useLocation();
-    const { ws, gameId } = location.state || {};
-
     const navigate = useNavigate();
     //Manejo el fetch de las cartas
     const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
     const localPlayerName = localStorage.getItem("username");
-
+    const gameId = localStorage.getItem('game_id');
+    
+    const ws = getWsGameInstance(WS_GAME + gameId);
     const { winnerName } = WinnerExists(ws, gameId);
+    
+    const winner = useWinnerPolling(gameId);
     const { movsIds, figsIds } = CardsGame();
     const { currentPlayer, playerId } = getCurrentTurnPlayer();
     
     const handleEndTurn = async () => {
         await passTurn(); 
+    };
+
+    const handleLeave = async () => {
+        await LeaveGame(navigate);
     };
 
     return (
@@ -48,7 +53,7 @@ function Game() {
                         recycle={false}
                         style={{ position: 'fixed', top: 0, left: 0 }}
                     />
-                    <VictoryBox winnerName={winnerName} onLeave={LeaveGame(navigate)}/>
+                    <VictoryBox winnerName={winner} onLeave={handleLeave}/>
                 </>
             )}
             <div className="game-container">
@@ -82,7 +87,7 @@ function Game() {
                               />
                         </div>
                         <div className="leav">
-                            <LeaveButton onLeave={LeaveGame(navigate)}/>
+                            <LeaveButton onLeave={handleLeave}/>
                         </div>
                     </div>
 
