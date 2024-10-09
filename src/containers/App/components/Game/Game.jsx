@@ -4,7 +4,6 @@ import VictoryBox from "../../../../components/VictoryBox/VictoryBox.jsx";
 import useWinnerPolling from "../../../../hooks/Game/getWinner.js";
 import FigCards from "../../../../components/Game/FigCards/FigCards.jsx";
 import MovCards from "../../../../components/Game/MovCards/MovCards.jsx";
-import CardsGame from "../../../../hooks/Game/Cards/CardsGame.js";
 import LeaveButton from "../../../../components/Game/LeaveButton/LeaveButton.jsx";
 import SeePlayer from "../../../../components/Game/seePlayer_Turn/seePlayer.jsx";
 import getCurrentTurnPlayer from "../../../../hooks/Game/TurnPlayer/getCurrentTurnPlayer.js";
