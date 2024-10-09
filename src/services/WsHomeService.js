@@ -45,7 +45,7 @@ function WsHomeService (url) {
         }
     };
 
-    return { ws: ws.current };
+    return { ws: ws.current, messages, sendMessage };
 };
 
 export default WsHomeService;
