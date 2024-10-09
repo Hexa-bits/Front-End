@@ -28,7 +28,7 @@ export const LeaveGame = (ws, navigate) => {
             // solo game
             const active = localStorage.getItem('active');
             if (active) {localStorage.setItem('active', false);} 
-            ws && ws.close();
+            ws.close();
             navigate(HOME);
         } catch (error) {
             alert("No se pudo abandonar el juego. " + error.message);

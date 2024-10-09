@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { LOBBY_URL } from '../../utils/Constants.js';
 
-export const useLobby = (ws, gameId) => {
+function useLobby (ws, gameId) {
     const [players, setPlayers] = useState([]);
     const [gameName, setGameName] = useState('');
     const [maxPlayers, setMaxPlayers] = useState(0);
@@ -11,7 +11,12 @@ export const useLobby = (ws, gameId) => {
     
     const getLobbyInfo = async () => {
         try {
-            const response = await fetch(LOBBY_URL + gameId, { method: "GET", });
+            const response = await fetch(LOBBY_URL + gameId, { 
+                method: "GET", 
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
             if (!response.ok) {
                 throw new Error("Response not ok");
             }
@@ -25,27 +30,32 @@ export const useLobby = (ws, gameId) => {
             console.log("http: Error al obtener información del juego. " + error.message);
         }
     }
+
     useEffect(() => { 
+        if (!ws) return;
+
         getLobbyInfo();
-    }, []);
+        ws.onmessage = (event) => {
+            const message = event.data;
+            if (message) {
+                if (message === "Se unió/abandonó jugador en lobby") {
+                    getLobbyInfo();
+                }
+                if (message === "La partida inició") {
+                    setActiveGame(true);
+                }
+                if (message === "La partida se canceló") {
+                    setCancelGame(true);
+                }
+            }
+        };
+    
+        ws.onerror = (error) => {
+            console.error('WebSocket error:', error);
+        };
 
-    ws.onmessage = (event) => {
-        const message = event.data;
-        if (message) {
-            if (message == "Se unió/abandonó jugador en lobby") {
-                getLobbyInfo();
-            }
-            if (message == "La partida inició") {
-                setActiveGame(true);
-            }
-            if (message == "La partida se canceló") {
-                setCancelGame(true);
-            }
-        }
-    };
-
-    ws.onerror = (error) => {
-        console.error('WebSocket error:', error);
-    };
+    }, [ws]);
     return { players, gameName, maxPlayers, activeGame, cancelGame };
 };
+
+export default useLobby;
