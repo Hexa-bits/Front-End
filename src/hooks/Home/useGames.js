@@ -47,7 +47,7 @@ function useGames(ws) {
         return () => {
             console.log("Limpiando WebSocket");
             if (ws.readyState === WebSocket.OPEN) {
-                ws.close(); // Cerrar el WebSocket si sigue abierto
+                ws.close();
             }
         };
     }, [ws]);
