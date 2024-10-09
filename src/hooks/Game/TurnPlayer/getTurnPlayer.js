@@ -1,8 +1,8 @@
-import { useNameTurnPlayerUrl } from "../../../utils/logics/Game/useTurnPlayerUrls.js";
+import { GET_TURN_PLAYER_URL } from '../../../utils/Constants.js';
 
 //Obtener id y nombre del jugador en turno
 const getTurnPlayer = async (gameId) => {
-    const fullUrl = useNameTurnPlayerUrl(gameId);
+
     try {
         const response = await fetch(fullUrl, {
             method: 'GET',
