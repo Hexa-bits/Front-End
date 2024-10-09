@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GET_WINNER_URL } from '../../utils/Constants.js';
 
-// Acordar con back que se envie player_name en label "winner" por GAME_INFO_WS
-const WinnerExists = (ws, gameId) => {
+function WinnerExists (ws, gameId) {
+
     const [winner, setWinner] = useState(null);
 
-    const fetchWinner = async () => {
+    const getWinner = async () => {
         try {
             const response = await fetch(GET_WINNER_URL + gameId, {
                 method: 'GET',
@@ -23,16 +23,21 @@ const WinnerExists = (ws, gameId) => {
         }
     };
 
-    ws.onmessage = (event) => {
-        const message = event.data;
-        if (message == "Hay Ganador") { fetchWinner(); }
-    };
-    ws.onerror = (error) => {
-        console.error('WebSocket error:', error);
-    };
+    useEffect(() => {
+        if (!ws) return;
+        getWinner();
+    
+        ws.onmessage = (event) => {
+            const message = event.data;
+            if (message == "Hay Ganador") { 
+                getWinner(); 
+            }
+        };
+    }, [ws]);
 
-    return {winner} ;
+    return { winner } ;
 };
+
 export default WinnerExists;
 
 

@@ -25,12 +25,16 @@ function Game() {
     const localPlayerName = localStorage.getItem("username");
     const gameId = localStorage.getItem('game_id');
     
+    // Recupero instancia de ws creada en Lobby
     const ws = getWsGameInstance(WS_GAME + gameId);
     const { winnerName } = WinnerExists(ws, gameId);
     
-    const winner = useWinnerPolling(gameId);
-    const { movsIds, figsIds } = CardsGame();
-    const { currentPlayer, playerId } = getCurrentTurnPlayer();
+    // const { movsIds, figsIds } = CardsGame();
+    // const { currentPlayer, playerId } = getCurrentTurnPlayer();
+    const currentPlayer = "player 1";
+    const playerId = 1;
+    const movsIds = [1, 2, 3, 4, 5];
+    const figsIds = [1, 2, 3, 4, 5];
     
     const handleEndTurn = async () => {
         await passTurn(); 

@@ -26,7 +26,6 @@ export const GAME_TURN_PLAYER_WS_URL = `ws://localhost:${PORT}${GAME}/info`;
 
 export const WS_GAME = `ws://localhost:${PORT}${GAME}?game_id=`;
 export const WS_HOME = `ws://localhost:${PORT}${HOME}`;
-export const WS_LOBBY_URL = `ws://localhost:${PORT}${LOBBY}?game_id=`;
 
 /** MENSAJES */
 export const LoginHelpText = "Debe tener entre 1 y 10 caracteres.";
