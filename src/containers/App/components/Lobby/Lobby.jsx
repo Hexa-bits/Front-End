@@ -6,7 +6,7 @@ import LobbyCard from "../../../../components/Lobby/Card/LobbyCard.jsx"
 import LobbyList from "../../../../components/Lobby/List/LobbyList.jsx";
 import LobbyButtons from "../../../../components/Lobby/Buttons/LobbyButtons.jsx";
 import useLobby from "../../../../hooks/Lobby/useLobby.js";
-import { LeaveGame } from "../../../../hooks/Lobby/leaveGame.jsx";
+import {LeaveGame} from "../../../../hooks/Lobby/leaveGame.jsx";
 import { StartGame } from "../../../../hooks/Lobby/startGame.jsx";
 import { HOME, GAME, WS_GAME} from "../../../../utils/Constants.js";
 
@@ -49,6 +49,13 @@ function Lobby() {
         }
     }, [isWsOpen]);
 
+    const handleLeave = async () => {
+        if (ws.current) {
+            ws.current.close();
+        }
+        await LeaveGame(navigate);
+    };
+
     return (
         <div className="lobby-overlay">
             <div className='lobby-container'>
@@ -56,7 +63,7 @@ function Lobby() {
                 <LobbyList players={players} />
                 <LobbyButtons 
                     isOwner={isOwner} 
-                    onLeaveGame={LeaveGame(ws, navigate)} 
+                    onLeaveGame={handleLeave} 
                     onStartGame={StartGame(navigate)}
                 />
             </div>

@@ -13,7 +13,7 @@ import passTurn from "../../../../hooks/Game/TurnPlayer/passTurn.js";
 import Confetti from 'react-confetti';
 import './Game.css';
 import { useNavigate } from 'react-router-dom';
-import { LeaveGame } from '../../../../hooks/Lobby/leaveGame.jsx';
+import {LeaveGame}  from '../../../../hooks/Lobby/leaveGame.jsx';
 
 
 function Game() {
@@ -30,6 +30,13 @@ function Game() {
         await passTurn(); 
     };
 
+    const handleLeave = async () => {
+        // if (ws.current) {
+        //     ws.current.close();
+        // }
+        await LeaveGame(navigate);
+    };
+
     return (
         <div>
             {winner && (
@@ -43,7 +50,7 @@ function Game() {
                         recycle={false}
                         style={{ position: 'fixed', top: 0, left: 0 }}
                     />
-                    <VictoryBox winnerName={winner.name_player} onLeave={LeaveGame(navigate)}/>
+                    <VictoryBox winnerName={winner.name_player} onLeave={handleLeave}/>
                 </>
             )}
             <div className="game-container">
@@ -77,7 +84,7 @@ function Game() {
                               />
                         </div>
                         <div className="leav">
-                            <LeaveButton onLeave={LeaveGame(navigate)}/>
+                            <LeaveButton onLeave={handleLeave}/>
                         </div>
                     </div>
 
