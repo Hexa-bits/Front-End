@@ -23,33 +23,34 @@ function useGames(ws) {
         }
     }
 
-    // useEffect para manejar WebSocket y actualizaciones
     useEffect(() => {
         if (!ws) return; // Verificamos que el WebSocket esté definido
-
-        // Llamar a getListGames al montar el componente para obtener las partidas iniciales
-        getListGames();
-
+    
+        console.log("Primer llamado a getListGames");
+        getListGames(); // Cargar juegos inicialmente
+    
         // Establecer los manejadores de eventos del WebSocket
         ws.onmessage = (event) => {
             const message = event.data;
             console.log("Mensaje recibido:", message);
             if (message && message === "Actualizar lista de partidas") {
+                console.log("Llamado de mensajes de actualización.");
                 getListGames(); // Refrescar la lista si se recibe la notificación de actualización
             }
         };
-
+    
         ws.onerror = (error) => {
             console.error('WebSocket error:', error);
         };
-
+    
         // Limpiar cuando se desmonte el componente
         return () => {
+            console.log("Limpiando WebSocket");
             if (ws.readyState === WebSocket.OPEN) {
                 ws.close(); // Cerrar el WebSocket si sigue abierto
             }
         };
-    }, [ws]); // Solo se ejecuta cuando `ws` cambia
+    }, [ws]);
 
     return { games };
 }

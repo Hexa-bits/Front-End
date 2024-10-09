@@ -3,7 +3,7 @@ import useGames from '../../../../hooks/Home/useGames.js';
 import Button from "../../../../components/Button/Button";
 import GameList from '../../../../components/Game_List/Game_List.jsx';
 import JoinGame from '../../../../utils/logics/Home/JoinGame.js';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { WS_HOME } from '../../../../utils/Constants.js';
 
@@ -14,36 +14,48 @@ function Home() {
     const username = localStorage.getItem("username");
     const navigate = useNavigate();
 
-    // Crear conexión al WebSocket
-    const ws = useRef(null);
+    const ws = useRef(null); // Mantener la referencia del WebSocket
+    
+    const [isWsOpen, setIsWsOpen] = useState(false); // Estado para manejar si el WebSocket está abierto
 
-    // Lista de Partidas
     const { games } = useGames(ws.current);
 
     const handleCrearPartida = () => {
-        ws.current.close();
         navigate("/home/create-config");
     };
-    
+
     const { joinGame } = JoinGame(ws.current);
-    // Manejador de unirse a partida
     const handleJoin = (gameId) => {
         joinGame(gameId, playerId);
     };
 
     useEffect(() => {
-        if(!ws.current){
+        if (!ws.current) {
             console.log("Inicializando WebSocket");
             ws.current = new WebSocket(WS_HOME);
+            ws.current.onopen = () => {
+                console.log("WebSocket está abierto");
+                setIsWsOpen(true); // Actualizar el estado cuando el WebSocket está abierto
+            };
+
+            ws.current.onclose = () => {
+                console.log("WebSocket está cerrado");
+                setIsWsOpen(false); // Actualizar el estado cuando el WebSocket se cierra
+            };
+
+            ws.current.onerror = (error) => {
+                console.error('WebSocket error:', error);
+            };
         }
-        
-        // Limpiar la conexión del WebSocket al desmontar el componente
+
         return () => {
-            if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-                ws.current.close();
+            if (isWsOpen) {
+                console.log("Cerrando WebSocket en Home");
+                ws.current.close(); // Cerrar solo si está abierto
             }
         };
-    }, []);
+    }, [isWsOpen]);
+
 
     return (
         <div className="Home">

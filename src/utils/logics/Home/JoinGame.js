@@ -25,7 +25,7 @@ const JoinGame = (ws) => {
 
             // Lógica de navegación
             console.log("Navegando al lobby con gameId:", gameId);
-            ws.close();
+            // ws.close();
             navigate(LOBBY, { state: { isOwner: false, gameId } });
 
             return data;
