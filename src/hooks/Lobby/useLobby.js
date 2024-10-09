@@ -1,4 +1,4 @@
-import { useState, useEffect, act } from 'react';
+import { useState, useEffect } from 'react';
 import { LOBBY_URL, WS_LOBBY_URL } from '../../utils/Constants.js';
 
 export const useLobby = (gameId) => {

@@ -22,9 +22,10 @@ export const GET_WINNER_URL = `http://localhost:${PORT}${GAME}/get-winner`;
 export const GAME_PASS_URL = `http://localhost:${PORT}${GAME}/end-turn`;
 
 /** WEBSOCKETS */
-export const HOME_URL_WS = `ws://localhost:${PORT}${HOME}/get-lobbies`;
-export const WS_LOBBY_URL = `ws://localhost:${PORT}${LOBBY}?game_id=`;
 export const GAME_TURN_PLAYER_WS_URL = `ws://localhost:${PORT}${GAME}/info`;
+
+export const WS_HOME = `ws://localhost:${PORT}${HOME}`;
+export const WS_LOBBY_URL = `ws://localhost:${PORT}${LOBBY}?game_id=`;
 
 /** MENSAJES */
 export const LoginHelpText = "Debe tener entre 1 y 10 caracteres.";
