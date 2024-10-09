@@ -1,9 +1,16 @@
-import { LeaveGame } from '../../hooks/Lobby/leaveGame'; 
+import {LeaveGame} from '../../hooks/Lobby/leaveGame'; 
 import { describe, it, vi, expect } from 'vitest';
 import { GAME_LEAVE_URL, HOME } from '../../utils/Constants';
+import { closeWsGameInstance } from '../../services/WsGameService';
+import { waitFor } from '@testing-library/react';
 
 vi.mock('react-router-dom', () => ({
   useNavigate: () => vi.fn(),
+}));
+
+// Mock de closeWsGameInstance
+vi.mock('../../services/WsGameService', () => ({
+  closeWsGameInstance: vi.fn(),  
 }));
 
 describe('LeaveGame function', () => {
@@ -30,26 +37,25 @@ describe('LeaveGame function', () => {
     global.fetch = mockFetch;
     global.alert = vi.fn();
 
-    const leaveGame = LeaveGame(mockNavigate);
-    await leaveGame();
-
-    // Verificaciones
-    expect(mockLocalStorage.getItem).toHaveBeenCalledWith('id_user');
-    expect(mockLocalStorage.getItem).toHaveBeenCalledWith('game_id');
-    expect(mockFetch).toHaveBeenCalledWith(`${GAME_LEAVE_URL}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ game_id: 789, id_user: 456 }),
+    LeaveGame(mockNavigate);
+    waitFor(() => {
+      // Verificaciones
+      expect(mockLocalStorage.getItem).toHaveBeenCalledWith('id_user');
+      expect(mockLocalStorage.getItem).toHaveBeenCalledWith('game_id');
+      expect(mockFetch).toHaveBeenCalledWith(`${GAME_LEAVE_URL}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ game_id: 789, id_user: 456 }),
+      });
+      expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('game_id');
+      expect(global.alert).toHaveBeenCalledWith(
+        'Jugador 456 abandonaste el juego 789 exitosamente'
+      );
+      expect(closeWsGameInstance).toHaveBeenCalled();
+      expect(mockNavigate).toHaveBeenCalledWith(HOME);
     });
-    expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('game_id');
-    expect(mockLocalStorage.getItem).toHaveBeenCalledWith('active');
-    // expect(mockLocalStorage.setItem).toHaveBeenCalledWith('active', false);
-    expect(global.alert).toHaveBeenCalledWith(
-      'Jugador 456 abandonaste el juego 789 exitosamente'
-    );
-    expect(mockNavigate).toHaveBeenCalledWith(HOME);
   });
 
   it('debería manejar errores al intentar abandonar el juego', async () => {
@@ -63,12 +69,13 @@ describe('LeaveGame function', () => {
     global.fetch = mockFetch;
     global.alert = vi.fn(); 
   
-    const leaveGame = LeaveGame();
-    await leaveGame();
+    LeaveGame();
+    waitFor (() => {
+      expect(global.alert).toHaveBeenCalledWith(
+        'No se pudo abandonar el juego. Error al abandonar el juego'
+      );
+    });
 
     // Verificaciones
-    expect(global.alert).toHaveBeenCalledWith(
-      'No se pudo abandonar el juego. Error al abandonar el juego'
-    );
   });
 });

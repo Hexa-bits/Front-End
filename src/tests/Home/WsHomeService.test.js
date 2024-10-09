@@ -1,10 +1,13 @@
 import { renderHook, act } from '@testing-library/react';
 import WsHomeService from '../../services/WsHomeService';
+import { afterAll } from 'vitest';
 
 
 describe('WsHomeService', () => {
     const url = 'ws://localhost:1234';
     let mockWebSocket;
+    const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     beforeEach(() => {
         mockWebSocket = {
@@ -79,5 +82,9 @@ describe('WsHomeService', () => {
 
     afterEach(() => {
         vi.clearAllMocks();
+    });
+    afterAll(() => {
+        consoleLogSpy.mockRestore();
+        consoleErrorSpy.mockRestore();
     });
 });

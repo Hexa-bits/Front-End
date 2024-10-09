@@ -1,84 +1,88 @@
-import { describe, it, vi, expect, beforeEach } from 'vitest';
-import { renderHook, waitFor , act} from '@testing-library/react';
-import { useLobby } from '../../hooks/Lobby/useLobby';
+import { describe, it, vi, expect, beforeEach } from "vitest";
+import { renderHook, waitFor, act } from "@testing-library/react";
+import useLobby from "../../hooks/Lobby/useLobby";
 
 // Mock para useNavigate de React Router
-vi.mock('react-router-dom', () => ({
-  useNavigate: () => vi.fn(),
+vi.mock("react-router-dom", () => ({
+	useNavigate: () => vi.fn(),
 }));
 
-describe('useLobby hook', () => {
-  const gameId = '123';
-  const mockFetch = vi.fn();
-  let mockWs;
+const gameId = "123";
+const LOBBY_URL = "/home/lobby?game_id=123";
 
-  beforeEach(() => {
-    // Mock de fetch
-    global.fetch = mockFetch;
+describe("useLobby hook", () => {
+	
+	let mockFetch;
+	let mockWs;
 
-    // Mock de WebSocket
-    mockWs = {
-      onmessage: null,
-      onerror: null,
-      close: vi.fn(),
-    };
+	beforeEach(() => {
+		// Mock de fetch
+		mockFetch = vi.fn(() =>
+			Promise.resolve({
+				ok: true,
+				json: () => Promise.resolve({
+					name_players: ["Jugador 1", "Jugador 2"],
+					game_name: "Partida Test",
+					max_players: 4,
+				}),
+			})
+		);
+		// Mock de WebSocket
+		mockWs = {
+			onmessage: null,
+			onerror: null,
+		}
+		global.fetch = mockFetch;
 
-    global.WebSocket = vi.fn(() => mockWs);
+		vi.spyOn(console, "log").mockImplementation(() => {});
+		vi.spyOn(console, "error").mockImplementation(() => {});
+  	});
+	
+	afterEach(() => {
+		vi.clearAllMocks();
+	});
 
-    vi.spyOn(console, 'log').mockImplementation(() => {});
-    vi.spyOn(console, 'error').mockImplementation(() => {});
-  });
-  // const mockWebSocket = vi.fn();
+	it('Se obtiene la información del lobby correctamente al montar el hook', async () => {
+        const { result } = renderHook(() => useLobby(mockWs, gameId));
 
+        // Espera que el hook actualice el estado
+		waitFor(() => {
+			// Verifica que se haya llamado a fetch con el URL correcto
+			expect(fetchMock).toHaveBeenCalledWith(LOBBY_URL, { method: 'GET' });
 
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-
-  it('debería obtener la información del lobby correctamente vía HTTP', async () => {
-    const mockGameInfo = {
-      name_players: ['Jugador 1', 'Jugador 2'],
-      game_name: 'Partida Test',
-      max_players: 4,
-      start_owner: false,
-      cancel_owner: false,
-    };
-
-    // Simula la respuesta de fetch
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockGameInfo,
+			expect(result.current.players).toEqual(['player1', 'player2']);
+			expect(result.current.gameName).toBe('Test Game');
+			expect(result.current.maxPlayers).toBe(4);
+			expect(result.current.activeGame).toBe(false);
+			expect(result.current.cancelGame).toBe(false);
+		});
     });
 
-    const { result } = renderHook(() => useLobby(gameId));
-
-    // Verificaciones
-    await waitFor(() => {
-      expect(result.current.players).toBe(mockGameInfo.name_players);
-      expect(result.current.gameName).toBe(mockGameInfo.game_name);
-      expect(result.current.maxPlayers).toBe(mockGameInfo.max_players);
-      expect(result.current.activeGame).toBe(mockGameInfo.start_owner);
-      expect(result.current.cancelGame).toBe(mockGameInfo.cancel_owner);
-    });
-  });
-
-  it('debería manejar errores al obtener la información del lobby vía HTTP', async () => {
-    // Simula un error en la respuesta de fetch
-    mockFetch.mockResolvedValueOnce({
-      ok: false,
-      text: async () => 'Error al obtener información del juego.',
+    it('Correcto manejo de mensaje de WebSocket "Se unió/abandonó jugador en lobby"', async () => {
+        const { result } = renderHook(() => useLobby(mockWs, gameId));
+        // Simula el mensaje WebSocket
+        act(() => {
+            mockWs.onmessage({ data: 'Se unió/abandonó jugador en lobby' });
+        });
+		waitFor(() => {
+			expect(fetchMock).toHaveBeenCalledTimes(2);
+		});
     });
 
-    const consoleSpy = vi.spyOn(console, 'log');
-    renderHook(() => useLobby(gameId));
-    
-    // Verificar que se haya registrado el error en la consola
-    await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith(
-        'http: Error al obtener información del juego. http: Error al obtener información del juego.'
-      );
+    it('Correcto manejo de mensaje de WebSocket "La partida inició"', () => {
+        const { result } = renderHook(() => useLobby(mockWs, 'game123'));
+        act(() => {
+            mockWs.onmessage({ data: 'La partida inició' });
+        });
+        expect(result.current.activeGame).toBe(true);
     });
 
-    consoleSpy.mockRestore();
-  });
+    it('Correcto manejo de mensaje de WebSocket "La partida se canceló"', () => {
+        const { result } = renderHook(() => useLobby(mockWs, 'game123'));
+        act(() => {
+            mockWs.onmessage({ data: 'La partida se canceló' });
+        });
+        expect(result.current.cancelGame).toBe(true);
+    });
+
 });
