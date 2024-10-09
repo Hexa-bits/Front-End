@@ -19,7 +19,6 @@ function Home() {
     // Lista de Partidas
     const { games } = useGames(ws);
 
-    
     const handleCrearPartida = () => {
         ws.close();
         navigate("/home/create-config");
