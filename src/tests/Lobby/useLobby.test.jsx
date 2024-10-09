@@ -1,6 +1,6 @@
 import { describe, it, vi, expect, beforeEach } from "vitest";
 import { renderHook, waitFor, act } from "@testing-library/react";
-import { useLobby } from "../../hooks/Lobby/useLobby";
+import useLobby from "../../hooks/Lobby/useLobby";
 
 // Mock para useNavigate de React Router
 vi.mock("react-router-dom", () => ({

@@ -6,7 +6,7 @@ import LobbyCard from "../../../../components/Lobby/Card/LobbyCard.jsx"
 import LobbyList from "../../../../components/Lobby/List/LobbyList.jsx";
 import LobbyButtons from "../../../../components/Lobby/Buttons/LobbyButtons.jsx";
 import useLobby from "../../../../hooks/Lobby/useLobby.js";
-import {LeaveGame} from "../../../../hooks/Lobby/leaveGame.jsx";
+import { LeaveGame } from "../../../../hooks/Lobby/leaveGame.jsx";
 import { StartGame } from "../../../../hooks/Lobby/startGame.jsx";
 import { HOME, GAME, WS_GAME} from "../../../../utils/Constants.js";
 import  { closeWsGameInstance, createWsGameInstance } from "../../../../services/WsGameService.js";
