@@ -25,8 +25,6 @@ function WinnerExists (ws, gameId) {
 
     useEffect(() => {
         if (!ws) return;
-        getWinner();
-    
         ws.onmessage = (event) => {
             const message = event.data;
             if (message == "Hay Ganador") { 
