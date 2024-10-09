@@ -3,7 +3,7 @@ import { LOBBY } from '../../Constants';
 import { GAME_JOIN_URL } from '../../../utils/Constants';
 
 //Devuelve la función joinGame que se encarga de unir al jugador a la partida
-const JoinGame = (ws) => {    
+const  JoinGame = (ws) => {    
     const navigate = useNavigate();
 
     const joinGame = async (gameId, playerId) => {
@@ -39,30 +39,3 @@ const JoinGame = (ws) => {
 };
 
 export default JoinGame;
-
-
-
-// export const useHomeLogic = ({ws}) => {    
-//     const navigate = useNavigate();
-//     const { joinGame } = useGameActions();
-//     const playerId = parseInt(localStorage.getItem("id_user"),10);
-    
-//     const handleJoinGame = (gameId) =>{
-//         console.log("Navegando al lobby con gameId:", gameId);
-//         ws.close();
-//         navigate(LOBBY, {state: {isOwner:false, gameId }});
-//     }
-//       const handleJoin = async (gameId) => {
-//         try {
-//             const result = await joinGame(gameId, playerId);
-//             handleJoinGame(gameId);
-//         } catch (error) {
-//             console.error("Error al unirse a la partida:", error);
-//         }
-//     };
-
-//     return { handleJoin };
-// };
-
-
-

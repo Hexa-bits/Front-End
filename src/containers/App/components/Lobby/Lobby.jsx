@@ -9,50 +9,25 @@ import useLobby from "../../../../hooks/Lobby/useLobby.js";
 import {LeaveGame} from "../../../../hooks/Lobby/leaveGame.jsx";
 import { StartGame } from "../../../../hooks/Lobby/startGame.jsx";
 import { HOME, GAME, WS_GAME} from "../../../../utils/Constants.js";
+import  { closeWsGameInstance, createWsGameInstance } from "../../../../services/WsGameService.js";
 
 function Lobby() {
     const location = useLocation();
     const navigate = useNavigate();
     const {isOwner, gameId} = location.state || {};
-    const [isWsOpen, setIsWsOpen] = useState(false);
 
-    const ws = useRef(null);
-    
-    const {players, gameName, maxPlayers, activeGame, cancelGame} = useLobby(ws.current, gameId);
+    const ws = createWsGameInstance(WS_GAME + gameId);
+    const {players, gameName, maxPlayers, activeGame, cancelGame} = useLobby(ws, gameId);
 
     useEffect(() => {
         if (activeGame) { navigate(GAME); }
-        if (cancelGame) {  ws.current && ws.current.close(); navigate(HOME); }
+        if (cancelGame) { 
+            closeWsGameInstance();
+            navigate(HOME); 
+        }
     }, [cancelGame, activeGame]);
 
-    useEffect(() => {
-        if(!ws.current){
-            console.log("Inicializando WebSocket");
-            ws.current = new WebSocket(WS_GAME + gameId);
-
-            ws.current.onopen = () => {
-                console.log("WebSocket abierto en Lobby");
-                setIsWsOpen(true);
-            }
-
-            ws.current.onclose = () => {
-                console.log("WebSocket cerrado en Lobby");
-                setIsWsOpen(false);
-            }
-        }
-
-        return () => {
-            if (isWsOpen) {
-                console.log("Cerrando WebSocket en Lobby");
-                ws.current.close();
-            }
-        }
-    }, [isWsOpen]);
-
-    const handleLeave = async () => {
-        if (ws.current) {
-            ws.current.close();
-        }
+    const handleLeave = async () => { 
         await LeaveGame(navigate);
     };
 

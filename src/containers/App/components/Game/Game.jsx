@@ -13,7 +13,9 @@ import passTurn from "../../../../hooks/Game/TurnPlayer/passTurn.js";
 import Confetti from 'react-confetti';
 import './Game.css';
 import { useNavigate } from 'react-router-dom';
-import {LeaveGame}  from '../../../../hooks/Lobby/leaveGame.jsx';
+import { LeaveGame }  from '../../../../hooks/Lobby/leaveGame.jsx';
+import { closeWsGameInstance, getWsGameInstance } from '../../../../services/WsGameService.js';
+import { WS_GAME } from '../../../../utils/Constants.js';
 
 
 function Game() {
@@ -22,6 +24,8 @@ function Game() {
     const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
     const localPlayerName = localStorage.getItem("username");
     const gameId = localStorage.getItem('game_id');
+    
+    const ws = getWsGameInstance(WS_GAME + gameId);
     const winner = useWinnerPolling(gameId);
     const { movsIds, figsIds } = CardsGame();
     const { currentPlayer, playerId } = getCurrentTurnPlayer();
@@ -31,9 +35,6 @@ function Game() {
     };
 
     const handleLeave = async () => {
-        // if (ws.current) {
-        //     ws.current.close();
-        // }
         await LeaveGame(navigate);
     };
 

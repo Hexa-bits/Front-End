@@ -1,3 +1,4 @@
+import { closeWsGameInstance } from '../../services/WsGameService.js';
 import { HOME, GAME_LEAVE_URL } from '../../utils/Constants.js';
 
 export const LeaveGame = async (navigate) => { 
@@ -21,6 +22,7 @@ export const LeaveGame = async (navigate) => {
     
         alert(`Jugador ${playerId} abandonaste el juego ${gameId} exitosamente`);
         localStorage.removeItem('game_id');
+        closeWsGameInstance();
         navigate(HOME);
     } catch (error) {
         alert("No se pudo abandonar el juego. " + error.message);
