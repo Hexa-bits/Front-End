@@ -15,29 +15,35 @@ function Home() {
     const navigate = useNavigate();
 
     // Crear conexión al WebSocket
-    const ws = useRef(new WebSocket(WS_HOME)).current;
+    const ws = useRef(null);
+
     // Lista de Partidas
-    const { games } = useGames(ws);
+    const { games } = useGames(ws.current);
 
     const handleCrearPartida = () => {
-        ws.close();
+        ws.current.close();
         navigate("/home/create-config");
     };
     
-    const { joinGame } = JoinGame(ws);
+    const { joinGame } = JoinGame(ws.current);
     // Manejador de unirse a partida
     const handleJoin = (gameId) => {
         joinGame(gameId, playerId);
     };
 
     useEffect(() => {
+        if(!ws.current){
+            console.log("Inicializando WebSocket");
+            ws.current = new WebSocket(WS_HOME);
+        }
+        
         // Limpiar la conexión del WebSocket al desmontar el componente
         return () => {
-            if (ws.readyState === WebSocket.OPEN) {
-                ws.close();
+            if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+                ws.current.close();
             }
         };
-    }, [ws]);
+    }, []);
 
     return (
         <div className="Home">
