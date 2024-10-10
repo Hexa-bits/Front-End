@@ -32,7 +32,7 @@ function getCurrentTurnPlayer(ws) {
             }
         };
  
-    }, [ws, currentPlayer]);
+    }, [ws]);
 
     return { currentPlayer, playerId };
 }
