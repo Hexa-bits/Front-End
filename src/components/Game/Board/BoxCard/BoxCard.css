@@ -1,0 +1,21 @@
+.BoxCard {
+    width: 70px; 
+    height: 70px; 
+    margin: 5px; 
+    border-radius: 10px; 
+    background-color: #fff;
+    border: 1px solid #000;
+    padding: 3px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    cursor:pointer;
+}
+
+.BoxCard.selected {
+    border: 2px solid gold; /* Borde dorado */
+    box-shadow: 0 0 20px 5px rgba(255, 215, 0, 0.6); /* Efecto de resplandor dorado */
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño al seleccionar */
+    transition: all 0.3s ease; /* Transición suave para el efecto */
+}
+
