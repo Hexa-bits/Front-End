@@ -1,19 +1,23 @@
 import getTurnPlayer from '../../../hooks/Game/TurnPlayer/getTurnPlayer.js';
-import { GET_TURN_PLAYER_URL } from '../../../utils/Constants.js';
+import { useNameTurnPlayerUrl } from '../../../utils/logics/Game/useTurnPlayerUrls.js';
+
+// Mockear la función useNameTurnPlayerUrl y fetch
+vi.mock('../../../utils/logics/Game/useTurnPlayerUrls.js', () => ({
+    useNameTurnPlayerUrl: vi.fn(),
+}));
 
 describe('getTurnPlayer', () => {
     const mockGameId = 'mockGameId';
-    const mockUrl = `${GET_TURN_PLAYER_URL}${mockGameId}`; // Construye la URL completa
+    const mockUrl = 'http://mockapi.com/turnPlayer';
     const mockResponseData = {
         id_player: 'mockPlayerId',
         name_player: 'Player1',
     };
 
-    // Definir la variable consoleErrorSpy aquí para que esté disponible globalmente
     let consoleErrorSpy;
 
     beforeEach(() => {
-        // Inicializar el espía en cada test
+        useNameTurnPlayerUrl.mockReturnValue(mockUrl);
         consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 

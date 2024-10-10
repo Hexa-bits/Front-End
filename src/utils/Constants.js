@@ -17,11 +17,13 @@ export const GAME_LEAVE_URL = `http://localhost:${PORT}${GAME}/leave`;
 export const GAME_START_URL = `http://localhost:${PORT}${GAME}/start-game`;
 export const GET_MOVEMENTS_URL = `http://localhost:${PORT}${GAME}/my-mov-card?player_id=`;
 export const GET_FIGURES_URL = `http://localhost:${PORT}${GAME}/my-fig-card?player_id=`;
-export const GET_TURN_PLAYER_URL = `http://localhost:${PORT}${GAME}/current-turn?game_id=`;
+export const GET_TURN_PLAYER_URL = `http://localhost:${PORT}${GAME}/current-turn`;
 export const GET_WINNER_URL = `http://localhost:${PORT}${GAME}/get-winner`;
 export const GAME_PASS_URL = `http://localhost:${PORT}${GAME}/end-turn`;
 
 /** WEBSOCKETS */
+export const GAME_TURN_PLAYER_WS_URL = `ws://localhost:${PORT}${GAME}/info`;
+
 export const WS_GAME = `ws://localhost:${PORT}${GAME}?game_id=`;
 export const WS_HOME = `ws://localhost:${PORT}${HOME}`;
 export const WS_LOBBY_URL = `ws://localhost:${PORT}${LOBBY}?game_id=`;
