@@ -28,19 +28,15 @@ function Game() {
     // Recupero instancia de ws creada en Lobby
     const ws = getWsGameInstance(WS_GAME + gameId);
     const { winnerName } = WinnerExists(ws, gameId);
-    
-    // const { movsIds, figsIds } = CardsGame();
-    // const { currentPlayer, playerId } = getCurrentTurnPlayer();
-    const currentPlayer = "player 1";
-    const playerId = 1;
-    const movsIds = [1, 2, 3, 4, 5];
-    const figsIds = [1, 2, 3, 4, 5];
+    const { movsIds, figsIds } = CardsGame();
+    const { currentPlayer, playerId } = getCurrentTurnPlayer(ws);
     
     const handleEndTurn = async () => {
         await passTurn(); 
     };
 
     const handleLeave = async () => {
+        await passTurn();
         await LeaveGame(navigate);
     };
 
