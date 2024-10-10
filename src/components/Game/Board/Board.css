@@ -1,0 +1,22 @@
+/* Board.css */
+.Board {
+    background-color: #73302e;
+    border-radius: 20px;
+    width: 80%;
+    padding: 10px;
+}
+
+.BoxCard {
+    width: 80px; /* Ajusta el tamaño según tus necesidades */
+    height: 80px; 
+    border-radius: 10px;
+    cursor: pointer; 
+    transition: transform 0.2s; 
+    background-color: white; /* Fondo blanco para las tarjetas */
+}
+
+.BoardRow {
+    display: flex; /* Organiza las celdas en una fila */
+    flex-direction: row;
+    justify-content: center;
+}
