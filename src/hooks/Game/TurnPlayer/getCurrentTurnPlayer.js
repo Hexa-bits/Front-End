@@ -23,15 +23,13 @@ function getCurrentTurnPlayer(ws) {
 
     useEffect(() => {
         if(!ws) return;
-        
+
         ws.onmessage = (event) => {
             const message = event.data;
-
             if (message && message === "Terminó turno") {
-                console.log("Llamado de mensajes de Turno");
+                console.log("Llamado de mensajes de Turno.");
                 fetchData();
             }
-            console.log("POR WS, turno actual:", currentPlayer);
         };
  
     }, [ws, currentPlayer]);
