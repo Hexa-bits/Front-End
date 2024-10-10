@@ -57,7 +57,7 @@ function Game() {
                         recycle={false}
                         style={{ position: 'fixed', top: 0, left: 0 }}
                     />
-                    <VictoryBox winnerName={winner} onLeave={handleLeave}/>
+                    <VictoryBox winnerName={winnerName} onLeave={handleLeave}/>
                 </>
             )}
             <div className="game-container">

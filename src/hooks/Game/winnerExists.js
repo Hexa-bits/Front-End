@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { GET_WINNER_URL } from '../../utils/Constants.js';
 
+
 function WinnerExists (ws, gameId) {
 
-    const [winner, setWinner] = useState(null);
+    const [winnerName, setWinner] = useState(null);
 
     const getWinner = async () => {
         try {
@@ -27,15 +28,15 @@ function WinnerExists (ws, gameId) {
         if (!ws) return;
         ws.onmessage = (event) => {
             const message = event.data;
-            if (message == "Hay Ganador") { 
+            if (message === "Hay Ganador") { 
+                console.log("Hay Ganador"); 
                 getWinner(); 
             }
         };
     }, [ws]);
 
-    return { winner } ;
+    return { winnerName } ;
 };
 
 export default WinnerExists;
-
 
