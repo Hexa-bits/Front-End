@@ -1,36 +1,22 @@
 import './BoxCard.css';
-import red from '../../../../../assets/Board/A.svg';
-import yellow from '../../../../../assets/Board/B.svg';
-import green from '../../../../../assets/Board/C.svg';
-import blue from '../../../../../assets/Board/D.svg';
+
+const colorMap = {
+    red: '#DC143C',    // rojo carmesí
+    blue: '#4169E1',   // azul real
+    green: '#50C878',  // verde esmeralda
+    yellow: '#FFD700'  // oro claro
+};
 
 function BoxCard({ color, isSelected, onClick }) {  
-    let imageSrc;
 
-    switch (color) {
-        case "red":
-            imageSrc = red;  
-            break;
-        case "yellow":
-            imageSrc = yellow;
-            break;
-        case "green":
-            imageSrc = green;
-            break;
-        case "blue":
-            imageSrc = blue;
-            break;
-        default:
-            imageSrc = null;
-            break;
-    }
+    const mappedColor = colorMap[color] || 'gray'
 
     return (
         <div 
             className={`BoxCard ${isSelected ? 'selected' : ''}`} 
             onClick={onClick}
+            style={{backgroundColor: mappedColor}}
         >
-            {imageSrc && <img src={imageSrc} />}
         </div>
     );
 }

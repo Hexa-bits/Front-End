@@ -1,6 +1,6 @@
 import './Board.css';
 import BoxCard from './BoxCard/BoxCard';
-import useSelectedCards from '../../../utils/logics/Game/Board/useSelectedCards';
+import useSelectedCards from '../../../hooks/Game/Board/useSelectedCards';
 
 function Board ({ isTurn }){
 
