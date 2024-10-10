@@ -22,8 +22,6 @@ export const GET_WINNER_URL = `http://localhost:${PORT}${GAME}/get-winner`;
 export const GAME_PASS_URL = `http://localhost:${PORT}${GAME}/end-turn`;
 
 /** WEBSOCKETS */
-export const GAME_TURN_PLAYER_WS_URL = `ws://localhost:${PORT}${GAME}/info`;
-
 export const WS_GAME = `ws://localhost:${PORT}${GAME}?game_id=`;
 export const WS_HOME = `ws://localhost:${PORT}${HOME}`;
 export const WS_LOBBY_URL = `ws://localhost:${PORT}${LOBBY}?game_id=`;
