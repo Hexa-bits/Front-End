@@ -29,14 +29,15 @@ function Game() {
 
   const ws = getWsGameInstance(WS_GAME + gameId);
   const winner = useWinnerPolling(gameId);
-  const { movs_ids, figs_ids } = renewAllCards(ws, localPlayerId);
   const { currentPlayer, playerId } = getCurrentTurnPlayer(ws);
+  const { movs_ids, figs_ids } = renewAllCards(ws, localPlayerId);
 
   const handleEndTurn = async () => {
     await passTurn();
   };
 
   const handleLeave = async () => {
+    await passTurn();
     await LeaveGame(navigate);
   };
 
