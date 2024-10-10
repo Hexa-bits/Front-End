@@ -11,6 +11,13 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     border: 10px solid #3b1c1b;
     position: relative; /* Para el pseudo-elemento */
+    
+     /* Sombra exterior para simular elevación */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 
+                inset 0 5px 10px rgba(255, 255, 255, 0.1); 
+    /* Fondo con un ligero degradado para darle más realismo */
+    background: linear-gradient(145deg, #5b2726, #3d1918);
+
 }
 
 .Board::before {
