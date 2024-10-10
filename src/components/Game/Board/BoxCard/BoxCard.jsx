@@ -12,7 +12,8 @@ function BoxCard({ color, isSelected, onClick }) {
     const mappedColor = colorMap[color] || 'gray'
 
     return (
-        <div 
+        <div
+            role="button"
             className={`BoxCard ${isSelected ? 'selected' : ''}`} 
             onClick={onClick}
             style={{backgroundColor: mappedColor}}

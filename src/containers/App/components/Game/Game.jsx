@@ -15,7 +15,7 @@ import Board from '../../../../components/Game/Board/Board.jsx';
 import { useNavigate } from 'react-router-dom';
 import { LeaveGame }  from '../../../../hooks/Lobby/leaveGame.jsx';
 import { closeWsGameInstance, getWsGameInstance } from '../../../../services/WsGameService.js';
-import { WS_GAME } from '../../../../utils/Constants.js';
+import { WS_GAME , cardData } from '../../../../utils/Constants.js';
 import './Game.css';
 
 
@@ -66,7 +66,9 @@ function Game() {
                             <FigCards figsIds={figsIds}/>
                         </div>
                         <div className="board">
-                            <Board isTurn={localPlayerId === playerId}/>
+                            <Board 
+                                isTurn={localPlayerId === playerId}
+                                cardData={ cardData }/>
                         </div>
                         <div className="Mov">
                             <MovCards movsIds = { movsIds }/>
