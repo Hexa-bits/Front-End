@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useInsertionEffect } from 'react';
 import Button from '../../../../components/Button/Button.jsx';
 import VictoryBox from '../../../../components/VictoryBox/VictoryBox.jsx';
 import WinnerExists from '../../../../hooks/Game/winnerExists.js';
@@ -16,20 +16,22 @@ import { useNavigate } from 'react-router-dom';
 import { LeaveGame }  from '../../../../hooks/Lobby/leaveGame.jsx';
 import { getWsGameInstance } from '../../../../services/WsGameService.js';
 import { WS_GAME } from '../../../../utils/Constants.js';
+import wsGameHandler from '../../../../services/WsGameHandler.js';
 
 
 function Game() {
     const navigate = useNavigate();
-    //Manejo el fetch de las cartas
     const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
     const localPlayerName = localStorage.getItem("username");
     const gameId = localStorage.getItem('game_id');
     
-    // Recupero instancia de ws creada en Lobby
     const ws = getWsGameInstance(WS_GAME + gameId);
-    const { winnerName } = WinnerExists(ws, gameId);
+
+    const { currentPlayer, playerId, fetchTurnData } = getCurrentTurnPlayer(gameId);
+    const { winnerName, getWinner } = WinnerExists(gameId);
     const { movsIds, figsIds } = CardsGame();
-    const { currentPlayer, playerId } = getCurrentTurnPlayer(ws);
+
+    wsGameHandler(ws, fetchTurnData, getWinner);
     
     const handleEndTurn = async () => {
         await passTurn(); 

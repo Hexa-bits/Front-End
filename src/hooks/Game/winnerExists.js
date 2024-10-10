@@ -1,12 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState, useCallback } from 'react';
 import { GET_WINNER_URL } from '../../utils/Constants.js';
 
-
-function WinnerExists (ws, gameId) {
-
+function WinnerExists (gameId) {
     const [winnerName, setWinner] = useState(null);
-
-    const getWinner = async () => {
+    
+    const getWinner = useCallback( async () => {
         try {
             const response = await fetch(GET_WINNER_URL + gameId, {
                 method: 'GET',
@@ -22,21 +20,9 @@ function WinnerExists (ws, gameId) {
         } catch (error) {
             console.error('Error fetching winner:', error);
         }
-    };
+    }, [gameId]);
 
-    useEffect(() => {
-        if (!ws) return;
-        ws.onmessage = (event) => {
-            const message = event.data;
-            if (message === "Hay Ganador") { 
-                console.log("Hay Ganador"); 
-                getWinner(); 
-            }
-        };
-    }, [ws]);
-
-    return { winnerName } ;
+    return { winnerName , getWinner } ;
 };
 
 export default WinnerExists;
-
