@@ -4,7 +4,7 @@ import { GET_TURN_PLAYER_URL } from '../../../utils/Constants.js';
 const getTurnPlayer = async (gameId) => {
 
     try {
-        const response = await fetch(fullUrl, {
+        const response = await fetch(GET_TURN_PLAYER_URL + gameId, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

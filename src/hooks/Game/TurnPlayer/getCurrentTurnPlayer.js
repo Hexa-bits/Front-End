@@ -6,28 +6,35 @@ function getCurrentTurnPlayer(ws) {
     const [playerId, setPlayerId] = useState(null);
     const gameId = localStorage.getItem('game_id');
 
+    const fetchData = async () => {
+        try {
+            const { playerId: newPlayerId, namePlayer: newNamePlayer } = await getTurnPlayer(gameId);
+            setCurrentPlayer(newNamePlayer);
+            setPlayerId(newPlayerId);
+        } catch (error) {
+            console.error('Error fetching game data:', error);
+        }
+    };
+
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const { playerId: newPlayerId, namePlayer: newNamePlayer } = await getTurnPlayer(gameId);
-                setCurrentPlayer(newNamePlayer);
-                setPlayerId(newPlayerId);
-            } catch (error) {
-                console.error('Error fetching game data:', error);
-            }
-        };
         fetchData();
     }, []);
 
     useEffect(() => {
+        if(!ws) return;
+        
         ws.onmessage = (event) => {
             const message = event.data;
-            if (message === "Terminó turno") {
+
+            if (message && message === "Terminó turno") {
+                console.log("Llamado de mensajes de Turno");
                 fetchData();
             }
+            console.log("POR WS, turno actual:", currentPlayer);
         };
  
-    }, [ws]);
+    }, [ws, currentPlayer]);
 
     return { currentPlayer, playerId };
 }
