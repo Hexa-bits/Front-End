@@ -34,7 +34,6 @@ function renewAllCards(ws, playerId) {
 
   const renewFigs = async () => {
     try {
-      //puedo poner dos try? o si o si tengo que pedir las cartas de figura en su propio archivo?
       const response = await fetch(GET_FIGURES_URL + playerId, {
         method: "GET",
       });
@@ -45,15 +44,17 @@ function renewAllCards(ws, playerId) {
       const data = await response.json();
       console.log("Figuras: ", data.id_fig_card);
       setFigsIds(data.id_fig_card);
-      //return { figs_ids: data.id_fig_card || [] };
     } catch (error) {
       console.error(
         "Error al obtener las cartas de figuras del jugador:",
         error
       );
-      //return { figs_ids: [] };
     }
   };
+  useEffect(() => {
+    renewFigs();
+    renewMovs();
+  }, [playerId]);
 
   useEffect(() => {
     if (!ws) return; //si el ws no está abierto no hace nada
@@ -67,7 +68,7 @@ function renewAllCards(ws, playerId) {
     ws.onerror = (error) => {
       console.error("ws error:", error);
     };
-  }, [ws]); //por qué ws?
+  }, [ws]);
   return { movs_ids, figs_ids };
 }
 export default renewAllCards;

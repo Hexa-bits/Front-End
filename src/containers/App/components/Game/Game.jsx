@@ -29,8 +29,10 @@ function Game() {
 
   const ws = getWsGameInstance(WS_GAME + gameId);
   const winner = useWinnerPolling(gameId);
-  const { movs_ids, figs_ids } = renewAllCards(ws, playerId);
+  const { movs_ids, figs_ids } = renewAllCards(ws, localPlayerId);
   const { currentPlayer, playerId } = getCurrentTurnPlayer();
+  // const currentPlayer = "player1";
+  // const playerId = 2;
 
   const handleEndTurn = async () => {
     await passTurn();
@@ -63,11 +65,11 @@ function Game() {
           </div>
           <div className="Game_Area">
             <div className="Fig">
-              <FigCards figsIds={figs_ids} />
+              <FigCards figs_ids={figs_ids} />
             </div>
             <div className="board"></div>
             <div className="Mov">
-              <MovCards movsIds={movs_ids} />
+              <MovCards movs_ids={movs_ids} />
             </div>
           </div>
         </div>
