@@ -1,15 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   GET_MOVEMENTS_URL,
   GET_FIGURES_URL,
 } from "../../../utils/Constants.js";
 
-function renewAllCards(ws, playerId) {
+function renewAllCards(playerId) {
   const [movs_ids, setMovsIds] = useState([]);
   const [figs_ids, setFigsIds] = useState([]);
-  const renewMovs = async () => {
+  const fetchMovs = useCallback(async () => {
     try {
-      //puedo poner dos try? o si o si tengo que pedir las cartas de figura en su propio archivo?
       const response = await fetch(GET_MOVEMENTS_URL + playerId, {
         method: "GET",
       });
@@ -28,9 +27,9 @@ function renewAllCards(ws, playerId) {
         error
       );
     }
-  };
+  }, [playerId]);
 
-  const renewFigs = async () => {
+  const fetchFigs = useCallback(async () => {
     try {
       const response = await fetch(GET_FIGURES_URL + playerId, {
         method: "GET",
@@ -48,25 +47,13 @@ function renewAllCards(ws, playerId) {
         error
       );
     }
-  };
-  useEffect(() => {
-    renewFigs();
-    renewMovs();
   }, [playerId]);
 
-  // useEffect(() => {
-  //   if (!ws) return; //si el ws no está abierto no hace nada
-  //   ws.onmessage = (event) => {
-  //     const message = event.data; //acá el mje va a ser sacado de lo q me manda el evento
-  //     if (message === "Terminó turno") {
-  //       renewFigs();
-  //       renewMovs(); // si el ws sí está abierto, llamo a la función q quiero el mje q me llegue
-  //     }
-  //   };
-  //   ws.onerror = (error) => {
-  //     console.error("ws error:", error);
-  //   };
-  // }, [ws]);   todo esto iria en un archivo aparte
-  return { movs_ids, figs_ids };
+  useEffect(() => {
+    fetchFigs();
+    fetchMovs();
+  }, [fetchFigs, fetchMovs]);
+
+  return { movs_ids, figs_ids, fetchFigs, fetchMovs };
 }
 export default renewAllCards;
