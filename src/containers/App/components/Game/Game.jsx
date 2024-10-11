@@ -1,7 +1,7 @@
 import React, { useEffect, useInsertionEffect } from "react";
 import Button from "../../../../components/Button/Button.jsx";
 import VictoryBox from "../../../../components/VictoryBox/VictoryBox.jsx";
-import WinnerExists from "../../../../hooks/Game/winnerExists.js";
+import WinnerExists from "../../../../services/Game/Winner/winnerExists.js";
 import FigCards from "../../../../components/Game/FigCards/FigCards.jsx";
 import MovCards from "../../../../components/Game/MovCards/MovCards.jsx";
 import renewAllCards from "../../../../services/Game/Cards/renewAllCards.js";
