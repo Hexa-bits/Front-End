@@ -18,7 +18,6 @@ export const StartGame = (navigate) => {
                 throw new Error(errorMessage || response.statusText);
             }
             console.log(`Juego ${game_id} iniciado exitosamente`);
-            localStorage.setItem('active', true);
             navigate(GAME);
         }
         catch (error) {

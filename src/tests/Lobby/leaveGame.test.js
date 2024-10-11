@@ -1,5 +1,5 @@
 import {LeaveGame} from '../../hooks/Lobby/leaveGame'; 
-import { describe, it, vi, expect } from 'vitest';
+import { describe, it, vi, expect, beforeAll } from 'vitest';
 import { GAME_LEAVE_URL, HOME } from '../../utils/Constants';
 import { closeWsGameInstance } from '../../services/WsGameService';
 import { waitFor } from '@testing-library/react';
@@ -14,6 +14,11 @@ vi.mock('../../services/WsGameService', () => ({
 }));
 
 describe('LeaveGame function', () => {
+
+  afterEach(() => {
+		vi.clearAllMocks();
+	});
+
   it('debería hacer la llamada para abandonar el juego y navegar', async () => {
     // Mock para localStorage y fetch
     const mockNavigate = vi.fn();
@@ -29,7 +34,6 @@ describe('LeaveGame function', () => {
         if (key === 'game_id') return '789';
         return null;
       }),
-      setItem: vi.fn(),
       removeItem: vi.fn(),
     };
 
@@ -76,6 +80,5 @@ describe('LeaveGame function', () => {
       );
     });
 
-    // Verificaciones
   });
 });

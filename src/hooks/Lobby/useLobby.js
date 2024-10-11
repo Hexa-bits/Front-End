@@ -49,11 +49,6 @@ function useLobby (ws, gameId) {
                 }
             }
         };
-    
-        ws.onerror = (error) => {
-            console.error('WebSocket error:', error);
-        };
-
     }, [ws]);
     return { players, gameName, maxPlayers, activeGame, cancelGame };
 };
