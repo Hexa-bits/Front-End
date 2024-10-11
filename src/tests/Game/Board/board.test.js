@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, expect, vi } from "vitest";
-import renewBoard from "../../hooks/Game/Board/renewBoard.js";
-import { GAME_BOARD_URL } from "../../utils/Constants.js";
+import renewBoard from "../../../hooks/Game/Board/renewBoard.js";
+import { GAME_BOARD_URL } from "../../../utils/Constants.js";
 
 const gameId = 1;
 describe("renewBoard", () => {
@@ -36,7 +36,7 @@ describe("renewBoard", () => {
   it("hace el pedido al boxcards", async () => {
     const { result } = renderHook(() => renewBoard(gameId));
 
-    await waitFor(() => {
+    waitFor(() => {
       expect(mockFetchBoxCards).toHaveBeenCalledWith(GAME_BOARD_URL + gameId, {
         method: "GET",
       });
