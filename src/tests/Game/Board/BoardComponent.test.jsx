@@ -8,8 +8,8 @@ describe('Board Component', () => {
     it('Renderiza el tablero con datos de cartas simulados y verifica el color', () => {
         // Mockear los datos de las cartas
         const mockCardData = [
-            { x: 0, y: 0, color: 'red' },
-            { x: 0, y: 1, color: 'blue' },
+            { x: 0, y: 0, color: 1},
+            { x: 0, y: 1, color: 4},
         ];
 
         useSelectedCards.mockReturnValue({
