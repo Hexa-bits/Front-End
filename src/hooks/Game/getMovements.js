@@ -1,11 +1,10 @@
-import { useMovUrl } from "./useMovUrl.js";
+import { GET_MOVEMENTS_URL } from "../../utils/Constants.js";
 
 const getMovements = async () => {
     const playerId = parseInt(localStorage.getItem("id_user"), 10); 
-    const fullUrl = useMovUrl(playerId); 
-
+    
     try {
-        const response = await fetch(fullUrl, {
+        const response = await fetch(GET_MOVEMENTS_URL + playerId, {
             method: 'GET',
         });
 

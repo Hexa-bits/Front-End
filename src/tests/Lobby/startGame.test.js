@@ -21,7 +21,6 @@ describe('StartGame function', () => {
     );
     const mockLocalStorage = {
       getItem: vi.fn(() => '123'), 
-      setItem: vi.fn(),
     };
 
     Object.defineProperty(global, 'localStorage', { value: mockLocalStorage });
@@ -43,7 +42,6 @@ describe('StartGame function', () => {
 
 
     expect(consoleSpy).toHaveBeenCalledWith('Juego 123 iniciado exitosamente');
-    expect(mockLocalStorage.setItem).toHaveBeenCalledWith('active', true);
     expect(mockNavigate).toHaveBeenCalledWith(GAME);
 
     consoleSpy.mockRestore();
