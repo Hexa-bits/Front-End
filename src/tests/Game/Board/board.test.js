@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, expect, vi } from "vitest";
-import renewBoard from "../../../hooks/Game/Board/renewBoard.js";
+import renewBoard from "../../../services/Game/Board/renewBoard.js";
 import { GAME_BOARD_URL } from "../../../utils/Constants.js";
 
 const gameId = 1;
