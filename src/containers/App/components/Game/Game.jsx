@@ -14,7 +14,7 @@ import Board from "../../../../components/Game/Board/Board.jsx";
 import Confetti from "react-confetti";
 import "./Game.css";
 import { useNavigate } from "react-router-dom";
-import { LeaveGame } from "../../../../hooks/Lobby/leaveGame.jsx";
+import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
 import { getWsGameInstance } from "../../../../services/WsGameService.js";
 import { WS_GAME, cardData } from "../../../../utils/Constants.js";
 import wsGameHandler from "../../../../services/WsGameHandler.js";
