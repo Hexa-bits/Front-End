@@ -15,9 +15,9 @@ import Confetti from "react-confetti";
 import "./Game.css";
 import { useNavigate } from "react-router-dom";
 import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
-import { getWsGameInstance } from "../../../../services/WsGameService.js";
+import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
 import { WS_GAME, cardData } from "../../../../utils/Constants.js";
-import wsGameHandler from "../../../../services/WsGameHandler.js";
+import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
 import renewBoard from "../../../../services/Game/Board/renewBoard.js";
 
 function Game() {

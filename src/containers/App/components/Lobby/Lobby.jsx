@@ -12,7 +12,7 @@ import { HOME, GAME, WS_GAME } from "../../../../utils/Constants.js";
 import {
   closeWsGameInstance,
   createWsGameInstance,
-} from "../../../../services/WsGameService.js";
+} from "../../../../services/WS/WsGameService.js";
 
 function Lobby() {
   const location = useLocation();

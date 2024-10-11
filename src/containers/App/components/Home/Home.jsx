@@ -3,7 +3,7 @@ import useGames from "../../../../services/Home/useGames.js";
 import Button from "../../../../components/Button/Button";
 import GameList from "../../../../components/Game_List/Game_List.jsx";
 import JoinGame from "../../../../utils/logics/Home/JoinGame.js";
-import WsHomeService from "../../../../services/WsHomeService.js";
+import WsHomeService from "../../../../services/WS/WsHomeService.js";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { WS_HOME } from "../../../../utils/Constants.js";

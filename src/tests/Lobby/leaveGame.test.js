@@ -1,7 +1,7 @@
 import { LeaveGame } from "../../services/Lobby/leaveGame";
 import { describe, it, vi, expect, beforeAll } from "vitest";
 import { GAME_LEAVE_URL, HOME } from "../../utils/Constants";
-import { closeWsGameInstance } from "../../services/WsGameService";
+import { closeWsGameInstance } from "../../services/WS/WsGameService";
 import { waitFor } from "@testing-library/react";
 
 vi.mock("react-router-dom", () => ({
