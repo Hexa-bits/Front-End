@@ -4,7 +4,11 @@ import VictoryBox from "../../../../components/VictoryBox/VictoryBox.jsx";
 import WinnerExists from "../../../../hooks/Game/winnerExists.js";
 import FigCards from "../../../../components/Game/FigCards/FigCards.jsx";
 import MovCards from "../../../../components/Game/MovCards/MovCards.jsx";
+<<<<<<< HEAD
 import CardsGame from "../../../../utils/logics/Game/CardsGame.js";
+=======
+import renewAllCards from "../../../../hooks/Game/Cards/renewAllCards.js";
+>>>>>>> e9e70b0af55e57d2e73e52c6493de77db34ff99d
 import LeaveButton from "../../../../components/Game/LeaveButton/LeaveButton.jsx";
 import SeePlayer from "../../../../components/Game/seePlayer_Turn/seePlayer.jsx";
 import getCurrentTurnPlayer from "../../../../hooks/Game/TurnPlayer/getCurrentTurnPlayer.js";
@@ -29,9 +33,16 @@ function Game() {
   const { currentPlayer, playerId, fetchTurnData } =
     getCurrentTurnPlayer(gameId);
   const { winnerName, getWinner } = WinnerExists(gameId);
+<<<<<<< HEAD
   const { movsIds, figsIds } = CardsGame();
 
   wsGameHandler(ws, fetchTurnData, getWinner);
+=======
+  const { movs_ids, figs_ids, fetchFigs, fetchMovs } =
+    renewAllCards(localPlayerId);
+
+  wsGameHandler(ws, fetchTurnData, getWinner, fetchFigs, fetchMovs);
+>>>>>>> e9e70b0af55e57d2e73e52c6493de77db34ff99d
 
   const handleEndTurn = async () => {
     await passTurn();
@@ -65,11 +76,11 @@ function Game() {
           </div>
           <div className="Game_Area">
             <div className="Fig">
-              <FigCards figsIds={figsIds} />
+              <FigCards figs_ids={figs_ids} />
             </div>
             <div className="board"></div>
             <div className="Mov">
-              <MovCards movsIds={movsIds} />
+              <MovCards movs_ids={movs_ids} />
             </div>
           </div>
         </div>
