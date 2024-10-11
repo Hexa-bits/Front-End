@@ -1,57 +1,70 @@
-import { startGame } from "../../hooks/Lobby/useStartGame.js";  // Actualiza con la ruta correcta
-import { GAME_START_URL, GAME } from '../../utils/Constants.js';
+import { StartGame } from '../../hooks/Lobby/startGame';
+import { describe, it, vi, expect } from 'vitest';
+import { GAME_START_URL, GAME } from '../../utils/Constants';
 
-jest.mock('react-router-dom', () => ({
-    useNavigate: jest.fn(),
+vi.mock('react-router-dom', () => ({
+  useNavigate: () => vi.fn(),
 }));
 
-describe('startGame', () => {
-    const mockNavigate = jest.fn();
-    const originalConsoleLog = console.log;
+describe('StartGame function', () => {
+  vi.spyOn(console, 'log').mockImplementation(() => {});
 
-    beforeEach(() => {
-        mockNavigate.mockClear();
-        global.fetch = jest.fn();  // Mockear fetch para evitar llamadas reales a la API
-        console.log = jest.fn();  // Mockear console.log
+  it('debería hacer la llamada para iniciar el juego y navegar', async () => {
+
+    // Mock para localStorage y fetch
+    const mockNavigate = vi.fn();
+    const mockFetch = vi.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({}),
+      })
+    );
+    const mockLocalStorage = {
+      getItem: vi.fn(() => '123'), 
+    };
+
+    Object.defineProperty(global, 'localStorage', { value: mockLocalStorage });
+    global.fetch = mockFetch;
+    const consoleSpy = vi.spyOn(console, 'log');
+    
+    const startGame = StartGame(mockNavigate);
+    await startGame(mockNavigate);
+
+    // Verificaciones
+    expect(mockLocalStorage.getItem).toHaveBeenCalledWith('game_id');
+    expect(mockFetch).toHaveBeenCalledWith(`${GAME_START_URL}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ game_id: 123 }),
     });
 
-    afterEach(() => {
-        jest.clearAllMocks();
-        console.log = originalConsoleLog;  // Restaurar console.log original
-    });
 
-    it('should start the game and navigate to the game page on success', async () => {
-        const mockResponse = { ok: true };
-        fetch.mockResolvedValueOnce(mockResponse);
+    expect(consoleSpy).toHaveBeenCalledWith('Juego 123 iniciado exitosamente');
+    expect(mockNavigate).toHaveBeenCalledWith(GAME);
 
-        await startGame(7, mockNavigate);
+    consoleSpy.mockRestore();
 
-        // Verifica que la solicitud fue hecha correctamente
-        expect(fetch).toHaveBeenCalledWith(GAME_START_URL, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ game_id: 7 }),
-        });
+  });
 
-        // Verifica que se haya llamado a navigate
-        expect(mockNavigate).toHaveBeenCalledWith(GAME);
-        expect(console.log).toHaveBeenCalledWith('Juego 7 iniciado exitosamente');
-    });
+  it('debería manejar errores al intentar iniciar el juego', async () => {
+    // Mock para localStorage y fetch que lanza error
+    const mockFetch = vi.fn(() =>
+      Promise.resolve({
+        ok: false,
+        text: () => Promise.resolve('Error al iniciar el juego'),
+      })
+    );
+    global.fetch = mockFetch;
+    
+    const consoleSpy = vi.spyOn(console, 'log');
+    const startGame = StartGame();
+    await startGame();
 
-    it('should handle errors and log an error message when the request fails', async () => {
-        const mockErrorMessage = 'Error de prueba';
-        const mockResponse = {
-            ok: false,
-            text: jest.fn().mockResolvedValueOnce(mockErrorMessage),
-        };
-        fetch.mockResolvedValueOnce(mockResponse);
-
-        await startGame(7, mockNavigate);
-
-        // Verifica que se haya registrado el error
-        expect(console.log).toHaveBeenCalledWith('No se pudo iniciar el juego. ' + mockErrorMessage);
-        expect(mockNavigate).not.toHaveBeenCalled();  // No se debería llamar a navigate en caso de error
-    });
+    // Verificaciones
+    expect(consoleSpy).toHaveBeenCalledWith(
+      'No se pudo iniciar el juego. Error al iniciar el juego'
+    );
+  });
 });

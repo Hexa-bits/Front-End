@@ -4,16 +4,21 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "vitest": "vitest"
   },
   "dependencies": {
+    "abab": "^2.0.6",
     "bootstrap": "^5.3.3",
+    "domexception": "^4.0.0",
     "fetch-mock": "^11.1.4",
+    "inflight": "^1.0.6",
     "jsdom": "^25.0.1",
+    "react-confetti": "^6.1.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2"
   },
@@ -39,6 +44,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-fetch-mock": "^3.0.3",
     "react": "^18.3.1",
-    "vite": "^5.4.1"
+    "vite": "^5.4.1",
+    "vitest": "^2.1.2"
   }
 }

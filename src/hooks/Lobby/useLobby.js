@@ -1,50 +1,56 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { GAME } from '../../utils/Constants.js';
+import { LOBBY_URL } from '../../utils/Constants.js';
 
-export const useLobby = ((fullUrl, gameId) => {
+function useLobby (ws, gameId) {
     const [players, setPlayers] = useState([]);
     const [gameName, setGameName] = useState('');
     const [maxPlayers, setMaxPlayers] = useState(0);
-    const [activeGame , setActiveGame] = useState(false); 
+    const [activeGame, setActiveGame] = useState(false);
+    const [cancelGame, setCancelGame] = useState(false);
 
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        let interval;
-        interval = setInterval(getGameInfo, 1000);
-        
-        return () => clearInterval(interval); 
-    }, [fullUrl, gameId, activeGame]);
-
-    async function getGameInfo() {
+    
+    const getLobbyInfo = async () => {
         try {
-            const response = await fetch(fullUrl, {
-                method: "GET",
+            const response = await fetch(LOBBY_URL + gameId, { 
+                method: "GET", 
+                headers: {
+                    'Content-Type': 'application/json',
+                }
             });
             if (!response.ok) {
-                throw new Error("Error al obtener información del juego.");
+                throw new Error("Response not ok");
             }
             const data = await response.json();
-            console.log("Obteniendo información del juego...");
-
+            console.log("http: Obteniendo información del juego...");
             setPlayers(data.name_players || []);
             setGameName(data.game_name);
             setMaxPlayers(data.max_players);
-            setActiveGame(data.game_status); 
-
-            // Verifica si el juego ha comenzado
-            if (activeGame === true) {
-                localStorage.setItem('active', true);
-                navigate(GAME); 
-            }
-
+            
         } catch (error) {
-            console.log("Error al obtener información del juego. " + error.message);
+            console.log("http: Error al obtener información del juego. " + error.message);
         }
     }
 
-    return {players, gameName, maxPlayers, activeGame};
-});
+    useEffect(() => { 
+        if (!ws) return;
 
+        getLobbyInfo();
+        ws.onmessage = (event) => {
+            const message = event.data;
+            if (message) {
+                if (message === "Se unió/abandonó jugador en lobby") {
+                    getLobbyInfo();
+                }
+                if (message === "La partida inició") {
+                    setActiveGame(true);
+                }
+                if (message === "La partida se canceló") {
+                    setCancelGame(true);
+                }
+            }
+        };
+    }, [ws]);
+    return { players, gameName, maxPlayers, activeGame, cancelGame };
+};
 
+export default useLobby;

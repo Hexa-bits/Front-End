@@ -8,18 +8,11 @@ import '../../../../utils/Constants.js'
 import { LoginHelpText, LOGIN_URL } from "../../../../utils/Constants.js";
 import './Login.css';
 
-// import fetchMock from 'fetch-mock';
-
-// fetchMock.post(LOGIN_URL, { Id: 3 });   // MOCK TEST 
 
 function Login () {
     const navigate = useNavigate(); 
     const [username, setUsername] = useState('');  
 
-    /**
-     *  Hook that executes when the component is rendered
-     *  It is used to get the username from the local storage if it exists
-    */
     useEffect(() => {
        const savedUserName = localStorage.getItem('username');
         if (savedUserName) {
@@ -73,7 +66,7 @@ function Login () {
     return ( 
         <div className="login-container">
             <h1 className="login-title"> El Switcher </h1>
-            <div className="card login-card">
+            <div className="card">
                 <Form
                     label="Registro de Usuario"
                     type="text"
@@ -83,7 +76,7 @@ function Login () {
                     onChange={handleChange}
                     value={username}
                 /> 
-                <Button label="Ingresar" onClick={handleInput}/>
+                <Button class="btn btn-secondary" label="Ingresar" onClick={handleInput}/>
             </div>
         </div>
     );

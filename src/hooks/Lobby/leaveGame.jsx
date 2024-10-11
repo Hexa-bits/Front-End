@@ -1,9 +1,12 @@
-import { act } from 'react';
+import { closeWsGameInstance } from '../../services/WsGameService.js';
 import { HOME, GAME_LEAVE_URL } from '../../utils/Constants.js';
 
-export const leaveGame = async (gameId, navigate) => {
+export const LeaveGame = async (navigate) => { 
+
+    const playerId = parseInt(localStorage.getItem('id_user'),10); 
+    const gameId = parseInt(localStorage.getItem('game_id'), 10);
+
     try {
-        const playerId = parseInt(localStorage.getItem('id_user'),10); 
         const response = await fetch(GAME_LEAVE_URL, {
             method: 'PUT',
             headers: {
@@ -18,14 +21,8 @@ export const leaveGame = async (gameId, navigate) => {
         }
     
         alert(`Jugador ${playerId} abandonaste el juego ${gameId} exitosamente`);
-
-        // desde looby o game
         localStorage.removeItem('game_id');
-
-        // solo game
-        const active = localStorage.getItem('active');
-        if (active === true) {localStorage.setItem('active', false);} 
-
+        closeWsGameInstance();
         navigate(HOME);
     } catch (error) {
         alert("No se pudo abandonar el juego. " + error.message);

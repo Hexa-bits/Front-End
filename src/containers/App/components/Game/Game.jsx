@@ -1,82 +1,99 @@
-import React from 'react';
-import Button from '../../../../components/Button/Button.jsx';
-import MovCards from '../../../../components/Game/MovCards/MovCards.jsx';
-import FigCards from '../../../../components/Game/FigCards/FigCards.jsx'
-import VictoryBox from '../../../../components/VictoryBox/VictoryBox.jsx';
-import useWinnerPolling from '../../../../hooks/Game/getWinner.js';
-import LeaveButton from '../../../../components/Game/LeaveButton/LeaveButton.jsx';
-import SeePlayer from '../../../../components/Game/seePlayer_Turn/seePlayer.jsx';
-import DataGame from "../../../../utils/logics/Game/DataGame.js";
-import Board from '../../../../components/Game/Board/Board.jsx';
-import { passTurn } from "../../../../hooks/Game/passTurn.js";
-import Confetti from 'react-confetti';
-import './Game.css';
-
+import React, { useEffect, useInsertionEffect } from "react";
+import Button from "../../../../components/Button/Button.jsx";
+import VictoryBox from "../../../../components/VictoryBox/VictoryBox.jsx";
+import WinnerExists from "../../../../hooks/Game/winnerExists.js";
+import FigCards from "../../../../components/Game/FigCards/FigCards.jsx";
+import MovCards from "../../../../components/Game/MovCards/MovCards.jsx";
+import CardsGame from "../../../../utils/logics/Game/CardsGame.js";
+import LeaveButton from "../../../../components/Game/LeaveButton/LeaveButton.jsx";
+import SeePlayer from "../../../../components/Game/seePlayer_Turn/seePlayer.jsx";
+import getCurrentTurnPlayer from "../../../../hooks/Game/TurnPlayer/getCurrentTurnPlayer.js";
+import PlayerName from "../../../../components/Game/PlayerName/PlayerName.jsx";
+import passTurn from "../../../../hooks/Game/TurnPlayer/passTurn.js";
+import Confetti from "react-confetti";
+import "./Game.css";
+import { useNavigate } from "react-router-dom";
+import { LeaveGame } from "../../../../hooks/Lobby/leaveGame.jsx";
+import { getWsGameInstance } from "../../../../services/WsGameService.js";
+import { WS_GAME } from "../../../../utils/Constants.js";
+import wsGameHandler from "../../../../services/WsGameHandler.js";
 
 function Game() {
-    //Manejo el fetch de las cartas
-    const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
-    const gameId = localStorage.getItem('game_id');
-    const winner = useWinnerPolling(gameId);
-    const { movsIds, figsIds, currentPlayer, playerId } = DataGame();
+  const navigate = useNavigate();
+  const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
+  const localPlayerName = localStorage.getItem("username");
+  const gameId = localStorage.getItem("game_id");
 
-    // Función para manejar el fin del turno
-    const handleEndTurn = async () => {
-      await passTurn(); // Cambia el turno
-    };
+  const ws = getWsGameInstance(WS_GAME + gameId);
 
-    return (
-        <div>
-            {winner && (
-                <>
-                    <Confetti
-                        width={2500} 
-                        height={1500} 
-                        numberOfPieces={300} 
-                        gravity={0.3}
-                        wind={0.02} 
-                        recycle={false}
-                        style={{ position: 'fixed', top: 0, left: 0 }}
-                    />
-                    <VictoryBox winnerName={winner.name_player}/>
-                </>
-            )}
-            <div className="game-container">
-                <div className="left-box">
-                    <div className="seePlayer">
-                        <SeePlayer player={currentPlayer || "??????"}/>
-                    </div>
-                    <div className="Game_Area">
-                        <div className="Fig">
-                            <FigCards figsIds={figsIds}/>
-                        </div>
-                        <div className="board">
-                          <Board isTurn={localPlayerId === playerId}/>
-                        </div>
-                        <div className="Mov">
-                            <MovCards movsIds = { movsIds }/>
-                        </div>
+  const { currentPlayer, playerId, fetchTurnData } =
+    getCurrentTurnPlayer(gameId);
+  const { winnerName, getWinner } = WinnerExists(gameId);
+  const { movsIds, figsIds } = CardsGame();
 
-                    </div>
-                </div>
-                <div className="right-box">
-                    <div className="Butt">
-                        <div className="end">
-                            <Button 
-                              label="Terminar Turno"
-                              onClick={handleEndTurn}
-                              disabled={localPlayerId !== playerId}
-                              />
-                        </div>
-                        <div className="leav">
-                            <LeaveButton />
-                        </div>
-                    </div>
+  wsGameHandler(ws, fetchTurnData, getWinner);
 
-                </div>
+  const handleEndTurn = async () => {
+    await passTurn();
+  };
+
+  const handleLeave = async () => {
+    await passTurn();
+    await LeaveGame(navigate);
+  };
+
+  return (
+    <div>
+      {winnerName && (
+        <>
+          <Confetti
+            width={2500}
+            height={1500}
+            numberOfPieces={300}
+            gravity={0.3}
+            wind={0.02}
+            recycle={false}
+            style={{ position: "fixed", top: 0, left: 0 }}
+          />
+          <VictoryBox winnerName={winnerName} onLeave={handleLeave} />
+        </>
+      )}
+      <div className="game-container">
+        <div className="left-box">
+          <div className="seePlayer">
+            <SeePlayer player={currentPlayer || "??????"} />
+          </div>
+          <div className="Game_Area">
+            <div className="Fig">
+              <FigCards figsIds={figsIds} />
             </div>
+            <div className="board"></div>
+            <div className="Mov">
+              <MovCards movsIds={movsIds} />
+            </div>
+          </div>
         </div>
-        );
-    }
+        <div className="right-box">
+          <div className="PlayerInfo-Area">
+            <PlayerName player={localPlayerName} />
+          </div>
+
+          <div className="Butt">
+            <div className="end">
+              <Button
+                label="Terminar Turno"
+                onClick={handleEndTurn}
+                disabled={localPlayerId !== playerId}
+              />
+            </div>
+            <div className="leav">
+              <LeaveButton onLeave={handleLeave} />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default Game;
