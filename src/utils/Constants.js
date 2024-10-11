@@ -20,6 +20,7 @@ export const GET_FIGURES_URL = `http://localhost:${PORT}${GAME}/my-fig-card?play
 export const GET_WINNER_URL = `http://localhost:${PORT}${GAME}/get-winner?game_id=`;
 export const GET_TURN_PLAYER_URL = `http://localhost:${PORT}${GAME}/current-turn?game_id=`;
 export const GAME_PASS_URL = `http://localhost:${PORT}${GAME}/end-turn`;
+export const GAME_BOARD_URL = `http://localhost:${PORT}${GAME}/board?game_id=`;
 
 /** WEBSOCKETS */
 export const WS_GAME = `ws://localhost:${PORT}${GAME}?game_id=`;

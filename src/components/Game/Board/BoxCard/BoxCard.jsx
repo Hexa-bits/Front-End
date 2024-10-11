@@ -1,10 +1,10 @@
 import './BoxCard.css';
 
 const colorMap = {
-    red: '#DC143C',    // rojo carmesí
-    blue: '#4169E1',   // azul real
-    green: '#50C878',  // verde esmeralda
-    yellow: '#FFD700'  // oro claro
+    1: '#DC143C',    // rojo carmesí
+    2: '#50C878',  // verde esmeralda
+    3: '#FFD700',  // oro claro
+    4: '#4169E1'   // azul real
 };
 
 function BoxCard({ color, isSelected, onClick }) {  
