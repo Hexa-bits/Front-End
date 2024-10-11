@@ -33,16 +33,10 @@ function Game() {
   const { currentPlayer, playerId, fetchTurnData } =
     getCurrentTurnPlayer(gameId);
   const { winnerName, getWinner } = WinnerExists(gameId);
-<<<<<<< HEAD
-  const { movsIds, figsIds } = CardsGame();
-
-  wsGameHandler(ws, fetchTurnData, getWinner);
-=======
   const { movs_ids, figs_ids, fetchFigs, fetchMovs } =
     renewAllCards(localPlayerId);
 
   wsGameHandler(ws, fetchTurnData, getWinner, fetchFigs, fetchMovs);
->>>>>>> e9e70b0af55e57d2e73e52c6493de77db34ff99d
 
   const handleEndTurn = async () => {
     await passTurn();
