@@ -1,40 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import getTurnPlayer from './getTurnPlayer.js';
 
-function getCurrentTurnPlayer(ws) {
+
+function getCurrentTurnPlayer(gameId) {
     const [currentPlayer, setCurrentPlayer] = useState(null);
     const [playerId, setPlayerId] = useState(null);
-    const gameId = localStorage.getItem('game_id');
 
-    const fetchData = async () => {
+    const fetchTurnData = useCallback(async () => {
         try {
             const { playerId: newPlayerId, namePlayer: newNamePlayer } = await getTurnPlayer(gameId);
             setCurrentPlayer(newNamePlayer);
             setPlayerId(newPlayerId);
         } catch (error) {
             console.error('Error fetching game data:', error);
-        }
-    };
-
-
-    useEffect(() => {
-        fetchData();
-    }, []);
+        }   
+    }, [gameId]);
 
     useEffect(() => {
-        if(!ws) return;
+        fetchTurnData();
+    }, [fetchTurnData]);
 
-        ws.onmessage = (event) => {
-            const message = event.data;
-            if (message && message === "Terminó turno") {
-                console.log("Llamado de mensajes de Turno.");
-                fetchData();
-            }
-        };
- 
-    }, [ws]);
 
-    return { currentPlayer, playerId };
+    return { currentPlayer, playerId, fetchTurnData };
 }
 
 export default getCurrentTurnPlayer;

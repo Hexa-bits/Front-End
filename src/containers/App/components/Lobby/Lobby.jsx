@@ -40,6 +40,7 @@ function Lobby() {
                     isOwner={isOwner} 
                     onLeaveGame={handleLeave} 
                     onStartGame={StartGame(navigate)}
+                    oneJoined={players.length < 2}
                 />
             </div>
         </div>
