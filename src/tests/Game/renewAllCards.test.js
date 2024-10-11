@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, expect, vi } from "vitest";
-import renewAllCards from "../../hooks/Game/Cards/renewAllCards.js";
+import renewAllCards from "../../services/Game/Cards/renewAllCards";
 
 const playerId = 1;
 const GET_MOVEMENTS_URL = "/game/movements?player_id=";
