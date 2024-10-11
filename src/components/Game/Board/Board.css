@@ -1,22 +1,44 @@
 /* Board.css */
 .Board {
-    background-color: #73302e;
+    background-color: #5b2726;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 20px;
-    width: 80%;
+    width: 400px;
+    height: 400px;
     padding: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border: 10px solid #3b1c1b;
+    position: relative; /* Para el pseudo-elemento */
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5), 
+                inset 0 5px 10px rgba(255, 255, 255, 0.1); 
+    background: linear-gradient(145deg, #5b2726, #3d1918);
 }
 
-.BoxCard {
-    width: 80px; /* Ajusta el tamaño según tus necesidades */
-    height: 80px; 
-    border-radius: 10px;
-    cursor: pointer; 
-    transition: transform 0.2s; 
-    background-color: white; /* Fondo blanco para las tarjetas */
+.Board::before {
+    content: '';
+    position: absolute;
+    top: -10px; 
+    left: -10px; 
+    right: -10px; 
+    bottom: -10px;
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+
+.BoxCards{
+    display: flex;
+    flex-wrap: wrap;
+    width: auto;
+    height: auto;
+    justify-content: center;
+    align-items: center;
 }
 
 .BoardRow {
-    display: flex; /* Organiza las celdas en una fila */
+    display: flex; 
     flex-direction: row;
     justify-content: center;
 }

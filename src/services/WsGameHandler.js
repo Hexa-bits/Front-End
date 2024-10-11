@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 // Esta función se encarga de manejar todos los mensajes que llegan por websocket
 const wsGameHandler = (
   ws,
@@ -18,6 +19,7 @@ const wsGameHandler = (
         fetchTurnData();
         fetchFigs();
         fetchMovs();
+        fetchBoxCards();
       } else if (message === "Hay Ganador") {
         console.log("Mensaje de ganador recibido");
         getWinner();
