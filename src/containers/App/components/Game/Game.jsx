@@ -4,11 +4,7 @@ import VictoryBox from "../../../../components/VictoryBox/VictoryBox.jsx";
 import WinnerExists from "../../../../hooks/Game/winnerExists.js";
 import FigCards from "../../../../components/Game/FigCards/FigCards.jsx";
 import MovCards from "../../../../components/Game/MovCards/MovCards.jsx";
-<<<<<<< HEAD
-import CardsGame from "../../../../utils/logics/Game/CardsGame.js";
-=======
 import renewAllCards from "../../../../hooks/Game/Cards/renewAllCards.js";
->>>>>>> e9e70b0af55e57d2e73e52c6493de77db34ff99d
 import LeaveButton from "../../../../components/Game/LeaveButton/LeaveButton.jsx";
 import SeePlayer from "../../../../components/Game/seePlayer_Turn/seePlayer.jsx";
 import getCurrentTurnPlayer from "../../../../hooks/Game/TurnPlayer/getCurrentTurnPlayer.js";
