@@ -17,6 +17,7 @@ import { LeaveGame } from "../../../../hooks/Lobby/leaveGame.jsx";
 import { getWsGameInstance } from "../../../../services/WsGameService.js";
 import { WS_GAME } from "../../../../utils/Constants.js";
 import wsGameHandler from "../../../../services/WsGameHandler.js";
+import renewBoard from "../../../../hooks/Game/Board/renewBoard.js";
 
 function Game() {
   const navigate = useNavigate();
@@ -31,8 +32,16 @@ function Game() {
   const { winnerName, getWinner } = WinnerExists(gameId);
   const { movs_ids, figs_ids, fetchFigs, fetchMovs } =
     renewAllCards(localPlayerId);
+  const { boxCards, fetchBoxCards } = renewBoard(gameId);
 
-  wsGameHandler(ws, fetchTurnData, getWinner, fetchFigs, fetchMovs);
+  wsGameHandler(
+    ws,
+    fetchTurnData,
+    getWinner,
+    fetchFigs,
+    fetchMovs,
+    fetchBoxCards
+  );
 
   const handleEndTurn = async () => {
     await passTurn();
