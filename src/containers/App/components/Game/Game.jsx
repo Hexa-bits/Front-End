@@ -29,11 +29,12 @@ function Game() {
 
   const ws = getWsGameInstance(WS_GAME + gameId);
   const winner = useWinnerPolling(gameId);
-  const { movs_ids, figs_ids } = renewAllCards(ws, localPlayerId);
   const { currentPlayer, playerId } = getCurrentTurnPlayer(ws);
+  const { movs_ids, figs_ids } = renewAllCards(ws, localPlayerId);
 
   const handleEndTurn = async () => {
     await passTurn();
+    //console.log("boton apretado"); el boton si lo aprieta, no está haciendo caso el passturn
   };
 
   const handleLeave = async () => {

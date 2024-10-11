@@ -54,19 +54,19 @@ function renewAllCards(ws, playerId) {
     renewMovs();
   }, [playerId]);
 
-  useEffect(() => {
-    if (!ws) return; //si el ws no está abierto no hace nada
-    ws.onmessage = (event) => {
-      const message = event.data; //acá el mje va a ser sacado de lo q me manda el evento
-      if (message === "Terminó turno") {
-        renewFigs();
-        renewMovs(); // si el ws sí está abierto, llamo a la función q quiero el mje q me llegue
-      }
-    };
-    ws.onerror = (error) => {
-      console.error("ws error:", error);
-    };
-  }, [ws]);
+  // useEffect(() => {
+  //   if (!ws) return; //si el ws no está abierto no hace nada
+  //   ws.onmessage = (event) => {
+  //     const message = event.data; //acá el mje va a ser sacado de lo q me manda el evento
+  //     if (message === "Terminó turno") {
+  //       renewFigs();
+  //       renewMovs(); // si el ws sí está abierto, llamo a la función q quiero el mje q me llegue
+  //     }
+  //   };
+  //   ws.onerror = (error) => {
+  //     console.error("ws error:", error);
+  //   };
+  // }, [ws]);   todo esto iria en un archivo aparte
   return { movs_ids, figs_ids };
 }
 export default renewAllCards;
