@@ -1,6 +1,6 @@
 import { describe, it, vi, expect, beforeEach } from "vitest";
 import { renderHook, waitFor, act } from "@testing-library/react";
-import WinnerExists from "../../hooks/Game/winnerExists";
+import WinnerExists from "../../services/Game/Winner/winnerExists";
 
 const gameId = "123";
 const GET_WINNER_URL = "/game/winner?game_id=123";
