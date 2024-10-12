@@ -2,9 +2,10 @@ import "./Board.css";
 import BoxCard from "./BoxCard/BoxCard";
 import useSelectedCards from "../../../services/Game/Board/useSelectedCards";
 
-function Board({ isTurn, cardData }) {
+function Board({ isTurn, cardData, onSelectedCards}) {
   const { selectedCards, handlerSelectedCard } = useSelectedCards(isTurn);
-
+  onSelectedCards(selectedCards);
+  
   return (
     <div className="Board">
       <div className="BoxCards">

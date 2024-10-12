@@ -1,4 +1,4 @@
-import React, { useEffect, useInsertionEffect } from "react";
+import React, { useEffect, useInsertionEffect, useState } from "react";
 import Button from "../../../../components/Button/Button.jsx";
 import VictoryBox from "../../../../components/VictoryBox/VictoryBox.jsx";
 import WinnerExists from "../../../../services/Game/Winner/winnerExists.js";
@@ -19,6 +19,8 @@ import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
 import { WS_GAME, cardData } from "../../../../utils/Constants.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
 import renewBoard from "../../../../services/Game/Board/renewBoard.js";
+import useMovCard from "../../../../services/Game/Cards/useMovCard.js";
+import {checkMov} from "../../../../utils/logics/Game/checkMov.js";
 
 function Game() {
   const navigate = useNavigate();
@@ -34,6 +36,8 @@ function Game() {
   const { movs_ids, figs_ids, fetchFigs, fetchMovs } =
     renewAllCards(localPlayerId);
   const { boxCards, fetchBoxCards } = renewBoard(gameId);
+  const [selectedCards, setSelectedCards] = useState([]);
+  const [selectedMov, setSelectedMov] = useState(null);
 
   wsGameHandler(
     ws,
@@ -52,6 +56,16 @@ function Game() {
     await passTurn();
     await LeaveGame(navigate);
   };
+
+  const handleUseMov = () => {
+    console.log("fichas " + selectedCards + " Movimiento : " + selectedMov);
+    const isValid = checkMov(selectedMov, selectedCards);
+    console.log("checkMov: ", isValid);
+    // if (checkMov(movCardId, selectedCards)) {
+    //   await useMovCard(localPlayerId, movCardId, selectedCards);
+    // }
+  };
+
 
   return (
     <div>
@@ -79,10 +93,17 @@ function Game() {
               <FigCards figs_ids={figs_ids} />
             </div>
             <div className="board">
-              <Board isTurn={localPlayerId === playerId} cardData={boxCards} />
+              <Board 
+                isTurn={localPlayerId === playerId} 
+                cardData={boxCards} 
+                onSelectedCards={setSelectedCards}
+              />
             </div>
             <div className="Mov">
-              <MovCards movs_ids={movs_ids} />
+              <MovCards 
+                movs_ids={movs_ids} 
+                onSelectedMov={setSelectedMov}
+              />
             </div>
           </div>
         </div>
@@ -92,6 +113,13 @@ function Game() {
           </div>
 
           <div className="Butt">
+            <div className="useMov"> 
+              <Button
+                label="Usar Movimiento"
+                onClick={handleUseMov}
+                disabled={localPlayerId !== playerId}
+              />
+            </div>
             <div className="end">
               <Button
                 label="Terminar Turno"

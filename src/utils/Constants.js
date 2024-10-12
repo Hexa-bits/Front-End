@@ -21,6 +21,7 @@ export const GET_WINNER_URL = `http://localhost:${PORT}${GAME}/get-winner?game_i
 export const GET_TURN_PLAYER_URL = `http://localhost:${PORT}${GAME}/current-turn?game_id=`;
 export const GAME_PASS_URL = `http://localhost:${PORT}${GAME}/end-turn`;
 export const GAME_BOARD_URL = `http://localhost:${PORT}${GAME}/board?game_id=`;
+export const USE_MOV_CARD = `http://localhost:${PORT}${GAME}/use-mov-card`;
 
 /** WEBSOCKETS */
 export const WS_GAME = `ws://localhost:${PORT}${GAME}?game_id=`;
