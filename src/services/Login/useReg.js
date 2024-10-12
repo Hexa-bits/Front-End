@@ -1,10 +1,8 @@
 import React from "react";
 import { LOGIN_URL } from "../../utils/Constants";
 
-// import fetchMock from 'fetch-mock';
-// fetchMock.post(LOGIN_URL, { id: 3 });   // MOCK TEST 
 
-async function useReg ({ username}) {
+export const useReg = async ( {username}) => {
     try {            
         const response = await fetch(LOGIN_URL, {
             method: 'POST',
@@ -21,13 +19,11 @@ async function useReg ({ username}) {
         const data = await response.json();
         const Id = data.id;
 
-        alert(`Usuario ${username} creado exitosamente con Id: ${Id}.`);
         localStorage.setItem('username', username); 
         localStorage.setItem('id_user', Id);
 
     } catch (error) {
-        throw error;
+        console.log(error);
     }
 }
 
-export { useReg };
