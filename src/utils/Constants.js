@@ -36,6 +36,13 @@ export const GAME_INFO_WS = `ws://localhost:${PORT}${GAME}/info`;
 export const MAX_PLAYERS = 4;
 export const MIN_PLAYERS = 1;
 
+export const COLORMAP_BOXCARDS = {
+    1: '#DC143C',    // rojo carmesí
+    2: '#50C878',  // verde esmeralda
+    3: '#FFD700',  // oro claro
+    4: '#4169E1'   // azul real
+};
+
 //A modo de Ejemplo
 export const cardData = [
     { x: 0, y: 0, color: 'red' },
