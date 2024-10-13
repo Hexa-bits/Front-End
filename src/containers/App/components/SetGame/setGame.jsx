@@ -19,7 +19,7 @@ function Start() {
           maxPlayers={max_players}
           setPlayerAmnt={setMaxPlayers}
         />
-        <Button label="Crear Partida" onClick={handleClick} />
+        <Button label="CREAR PARTIDA" onClick={handleClick} />
       </div>
     </div>
   );

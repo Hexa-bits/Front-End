@@ -6,7 +6,7 @@ function LobbyList({ players }) {
     return (
         <>
             <div className="list-header">
-                <h3 className="list-title">Jugadores en espera</h3>
+                <h3 className="list-title">JUGADORES EN ESPERA</h3>
                 <DotsAnim/>
             </div>
             <ul className="list-group list-group-flush">
@@ -16,7 +16,7 @@ function LobbyList({ players }) {
                         {index === 0 ? (
                             <div>
                                 {player} 
-                                <i className="emoji-gemstone emoji-owner"></i>
+                                <img src="/assets/icons/crown.svg" className="emoji-owner"></img>
                             </div> ) : ( player )
                         }
                     </li>

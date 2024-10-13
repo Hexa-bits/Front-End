@@ -4,7 +4,7 @@ import './LobbyCard.css';
 function LobbyCard({ gameName, maxPlayers}) {
     return (  
         <div className="card text-bg-info mb-3 card-container">
-            <div className="card-header">La partida comenzara pronto!</div>
+            <div className="card-header">LA PARTIDA COMENZARA PRONTO!</div>
             <div className="card-body">
                 <h5 className="card-title"> 
                     • Partida <span className='game-name'>{gameName}</span>

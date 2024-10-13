@@ -8,7 +8,8 @@
     display: flex;
     justify-content: center;
     font-weight: bold;
-    font-size: 20px;
+    
+    font-size: 30px;
     background-color: var(--violeta2);
 }
 
@@ -19,16 +20,18 @@
 
     background-color: var(--amarillito);
     font-weight: bold;
+    font-size: 20px;
     color: var(--violeta2);
 }
 .card .card-body .card-title {
-    font-size: 1rem;
+    font-size: 20px;
     font-weight: bold;
     color: var(--violeta2); 
     margin-right: 3rem;
 }
 .card .card-body .game-name{
-    font-size: 1.1rem;
+    font-size: 20px;
+    text-decoration: underline;
 }
 
 /* .card .card-body .max-players{

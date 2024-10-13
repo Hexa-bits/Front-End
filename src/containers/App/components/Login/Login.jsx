@@ -19,12 +19,12 @@ function Login() {
     return (
         <div className="login-container">
             <h1 className={`login-title ${isTitleVisible ? "visible" : ""}`}>
-                El Switcher
+                EL SWITCHER
             </h1>
             {isFormVisible && (
                 <div className="card">
                     <Form
-                        label="Registro de Usuario"
+                        label="INGRESA UN NOMBRE"
                         type="text"
                         placeholder="Ingresar nombre de usuario"
                         helpText={LoginHelpText}
@@ -32,7 +32,7 @@ function Login() {
                         onChange={handleChange}
                         value={username}
                     />
-                    <Button className="btn btn-secondary" label="Ingresar" onClick={handleInput} />
+                    <Button className="btn btn-secondary" label="INGRESAR" onClick={handleInput} />
                 </div>
             )}
         </div>

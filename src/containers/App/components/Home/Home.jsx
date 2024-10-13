@@ -6,7 +6,7 @@ import JoinGame from "../../../../utils/logics/Home/JoinGame.js";
 import WsHomeService from "../../../../services/WS/WsHomeService.js";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { WS_HOME } from "../../../../utils/Constants.js";
+import { WS_HOME, LOGIN } from "../../../../utils/Constants.js";
 
 function Home() {
   const playerId = parseInt(localStorage.getItem("id_user"), 10);
@@ -28,6 +28,10 @@ function Home() {
 
   return (
     <div className="Home">
+      <Button 
+        onClick={() => navigate(LOGIN)} 
+        className="back-btn" 
+      />
       <section className="NombreUsuario">
         <div className="dataUser">
           <div className="user">Usuario: {username}</div>
@@ -36,7 +40,7 @@ function Home() {
       </section>
 
       <section className="CrearPartida">
-        <Button label="Crear Partida" onClick={handleCrearPartida} />
+        <Button label="CREAR PARTIDA" onClick={handleCrearPartida} />
       </section>
 
       <section className="GameList__Home">

@@ -1,10 +1,14 @@
 import "./Board.css";
 import BoxCard from "./BoxCard/BoxCard";
 import useSelectedCards from "../../../services/Game/Board/useSelectedCards";
+import { useEffect } from "react";
 
 function Board({ isTurn, cardData, onSelectedCards}) {
   const { selectedCards, handlerSelectedCard } = useSelectedCards(isTurn);
-  onSelectedCards(selectedCards);
+  
+  useEffect(() => {
+    onSelectedCards(selectedCards);
+  }, [selectedCards, onSelectedCards]);
   
   return (
     <div className="Board">

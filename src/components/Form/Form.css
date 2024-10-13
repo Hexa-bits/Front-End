@@ -28,8 +28,8 @@
 }
 
 /* Help text style */
-.form-text {
-    font-size: 3rem;
+.login-container .form-text {
+    font-size: 1.1rem;
     margin-bottom: 0.5rem; 
     display: block; 
 }

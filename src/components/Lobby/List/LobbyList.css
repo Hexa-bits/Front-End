@@ -12,33 +12,34 @@
     background: var(--amarillito);
     background-color: var(--amarillito);
     width: 100%;
-    color: var(--violetaClaro);
+    color: var(--violeta2);
     font-weight: bold;
-    text-decoration-line: underline;
+    font-size: 20px;
     border: none;
 }
 .list-header{
     display: flex;
     justify-content: center;
     align-items: center;
-    border-top: 1px solid var(--violetaClaro);
+    /* border-top: 1px solid var(--violetaClaro); */
 }
 
 .list-title {
-    color: var(--violetaClaro); 
-    font-size: 17px;
+    color: var(--violeta2); 
+    font-size: 20px;
     margin-bottom: 10px;
     text-align: center;
     font-style: italic;
     font-weight: bold;
-    margin-top: 1rem;
+    margin-top: 2px;
 }
 
 .dots {
-    margin-top: 1rem;
+    margin-top: 2px;
     margin-left: 10px;
 }
 
 .emoji-owner {
-    margin-left: 2px;   
+    width: 20px;
+    margin-left: 5px;   
 }
