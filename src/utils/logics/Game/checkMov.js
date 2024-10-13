@@ -48,15 +48,15 @@ const relative_shifts2 = {
     7: [{ dx: 4, dy: 0 }, {dx:-4, dy: 0 }, {dx:-2, dy: 0 }, {dx:2, dy: 0 }]
 }
 
-// movs simples sin considerar movs entre bordes
+// movs simples sin considerar movs de un borde a otro, rotaciones incluidas
 const relative_shifts1 = {
-    1: [{ dx: 2, dy:-2 }, {dx:-2, dy: 2 }], 
-    2: [{ dx: 2, dy: 0 }, {dx:-2, dy: 0 }],
-    3: [{ dx: 1, dy: 0 }, {dx:-1, dy: 0 }],
-    4: [{ dx: 1, dy: 1 }, {dx:-1, dy:-1,}],
-    5: [{ dx:-2, dy: 1 }, {dx: 2, dy:-1,}],
-    6: [{ dx: 2, dy: 1 }, {dx:-2, dy:-1,}],
-    7: [{ dx: 4, dy: 0 }, {dx:-4, dy: 0 }]
+    1: [{ dx: 2, dy:-2 }, {dx:-2, dy: 2 }, { dx: 2, dy: 2 }, {dx:-2, dy:-2 }], 
+    2: [{ dx: 2, dy: 0 }, {dx:-2, dy: 0 }, { dx: 0, dy: 2 }, {dx: 0, dy:-2 }],
+    3: [{ dx: 1, dy: 0 }, {dx:-1, dy: 0 }, { dx: 0, dy: 1 }, {dx: 0, dy:-1 }],
+    4: [{ dx: 1, dy: 1 }, {dx:-1, dy:-1 }, { dx: 1, dy:-1 }, {dx:-1, dy: 1 }],
+    5: [{ dx:-2, dy: 1 }, {dx: 2, dy:-1 }, { dx: 1, dy: 2 }, {dx:-1, dy:-2 }],
+    6: [{ dx: 2, dy: 1 }, {dx:-2, dy:-1 }, { dx:-1, dy: 2 }, {dx: 1, dy:-2 }],
+    7: [{ dx: 4, dy: 0 }, {dx:-4, dy: 0 }, { dx: 0, dy: 4 }, {dx: 0, dy:-4 }]
 }
 
 export const checkMov = ( movId, selectedCards ) => {
