@@ -19,7 +19,7 @@ export const LeaveGame = async (navigate) => {
       throw new Error(errorMessage || response.statusText);
     }
 
-    alert(`Jugador ${playerId} abandonaste el juego ${gameId} exitosamente`);
+    // (`Jugador ${playerId} abandonaste el juego ${gameId} exitosamente`);
     localStorage.removeItem("game_id");
     closeWsGameInstance();
     navigate(HOME);

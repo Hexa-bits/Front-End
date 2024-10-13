@@ -1,14 +1,4 @@
 /* BUTTONS */
-/* .btn-container {
-    display: flex;
-    gap: 40px;
-    justify-content: center;
-    margin-top: 20px;
-}
-.btn-container button {
-    width: 150px;
-} */
-
 
 .btn-container {
     display: flex;
@@ -20,11 +10,31 @@
     width: 150px;
 }
 .btn-container .btn-start {
-    background-color: rgba(70, 161, 70, 0.747);
+    background-color: var(--violeta2);
     border: none;
-
+    color: white;
 }
+.btn-container .btn-start:hover {
+    background-color: var(--violeta2);
+    transform: scale(1.05);
+}
+
+.btn-container .btn-start:disabled {
+    background-color: var(--violetaClaro);
+    color: white;
+}
+
 .btn-container .btn-leave {
-    background-color: rgba(255, 0, 0, 0.747);
+    background-color: var(--rojo);
     border: none;
+}
+
+.btn-container .btn-leave:hover {
+    background-color: var(--rojo);
+    transform: scale(1.05);
+}
+
+.btn-container .btn-leave:disabled {
+    background-color: var(--rojo);
+    color: white;
 }

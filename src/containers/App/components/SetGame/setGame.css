@@ -7,7 +7,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color:var(--marronsito);
+    background-color:var(--violeta);
 }
 
 .setGame{
@@ -16,7 +16,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgb(255, 248, 188);
+    background-color: var(--amarillito);
     border-radius: 5px;
 }
 
@@ -26,6 +26,13 @@
 }
 
 .setGame button{
+    background-color: var(--violeta);  
+    border: none;  
     width: 70%;
     margin: 10px 0 20px 0;
+}
+
+.setGame button:hover{
+    background-color: var(--violeta2);
+    transform: scale(1.03);
 }
