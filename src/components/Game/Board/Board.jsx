@@ -15,12 +15,13 @@ function Board({ isTurn, cardData, onSelectedCards}) {
       <div className="BoxCards">
         {cardData.map(({ x, y, color }) => {
           const index = `${x}-${y}`;
+          const isSelected = selectedCards.some(card => card.x === x && card.y === y);
           return (
             <BoxCard
               key={index}
               color={color}
-              isSelected={selectedCards.includes(index)}
-              onClick={() => handlerSelectedCard(x, y)}
+              isSelected={isSelected}
+              onClick={() => handlerSelectedCard(x, y, color)}
             />
           );
         })}

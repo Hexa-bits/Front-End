@@ -4,7 +4,6 @@ import Button from "../../../../components/Button/Button";
 import GameList from "../../../../components/Game_List/Game_List.jsx";
 import JoinGame from "../../../../utils/logics/Home/JoinGame.js";
 import WsHomeService from "../../../../services/WS/WsHomeService.js";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { WS_HOME, LOGIN } from "../../../../utils/Constants.js";
 
@@ -28,14 +27,14 @@ function Home() {
 
   return (
     <div className="Home">
-      <Button 
+      {/* <Button 
         onClick={() => navigate(LOGIN)} 
         className="back-btn" 
-      />
+      /> */}
       <section className="NombreUsuario">
         <div className="dataUser">
-          <div className="user">Usuario: {username}</div>
-          <div className="id_user"> Id_Usuario: {playerId}</div>
+          <div className="user">USUARIO: {username}</div>
+          <div className="id_user"> ID: {playerId}</div>
         </div>
       </section>
 

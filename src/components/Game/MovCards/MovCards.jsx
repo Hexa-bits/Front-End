@@ -1,28 +1,27 @@
 import React, { useState } from "react";
 import "./MovCards.css";
 
-function MovCards({ movs_ids , onSelectedMov }) {
+function MovCards({ mov_cards , onSelectedMov }) {
   const [selectedIndex, setSelectedIndex] = useState(null);
 
   const handleCardClick = (index) => {
-    const mov_id = movs_ids[index];
     setSelectedIndex(index === selectedIndex ? null : index);
-    onSelectedMov(index === selectedIndex ? null : mov_id);
+    onSelectedMov(index === selectedIndex ? null : mov_cards[index]);
   };
   return (
     <div className="mov-cards-container">
       <div className="mov-card">
-        {movs_ids.slice(0, 3).map((Id, index) => {
+        {mov_cards.slice(0, 3).map((card, index) => {
           const isSelected = index === selectedIndex;
           return (
             <div
-              key={index}
+              key={card.id}
               className={`Figures ${isSelected ? "selected" : ""}`} 
               onClick={() => handleCardClick(index)}
             >
               <img
-                src={`../../../../assets/Movements/mov${Id}.svg`}
-                alt={`mov${Id}`}
+                src={`../../../../assets/Movements/mov${card.move}.svg`}
+                alt={`mov${card.move}`}
               />
             </div>
           );

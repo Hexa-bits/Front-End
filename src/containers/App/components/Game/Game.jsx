@@ -33,7 +33,7 @@ function Game() {
   const { currentPlayer, playerId, fetchTurnData } =
     getCurrentTurnPlayer(gameId);
   const { winnerName, getWinner } = WinnerExists(gameId);
-  const { movs_ids, figs_ids, fetchFigs, fetchMovs } =
+  const { mov_cards, figs_ids, fetchFigs, fetchMovs } =
     renewAllCards(localPlayerId);
   const { boxCards, fetchBoxCards } = renewBoard(gameId);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -57,13 +57,13 @@ function Game() {
     await LeaveGame(navigate);
   };
 
-  const handleUseMov = () => {
-    console.log("fichas " + selectedCards + " Movimiento : " + selectedMov);
-    const isValid = checkMov(selectedMov, selectedCards);
-    console.log("checkMov: ", isValid);
-    // if (checkMov(movCardId, selectedCards)) {
-    //   await useMovCard(localPlayerId, movCardId, selectedCards);
-    // }
+  const handleUseMov = async () => {
+    // console.log("fichas " + selectedCards + " Movimiento : " + selectedMov.move);
+    // const isValid = checkMov(selectedMov, selectedCards);
+    // console.log("checkMov: ", isValid);
+    if (checkMov(selectedMov, selectedCards)) {
+      await useMovCard(localPlayerId, selectedMov, selectedCards);
+    }
   };
 
 
@@ -101,7 +101,7 @@ function Game() {
             </div>
             <div className="Mov">
               <MovCards 
-                movs_ids={movs_ids} 
+                mov_cards={mov_cards} 
                 onSelectedMov={setSelectedMov}
               />
             </div>
