@@ -5,16 +5,13 @@ import getFormedFig from "../../../services/Game/Board/Highlight Figs/formedFig"
 import { COLORMAP_BOXCARDS } from "../../../utils/Constants";
 import { useEffect } from "react";
 
-//Modificar este mock
-const formedFigs = [
-    [{x:1, y:1, color:3}, {x:2, y:1, color:3}, {x:3, y:1, color:3}, {x:2, y:2, color:3}],
-    [{x:5, y:3, color:1}, {x:6, y:3, color:1}, {x:6, y:4, color:1}, {x:6, y:5, color:1}]
-]
 
-function Board({ isTurn, cardData, onSelectedCards}) {
+function Board({ isTurn, cardData, onSelectedCards, game_id}) {
     const { selectedCards, handlerSelectedCard } = useSelectedCards(isTurn);
-    const game_id = localStorage.getItem("game_id");
-    console.log("Game ID: ", game_id);
+
+    const formedFigs  = getFormedFig(game_id); 
+
+    console.log("Formed Figs: ", formedFigs);
 
     useEffect(() => {
         onSelectedCards(selectedCards);

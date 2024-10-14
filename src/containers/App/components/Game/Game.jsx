@@ -94,6 +94,7 @@ function Game() {
                 isTurn={localPlayerId === playerId} 
                 cardData={boxCards} 
                 onSelectedCards={setSelectedCards}
+                game_id={gameId}
               />
             </div>
             <div className="Mov">
