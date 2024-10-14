@@ -12,12 +12,19 @@ describe("Board Component", () => {
       { x: 0, y: 1, color: 4 },
     ];
 
+    const mockOnSelectedCards = vi.fn();
+
     useSelectedCards.mockReturnValue({
       selectedCards: [],
       handlerSelectedCard: vi.fn(),
     });
 
-    render(<Board isTurn={true} cardData={mockCardData} />);
+    render(
+      <Board 
+        isTurn={true} 
+        cardData={mockCardData} 
+        onSelectedCards={mockOnSelectedCards}
+      />);
 
     // Obtener todas las cartas usando el role "button"
     const boxCards = screen.getAllByRole("button");
@@ -26,5 +33,6 @@ describe("Board Component", () => {
 
     expect(boxCards[0]).toHaveStyle("background-color: #DC143C"); // Rojo Carmesí
     expect(boxCards[1]).toHaveStyle("background-color: #4169E1"); // Azul Real
+    expect(mockOnSelectedCards).toHaveBeenCalledWith([]);
   });
 });

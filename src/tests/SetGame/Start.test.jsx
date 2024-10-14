@@ -24,14 +24,14 @@ describe("Component Start", () => {
         <Start />
       </MemoryRouter>
     );
-    expect(screen.getByLabelText("Nombre de la partida")).toBeInTheDocument();
+    expect(screen.getByLabelText("NOMBRE DE PARTIDA")).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText("Ingrese un nombre")
     ).toBeInTheDocument();
     expect(
       screen.getByText("Elige la cantidad de participantes")
     ).toBeInTheDocument();
-    expect(screen.getByText("Crear Partida")).toBeInTheDocument();
+    expect(screen.getByText("CREAR PARTIDA")).toBeInTheDocument();
   });
 
   test("Debe llamar handleClick al hacer clic en Crear Partida.", () => {
@@ -47,7 +47,7 @@ describe("Component Start", () => {
         <Start />
       </MemoryRouter>
     );
-    fireEvent.click(screen.getByText("Crear Partida"));
+    fireEvent.click(screen.getByText("CREAR PARTIDA"));
 
     expect(useSetGame().handleClick).toHaveBeenCalledTimes(1);
   });
