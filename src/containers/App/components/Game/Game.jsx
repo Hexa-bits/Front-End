@@ -58,9 +58,6 @@ function Game() {
   };
 
   const handleUseMov = async () => {
-    // console.log("fichas " + selectedCards + " Movimiento : " + selectedMov.move);
-    // const isValid = checkMov(selectedMov, selectedCards);
-    // console.log("checkMov: ", isValid);
     if (checkMov(selectedMov, selectedCards)) {
       await useMovCard(localPlayerId, selectedMov, selectedCards);
     }

@@ -3,10 +3,10 @@ import { useState } from 'react';
 function useSelectedCards(isTurn) {
     const [selectedCards, setSelectedCards] = useState([]);
 
-    const handlerSelectedCard = (rowIndex, colIndex, color) => {
+    const handlerSelectedCard = (rowIndex, colIndex ) => {
         if (!isTurn) return; // Si no es el turno, no hace nada
 
-        const card = {x: rowIndex, y: colIndex, color }; // objeto ficha
+        const card = {x: rowIndex, y: colIndex }; // objeto ficha
 
         const isSelected = selectedCards.some(selectedCard => 
             selectedCard.x === rowIndex && selectedCard.y === colIndex

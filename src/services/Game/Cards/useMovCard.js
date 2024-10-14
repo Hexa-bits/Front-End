@@ -2,15 +2,10 @@ import { USE_MOV_CARD  } from "../../../utils/Constants";
 
 const useMovCard = async ( playerId, selectedMov, selectedCards ) => {
     
-    const fichas = selectedCards.map((card) => {
-        console.log("x: " + card.x, "y: " + card.y, "color: " + card.color);
-        return { 
-            x_pos: card.x, 
-            y_pos: card.y, 
-            color: card.color 
-        };
-    });
     const card_id = parseInt(selectedMov.id, 10);
+    const fichas = selectedCards.map((card) => {
+        return { x_pos: card.x, y_pos: card.y };
+    });
 
     try {
         const response = await fetch(USE_MOV_CARD, {
