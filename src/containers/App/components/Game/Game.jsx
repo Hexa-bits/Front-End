@@ -61,6 +61,9 @@ function Game() {
     if (checkMov(selectedMov, selectedCards)) {
       await useMovCard(localPlayerId, selectedMov, selectedCards);
     }
+    else {
+      console.log("Movimiento no valido");
+    }
   };
 
 
