@@ -64,6 +64,8 @@ function Game() {
     else {
       console.log("Movimiento no valido");
     }
+    setSelectedMov(null);
+    setSelectedCards([]);
   };
 
 
