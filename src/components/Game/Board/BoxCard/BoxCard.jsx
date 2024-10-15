@@ -9,9 +9,22 @@ function BoxCard({ color, isSelected, isHighlighted, highlightColor, onClick }) 
     const boxClass = `BoxCard ${isSelected ? "selected" : ""} ${isHighlighted ? "highlighted" : ""}`;
     
     // Define el estilo para el color de fondo
-    const boxStyle = {
+    let boxStyle = {
         backgroundColor: mappedColor,
     };
+
+    if (isHighlighted) {
+        boxStyle = {
+            ...boxStyle,
+            boxShadow: `0 0 10px ${highlightColor}, 0 0 10px ${highlightColor}`
+        };
+    } else if (isSelected) {
+        boxStyle = {
+            ...boxStyle,
+            border: '2px solid gold',
+            boxShadow: '0 0 15px 5px rgba(255, 215, 0, 0.8)',
+        };
+    }
 
     return (
         <div
