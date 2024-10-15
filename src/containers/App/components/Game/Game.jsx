@@ -86,9 +86,6 @@ function Game() {
             <SeePlayer player={currentPlayer || "??????"} />
           </div>
           <div className="Game_Area">
-            <div className="Fig">
-              <FigCards figs_ids={figs_ids} />
-            </div>
             <div className="board">
               <Board 
                 isTurn={localPlayerId === playerId} 
@@ -97,11 +94,16 @@ function Game() {
                 game_id={gameId}
               />
             </div>
-            <div className="Mov">
-              <MovCards 
-                movs_ids={movs_ids} 
-                onSelectedMov={setSelectedMov}
-              />
+            <div className="Cards">
+              <div className="Fig">
+                <FigCards figs_ids={figs_ids} />
+              </div>
+              <div className="Mov">
+                <MovCards 
+                  movs_ids={movs_ids} 
+                  onSelectedMov={setSelectedMov}
+                />
+              </div>
             </div>
           </div>
         </div>

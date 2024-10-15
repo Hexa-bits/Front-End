@@ -2,22 +2,27 @@ import './BoxCard.css';
 import { COLORMAP_BOXCARDS } from '../../../../utils/Constants';
 
 
-function BoxCard({ color, isSelected, isHighlighted, highlightColor, onClick }) {  
-    const mappedColor = COLORMAP_BOXCARDS[color] || 'gray'
+function BoxCard({ color, isSelected, isHighlighted, highlightColor, onClick }) {
+    const mappedColor = COLORMAP_BOXCARDS[color] || 'gray';
+    
+    // Determina las clases a aplicar
+    const boxClass = `BoxCard ${isSelected ? "selected" : ""} ${isHighlighted ? "highlighted" : ""}`;
+    
+    // Define el estilo para el color de fondo
     const boxStyle = {
         backgroundColor: mappedColor,
-        border: isHighlighted ? `3px solid ${highlightColor}` : 'none', // Borde del color correspondiente
-        boxShadow: isHighlighted ? `0 0 5px ${highlightColor}` : 'none', // Efecto de brillo
     };
+
     return (
         <div
             role="button"
-            className={`BoxCard ${isSelected ? "selected" : ""} ${isHighlighted ? "highlighted" : ""}`}
+            className={boxClass}
             onClick={onClick}
             style={boxStyle}
         >
         </div>
     );
 }
+
 
 export default BoxCard;

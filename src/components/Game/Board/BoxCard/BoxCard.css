@@ -9,26 +9,28 @@
     display: flex; 
     justify-content: center; 
     align-items: center;
-    cursor:pointer;
+    cursor: pointer;
     box-shadow: 
         0 3px 0px rgba(0, 0, 0, 0.3), 
         inset 0 -4px 0 rgba(0, 0, 0, 0.1); 
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
 }
 
+/* Estilo para la carta seleccionada */
 .BoxCard.selected {
     border: 2px solid gold; 
-    box-shadow: 0 3px 0px rgba(0, 0, 0, 0.3), 0 0 15px 5px rgba(255, 215, 0, 0.6); 
     transform: scale(1.05);
     transition: all 0.3s ease;
+    box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8); 
 }
 
+/* Estilo para la carta resaltada */
 .BoxCard.highlighted {
-    border: 3px solid; /* Resaltado visual */
-    box-shadow: 0 0 5px ; /* Sombra alrededor de la carta */
-    animation: pulse 1.4s infinite; /* Animación continua */
+    border: 1px solid; 
+    animation: pulse 1.4s infinite;
 }
 
+/* Animación de pulsación */
 @keyframes pulse {
     0% {
         transform: scale(1);
@@ -40,4 +42,3 @@
         transform: scale(1);
     }
 }
-

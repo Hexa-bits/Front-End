@@ -17,7 +17,7 @@ function MovCards({ movs_ids , onSelectedMov }) {
           return (
             <div
               key={index}
-              className={`Figures ${isSelected ? "selected" : ""}`} 
+              className={`Movs ${isSelected ? "selected" : ""}`} 
               onClick={() => handleCardClick(index)}
             >
               <img
