@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "../../Button/Button.jsx";
-import './LobbyButtons.css';
+import "./LobbyButtons.css";
 
 function LobbyButtons({ isOwner, onLeaveGame, onStartGame, oneJoined}) {
     return (

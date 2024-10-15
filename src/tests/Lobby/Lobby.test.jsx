@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import Lobby from "../../containers/App/components/Lobby/Lobby";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -83,6 +83,8 @@ describe("Lobby component", () => {
     expect(screen.getByText("Player2")).toBeInTheDocument();
     expect(screen.getByText("ABANDONAR")).toBeInTheDocument();
     expect(screen.getByText("INICIAR")).toBeInTheDocument();
+    expect(screen.getByText("INICIAR")).not.toBeDisabled();
+    expect(screen.getByText("ABANDONAR")).not.toBeDisabled();
   });
 
   it("renders correctly", () => {
