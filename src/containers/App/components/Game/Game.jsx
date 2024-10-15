@@ -19,8 +19,9 @@ import useMovCard from "../../../../services/Game/Cards/useMovCard.js";
 import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
 import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
-import {checkMov} from "../../../../utils/logics/Game/checkMov.js";
+import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
 import { WS_GAME, cardData } from "../../../../utils/Constants.js";
+import postPlayer from "../../../../services/Game/TurnPlayer/cancelMov.js";
 
 function Game() {
   const navigate = useNavigate();
@@ -60,14 +61,16 @@ function Game() {
   const handleUseMov = async () => {
     if (checkMov(selectedMov, selectedCards)) {
       await useMovCard(localPlayerId, selectedMov, selectedCards);
-    }
-    else {
+    } else {
       console.log("Movimiento no valido");
     }
     setSelectedMov(null);
     setSelectedCards([]);
   };
 
+  const handleCancel = async () => {
+    await postPlayer();
+  };
 
   return (
     <div>
@@ -95,17 +98,14 @@ function Game() {
               <FigCards figs_ids={figs_ids} />
             </div>
             <div className="board">
-              <Board 
-                isTurn={localPlayerId === playerId} 
-                cardData={boxCards} 
+              <Board
+                isTurn={localPlayerId === playerId}
+                cardData={boxCards}
                 onSelectedCards={setSelectedCards}
               />
             </div>
             <div className="Mov">
-              <MovCards 
-                mov_cards={mov_cards} 
-                onSelectedMov={setSelectedMov}
-              />
+              <MovCards mov_cards={mov_cards} onSelectedMov={setSelectedMov} />
             </div>
           </div>
         </div>
@@ -115,7 +115,7 @@ function Game() {
           </div>
 
           <div className="Butt">
-            <div className="useMov"> 
+            <div className="useMov">
               <Button
                 label="USAR MOVIMIENTO"
                 onClick={handleUseMov}
@@ -131,6 +131,13 @@ function Game() {
             </div>
             <div className="leav">
               <LeaveButton onLeave={handleLeave} />
+            </div>
+            <div className="cancel">
+              <Button
+                label="Cancelar movimiento"
+                onClick={handleCancel}
+                disabled={localPlayerId !== playerId}
+              />
             </div>
           </div>
         </div>

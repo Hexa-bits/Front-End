@@ -104,6 +104,28 @@
     border: none;
 }
 
+/*cancelar movimiento*/
+
+.cancel button{
+    background-color: #f47914;
+    border: 2px solid rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
+}
+
+.cancel button:hover {
+    transform: none; /* Elimina cualquier transformación */
+}
+
+.cancel button:active {
+    transform: none; /* Elimina cualquier transformación al hacer clic */
+}
+
+.cancel button:focus {
+    outline: none;
+    transform: none;
+}
+
+
 /* Victoria */
 .victory-overlay {
     position: fixed;
