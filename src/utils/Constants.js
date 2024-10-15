@@ -22,6 +22,8 @@ export const GET_TURN_PLAYER_URL = `http://localhost:${PORT}${GAME}/current-turn
 export const GAME_PASS_URL = `http://localhost:${PORT}${GAME}/end-turn`;
 export const GAME_BOARD_URL = `http://localhost:${PORT}${GAME}/board?game_id=`;
 export const USE_MOV_CARD = `http://localhost:${PORT}${GAME}/use-mov-card`;
+export const USE_FIG_CARD = `http://localhost:${PORT}${GAME}/use-fig-card`;
+
 
 /** WEBSOCKETS */
 export const WS_GAME = `ws://localhost:${PORT}${GAME}?game_id=`;

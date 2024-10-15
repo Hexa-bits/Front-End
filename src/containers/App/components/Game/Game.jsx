@@ -21,6 +21,7 @@ import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
 import {checkMov} from "../../../../utils/logics/Game/checkMov.js";
 import { WS_GAME, cardData } from "../../../../utils/Constants.js";
+import useFigCard from "../../../../services/Game/Cards/useFigCard.js";
 
 function Game() {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ function Game() {
   const { boxCards, fetchBoxCards } = renewBoard(gameId);
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectedMov, setSelectedMov] = useState(null);
+
 
   wsGameHandler(
     ws,
@@ -66,6 +68,12 @@ function Game() {
     }
     setSelectedMov(null);
     setSelectedCards([]);
+  };
+
+  const discardFig = async () => {
+    await useFigCard(localPlayerId, selectedCards, selectedMov);
+    setSelectedFig(null);
+    setHighlightedFigs([]);  // ver con lo de santy
   };
 
 
@@ -119,6 +127,11 @@ function Game() {
               <Button
                 label="USAR MOVIMIENTO"
                 onClick={handleUseMov}
+                disabled={localPlayerId !== playerId}
+              />
+              <Button
+                label="DESCARTAR FIGURA"
+                onClick={discardFig}
                 disabled={localPlayerId !== playerId}
               />
             </div>

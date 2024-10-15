@@ -6,7 +6,7 @@ import {
 
 function renewAllCards(playerId) {
   const [mov_cards, setMovCards] = useState([]);
-  const [figs_ids, setFigsIds] = useState([]);
+  const [fig_cards, setFigsIds] = useState([]);
   const fetchMovs = useCallback(async () => {
     try {
       const response = await fetch(GET_MOVEMENTS_URL + playerId, {
@@ -19,8 +19,11 @@ function renewAllCards(playerId) {
         );
       }
       const data = await response.json();
-      console.log("Movimientos: ", data.mov_cards.move);
+      
       setMovCards(data.mov_cards);
+      mov_cards.move.map((card) => {
+        console.log(card);
+      });
 
     } catch (error) {
       console.error(
@@ -40,8 +43,8 @@ function renewAllCards(playerId) {
         throw new Error("Error al obtener las cartas de figuras del jugador.");
       }
       const data = await response.json();
-      console.log("Figuras: ", data.id_fig_card);
-      setFigsIds(data.id_fig_card);
+      // console.log("Figuras: ", data.fig_cards);
+      setFigsIds(data.fig_cards);
     } catch (error) {
       console.error(
         "Error al obtener las cartas de figuras del jugador:",
@@ -55,6 +58,6 @@ function renewAllCards(playerId) {
     fetchMovs();
   }, [fetchFigs, fetchMovs]);
 
-  return { mov_cards, figs_ids, fetchFigs, fetchMovs };
+  return { mov_cards, fig_cards, fetchFigs, fetchMovs };
 }
 export default renewAllCards;
