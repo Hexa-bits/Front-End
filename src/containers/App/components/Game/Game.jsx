@@ -129,11 +129,13 @@ function Game() {
                 onClick={handleUseMov}
                 disabled={localPlayerId !== playerId}
               />
+            </div>
+            <div className="useFig">
               <Button
                 label="DESCARTAR FIGURA"
                 onClick={discardFig}
                 disabled={localPlayerId !== playerId}
-              />
+                />
             </div>
             <div className="end">
               <Button
