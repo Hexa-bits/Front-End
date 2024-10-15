@@ -30,6 +30,7 @@ const useMovCard = async ( playerId, selectedMov, selectedCards ) => {
                 throw new Error("Error al usar movimiento");
             }
         }
+        console.log("Movimiento realizado con exito");
     } catch (error) {
         console.error("Error al usar movimiento:", error);
     }
