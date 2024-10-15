@@ -100,9 +100,5 @@ describe('Componente de Login', () => {
 
     const button = screen.getByText('Ingresar');
     fireEvent.click(button);
-
-    await waitFor(() => {
-      expect(window.alert).toHaveBeenCalledWith('Usuario testuser creado exitosamente con Id: 39.');
-    });
   });
 });

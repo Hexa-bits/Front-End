@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, act, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import getFormedFig from '../../../services/Game/Board/Highlight Figs/formedFig';
 
@@ -30,29 +30,34 @@ describe('getFormedFig', () => {
             json: vi.fn().mockResolvedValueOnce(mockData),
         });
 
-        const { findByText } = render(<TestComponent game_id={game_id} />);
+        await act(async () => {
+            render(<TestComponent game_id={game_id} />);
+        });
 
-        expect(await findByText('figura1')).toBeInTheDocument();
-        expect(await findByText('figura2')).toBeInTheDocument();
+        expect(await screen.findByText('figura1')).toBeInTheDocument();
+        expect(await screen.findByText('figura2')).toBeInTheDocument();
     });
 
     it('No debe intentar buscar figuras si game_id no está definido', async () => {
-        render(<TestComponent game_id={null} />);
+        await act(async () => {
+            render(<TestComponent game_id={null} />);
+        });
         expect(fetch).not.toHaveBeenCalled();
     });
 
     it('Debería manejar errores de la respuesta del servidor', async () => {
         const game_id = '123';
-    
+
         fetch.mockResolvedValueOnce({
             ok: false,
             json: vi.fn(),
         });
-    
-        const { queryByText } = render(<TestComponent game_id={game_id} />);
 
-        expect(queryByText('figura1')).not.toBeInTheDocument();
-        expect(queryByText('figura2')).not.toBeInTheDocument();
+        await act(async () => {
+            const { queryByText } = render(<TestComponent game_id={game_id} />);
+            expect(queryByText('figura1')).not.toBeInTheDocument();
+            expect(queryByText('figura2')).not.toBeInTheDocument();
+        });
     });
 
     it('Debería manejar el caso cuando no se devuelve figura resaltada', async () => {
@@ -64,9 +69,10 @@ describe('getFormedFig', () => {
             json: vi.fn().mockResolvedValueOnce(mockData),
         });
 
-        const { queryByText } = render(<TestComponent game_id={game_id} />);
-
-        expect(queryByText('figura1')).not.toBeInTheDocument();
-        expect(queryByText('figura2')).not.toBeInTheDocument();
+        await act(async () => {
+            const { queryByText } = render(<TestComponent game_id={game_id} />);
+            expect(queryByText('figura1')).not.toBeInTheDocument();
+            expect(queryByText('figura2')).not.toBeInTheDocument();
+        });
     });
 });

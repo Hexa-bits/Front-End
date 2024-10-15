@@ -6,8 +6,7 @@ function getFormedFig(game_id) {
 
     useEffect(() => {
         async function fetchFormedFig() {
-            if (!game_id) return; // Asegúrate de que game_id esté definido
-
+            if (!game_id) return [];
             try {
                 const response = await fetch(HIGHLIGHT_FIGS + game_id, {
                     method: 'GET',
@@ -26,6 +25,7 @@ function getFormedFig(game_id) {
 
             } catch (error) {
                 console.error("Error al obtener las cartas resaltadas:", error);
+                return [];
             }
         }
 

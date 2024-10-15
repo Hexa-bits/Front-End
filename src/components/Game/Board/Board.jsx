@@ -11,8 +11,6 @@ function Board({ isTurn, cardData, onSelectedCards, game_id}) {
 
     const formedFigs  = getFormedFig(game_id); 
 
-    console.log("Formed Figs: ", formedFigs);
-
     useEffect(() => {
         onSelectedCards(selectedCards);
     }, [selectedCards, onSelectedCards]);

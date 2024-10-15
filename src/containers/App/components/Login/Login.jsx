@@ -8,34 +8,23 @@ import './Login.css';
 
 function Login() {
     const { username, handleChange, handleInput } = useLogin();
-    const [isTitleVisible, setIsTitleVisible] = useState(false);
-    const [isFormVisible, setIsFormVisible] = useState(false);
-
-    useEffect(() => {
-        setTimeout(() => setIsTitleVisible(true), 500); 
-        setTimeout(() => setIsFormVisible(true), 2000); 
-    }, []);
 
     return (
         <div className="login-container">
-            <h1 className={`login-title ${isTitleVisible ? "visible" : ""}`}>
-                El Switcher
-            </h1>
-            {isFormVisible && (
-                <div className="card">
-                    <Form
-                        label="Registro de Usuario"
-                        type="text"
-                        placeholder="Ingresar nombre de usuario"
-                        helpText={LoginHelpText}
-                        id="inputUsername"
-                        onChange={handleChange}
-                        value={username}
-                    />
-                    <Button className="btn btn-secondary" label="Ingresar" onClick={handleInput} />
-                </div>
-            )}
+        <h1 className="login-title"> El Switcher </h1>
+        <div className="card">
+            <Form
+                label="Registro de Usuario"
+                type="text"
+                placeholder="Ingresar nombre de usuario"
+                helpText={LoginHelpText}
+                id="inputUsername"
+                onChange={handleChange}
+                value={username}
+            /> 
+            <Button class="btn btn-secondary" label="Ingresar" onClick={handleInput}/>
         </div>
+    </div>
     );
 }
 

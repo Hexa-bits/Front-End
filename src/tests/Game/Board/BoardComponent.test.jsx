@@ -17,13 +17,24 @@ describe("Board Component", () => {
       handlerSelectedCard: vi.fn(),
     });
 
-    render(<Board isTurn={true} cardData={mockCardData} />);
+    // Crear una función mock para onSelectedCards
+    const mockOnSelectedCards = vi.fn();
+
+    render(
+      <Board 
+        isTurn={true} 
+        cardData={mockCardData} 
+        onSelectedCards={mockOnSelectedCards} // Agrega este prop
+        game_id="test-game" // Asegúrate de proporcionar un game_id si es necesario
+      />
+    );
 
     // Obtener todas las cartas usando el role "button"
     const boxCards = screen.getAllByRole("button");
 
     expect(boxCards).toHaveLength(mockCardData.length);
 
+    // Verifica los estilos de fondo de las cartas
     expect(boxCards[0]).toHaveStyle("background-color: #DC143C"); // Rojo Carmesí
     expect(boxCards[1]).toHaveStyle("background-color: #4169E1"); // Azul Real
   });
