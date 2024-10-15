@@ -5,7 +5,7 @@ import "./LeaveButton.css";
 function LeaveButton({onLeave}) {
   return (
     <Button
-      label="Abandonar Juego"
+      label="ABANDONAR JUEGO"
       className="btn-leave-game"
       onClick={onLeave}
     />

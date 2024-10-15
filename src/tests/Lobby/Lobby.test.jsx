@@ -42,11 +42,11 @@ vi.mock("../../components/Lobby//Buttons/LobbyButtons", () => ({
     <div data-testid="lobby-buttons">
       {isOwner ? (
         <>
-          <button>Abandonar</button>
-          <button>Iniciar</button>
+          <button>ABANDONAR</button>
+          <button>INICIAR</button>
         </>
       ) : (
-        <button>Abandonar</button>
+        <button>ABANDONAR</button>
       )}
     </div>
   ),
@@ -81,10 +81,10 @@ describe("Lobby component", () => {
     expect(screen.getByText("4")).toBeInTheDocument();
     expect(screen.getByText("Player1")).toBeInTheDocument();
     expect(screen.getByText("Player2")).toBeInTheDocument();
-    expect(screen.getByText("Abandonar")).toBeInTheDocument();
-    expect(screen.getByText("Iniciar")).toBeInTheDocument();
-    expect(screen.getByText("Iniciar")).not.toBeDisabled();
-    expect(screen.getByText("Abandonar")).not.toBeDisabled();
+    expect(screen.getByText("ABANDONAR")).toBeInTheDocument();
+    expect(screen.getByText("INICIAR")).toBeInTheDocument();
+    expect(screen.getByText("INICIAR")).not.toBeDisabled();
+    expect(screen.getByText("ABANDONAR")).not.toBeDisabled();
   });
 
   it("renders correctly", () => {
@@ -111,6 +111,6 @@ describe("Lobby component", () => {
     expect(screen.getByTestId("lobby-list")).toBeInTheDocument();
     expect(screen.getByTestId("lobby-buttons")).toBeInTheDocument();
 
-    expect(screen.getByText("Abandonar")).toBeInTheDocument();
+    expect(screen.getByText("ABANDONAR")).toBeInTheDocument();
   });
 });

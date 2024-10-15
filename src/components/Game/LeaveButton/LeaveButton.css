@@ -1,9 +1,15 @@
 @import "../../../utils/colores.css";
 
-.btn-leave-game {
-    background-color: red; /* Cambia el color de fondo a rojo */
+.leav .btn-leave-game {
+    background-color: var(--rojo);
+    border: none;
     display: flex;
     justify-content: flex-end;
+    color: rgb(240, 240, 240);
+    font-weight: bold;
 }
 
-
+.leav .btn-leave-game:hover {
+    background-color: var(--rojo);
+    transform: scale(1.05);
+}

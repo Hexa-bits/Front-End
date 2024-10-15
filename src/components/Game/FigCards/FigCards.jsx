@@ -3,11 +3,11 @@ import "./FigCards.css";
 import { useState } from "react";
 
 function FigCards({ figs_ids }) {
-  const [selectedIndex, setSelectedIndex] = useState(null); // Estado para la carta seleccionada
+  const [selectedIndex, setSelectedIndex] = useState(null); 
 
   // Manejador de clics para seleccionar una carta
   const handleCardClick = (index) => {
-    setSelectedIndex(index === selectedIndex ? null : index); // Desselecciona si ya está seleccionada
+    setSelectedIndex(index === selectedIndex ? null : index); 
   };
 
   return (
@@ -15,12 +15,12 @@ function FigCards({ figs_ids }) {
       <div className="fig-card">
         {figs_ids.slice(0, 3).map((Id, index) => {
           const formattedId = Id.toString().padStart(2, "0"); // Convierte el número a cadena con dos dígitos
-          const isSelected = index === selectedIndex; // Verifica si esta carta está seleccionada
+          const isSelected = index === selectedIndex; 
           return (
             <div
               key={index}
-              className={`Figures ${isSelected ? "selected" : ""}`} // Añade 'selected' si está seleccionada
-              onClick={() => handleCardClick(index)} // Añade el manejador de clic
+              className={`Figures ${isSelected ? "selected" : ""}`} 
+              onClick={() => handleCardClick(index)} 
             >
               <img
                 src={`/assets/Figures/fig${formattedId}.svg`}

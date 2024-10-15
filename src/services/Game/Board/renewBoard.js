@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { GAME_BOARD_URL } from "../../../utils/Constants.js";
 
-function renewBoard(ws, gameId) {
+function renewBoard(gameId) {
   const [boxCards, setBoxCards] = useState([]);
   const fetchBoxCards = useCallback(async () => {
     const gameId = parseInt(localStorage.getItem("game_id"));

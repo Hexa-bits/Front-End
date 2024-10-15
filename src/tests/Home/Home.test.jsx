@@ -29,7 +29,7 @@ describe("Home", () => {
 
     // Verifica que el nombre de usuario y el ID de usuario se rendericen
     expect(screen.getByText(/usuario: testuser/i)).toBeInTheDocument();
-    expect(screen.getByText(/id_usuario: 1/i)).toBeInTheDocument();
+    expect(screen.getByText(/ID: 1/i)).toBeInTheDocument();
   });
 
   it("Debería renderizar el botón Crear Partida", () => {
@@ -41,7 +41,7 @@ describe("Home", () => {
 
     // Verifica que el botón "Crear Partida" se renderice
     expect(
-      screen.getByRole("button", { name: /crear partida/i })
+      screen.getByRole("button", { name: /CREAR PARTIDA/i })
     ).toBeInTheDocument();
   });
 

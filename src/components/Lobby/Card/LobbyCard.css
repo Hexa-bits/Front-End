@@ -1,23 +1,40 @@
+.lobby-container .card-container {
+    border: 2px solid var(--amarillito);
+    border-radius: 10px;
+}
+
 .card .card-header {
-    color: rgb(216, 255, 125);
+    color: var(--verdecito);
     display: flex;
     justify-content: center;
     font-weight: bold;
-    font-size: 20px;
+    
+    font-size: 30px;
+    background-color: var(--violeta2);
 }
 
 .card .card-body  {
-    color: rgb(63, 63, 66);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    background-color: var(--amarillito);
+    font-weight: bold;
+    font-size: 20px;
+    color: var(--violeta2);
 }
 .card .card-body .card-title {
-    font-size: 1rem;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--violeta2); 
+    margin-right: 3rem;
 }
 .card .card-body .game-name{
-    font-weight: bold;
-    color: rgb(20, 55, 153); 
+    font-size: 20px;
+    text-decoration: underline;
 }
 
-.card .card-body .max-players{
+/* .card .card-body .max-players{
     font-weight: bold;
-    color: rgb(20, 55, 153); 
-}
+    color: rgb(216, 255, 125); 
+} */

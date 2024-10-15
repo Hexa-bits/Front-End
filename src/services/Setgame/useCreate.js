@@ -19,12 +19,7 @@ async function create(game_name, max_players, navigate) {
     const data = await response.json();
     const game_id  = data.id;
 
-    // Guardamos la información de la partida en el localStorage
-    // localStorage.setItem("game_id", game_id);
-    // localStorage.setItem("game_name", game_name);
-    // localStorage.setItem("max_players", max_players);
     localStorage.setItem('game_id', game_id);
-    alert(`Partida ${game_name} creada exitosamente con Id: ${game_id}`);
 
     // Navegamos a la página para unirse al juego
     const gameId = parseInt(game_id, 10);

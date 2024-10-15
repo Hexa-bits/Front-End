@@ -8,7 +8,7 @@
 }
 
 .GameList .list-group .list-group-item{
-    background-color: #ffc548;
+    background-color: var(--amarillito);
     width: 600px;
     display: flex;
     justify-content: center;

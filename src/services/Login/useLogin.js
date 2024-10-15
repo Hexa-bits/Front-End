@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'; 
 import { useReg } from './useReg.js';
-import { checkInput } from './loginHelper.js'; 
 import { HOME, LoginHelpText } from '../../utils/Constants.js';
 
 export const useLogin = () => {
@@ -19,6 +18,8 @@ export const useLogin = () => {
     const handleChange = (e) => { 
         setUsername(e.target.value); 
     };
+
+    const checkInput = (input) => { return input.length > 0 && input.length <= 10; }
 
     const handleInput = () => {
         if (checkInput(username)) {

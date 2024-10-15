@@ -8,7 +8,7 @@ describe('ConfigGame Component', () => {
     const handleOnChange = vi.fn();
     render(<ConfigGame handleOnChange={handleOnChange} maxPlayers={0} setPlayerAmnt={setPlayerAmnt} />);
 
-    expect(screen.getByLabelText('Nombre de la partida')).toBeInTheDocument();
+    expect(screen.getByLabelText('NOMBRE DE PARTIDA')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Ingrese un nombre')).toBeInTheDocument();
     expect(screen.getByText('Elige la cantidad de participantes')).toBeInTheDocument();
   });
