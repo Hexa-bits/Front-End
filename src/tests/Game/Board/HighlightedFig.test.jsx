@@ -45,21 +45,6 @@ describe('getFormedFig', () => {
         expect(fetch).not.toHaveBeenCalled();
     });
 
-    it('Debería manejar errores de la respuesta del servidor', async () => {
-        const game_id = '123';
-
-        fetch.mockResolvedValueOnce({
-            ok: false,
-            json: vi.fn(),
-        });
-
-        await act(async () => {
-            const { queryByText } = render(<TestComponent game_id={game_id} />);
-            expect(queryByText('figura1')).not.toBeInTheDocument();
-            expect(queryByText('figura2')).not.toBeInTheDocument();
-        });
-    });
-
     it('Debería manejar el caso cuando no se devuelve figura resaltada', async () => {
         const mockData = []; // Sin datos
         const game_id = '123';

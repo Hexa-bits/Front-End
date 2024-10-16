@@ -2,6 +2,9 @@ import { HIGHLIGHT_FIGS } from '../../../../utils/Constants';
 import { useEffect, useState } from 'react';
 
 function getFormedFig(game_id) {
+
+    if (!game_id) return [];
+    
     const [formedFig, setFormedFigs] = useState([]);
 
     useEffect(() => {
