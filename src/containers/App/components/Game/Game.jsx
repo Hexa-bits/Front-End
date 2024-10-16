@@ -38,6 +38,7 @@ function Game() {
   const { boxCards, fetchBoxCards } = renewBoard(gameId);
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectedMov, setSelectedMov] = useState(null);
+  const [isMovementUsed, setIsMovementUsed] = useState(false);
 
   wsGameHandler(
     ws,
@@ -105,8 +106,9 @@ function Game() {
               </div>
               <div className="Mov">
                 <MovCards 
-                  onSelectedMov={setSelectedMov}
                   mov_cards={mov_cards}
+                  onSelectedMov={setSelectedMov}
+                  isTurn={localPlayerId === playerId}
                 />
               </div>
             </div>

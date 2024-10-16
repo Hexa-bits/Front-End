@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 
 function Board({ isTurn, cardData, onSelectedCards, game_id}) {
-    const { selectedCards, handlerSelectedCard } = useSelectedCards(isTurn);
+    const { selectedCards, handlerSelectedCard, clearSelectedCards } = useSelectedCards(isTurn);
 
     const formedFigs  = getFormedFig(game_id); 
 
@@ -25,23 +25,23 @@ function Board({ isTurn, cardData, onSelectedCards, game_id}) {
 
     return (
         <div className="Board">
-        <div className="BoxCards">
-            {cardData.map(({ x, y, color }) => {
-            const index = `${x}-${y}`;
-            const highlightColor = isHighlighted(x, y) ? COLORMAP_BOXCARDS[color] : null;
-            const isSelected = selectedCards.some(card => card.x === x && card.y === y);
-            return (
-                <BoxCard
-                    key={index}
-                    color={color}
-                    isSelected={isSelected}
-                    isHighlighted={!!highlightColor} // Asegúrate de que es un booleano
-                    highlightColor={highlightColor}
-                    onClick={() => handlerSelectedCard(x, y)}
-                />
-            );
-            })}
-        </div>
+          <div className="BoxCards">
+              {cardData.map(({ x, y, color }) => {
+              const index = `${x}-${y}`;
+              const highlightColor = isHighlighted(x, y) ? COLORMAP_BOXCARDS[color] : null;
+              const isSelected = selectedCards.some(card => card.x === x && card.y === y);
+              return (
+                  <BoxCard
+                      key={index}
+                      color={color}
+                      isSelected={isSelected}
+                      isHighlighted={!!highlightColor} // Asegúrate de que es un booleano
+                      highlightColor={highlightColor}
+                      onClick={() => handlerSelectedCard(x, y)}
+                  />
+              );
+              })}
+          </div>
         </div>
     );
 }
