@@ -16,7 +16,7 @@ function ConfigGame({ handleOnChange, maxPlayers, setPlayerAmnt}) {
   return (
     <div className="ConfigGame">
       <Form
-        label="Nombre de la partida"
+        label="NOMBRE DE PARTIDA"
         helpText="Debe tener entre 1 y 10 caracteres"
         type="text"
         placeholder="Ingrese un nombre"

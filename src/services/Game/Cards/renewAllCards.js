@@ -5,7 +5,7 @@ import {
 } from "../../../utils/Constants.js";
 
 function renewAllCards(playerId) {
-  const [movs_ids, setMovsIds] = useState([]);
+  const [mov_cards, setMovCards] = useState([]);
   const [figs_ids, setFigsIds] = useState([]);
   const fetchMovs = useCallback(async () => {
     try {
@@ -19,8 +19,9 @@ function renewAllCards(playerId) {
         );
       }
       const data = await response.json();
-      console.log("Movimientos: ", data.id_mov_card);
-      setMovsIds(data.id_mov_card);
+      console.log("Movimientos: ", data.mov_cards.move);
+      setMovCards(data.mov_cards);
+
     } catch (error) {
       console.error(
         "Error al obtener las cartas de movimientos del jugador:",
@@ -54,6 +55,6 @@ function renewAllCards(playerId) {
     fetchMovs();
   }, [fetchFigs, fetchMovs]);
 
-  return { movs_ids, figs_ids, fetchFigs, fetchMovs };
+  return { mov_cards, figs_ids, fetchFigs, fetchMovs };
 }
 export default renewAllCards;

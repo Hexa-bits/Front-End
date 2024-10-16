@@ -14,7 +14,7 @@ function Game_Item({game, handleJoin}){
                         </div>
 
                         <Button 
-                            label="Unirse" 
+                            label="UNIRSE" 
                             onClick={() => handleJoin(game.game_id)}
                             disabled={game.current_players >= game.max_players}/>
                     </div>

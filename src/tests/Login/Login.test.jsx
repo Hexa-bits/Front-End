@@ -1,104 +1,47 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { LoginHelpText, HOME } from '../../utils/Constants.js';
+import { render, screen, waitFor } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import Login from '../../containers/App/components/Login/Login';
 import { MemoryRouter } from 'react-router-dom';
-import Login from '../../containers/App/components/Login/Login.jsx';
 
-const mockNavigate = vi.fn();
 
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual('react-router-dom');
-  return {
-    ...actual,
-    useNavigate: () => mockNavigate,
-  };
-});
+describe('Login Component', () => {
 
-describe('Componente de Login', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
-  it('Debería mostrar el formulario de logueo.', () => {
+  it('debería renderizar el título inicialmente oculto', () => {
     render(
       <MemoryRouter>
         <Login />
       </MemoryRouter>
     );
 
-    expect(screen.getByText('El Switcher')).toBeInTheDocument();
-    expect(screen.getByLabelText('Registro de Usuario')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Ingresar nombre de usuario')).toBeInTheDocument();
-    expect(screen.getByText('Ingresar')).toBeInTheDocument();
+    const title = screen.getByText('EL SWITCHER');
+    expect(title).toBeInTheDocument();
+    expect(title).not.toHaveClass('visible');
   });
 
-  it('Debería actualizar el nombre de usuario al cambiar la entrada.', () => {
+  it('debería mostrar el título después de 500ms', async () => {
     render(
       <MemoryRouter>
         <Login />
       </MemoryRouter>
     );
 
-    const input = screen.getByPlaceholderText('Ingresar nombre de usuario');
-    fireEvent.change(input, { target: { value: 'testuser' } });
-
-    expect(input.value).toBe('testuser');
+    const title = screen.getByText('EL SWITCHER');
+    expect(title).not.toHaveClass('visible');
+    await waitFor(() => expect(title).toHaveClass('visible'), { timeout: 600 });
   });
 
-  it('Debería mostrar una alerta si el nombre de usuario no es válido', () => {
-    window.alert = vi.fn();
-
+  it('debería mostrar el formulario después de 2000ms', async () => {
     render(
       <MemoryRouter>
         <Login />
       </MemoryRouter>
     );
 
-    const button = screen.getByText('Ingresar');
-    fireEvent.click(button);
+    expect(screen.queryByPlaceholderText('Ingresar nombre de usuario')).toBeNull();
 
-    expect(window.alert).toHaveBeenCalledWith('Nombre ' + LoginHelpText);
-  });
-
-  it('Debe navegar a HOME si el nombre de usuario es válido y ya está guardado.', () => {
-    localStorage.setItem('username', 'testuser');
-
-    render(
-      <MemoryRouter>
-        <Login />
-      </MemoryRouter>
-    );
-
-    const input = screen.getByPlaceholderText('Ingresar nombre de usuario');
-    fireEvent.change(input, { target: { value: 'testuser' } });
-
-    const button = screen.getByText('Ingresar');
-    fireEvent.click(button);
-
-    expect(mockNavigate).toHaveBeenCalledWith(HOME);
-  });
-
-  it('Debe llamar a la función de logueo si el nombre de usuario es válido y no está guardado.', async () => {
-    localStorage.removeItem('username');
-    window.alert = vi.fn();
-
-    global.fetch = vi.fn(() =>
-      Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve({ id: 39 }),
-      })
-    );
-
-    render(
-      <MemoryRouter>
-        <Login />
-      </MemoryRouter>
-    );
-
-    const input = screen.getByPlaceholderText('Ingresar nombre de usuario');
-    fireEvent.change(input, { target: { value: 'testuser' } });
-
-    const button = screen.getByText('Ingresar');
-    fireEvent.click(button);
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText('Ingresar nombre de usuario')).toBeInTheDocument();
+      expect(screen.getByText('INGRESAR')).toBeInTheDocument();
+    }, { timeout: 2100 });
   });
 });

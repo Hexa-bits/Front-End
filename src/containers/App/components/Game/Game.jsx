@@ -1,25 +1,25 @@
-import React, { useEffect, useInsertionEffect, useState } from "react";
-import Button from "../../../../components/Button/Button.jsx";
-import VictoryBox from "../../../../components/VictoryBox/VictoryBox.jsx";
-import WinnerExists from "../../../../services/Game/Winner/winnerExists.js";
-import FigCards from "../../../../components/Game/FigCards/FigCards.jsx";
-import MovCards from "../../../../components/Game/MovCards/MovCards.jsx";
-import renewAllCards from "../../../../services/Game/Cards/renewAllCards.js";
-import LeaveButton from "../../../../components/Game/LeaveButton/LeaveButton.jsx";
-import SeePlayer from "../../../../components/Game/seePlayer_Turn/seePlayer.jsx";
-import getCurrentTurnPlayer from "../../../../services/Game/TurnPlayer/getCurrentTurnPlayer.js";
-import PlayerName from "../../../../components/Game/PlayerName/PlayerName.jsx";
-import passTurn from "../../../../services/Game/TurnPlayer/passTurn.js";
-import Board from "../../../../components/Game/Board/Board.jsx";
+import React, { useState } from "react";
 import Confetti from "react-confetti";
 import "./Game.css";
 import { useNavigate } from "react-router-dom";
-import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
-import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
-import { WS_GAME, cardData } from "../../../../utils/Constants.js";
-import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
+import Button from "../../../../components/Button/Button.jsx";
+import VictoryBox from "../../../../components/VictoryBox/VictoryBox.jsx";
+import FigCards from "../../../../components/Game/FigCards/FigCards.jsx";
+import MovCards from "../../../../components/Game/MovCards/MovCards.jsx";
+import LeaveButton from "../../../../components/Game/LeaveButton/LeaveButton.jsx";
+import SeePlayer from "../../../../components/Game/seePlayer_Turn/seePlayer.jsx";
+import PlayerName from "../../../../components/Game/PlayerName/PlayerName.jsx";
+import Board from "../../../../components/Game/Board/Board.jsx";
+import renewAllCards from "../../../../services/Game/Cards/renewAllCards.js";
+import WinnerExists from "../../../../services/Game/Winner/winnerExists.js";
+import passTurn from "../../../../services/Game/TurnPlayer/passTurn.js";
+import getCurrentTurnPlayer from "../../../../services/Game/TurnPlayer/getCurrentTurnPlayer.js";
 import renewBoard from "../../../../services/Game/Board/renewBoard.js";
 import useMovCard from "../../../../services/Game/Cards/useMovCard.js";
+import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
+import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
+import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
+import { WS_GAME } from "../../../../utils/Constants.js";
 import {checkMov} from "../../../../utils/logics/Game/checkMov.js";
 
 function Game() {
@@ -33,7 +33,7 @@ function Game() {
   const { currentPlayer, playerId, fetchTurnData } =
     getCurrentTurnPlayer(gameId);
   const { winnerName, getWinner } = WinnerExists(gameId);
-  const { movs_ids, figs_ids, fetchFigs, fetchMovs } =
+  const { mov_cards, figs_ids, fetchFigs, fetchMovs } =
     renewAllCards(localPlayerId);
   const { boxCards, fetchBoxCards } = renewBoard(gameId);
   const [selectedCards, setSelectedCards] = useState([]);
@@ -57,10 +57,15 @@ function Game() {
     await LeaveGame(navigate);
   };
 
-  const handleUseMov = () => {
-    console.log("fichas " + selectedCards + " Movimiento : " + selectedMov);
-    const isValid = checkMov(selectedMov, selectedCards);
-    console.log("checkMov: ", isValid);
+  const handleUseMov = async () => {
+    if (checkMov(selectedMov, selectedCards)) {
+      await useMovCard(localPlayerId, selectedMov, selectedCards);
+    }
+    else {
+      console.log("Movimiento no valido");
+    }
+    setSelectedMov(null);
+    setSelectedCards([]);
   };
 
 
@@ -100,8 +105,8 @@ function Game() {
               </div>
               <div className="Mov">
                 <MovCards 
-                  movs_ids={movs_ids} 
                   onSelectedMov={setSelectedMov}
+                  mov_cards={mov_cards}
                 />
               </div>
             </div>
@@ -115,14 +120,14 @@ function Game() {
           <div className="Butt">
             <div className="useMov"> 
               <Button
-                label="Usar Movimiento"
+                label="USAR MOVIMIENTO"
                 onClick={handleUseMov}
                 disabled={localPlayerId !== playerId}
               />
             </div>
             <div className="end">
               <Button
-                label="Terminar Turno"
+                label="TERMINAR TURNO"
                 onClick={handleEndTurn}
                 disabled={localPlayerId !== playerId}
               />

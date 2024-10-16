@@ -8,7 +8,7 @@ function VictoryBox({ winnerName, onLeave }) {
       <div className="victory-overlay">
         <div className="victory-box">
           <div className="text">
-            ¡ {winnerName} es ganador !
+            ¡ {winnerName} ES GANADOR !
           </div>
           <div className="but">
             <LeaveButton onLeave={onLeave}/>

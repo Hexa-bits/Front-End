@@ -37,5 +37,6 @@ describe("Board Component", () => {
     // Verifica los estilos de fondo de las cartas
     expect(boxCards[0]).toHaveStyle("background-color: #DC143C"); // Rojo Carmesí
     expect(boxCards[1]).toHaveStyle("background-color: #4169E1"); // Azul Real
+    expect(mockOnSelectedCards).toHaveBeenCalledWith([]);
   });
 });
