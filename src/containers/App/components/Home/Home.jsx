@@ -11,6 +11,8 @@ function Home() {
   const playerId = parseInt(localStorage.getItem("id_user"), 10);
   const username = localStorage.getItem("username");
   const navigate = useNavigate();
+  const [filter, setFilter] = useState("");
+
 
   const { ws } = WsHomeService(WS_HOME);
 
@@ -40,6 +42,11 @@ function Home() {
 
       <section className="CrearPartida">
         <Button label="CREAR PARTIDA" onClick={handleCrearPartida} />
+      </section>
+
+      <section>
+        <Form placeholder={"Buscar partida por nombre"} onChange={(e) => setFilter(e.target.value)} value={filter}/>
+        
       </section>
 
       <section className="GameList__Home">
