@@ -10,7 +10,8 @@ import LeaveButton from "../../../../components/Game/LeaveButton/LeaveButton.jsx
 import SeePlayer from "../../../../components/Game/seePlayer_Turn/seePlayer.jsx";
 import PlayerName from "../../../../components/Game/PlayerName/PlayerName.jsx";
 import Board from "../../../../components/Game/Board/Board.jsx";
-import renewAllCards from "../../../../services/Game/Cards/renewAllCards.js";
+import renewMovCards from "../../../../services/Game/Cards/renewMovCards.js";
+import renewFigCards from "../../../../services/Game/Cards/renewFigCards.js";
 import WinnerExists from "../../../../services/Game/Winner/winnerExists.js";
 import passTurn from "../../../../services/Game/TurnPlayer/passTurn.js";
 import getCurrentTurnPlayer from "../../../../services/Game/TurnPlayer/getCurrentTurnPlayer.js";
@@ -34,8 +35,8 @@ function Game() {
   const { currentPlayer, playerId, fetchTurnData } =
     getCurrentTurnPlayer(gameId);
   const { winnerName, getWinner } = WinnerExists(gameId);
-  const { mov_cards, figs_ids, fetchFigs, fetchMovs } =
-    renewAllCards(localPlayerId);
+  const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
+  const { figs_ids, fetchFigs } = renewFigCards(localPlayerId);
   const { boxCards, fetchBoxCards } = renewBoard(gameId);
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectedMov, setSelectedMov] = useState(null);
