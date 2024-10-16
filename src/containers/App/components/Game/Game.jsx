@@ -38,7 +38,6 @@ function Game() {
   const { boxCards, fetchBoxCards } = renewBoard(gameId);
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectedMov, setSelectedMov] = useState(null);
-  const [isMovementUsed, setIsMovementUsed] = useState(false);
 
   wsGameHandler(
     ws,
@@ -61,12 +60,12 @@ function Game() {
   const handleUseMov = async () => {
     if (checkMov(selectedMov, selectedCards)) {
       await useMovCard(localPlayerId, selectedMov, selectedCards);
+      setSelectedMov(null);
+      setSelectedCards([]);
     }
     else {
       console.log("Movimiento no valido");
     }
-    setSelectedMov(null);
-    setSelectedCards([]);
   };
 
 

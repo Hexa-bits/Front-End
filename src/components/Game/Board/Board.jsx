@@ -35,7 +35,7 @@ function Board({ isTurn, cardData, onSelectedCards, game_id}) {
                       key={index}
                       color={color}
                       isSelected={isSelected}
-                      isHighlighted={!!highlightColor} // Asegúrate de que es un booleano
+                      isHighlighted={!!highlightColor}
                       highlightColor={highlightColor}
                       onClick={() => handlerSelectedCard(x, y)}
                   />
