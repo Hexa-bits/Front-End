@@ -2,8 +2,10 @@
 
 .game-container {
     background-color: var(--claro2);
-    height: 100vh;
-    width: 100vw; 
+    min-height: 100vh;
+    min-width: 100vw;
+    height: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -13,7 +15,7 @@
 
 /* Parte Izquierda */
 .left-box{
-    width: 70%;
+    width: 60%;
     display: flex;
     flex-direction: column;
 }
@@ -29,18 +31,24 @@
 
 .Game_Area{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     height: 100%;
 }
 
-.Fig{
-    height: 100%;
+.Cards{
+    height: auto;
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin-left: 50px;
+}
+
+.Fig{
+    height: auto;
+    margin: 0px 20px 0 0;
 }
 
 .board{
@@ -54,6 +62,7 @@
 
 .Mov{
     height: 100%;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,16 +72,15 @@
 
 /* Parte Derecha */
 .right-box{
-    width: 30%;
+    width: 40%;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
 }
 
 .PlayerInfo-Area{
-    margin-top: 10px;
     width: 100%;
-    height: 5%;
+    height: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,9 +93,9 @@
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-    justify-content: space-around;
+    justify-content: center;
     gap:10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     margin-right: 10px;
 }
 

@@ -16,11 +16,11 @@ import passTurn from "../../../../services/Game/TurnPlayer/passTurn.js";
 import getCurrentTurnPlayer from "../../../../services/Game/TurnPlayer/getCurrentTurnPlayer.js";
 import renewBoard from "../../../../services/Game/Board/renewBoard.js";
 import useMovCard from "../../../../services/Game/Cards/useMovCard.js";
+import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
 import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
 import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
-import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
+import { WS_GAME } from "../../../../utils/Constants.js";
 import {checkMov} from "../../../../utils/logics/Game/checkMov.js";
-import { WS_GAME, cardData } from "../../../../utils/Constants.js";
 
 function Game() {
   const navigate = useNavigate();
@@ -60,12 +60,12 @@ function Game() {
   const handleUseMov = async () => {
     if (checkMov(selectedMov, selectedCards)) {
       await useMovCard(localPlayerId, selectedMov, selectedCards);
+      setSelectedMov(null);
+      setSelectedCards([]);
     }
     else {
       console.log("Movimiento no valido");
     }
-    setSelectedMov(null);
-    setSelectedCards([]);
   };
 
 
@@ -91,21 +91,25 @@ function Game() {
             <SeePlayer player={currentPlayer || "??????"} />
           </div>
           <div className="Game_Area">
-            <div className="Fig">
-              <FigCards figs_ids={figs_ids} />
-            </div>
             <div className="board">
               <Board 
                 isTurn={localPlayerId === playerId} 
                 cardData={boxCards} 
                 onSelectedCards={setSelectedCards}
+                game_id={gameId}
               />
             </div>
-            <div className="Mov">
-              <MovCards 
-                mov_cards={mov_cards} 
-                onSelectedMov={setSelectedMov}
-              />
+            <div className="Cards">
+              <div className="Fig">
+                <FigCards figs_ids={figs_ids} />
+              </div>
+              <div className="Mov">
+                <MovCards 
+                  mov_cards={mov_cards}
+                  onSelectedMov={setSelectedMov}
+                  isTurn={localPlayerId === playerId}
+                />
+              </div>
             </div>
           </div>
         </div>
