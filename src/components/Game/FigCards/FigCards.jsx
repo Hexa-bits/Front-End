@@ -1,6 +1,6 @@
 import React from "react";
 import "./FigCards.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function FigCards({ fig_cards, onSelectedFig, isTurn }) {
   const [selectedIndex, setSelectedIndex] = useState(null); 

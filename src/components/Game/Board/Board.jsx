@@ -23,11 +23,6 @@ function Board({ isTurn, cardData, onSelectedCards, onSelectedFig, game_id}) {
         return fig ? COLORMAP_BOXCARDS[fig.find(pos => pos.x === x && pos.y === y).color] : null;
     };
 
-    formedFigs.some((fig, index) => {
-        if (isSelected && fig.x === x && fig.y === Y) {
-            onSelectedFig(index);
-        }
-    });
 
     const handleFigSelection = (x, y) => {
         handlerSelectedCard(x, y);
