@@ -2,15 +2,16 @@
     width: auto;
     height: auto;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     border-radius: 10px;
+    margin-bottom: 15px;
 }
 
 .fig-card {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
+    flex-direction: row;
     gap: 15px;
 }
 
@@ -21,15 +22,15 @@
     border-radius: 10px;
     border: 2px solid transparent; 
     display: inline-block;
-    cursor: pointer; 
+    cursor: pointer;
     transition: transform 0.1s ease, border-color 0.1s ease;
     border: 1px solid black;
+    box-shadow: 
+        0 5px 5px rgba(0, 0, 0, 0.3)
 }
 
 .Figures.selected {
     border-color: black;
-    transform: scale(1.05); 
-    z-index: 1;
 }
 
 .Figures img {

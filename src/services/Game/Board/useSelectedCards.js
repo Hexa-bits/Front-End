@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function useSelectedCards(isTurn) {
     const [selectedCards, setSelectedCards] = useState([]);
 
     const handlerSelectedCard = (rowIndex, colIndex ) => {
-        if (!isTurn) return; // Si no es el turno, no hace nada
+        if (!isTurn) return;
 
         const card = {x: rowIndex, y: colIndex }; // objeto ficha
 
@@ -26,6 +26,13 @@ function useSelectedCards(isTurn) {
             }
         }
     };
+
+    // Deselecciona todas las cartas cuando el turno termine
+    useEffect(() => {
+        if (!isTurn) {
+            setSelectedCards([]); // Limpiar las cartas seleccionadas al finalizar el turno
+        }
+    }, [isTurn]);
 
     return { selectedCards, handlerSelectedCard };
 }

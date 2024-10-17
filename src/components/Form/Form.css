@@ -1,6 +1,5 @@
 
 .form-container {
-    margin-bottom: 1rem;
     width: 100%;
 }
 
@@ -10,7 +9,6 @@
     justify-content: center; 
     align-items: center; 
     width: 100%;
-    margin-bottom: 1rem;
 }
 .form-container .col-form-label {
     font-size: 2rem;
@@ -19,7 +17,6 @@
 /* Input style */
 .form-input {
     font-size: 1.25rem;
-    margin-bottom: 1rem;
     width: 100%;
 }
 .form-input::placeholder {
@@ -29,7 +26,9 @@
 
 /* Help text style */
 .login-container .form-text {
+    margin-top: 1rem;
     font-size: 1.1rem;
     margin-bottom: 0.5rem; 
     display: block; 
 }
+

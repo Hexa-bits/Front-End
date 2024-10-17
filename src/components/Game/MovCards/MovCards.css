@@ -11,25 +11,65 @@
 
 .mov-card {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-around;
     width: 100%;
     gap: 10px;
 }
 
-.Figures {
+.Movs {
+    width: auto;
+    padding: 1px;
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid transparent; 
+    display: inline-block;
     cursor: pointer; 
+    transition: transform 0.1s ease, border-color 0.1s ease;
+    border: 1px solid black;
+    box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-.Figures img {
+/* Rotaciones específicas para cada carta */
+.Movs:nth-child(1) {
+    transform: rotate(-15deg) translateX(30px);
+    z-index: 1;
+}
+
+.Movs:nth-child(2) {
+    transform: rotate(0deg) translateY(-20px);
+    z-index: 2;
+}
+
+.Movs:nth-child(3) {
+    transform: rotate(10deg) translateX(-30px) translateY(-5px);
+    z-index: 1;
+}
+
+.Movs img {
     flex: 1; 
     width: 100px;
     height: auto;
 }
 
 /* Estilo para una carta seleccionada */
-.Figures.selected {
+.Movs.selected {
     border: 1px solid black; 
-    transform: scale(1.1);
-    transition: transform 0.2s, border 0.1s; 
+    z-index: 3; /* Aumenta el z-index para encimar la carta seleccionada */
+    transition: transform 0.2s, border 0.1s, z-index 0.1s; 
+    box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8), 
+                0 0 30px 15px rgba(255, 215, 0, 1);
+    animation: sparkle 1s infinite alternate;
+}
+
+/* Animación de brillado */
+@keyframes sparkle {
+    0% {
+        box-shadow: 0 0 0px 1px rgba(255, 215, 0, 0.8), 
+                    0 0 0px 0px rgba(255, 215, 0, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0.9), 
+                    0 0 5px 2px rgba(255, 215, 0, 0.7);
+    }
 }
