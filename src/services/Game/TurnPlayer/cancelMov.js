@@ -15,6 +15,9 @@ const postPlayer = async () => {
       }),
     });
 
+    if (response.status === 404) {
+      alert("No quedan movimientos por deshacer");
+    }
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
