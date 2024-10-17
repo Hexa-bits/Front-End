@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from "@testing-library/react"; // Asegúrate de importar waitFor
+import { renderHook, waitFor } from "@testing-library/react";
 import { describe, it, expect, afterEach, vi } from "vitest";
 import renewFigCards from "../../../services/Game/Cards/renewFigCards";
 

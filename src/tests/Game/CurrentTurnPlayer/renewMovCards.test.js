@@ -1,6 +1,6 @@
-import { renderHook, waitFor } from "@testing-library/react"; // Asegúrate de importar waitFor
+import { renderHook, waitFor } from "@testing-library/react";
 import { describe, it, expect, afterEach, vi } from "vitest";
-import renewMovCards from "../../../services/Game/Cards/renewMovCards"; // Ajusta la ruta según tu estructura de archivos
+import renewMovCards from "../../../services/Game/Cards/renewMovCards";
 
 // Mock de la función fetch
 global.fetch = vi.fn();
