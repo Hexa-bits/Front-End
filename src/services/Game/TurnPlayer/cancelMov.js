@@ -20,6 +20,8 @@ const postPlayer = async () => {
     }
     if (!response.ok) {
       throw new Error("Network response was not ok");
+    } else {
+      console.log("mov descartado con éxito");
     }
   } catch (error) {
     console.error("Error:", error);
