@@ -11,7 +11,10 @@ const relative_shifts = {
 }
 
 export const checkMov = ( selectedMov, selectedCards ) => {
-    if (selectedCards.length !== 2 ) return false;
+    if (!selectedMov || selectedCards.length !== 2) {
+        console.error("Error en seleccion. Faltan fichas o cartas.");
+        return false;
+    } 
 
     const [card1, card2] = selectedCards;
 

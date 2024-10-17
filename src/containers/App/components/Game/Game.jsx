@@ -66,15 +66,15 @@ function Game() {
       setSelectedMov(null);
       setSelectedCards([]);
     }
-    else {
-      console.log("Movimiento no valido");
-    }
+    else { console.log("Movimiento no valido"); }
   };
 
   const useFig = async () => {
-    await discardFig(localPlayerId, selecFormedFig, selectedFig);
-    setSelectedFig(null);
-    setSelecFormedFig([]);  // ver con lo de santy
+    console.log("selectedFig", selectedFig);
+    console.log("selecFormedFig", selecFormedFig.map((fig) => fig));
+    //await discardFig(localPlayerId, selecFormedFig, selectedFig);
+    // setSelectedFig(null);
+    // setSelecFormedFig([]);  // ver con lo de santy
   };
 
 
