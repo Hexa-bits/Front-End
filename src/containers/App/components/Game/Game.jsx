@@ -21,6 +21,7 @@ import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
 import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
 import { WS_GAME } from "../../../../utils/Constants.js";
 import {checkMov} from "../../../../utils/logics/Game/checkMov.js";
+import useFigCard from "../../../../services/Game/Cards/useFigCard.js";
 
 function Game() {
   const navigate = useNavigate();
@@ -33,12 +34,13 @@ function Game() {
   const { currentPlayer, playerId, fetchTurnData } =
     getCurrentTurnPlayer(gameId);
   const { winnerName, getWinner } = WinnerExists(gameId);
-  const { mov_cards, figs_ids, fetchFigs, fetchMovs } =
+  const { mov_cards, fig_cards, fetchFigs, fetchMovs } =
     renewAllCards(localPlayerId);
   const { boxCards, fetchBoxCards } = renewBoard(gameId);
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectedMov, setSelectedMov] = useState(null);
-
+  const [selectedFig, setSelectedFig] = useState(null);
+  const [selecFormedFig, setSelecFormedFig] = useState([]);
 
   wsGameHandler(
     ws,
@@ -70,9 +72,9 @@ function Game() {
   };
 
   const discardFig = async () => {
-    await useFigCard(localPlayerId, selectedCards, selectedMov);
+    await useFigCard(localPlayerId, selecFormedFig, selectedFig);
     setSelectedFig(null);
-    setHighlightedFigs([]);  // ver con lo de santy
+    setSelecFormedFig([]);  // ver con lo de santy
   };
 
 
@@ -103,12 +105,17 @@ function Game() {
                 isTurn={localPlayerId === playerId} 
                 cardData={boxCards} 
                 onSelectedCards={setSelectedCards}
+                onSelectedFig={setSelecFormedFig}
                 game_id={gameId}
               />
             </div>
             <div className="Cards">
               <div className="Fig">
-                <FigCards figs_ids={figs_ids} />
+                <FigCards 
+                  fig_cards={fig_cards} 
+                  onSelectedFig={setSelectedFig}
+                  isTurn={localPlayerId === playerId}
+                />
               </div>
               <div className="Mov">
                 <MovCards 
