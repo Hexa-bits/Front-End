@@ -16,6 +16,7 @@
     "bootstrap": "^5.3.3",
     "domexception": "^4.0.0",
     "fetch-mock": "^11.1.4",
+    "fuse.js": "^7.0.0",
     "inflight": "^1.0.6",
     "jsdom": "^25.0.1",
     "react-confetti": "^6.1.0",

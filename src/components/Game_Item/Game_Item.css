@@ -21,6 +21,7 @@
 .game .config__left{
     width: 100%;
     font-weight: 500;
+    margin-left: 10px;
 }
 
 .game .config__right{
