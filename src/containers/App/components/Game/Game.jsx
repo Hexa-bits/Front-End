@@ -122,30 +122,34 @@ function Game() {
             <PlayerName player={localPlayerName} />
           </div>
 
-          <div className="Butt">
-            <div className="useMov">
-              <Button
-                label="USAR MOVIMIENTO"
-                onClick={handleUseMov}
-                disabled={localPlayerId !== playerId}
-              />
+          <div className="Buttons">
+            <div className="Buttup">
+              <div className="cancel">
+                <Button
+                  label="Cancelar movimiento"
+                  onClick={handleCancel}
+                  disabled={localPlayerId !== playerId}
+                />
+              </div>
+              <div className="useMov">
+                <Button
+                  label="USAR MOVIMIENTO"
+                  onClick={handleUseMov}
+                  disabled={localPlayerId !== playerId}
+                />
+              </div>
             </div>
-            <div className="end">
-              <Button
-                label="TERMINAR TURNO"
-                onClick={handleEndTurn}
-                disabled={localPlayerId !== playerId}
-              />
-            </div>
-            <div className="leav">
-              <LeaveButton onLeave={handleLeave} />
-            </div>
-            <div className="cancel">
-              <Button
-                label="Cancelar movimiento"
-                onClick={handleCancel}
-                disabled={localPlayerId !== playerId}
-              />
+            <div className="Buttdown">
+              <div className="end">
+                <Button
+                  label="TERMINAR TURNO"
+                  onClick={handleEndTurn}
+                  disabled={localPlayerId !== playerId}
+                />
+              </div>
+              <div className="leav">
+                <LeaveButton onLeave={handleLeave} />
+              </div>
             </div>
           </div>
         </div>
