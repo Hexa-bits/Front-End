@@ -3,7 +3,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 30px 0 0 0;
     width: 600px;
 }
 
@@ -12,6 +11,7 @@
     width: 600px;
     display: flex;
     justify-content: center;
+    border: none;
 }
 
 .list-group{

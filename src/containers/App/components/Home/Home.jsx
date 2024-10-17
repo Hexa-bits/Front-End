@@ -6,6 +6,8 @@ import JoinGame from "../../../../utils/logics/Home/JoinGame.js";
 import WsHomeService from "../../../../services/WS/WsHomeService.js";
 import { useNavigate } from "react-router-dom";
 import { WS_HOME, LOGIN } from "../../../../utils/Constants.js";
+import Form from "../../../../components/Form/Form.jsx";
+import { useState } from "react";
 
 function Home() {
   const playerId = parseInt(localStorage.getItem("id_user"), 10);
@@ -43,15 +45,18 @@ function Home() {
       <section className="CrearPartida">
         <Button label="CREAR PARTIDA" onClick={handleCrearPartida} />
       </section>
-
-      <section>
-        <Form placeholder={"Buscar partida por nombre"} onChange={(e) => setFilter(e.target.value)} value={filter}/>
-        
-      </section>
-
-      <section className="GameList__Home">
-        <GameList games={games} handleJoin={handleJoin} />
-      </section>
+      <div className="Gaming-container">
+        <section className="Form__Home">
+          <Form 
+            placeholder={"Buscar partida por nombre"} 
+            onChange={(e) => setFilter(e.target.value)} 
+            value={filter}
+          />
+        </section>
+        <section className="GameList__Home">
+          <GameList games={games} handleJoin={handleJoin} filter={filter} />
+        </section>
+      </div>
     </div>
   );
 }
