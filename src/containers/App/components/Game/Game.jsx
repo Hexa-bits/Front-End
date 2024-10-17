@@ -15,13 +15,13 @@ import WinnerExists from "../../../../services/Game/Winner/winnerExists.js";
 import passTurn from "../../../../services/Game/TurnPlayer/passTurn.js";
 import getCurrentTurnPlayer from "../../../../services/Game/TurnPlayer/getCurrentTurnPlayer.js";
 import renewBoard from "../../../../services/Game/Board/renewBoard.js";
-import useMovCard from "../../../../services/Game/Cards/useMovCard.js";
+import discardMove from "../../../../services/Game/Cards/discardMove.js";
+import discardFig from "../../../../services/Game/Cards/discardFig.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
 import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
 import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
 import { WS_GAME } from "../../../../utils/Constants.js";
 import {checkMov} from "../../../../utils/logics/Game/checkMov.js";
-import useFigCard from "../../../../services/Game/Cards/useFigCard.js";
 
 function Game() {
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ function Game() {
 
   const handleUseMov = async () => {
     if (checkMov(selectedMov, selectedCards)) {
-      await useMovCard(localPlayerId, selectedMov, selectedCards);
+      await discardMove(localPlayerId, selectedMov, selectedCards);
       setSelectedMov(null);
       setSelectedCards([]);
     }
@@ -71,8 +71,8 @@ function Game() {
     }
   };
 
-  const discardFig = async () => {
-    await useFigCard(localPlayerId, selecFormedFig, selectedFig);
+  const useFig = async () => {
+    await discardFig(localPlayerId, selecFormedFig, selectedFig);
     setSelectedFig(null);
     setSelecFormedFig([]);  // ver con lo de santy
   };
@@ -143,7 +143,7 @@ function Game() {
             <div className="useFig">
               <Button
                 label="DESCARTAR FIGURA"
-                onClick={discardFig}
+                onClick={useFig}
                 disabled={localPlayerId !== playerId}
                 />
             </div>

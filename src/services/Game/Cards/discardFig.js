@@ -1,6 +1,6 @@
 import { USE_FIG_CARD } from "../../../utils/Constants";
 
-const useFigCard = async ( playerId, selectedFig, selectedFigCard ) => {
+const discardFig = async ( playerId, selectedFig, selectedFigCard ) => {
     // if (selectedFig.length > 0 && selectedFig !== null)
     
     const fig_card_id = parseInt(selectedFigCard.id, 10);
@@ -23,19 +23,19 @@ const useFigCard = async ( playerId, selectedFig, selectedFigCard ) => {
         });
         if (!response.ok) {
             if (response.status === 400) {
-                throw new Error("Movimiento no valido");
+                console.log("Carta no coincide con figura seleccionada");
             }
             else if (response.status === 500) {
-                throw new Error("Fallo en la base de datos");
+                console.log("Fallo en la base de datos");
             }
             else {
-                throw new Error("Error al usar movimiento");
+                console.log("Error al descartar");
             }
         }
-        console.log("Carta Figura usada con exito.");
+        console.log("Carta Figura descartada con exito.");
     } catch (error) {
-        console.error("Error al usar movimiento:", error);
+        console.log(error);
     }
 }
 
-export default useFigCard;
+export default discardFig;
