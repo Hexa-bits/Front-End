@@ -23,6 +23,7 @@ export const GAME_PASS_URL = `http://localhost:${PORT}${GAME}/end-turn`;
 export const GAME_BOARD_URL = `http://localhost:${PORT}${GAME}/board?game_id=`;
 export const USE_MOV_CARD = `http://localhost:${PORT}${GAME}/use-mov-card`;
 export const USE_FIG_CARD = `http://localhost:${PORT}${GAME}/use-fig-card`;
+export const HIGHLIGHT_FIGS = `http://localhost:${PORT}${GAME}/highlight-figures?game_id=`;
 
 
 /** WEBSOCKETS */
@@ -36,6 +37,13 @@ export const GAME_INFO_WS = `ws://localhost:${PORT}${GAME}/info`;
 /** Otras constantes */
 export const MAX_PLAYERS = 4;
 export const MIN_PLAYERS = 1;
+
+export const COLORMAP_BOXCARDS = {
+    1: '#DC143C',    // rojo carmesí
+    2: '#50C878',  // verde esmeralda
+    3: '#FFD700',  // oro claro
+    4: '#4169E1'   // azul real
+};
 
 //A modo de Ejemplo
 export const cardData = [
