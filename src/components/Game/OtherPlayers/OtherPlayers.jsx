@@ -1,6 +1,5 @@
 import FigCards from "../FigCards/FigCards";
 import PlayerName from "../PlayerName/PlayerName";
-import BackMovs from "../MovCards/BackMovs";
 import "./OtherPlayers.css";
 function OtherPlayers({players}) {
 
