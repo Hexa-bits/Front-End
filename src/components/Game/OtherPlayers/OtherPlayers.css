@@ -1,0 +1,38 @@
+
+
+.each-player {
+    padding-left: 5vh;
+    padding-bottom: 3vh;
+}
+
+.player-name .Player{
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-radius: 2vh;
+    width: 50%;
+    padding: 5px;
+    color: white;
+}
+
+.player-figs {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.player-figs img {
+    width: 80px;
+    height: auto;
+}
+/* 
+background-color: #008bd0;
+padding: 10px;
+margin-top: 10px;
+border-radius: 20px;
+width: 80%;
+display: flex;
+justify-content: center;
+align-items: center;
+font-weight: 600;
+color: white; */

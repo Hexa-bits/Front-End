@@ -1,54 +1,63 @@
 @import "../../../../utils/colores.css";
 
-.game-container {
+.game-header {
     background-color: var(--claro2);
-    min-height: 100vh;
-    min-width: 100vw;
-    height: 100%;
-    height: 100%;
+    padding: 1vh;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
+}
+
+.game-header .seePlayer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+.game-header .PlayerInfo-Area{
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.game-container {
+    background-color: var(--claro2);
+    height: 92vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
     overflow: hidden;
     position: relative;
 }
 
+
 /* Parte Izquierda */
 .left-box{
-    width: 60%;
+    width: 70%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
-.seePlayer{
+
+.Game_Others_Area {
+    margin-top: 80px;
+    width: 35%;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-    width: 100%;
-    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .Game_Area{
+    width: 65%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    height: 100%;
-}
-
-.Cards{
-    height: auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.Fig{
-    height: auto;
-    margin: 0px 20px 0 0;
+    /* width: 100%; */
+    /* height: 100%; */
 }
 
 .board{
@@ -58,9 +67,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 70px;
 }
 
+.Cards{
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 60px;
+}
+
+.Fig{
+    margin-right: 20px;
+    height: auto;
+    margin: 0px 20px 0 0;
+}
+
+
 .Mov{
+    margin-right: 20px;
     height: 100%;
     margin-bottom: 10px;
     display: flex;
@@ -72,31 +99,24 @@
 
 /* Parte Derecha */
 .right-box{
-    width: 40%;
+    width: 30%;
+    height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     flex-direction: column;
-}
-
-.PlayerInfo-Area{
-    width: 100%;
-    height: 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 
 .Butt{
     width: 100%;
-    height: auto;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
     justify-content: center;
     gap:10px;
-    margin-bottom: 20px;
-    margin-right: 10px;
+    margin: 20px 10px;
+    position: sticky;
+    bottom: 0;
 }
 
 

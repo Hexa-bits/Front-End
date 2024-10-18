@@ -103,18 +103,23 @@
     outline: none;
     transform: none;
 }
-
-.Home .Gaming-container {
+.Home .Gaming-container  {
     width: 600px;
     display: flex;
     flex-direction: column;
     background: var(--amarillito);
     border-radius: 20px;
+    padding: 10px;
 }
 
 .GameList__Home{
-    height: auto;
+    width: 100%;
+    max-height: 50vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    
     display: flex;
+    flex-direction: column;
     justify-content: center;
     margin-bottom: 30px;
 }

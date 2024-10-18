@@ -10,6 +10,7 @@ import LeaveButton from "../../../../components/Game/LeaveButton/LeaveButton.jsx
 import SeePlayer from "../../../../components/Game/seePlayer_Turn/seePlayer.jsx";
 import PlayerName from "../../../../components/Game/PlayerName/PlayerName.jsx";
 import Board from "../../../../components/Game/Board/Board.jsx";
+import OtherPlayers from "../../../../components/Game/OtherPlayers/OtherPlayers.jsx";
 import renewAllCards from "../../../../services/Game/Cards/renewAllCards.js";
 import WinnerExists from "../../../../services/Game/Winner/winnerExists.js";
 import passTurn from "../../../../services/Game/TurnPlayer/passTurn.js";
@@ -17,6 +18,7 @@ import getCurrentTurnPlayer from "../../../../services/Game/TurnPlayer/getCurren
 import renewBoard from "../../../../services/Game/Board/renewBoard.js";
 import useMovCard from "../../../../services/Game/Cards/useMovCard.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
+import getOthersInfo from "../../../../services/Game/Cards/getOthersInfo.js";
 import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
 import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
 import { WS_GAME } from "../../../../utils/Constants.js";
@@ -33,11 +35,13 @@ function Game() {
   const { currentPlayer, playerId, fetchTurnData } =
     getCurrentTurnPlayer(gameId);
   const { winnerName, getWinner } = WinnerExists(gameId);
-  const { mov_cards, figs_ids, fetchFigs, fetchMovs } =
+  const { mov_cards, fig_cards, fetchFigs, fetchMovs } =
     renewAllCards(localPlayerId);
   const { boxCards, fetchBoxCards } = renewBoard(gameId);
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectedMov, setSelectedMov] = useState(null);
+
+  const { infoPlayers, fetchInfoPlayers } = getOthersInfo(gameId, localPlayerId);
 
   wsGameHandler(
     ws,
@@ -45,7 +49,8 @@ function Game() {
     getWinner,
     fetchFigs,
     fetchMovs,
-    fetchBoxCards
+    fetchBoxCards,
+    fetchInfoPlayers
   );
 
   const handleEndTurn = async () => {
@@ -85,11 +90,26 @@ function Game() {
           <VictoryBox winnerName={winnerName} onLeave={handleLeave} />
         </>
       )}
-      <div className="game-container">
-        <div className="left-box">
+
+        <div className="game-header">
           <div className="seePlayer">
             <SeePlayer player={currentPlayer || "??????"} />
           </div>
+
+          <div className="PlayerInfo-Area">
+            <PlayerName label={"USUARIO"} player={localPlayerName} />
+          </div>
+        </div>
+        <div className="game-container">
+
+        <div className="left-box">
+        
+          <div className="Game_Others_Area">
+            <OtherPlayers 
+              players={infoPlayers} 
+            />
+          </div> 
+
           <div className="Game_Area">
             <div className="board">
               <Board 
@@ -101,7 +121,7 @@ function Game() {
             </div>
             <div className="Cards">
               <div className="Fig">
-                <FigCards figs_ids={figs_ids} />
+                <FigCards fig_cards={fig_cards} />
               </div>
               <div className="Mov">
                 <MovCards 
@@ -114,9 +134,7 @@ function Game() {
           </div>
         </div>
         <div className="right-box">
-          <div className="PlayerInfo-Area">
-            <PlayerName player={localPlayerName} />
-          </div>
+
 
           <div className="Butt">
             <div className="useMov"> 
