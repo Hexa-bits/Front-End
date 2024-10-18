@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { BOARD_CHANGED, FIGS_UPD, MOVS_UPD, TURN_ENDED, WINNER } from "../../utils/Constants";
 // Esta función se encarga de manejar todos los mensajes que llegan por websocket
 const wsGameHandler = (
   ws,
@@ -14,17 +15,28 @@ const wsGameHandler = (
     ws.onmessage = (event) => {
       const message = event.data;
 
-      if (message === "Terminó turno") {
-        console.log("Mensaje de turno recibido");
-        fetchTurnData();
-        fetchFigs();
-        fetchMovs();
-        fetchBoxCards();
-      } else if (message === "Hay Ganador") {
-        console.log("Mensaje de ganador recibido");
-        getWinner();
-      } else if (message === "Hay modificación de Tablero") {
-        fetchBoxCards();
+
+      switch (message) {
+        case TURN_ENDED:
+          fetchTurnData();
+          fetchFigs();
+          fetchMovs();
+          fetchBoxCards();
+          break;
+        case WINNER:
+          getWinner();
+          break;
+        case BOARD_CHANGED:
+          fetchBoxCards();
+          break;
+        case FIGS_UPD:
+          fetchFigs();
+          break;
+        case MOVS_UPD:
+          fetchMovs();
+          break;
+        default:
+          break;
       }
     };
   }, [ws, fetchTurnData, getWinner, fetchFigs, fetchMovs, fetchBoxCards]);
