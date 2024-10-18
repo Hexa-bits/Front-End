@@ -25,14 +25,22 @@
     width: 80px;
     height: auto;
 }
-/* 
-background-color: #008bd0;
-padding: 10px;
-margin-top: 10px;
-border-radius: 20px;
-width: 80%;
-display: flex;
-justify-content: center;
-align-items: center;
-font-weight: 600;
-color: white; */
+
+.cant-mov-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.cant-mov-container .back-mov-image {
+    width: 15%;
+    padding: 1px;
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid transparent; 
+    /* display: inline-block; */
+    cursor: default; 
+    border: 1px solid black;
+    box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.2);
+}
