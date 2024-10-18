@@ -23,6 +23,7 @@ function FigCards({ fig_cards, onSelectedFig, isTurn }) {
     <div className="fig-cards-container">
       <div className="fig-card">
         {fig_cards.slice(0, 3).map((card, index) => {
+          const formattedId = card.fig.toString().padStart(2, "0"); // Convierte el número a cadena con dos dígitos
           const isSelected = index === selectedIndex; 
           return (
             <div
@@ -31,8 +32,8 @@ function FigCards({ fig_cards, onSelectedFig, isTurn }) {
               onClick={() => handleCardClick(index)} 
             >
               <img
-                src={`/assets/Figures/fig${card.fig}.svg`}
-                alt={`fig${card.fig}`}
+                src={`/assets/Figures/fig${formattedId}.svg`}
+                alt={`fig${formattedId}`}
               />
             </div>
           );

@@ -23,7 +23,6 @@ function Board({ isTurn, cardData, onSelectedCards, onSelectedFig, game_id}) {
         return fig ? COLORMAP_BOXCARDS[fig.find(pos => pos.x === x && pos.y === y).color] : null;
     };
 
-
     const handleFigSelection = (x, y) => {
         handlerSelectedCard(x, y);
         const foundFig = formedFigs.find(fig => 
@@ -32,7 +31,6 @@ function Board({ isTurn, cardData, onSelectedCards, onSelectedFig, game_id}) {
     
         if (foundFig) { onSelectedFig(foundFig); }
     };
-    
 
     return (
         <div className="Board">
@@ -50,6 +48,7 @@ function Board({ isTurn, cardData, onSelectedCards, onSelectedFig, game_id}) {
                       isHighlighted={!!highlightColor}
                       highlightColor={highlightColor}
                       inFig={inFig}
+                    //   onClick={() => handlerSelectedCard(x, y)}
                       onClick={inFig 
                         ? () => handleFigSelection(x, y) 
                         : () => handlerSelectedCard(x, y)

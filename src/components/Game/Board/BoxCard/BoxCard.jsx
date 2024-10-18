@@ -2,7 +2,7 @@ import './BoxCard.css';
 import { COLORMAP_BOXCARDS } from '../../../../utils/Constants';
 
 
-function BoxCard({ color, isSelected, isHighlighted, highlightColor, onClick }) {
+function BoxCard({ color, isSelected, isHighlighted, highlightColor, inFig, onClick }) {
     const mappedColor = COLORMAP_BOXCARDS[color] || 'gray';
     
     // Determina las clases a aplicar
