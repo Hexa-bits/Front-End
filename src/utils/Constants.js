@@ -23,6 +23,7 @@ export const GAME_PASS_URL = `http://localhost:${PORT}${GAME}/end-turn`;
 export const GAME_BOARD_URL = `http://localhost:${PORT}${GAME}/board?game_id=`;
 export const USE_MOV_CARD = `http://localhost:${PORT}${GAME}/use-mov-card`;
 export const HIGHLIGHT_FIGS = `http://localhost:${PORT}${GAME}/highlight-figures?game_id=`;
+export const GET_PLAYERS_INFO = `http://localhost:${PORT}${GAME}/others-cards?`;
 
 /** WEBSOCKETS */
 export const WS_GAME = `ws://localhost:${PORT}${GAME}?game_id=`;
