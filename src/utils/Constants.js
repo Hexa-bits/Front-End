@@ -33,6 +33,12 @@ export const WS_HOME = `ws://localhost:${PORT}${HOME}`;
 export const LoginHelpText = "Debe tener entre 1 y 10 caracteres.";
 export const GAME_INFO_WS = `ws://localhost:${PORT}${GAME}/info`;
 
+export const TURN_ENDED = "Terminó turno";
+export const WINNER = "Hay Ganador";
+export const BOARD_CHANGED = "Hay modificación de Tablero";
+export const FIGS_UPD = "Actualizar cartas de figuras";
+export const MOVS_UPD = "Actualizar cartas de movimientos";
+
 /** Otras constantes */
 export const MAX_PLAYERS = 4;
 export const MIN_PLAYERS = 1;
