@@ -3,12 +3,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 600px;
+    width: 100%;
 }
 
 .GameList .list-group .list-group-item{
     background-color: var(--amarillito);
-    width: 600px;
+    width: 100%;
     display: flex;
     justify-content: center;
     border: none;
