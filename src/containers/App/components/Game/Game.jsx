@@ -30,12 +30,10 @@ function Game() {
 
   const ws = getWsGameInstance(WS_GAME + gameId);
 
-  const { currentPlayer, playerId, fetchTurnData } =
-    getCurrentTurnPlayer(gameId);
+  const { currentPlayer, playerId, fetchTurnData } = getCurrentTurnPlayer(gameId);
   const { winnerName, getWinner } = WinnerExists(gameId);
-  const { mov_cards, figs_ids, fetchFigs, fetchMovs } =
-    renewAllCards(localPlayerId);
-  const { boxCards, fetchBoxCards } = renewBoard(gameId);
+  const { mov_cards, figs_ids, fetchFigs, fetchMovs } = renewAllCards(localPlayerId);
+  const { boxCards, fetchBoxCards, isMovParcial } = renewBoard(gameId);
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectedMov, setSelectedMov] = useState(null);
 
@@ -96,6 +94,7 @@ function Game() {
                 isTurn={localPlayerId === playerId} 
                 cardData={boxCards} 
                 onSelectedCards={setSelectedCards}
+                isMovParcial={isMovParcial}
                 game_id={gameId}
               />
             </div>

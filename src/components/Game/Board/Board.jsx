@@ -6,7 +6,7 @@ import { COLORMAP_BOXCARDS } from "../../../utils/Constants";
 import { useEffect } from "react";
 
 
-function Board({ isTurn, cardData, onSelectedCards, game_id}) {
+function Board({ isTurn, cardData, onSelectedCards, isMovParcial, game_id}) {
     const { selectedCards, handlerSelectedCard, clearSelectedCards } = useSelectedCards(isTurn);
 
     const formedFigs  = getFormedFig(game_id); 
