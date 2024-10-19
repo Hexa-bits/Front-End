@@ -7,7 +7,8 @@ const wsGameHandler = (
   getWinner,
   fetchFigs,
   fetchMovs,
-  fetchBoxCards
+  fetchBoxCards,
+  setLabelMovParcial,
 ) => {
   useEffect(() => {
     if (!ws) return;
@@ -17,30 +18,30 @@ const wsGameHandler = (
 
       switch (message) {
         case TURN_ENDED:
-          console.log("Mensaje de turno recibido");
+          setLabelMovParcial(false);
           fetchTurnData();
           fetchFigs();
           fetchMovs();
           fetchBoxCards();
           break;
         case WINNER:
-          console.log("Mensaje de ganador recibido");
           getWinner();
           break;
         case BOARD_CHANGED:
           fetchBoxCards();
+          setLabelMovParcial(true);
           break;
         case FIGS_UPD:
           fetchFigs();
           break;
-        case MOVS_UPD:
+          case MOVS_UPD:
           fetchMovs();
           break;
         default:
           break;
       }
     };
-  }, [ws, fetchTurnData, getWinner, fetchFigs, fetchMovs, fetchBoxCards]);
+  }, [ws, fetchTurnData, getWinner, fetchFigs, fetchMovs, fetchBoxCards, setLabelMovParcial]);
 };
 
 export default wsGameHandler;
