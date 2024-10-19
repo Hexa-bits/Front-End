@@ -6,9 +6,8 @@ import { COLORMAP_BOXCARDS } from "../../../utils/Constants";
 import { useEffect } from "react";
 
 
-function Board({ isTurn, cardData, onSelectedCards, game_id}) {
+function Board({ isTurn, cardData, onSelectedCards , game_id}) {
     const { selectedCards, handlerSelectedCard, clearSelectedCards } = useSelectedCards(isTurn);
-
     const formedFigs  = getFormedFig(game_id); 
 
     useEffect(() => {
@@ -25,23 +24,23 @@ function Board({ isTurn, cardData, onSelectedCards, game_id}) {
 
     return (
         <div className="Board">
-          <div className="BoxCards">
-              {cardData.map(({ x, y, color }) => {
-              const index = `${x}-${y}`;
-              const highlightColor = isHighlighted(x, y) ? COLORMAP_BOXCARDS[color] : null;
-              const isSelected = selectedCards.some(card => card.x === x && card.y === y);
-              return (
-                  <BoxCard
-                      key={index}
-                      color={color}
-                      isSelected={isSelected}
-                      isHighlighted={!!highlightColor}
-                      highlightColor={highlightColor}
-                      onClick={() => handlerSelectedCard(x, y)}
-                  />
-              );
-              })}
-          </div>
+            <div className="BoxCards">
+                {cardData.map(({ x, y, color }) => {
+                const index = `${x}-${y}`;
+                const highlightColor = isHighlighted(x, y) ? COLORMAP_BOXCARDS[color] : null;
+                const isSelected = selectedCards.some(card => card.x === x && card.y === y);
+                return (
+                    <BoxCard
+                        key={index}
+                        color={color}
+                        isSelected={isSelected}
+                        isHighlighted={!!highlightColor}
+                        highlightColor={highlightColor}
+                        onClick={() => handlerSelectedCard(x, y)}
+                    />
+                );
+                })}
+            </div>
         </div>
     );
 }
