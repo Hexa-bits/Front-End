@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 function LabelMovParcial({ isVisible }) {
     const [visible, setVisible] = useState(false);
-    const [hidding, setHidding] = useState(false);
+    const [hiding, setHidding] = useState(false);
 
     useEffect(() => {
         if (isVisible) {
@@ -20,7 +20,7 @@ function LabelMovParcial({ isVisible }) {
     }, [isVisible]);
 
     return (
-        <div className={`LabelMovParcial ${visible ? 'visible' : ''} ${hidding ? 'hiding' : ''}`}>
+        <div className={`LabelMovParcial ${visible ? 'visible' : ''} ${hiding ? 'hiding' : ''}`}>
             Parcial
         </div>
     );

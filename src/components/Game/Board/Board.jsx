@@ -3,10 +3,10 @@ import BoxCard from "./BoxCard/BoxCard";
 import useSelectedCards from "../../../services/Game/Board/useSelectedCards";
 import getFormedFig from "../../../services/Game/Board/Highlight Figs/formedFig";
 import { COLORMAP_BOXCARDS } from "../../../utils/Constants";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 
-function Board({ isTurn, cardData, onSelectedCards, isMovParcial, game_id}) {
+function Board({ isTurn, cardData, onSelectedCards , game_id}) {
     const { selectedCards, handlerSelectedCard, clearSelectedCards } = useSelectedCards(isTurn);
     const formedFigs  = getFormedFig(game_id); 
 
