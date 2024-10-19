@@ -1,8 +1,8 @@
 import { HIGHLIGHT_FIGS } from '../../../../utils/Constants';
 import { useEffect, useState } from 'react';
 
-function getFormedFig(game_id) {
-
+function getFormedFig() {
+    const game_id = parseInt(localStorage.getItem('game_id'),10 );
     if (!game_id) return [];
     
     const [formedFig, setFormedFigs] = useState([]);
