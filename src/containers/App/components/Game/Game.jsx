@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import "./Game.css";
 import { useNavigate } from "react-router-dom";
@@ -37,6 +37,7 @@ function Game() {
   const { mov_cards, fig_cards, fetchFigs, fetchMovs } =
     renewAllCards(localPlayerId);
   const { boxCards, fetchBoxCards } = renewBoard(gameId);
+
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectedMov, setSelectedMov] = useState(null);
   const [selectedFig, setSelectedFig] = useState(null);
@@ -61,6 +62,7 @@ function Game() {
   };
 
   const handleUseMov = async () => {
+
     if (checkMov(selectedMov, selectedCards)) {
       await discardMove(localPlayerId, selectedMov, selectedCards);
       setSelectedMov(null);
@@ -73,8 +75,8 @@ function Game() {
     console.log("selectedFig", selectedFig);
     console.log("selecFormedFig", selecFormedFig.map((fig) => fig));
     //await discardFig(localPlayerId, selecFormedFig, selectedFig);
-    // setSelectedFig(null);
-    // setSelecFormedFig([]);  // ver con lo de santy
+    setSelectedFig(null);
+    setSelecFormedFig([]);  
   };
 
 
@@ -106,7 +108,6 @@ function Game() {
                 cardData={boxCards} 
                 onSelectedCards={setSelectedCards}
                 onSelectedFig={setSelecFormedFig}
-                game_id={gameId}
               />
             </div>
             <div className="Cards">

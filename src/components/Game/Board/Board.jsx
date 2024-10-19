@@ -1,19 +1,19 @@
 import "./Board.css";
 import BoxCard from "./BoxCard/BoxCard";
 import useSelectedCards from "../../../services/Game/Board/useSelectedCards";
-import getFormedFig from "../../../services/Game/Board/Highlight Figs/formedFig";
+import getFormedFig from "../../../services/Game/Board/HighlightFigs/formedFig";
 import { COLORMAP_BOXCARDS } from "../../../utils/Constants";
-import { useEffect } from "react";
+import { useEffect, useState} from "react";
 
 
-function Board({ isTurn, cardData, onSelectedCards, onSelectedFig, game_id}) {
-    const { selectedCards, handlerSelectedCard, clearSelectedCards } = useSelectedCards(isTurn);
-
-    const formedFigs  = getFormedFig(game_id); 
+function Board({ isTurn, cardData, onSelectedCards, onSelectedFig}) {
+    const formedFigs  = getFormedFig(); 
+    const { selectedCards, handlerSelectedCard } = useSelectedCards(isTurn);
 
     useEffect(() => {
         onSelectedCards(selectedCards);
     }, [selectedCards, onSelectedCards]);
+
 
     const isHighlighted = (x, y) => {
         const fig = formedFigs.find(fig => 
@@ -28,8 +28,9 @@ function Board({ isTurn, cardData, onSelectedCards, onSelectedFig, game_id}) {
         const foundFig = formedFigs.find(fig => 
           fig.some(pos => pos.x === x && pos.y === y)
         );
-    
-        if (foundFig) { onSelectedFig(foundFig); }
+        if (foundFig) { 
+            onSelectedFig(foundFig); 
+        } 
     };
 
     return (
@@ -47,12 +48,10 @@ function Board({ isTurn, cardData, onSelectedCards, onSelectedFig, game_id}) {
                       isSelected={isSelected}
                       isHighlighted={!!highlightColor}
                       highlightColor={highlightColor}
-                      inFig={inFig}
-                    //   onClick={() => handlerSelectedCard(x, y)}
                       onClick={inFig 
                         ? () => handleFigSelection(x, y) 
                         : () => handlerSelectedCard(x, y)
-                      }
+                     }
                   />
               );
               })}
