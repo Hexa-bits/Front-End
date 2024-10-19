@@ -22,7 +22,7 @@ export const GET_TURN_PLAYER_URL = `http://localhost:${PORT}${GAME}/current-turn
 export const GAME_PASS_URL = `http://localhost:${PORT}${GAME}/end-turn`;
 export const GAME_BOARD_URL = `http://localhost:${PORT}${GAME}/board?game_id=`;
 export const USE_MOV_CARD = `http://localhost:${PORT}${GAME}/use-mov-card`;
-export const CANCEL_TURN_URL = `http://localhost:${PORT}${GAME}/game/cancel-mov`;
+export const CANCEL_TURN_URL = `http://localhost:${PORT}${GAME}/cancel-mov`;
 export const HIGHLIGHT_FIGS = `http://localhost:${PORT}${GAME}/highlight-figures?game_id=`;
 
 /** WEBSOCKETS */

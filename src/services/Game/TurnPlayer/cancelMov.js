@@ -1,8 +1,8 @@
 import { CANCEL_TURN_URL } from "../../../utils/Constants.js";
 
 //enviar id y nombre del jugador en turno
-const postPlayer = async () => {
-  const playerId = localStorage.getItem("player_id");
+const postPlayer = async (playerId, gameId) => {
+  //const playerId = localStorage.getItem("player_id");
 
   try {
     const response = await fetch(CANCEL_TURN_URL, {
