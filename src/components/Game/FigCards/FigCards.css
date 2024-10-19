@@ -29,11 +29,29 @@
         0 5px 5px rgba(0, 0, 0, 0.3)
 }
 
-.Figures.selected {
-    border-color: black;
-}
-
 .Figures img {
     width: 100px;
     height: auto;  
+}
+
+.Figures.selected {
+    border-color: black;
+    border: 1px solid black; 
+    z-index: 3; /* Aumenta el z-index para encimar la carta seleccionada */
+    transition: transform 0.2s, border 0.1s, z-index 0.1s; 
+    box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8), 
+    0 0 30px 15px rgba(255, 215, 0, 1);
+    animation: sparkle 1s infinite alternate;
+}
+
+/* Animación de brillado */
+@keyframes sparkle {
+0% {
+    box-shadow: 0 0 0px 1px rgba(255, 215, 0, 0.8), 
+                0 0 0px 0px rgba(255, 215, 0, 0.6);
+}
+100% {
+    box-shadow: 0 0 20px 10px rgba(255, 215, 0, 0.9), 
+                0 0 5px 2px rgba(255, 215, 0, 0.7);
+}
 }
