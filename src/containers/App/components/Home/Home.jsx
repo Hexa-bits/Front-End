@@ -15,7 +15,6 @@ function Home() {
   const navigate = useNavigate();
   const [filter, setFilter] = useState("");
 
-
   const { ws } = WsHomeService(WS_HOME);
 
   const { games } = useGames(ws);
@@ -28,6 +27,8 @@ function Home() {
   const handleJoin = (gameId) => {
     joinGame(gameId, playerId);
   };
+  const handleSwitch = () => 
+
 
   return (
     <div className="Home">
@@ -47,9 +48,11 @@ function Home() {
       </section>
       <div className="Gaming-container">
         <section className="Form__Home">
-          <Form 
-            placeholder={"Buscar partida por nombre"} 
-            onChange={(e) => setFilter(e.target.value)} 
+          <input className="form-check" type="checkbox" role = "switch" 
+          id = "flexSwitchCheckDefault" onChange={handleSwitch}/>
+          <Form
+            placeholder={"Buscar partida por nombre"}
+            onChange={(e) => setFilter(e.target.value)}
             value={filter}
           />
         </section>
@@ -60,5 +63,9 @@ function Home() {
     </div>
   );
 }
-
 export default Home;
+
+
+
+// tener un switch. que el switch tenga un handle q me cambie la createTestScheduler, y q la
+// cte se la pase al gamelist
