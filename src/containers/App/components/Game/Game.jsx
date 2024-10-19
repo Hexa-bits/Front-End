@@ -45,7 +45,8 @@ function Game() {
         getWinner,
         fetchFigs,
         fetchMovs,
-        fetchBoxCards
+        fetchBoxCards,
+        setLabelMovParcial,
     );
 
     const handleEndTurn = async () => {

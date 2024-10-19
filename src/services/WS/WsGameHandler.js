@@ -6,7 +6,8 @@ const wsGameHandler = (
   getWinner,
   fetchFigs,
   fetchMovs,
-  fetchBoxCards
+  fetchBoxCards,
+  setLabelMovParcial,
 ) => {
   useEffect(() => {
     if (!ws) return;
@@ -16,6 +17,7 @@ const wsGameHandler = (
 
       if (message === "Terminó turno") {
         console.log("Mensaje de turno recibido");
+        setLabelMovParcial(false);
         fetchTurnData();
         fetchFigs();
         fetchMovs();
@@ -25,9 +27,10 @@ const wsGameHandler = (
         getWinner();
       } else if (message === "Hay modificación de Tablero") {
         fetchBoxCards();
+        setLabelMovParcial(true);
       }
     };
-  }, [ws, fetchTurnData, getWinner, fetchFigs, fetchMovs, fetchBoxCards]);
+  }, [ws, fetchTurnData, getWinner, fetchFigs, fetchMovs, fetchBoxCards, setLabelMovParcial]);
 };
 
 export default wsGameHandler;
