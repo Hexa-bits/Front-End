@@ -15,15 +15,7 @@ function getOthersInfo (gameId, playerId) {
             }
             const data = await response.json();
             setInfoPlayers(data);
-            
-            // console.log(
-            //     "Información de los otros jugadores: ", 
-            //     data.map((player) => 
-            //         player.nombre, 
-            //         player.fig_cards.map((card) => card.id),
-            //         player.mov_cant,
-            //     ),
-            // );
+
         } catch (error) {
             console.error("Error al obtener la información de los otros jugadores:", error);
         }
