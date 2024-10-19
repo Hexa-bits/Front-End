@@ -27,7 +27,7 @@ const wsGameHandler = (
         fetchMovs();
         fetchTurnData(); //info del turno
         //fetchBoxCards();
-      } else if (message === "Hay modificación en el tablero") {
+      } else if (message === "Hay modificación de Tablero") {
         console.log("Mensaje recibido modificación tablero");
         fetchBoxCards(); //ver tablero
       } else if (message === "Hay Ganador") {
