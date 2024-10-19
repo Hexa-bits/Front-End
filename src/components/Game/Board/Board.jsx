@@ -28,9 +28,7 @@ function Board({ isTurn, cardData, onSelectedCards, onSelectedFig}) {
         const foundFig = formedFigs.find(fig => 
           fig.some(pos => pos.x === x && pos.y === y)
         );
-        if (foundFig) { 
-            onSelectedFig(foundFig); 
-        } 
+        if (foundFig) { onSelectedFig(foundFig); } 
     };
 
     return (
