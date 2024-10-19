@@ -26,7 +26,13 @@ describe("renewAllCards", () => {
     mockFigsFetch = vi.fn(() =>
       Promise.resolve({
         ok: true,
-        json: () => Promise.resolve({ id_fig_card: [4, 5, 6] }),
+        json: () => Promise.resolve({ 
+          fig_cards: [ 
+            {"id": 1, "fig": 1},
+            {"id": 2, "fig": 2},
+            {"id": 3, "fig": 3}
+          ] 
+         }),
       })
     );
     global.fetch = mockMovsFetch;
@@ -43,7 +49,7 @@ describe("renewAllCards", () => {
   it("Initializes with default values", () => {
     const { result } = renderHook(() => renewAllCards(playerId));
     expect(result.current.mov_cards).toEqual([]);
-    expect(result.current.figs_ids).toEqual([]);
+    expect(result.current.fig_cards).toEqual([]);
   });
 
   it("fetches cards correctly", async () => {
@@ -66,7 +72,13 @@ describe("renewAllCards", () => {
           {"id": 3, "move": 3}
         ] 
       );
-      expect(result.current.figs_ids).toEqual([4, 5, 6]);
+      expect(result.current.fig_cards).toEqual(
+        [ 
+          {"id": 1, "fig": 1},
+          {"id": 2, "fig": 2},
+          {"id": 3, "fig": 3}
+        ]
+      );
     });
   });
 
