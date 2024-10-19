@@ -33,9 +33,9 @@ const wsGameHandler = (
       } else if (message === "Hay Ganador") {
         console.log("Mensaje de ganador recibido");
         getWinner();
-      } else if (message === "Actualizar cartas de movimiento") {
+      } else if (message === "Actualizar cartas de movimientos") {
         fetchMovs(); //cartas fig y mov
-      } else if (message === "Actualizar cartas de figura") {
+      } else if (message === "Actualizar cartas de figuras") {
         fetchFigs(); //cartas fig y mov
       }
     };
