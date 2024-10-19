@@ -6,17 +6,17 @@ function OtherPlayers({players}) {
 
     return ( 
         <>
-        { players.map((player, index) => (
-            <div className="each-player" key={index}>
+        { players.map((player, playerIndex) => (
+            <div className="each-player" key={playerIndex}>
                 <div className="player-name"> 
-                    <PlayerName label={index} player={player.nombre} />   
+                    <PlayerName label={playerIndex} player={player.nombre} />   
                  </div>
                 <div className="player-figs"> 
                     <FigCards fig_cards={player.fig_cards} />
                 </div>
                 <div className="cant-mov-container">
-                    {Array.from({ length: player.mov_cant }, () => (
-                        <img key={index} src="/assets/Movements/back-mov.svg" alt={index} className="back-mov-image" />
+                    {Array.from({ length: player.mov_cant }, (_, movIndex) => (
+                        <img key={movIndex} src="/assets/Movements/back-mov.svg" alt={movIndex} className="back-mov-image" />
                     ))}
                 </div>
             </div>

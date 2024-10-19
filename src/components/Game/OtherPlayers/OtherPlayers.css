@@ -27,14 +27,16 @@
 }
 
 .cant-mov-container {
+    margin-top: 5px;
     width: 100%;
     display: flex;
     flex-direction: row;
     gap: 10px;
+    justify-content: flex-end;
 }
 
 .cant-mov-container .back-mov-image {
-    width: 15%;
+    width: 2.8rem;
     padding: 1px;
     background-color: white;
     border-radius: 10px;
@@ -43,4 +45,21 @@
     cursor: default; 
     border: 1px solid black;
     box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Rotaciones específicas para cada carta */
+.back-mov-image:nth-child(1) {
+    transform: rotate(-15deg) translateX(55px) translateY(10px);
+    z-index: 1;
+}
+
+.back-mov-image:nth-child(2) {
+    transform: rotate(0deg) translateX(35px) translateY(-8px);
+    z-index: 2;
+}
+
+.back-mov-image:nth-child(3) {
+    transform: rotate(10deg) translateX(10px) translateY(-5px);
+    z-index: 1;
 }

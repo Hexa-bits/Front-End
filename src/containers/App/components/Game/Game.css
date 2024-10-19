@@ -2,7 +2,7 @@
 
 .game-header {
     background-color: var(--claro2);
-    padding: 1vh;
+    padding: 2vh;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -10,15 +10,17 @@
 
 .game-header .seePlayer{
     display: flex;
-    justify-content: center;
+    margin-left: 2vh;
+    justify-content: flex-start;
     align-items: center;
     width: 50%;
 }
 
 .game-header .PlayerInfo-Area{
     width: 20%;
+    margin-right: 2vh;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
 }
 .game-container {
