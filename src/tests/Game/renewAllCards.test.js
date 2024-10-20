@@ -27,12 +27,11 @@ describe("renewAllCards", () => {
       Promise.resolve({
         ok: true,
         json: () => Promise.resolve({ 
-          fig_cards: [ 
-            {"id": 1, "fig": 1},
-            {"id": 2, "fig": 2},
-            {"id": 3, "fig": 3}
-          ] 
-         }),
+          fig_cards: [
+            {"id": 4, "fig": 10},
+            {"id": 5, "fig": 11},
+            {"id": 6, "fig": 12}
+          ]}),
       })
     );
     global.fetch = mockMovsFetch;
@@ -73,10 +72,10 @@ describe("renewAllCards", () => {
         ] 
       );
       expect(result.current.fig_cards).toEqual(
-        [ 
-          {"id": 1, "fig": 1},
-          {"id": 2, "fig": 2},
-          {"id": 3, "fig": 3}
+        [
+          {"id": 4, "fig": 10},
+          {"id": 5, "fig": 11},
+          {"id": 6, "fig": 12}
         ]
       );
     });
@@ -97,7 +96,7 @@ describe("renewAllCards", () => {
 
     waitFor(() => {
       expect(result.current.mov_cards).toBe(null);
-      expect(result.current.figs_ids).toBe(null);
+      expect(result.current.fig_cards).toBe(null);
       expect(console.error).toHaveBeenCalledWith(
         "Error al obtener las cartas de movimientos del jugador:",
         expect.any(Error)

@@ -15,7 +15,7 @@ const wsGameHandler = (
 
     ws.onmessage = (event) => {
       const message = event.data;
-
+      
       switch (message) {
         case TURN_ENDED:
           setLabelMovParcial(false);
@@ -34,7 +34,7 @@ const wsGameHandler = (
         case FIGS_UPD:
           fetchFigs();
           break;
-          case MOVS_UPD:
+        case MOVS_UPD:
           fetchMovs();
           break;
         default:

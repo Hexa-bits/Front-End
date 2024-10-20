@@ -29,7 +29,7 @@ function MovCards({ mov_cards , onSelectedMov, isTurn }) {
               onClick={() => handleCardClick(index)}
             >
               <img
-                src={`../../../../assets/Movements/mov${card.move}.svg`}
+                src={`/assets/Movements/mov${card.move}.svg`}
                 alt={`mov${card.move}`}
               />
             </div>

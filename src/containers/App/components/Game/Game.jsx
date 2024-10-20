@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import "./Game.css";
 import { useNavigate } from "react-router-dom";
@@ -11,17 +11,20 @@ import SeePlayer from "../../../../components/Game/seePlayer_Turn/seePlayer.jsx"
 import PlayerName from "../../../../components/Game/PlayerName/PlayerName.jsx";
 import Board from "../../../../components/Game/Board/Board.jsx";
 import OtherPlayers from "../../../../components/Game/OtherPlayers/OtherPlayers.jsx";
+import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
+
+import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
+import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
 import renewAllCards from "../../../../services/Game/Cards/renewAllCards.js";
 import WinnerExists from "../../../../services/Game/Winner/winnerExists.js";
 import passTurn from "../../../../services/Game/TurnPlayer/passTurn.js";
 import getCurrentTurnPlayer from "../../../../services/Game/TurnPlayer/getCurrentTurnPlayer.js";
 import renewBoard from "../../../../services/Game/Board/renewBoard.js";
-import useMovCard from "../../../../services/Game/Cards/useMovCard.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
 import getOthersInfo from "../../../../services/Game/Cards/getOthersInfo.js";
-import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
-import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
-import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
+import discardMove from "../../../../services/Game/Cards/discardMove.js";
+import discardFig from "../../../../services/Game/Cards/discardFig.js";
+
 import { WS_GAME } from "../../../../utils/Constants.js";
 import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
 
@@ -41,6 +44,8 @@ function Game() {
     const [ labelMovPacial, setLabelMovParcial ] = useState(false);
     const [selectedCards, setSelectedCards] = useState([]);
     const [selectedMov, setSelectedMov] = useState(null);
+    const [selectedFig, setSelectedFig] = useState(null);
+    const [selecFormedFig, setSelecFormedFig] = useState([]);
 
     wsGameHandler(
       ws,
@@ -63,17 +68,22 @@ function Game() {
       await LeaveGame(navigate);
     };
 
-    const handleUseMov = async () => {
-      if (checkMov(selectedMov, selectedCards)) {
-        await useMovCard(localPlayerId, selectedMov, selectedCards);
-        setLabelMovParcial(true);
-        setSelectedMov(null);
-        setSelectedCards([]);
-      }
-      else {
-        console.log("Movimiento no valido");
-      }
-    };
+  const handleUseMov = async () => {
+
+    if (checkMov(selectedMov, selectedCards)) {
+      await discardMove(localPlayerId, selectedMov, selectedCards);
+      setLabelMovParcial(true);
+      setSelectedMov(null);
+      setSelectedCards([]);
+    }
+    else { console.log("Movimiento no valido"); }
+  };
+
+  const useFig = async () => {
+    await discardFig(localPlayerId, selecFormedFig, selectedFig);
+    setSelectedFig(null);
+    setSelecFormedFig([]);  
+  };
 
 
   return (
@@ -92,33 +102,18 @@ function Game() {
           <VictoryBox winnerName={winnerName} onLeave={handleLeave} />
         </>
       )}
-
-        <div className="game-header">
+      <div className="game-container">
+        <div className="left-box">
           <div className="seePlayer">
             <SeePlayer player={currentPlayer || "??????"} />
           </div>
-
-          <div className="PlayerInfo-Area">
-            <PlayerName label={"USUARIO"} player={localPlayerName} />
-          </div>
-        </div>
-        <div className="game-container">
-
-        <div className="left-box">
-        
-          <div className="Game_Others_Area">
-            <OtherPlayers 
-              players={infoPlayers} 
-            />
-          </div> 
-
           <div className="Game_Area">
             <div className="board">
               <Board 
                 isTurn={localPlayerId === playerId} 
                 cardData={boxCards} 
                 onSelectedCards={setSelectedCards}
-                game_id={gameId}
+                onSelectedFig={setSelecFormedFig}
               />
               <div className="labelMovParcial">
                 <LabelMovParcial isVisible={labelMovPacial}/>
@@ -126,7 +121,11 @@ function Game() {
             </div>
             <div className="Cards">
               <div className="Fig">
-                <FigCards fig_cards={fig_cards} />
+                <FigCards 
+                  fig_cards={fig_cards} 
+                  onSelectedFig={setSelectedFig}
+                  isTurn={localPlayerId === playerId} 
+                />
               </div>
               <div className="Mov">
                 <MovCards 
