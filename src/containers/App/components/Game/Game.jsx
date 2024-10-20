@@ -10,6 +10,10 @@ import LeaveButton from "../../../../components/Game/LeaveButton/LeaveButton.jsx
 import SeePlayer from "../../../../components/Game/seePlayer_Turn/seePlayer.jsx";
 import PlayerName from "../../../../components/Game/PlayerName/PlayerName.jsx";
 import Board from "../../../../components/Game/Board/Board.jsx";
+import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
+
+import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
+import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
 import renewAllCards from "../../../../services/Game/Cards/renewAllCards.js";
 import WinnerExists from "../../../../services/Game/Winner/winnerExists.js";
 import passTurn from "../../../../services/Game/TurnPlayer/passTurn.js";
@@ -18,10 +22,7 @@ import renewBoard from "../../../../services/Game/Board/renewBoard.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
 import discardMove from "../../../../services/Game/Cards/discardMove.js";
 import discardFig from "../../../../services/Game/Cards/discardFig.js";
-import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
-import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
-import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
-import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
+
 import { WS_GAME } from "../../../../utils/Constants.js";
 import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
 
