@@ -31,10 +31,10 @@ function Home() {
 
   return (
     <div className="Home">
-      {/* <Button 
+      <Button 
         onClick={() => navigate(LOGIN)} 
         className="back-btn" 
-      /> */}
+      />
       <section className="NombreUsuario">
         <div className="dataUser">
           <div className="user">USUARIO: {username}</div>

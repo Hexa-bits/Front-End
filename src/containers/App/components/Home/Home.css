@@ -13,11 +13,14 @@
 }
 
 .Home .back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
     background-image: url('/assets/icons/back-arrow.svg');
-    background-size: 65%;
+    background-size: 50%;
     background-repeat: no-repeat;
     background-position: center;
-    width: 35px;
+    width: 50px;
     height: 35px;   
     border: none;
     background-color: var(--verde);
