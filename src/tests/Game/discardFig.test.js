@@ -3,16 +3,17 @@ import { afterEach, beforeEach, expect, vi } from "vitest";
 import discardFig  from "../../services/Game/Cards/discardFig";
 import { USE_FIG_CARD } from "../../utils/Constants";
 
-const playerId = 1;
-const selectedFig = [ {x: 1, y:2 }, {x:2, y: 2}, {x:3, y:2}];
-const selectedFigCard = { id: 10 , fig: 3};
-
-
 global.fetch = vi.fn();
 
 describe("discardFig", () => {
     let mockFetch;
     let consoleLogSpy;
+    const playerId = 1;
+    const selectedFig = [ {x: 1, y:2 }, {x:2, y: 2}, {x:3, y:2}];
+    const fichas = selectedFig.map((card) => {
+        return { x_pos: card.x, y_pos: card.y };
+    });
+    const selectedFigCard = { id: 10 , fig: 3};
 
     beforeEach(() => {
         mockFetch = vi.fn(() =>
@@ -40,7 +41,7 @@ describe("discardFig", () => {
             body: JSON.stringify({
                 player_id: playerId,
                 id_fig_card: selectedFigCard.id,
-                fichas: selectedFig,
+                figura: fichas
             }),
         });
         expect(console.log).toHaveBeenCalledWith("Carta Figura descartada con exito.");
