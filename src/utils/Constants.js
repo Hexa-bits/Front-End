@@ -44,8 +44,6 @@ export const MOVS_UPD = "Actualizar cartas de movimientos";
 export const MAX_PLAYERS = 4;
 export const MIN_PLAYERS = 1;
 
-
-
 export const COLORMAP_BOXCARDS = {
     1: '#DC143C',    // rojo carmesí
     2: '#50C878',  // verde esmeralda

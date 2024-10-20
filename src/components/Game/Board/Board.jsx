@@ -7,13 +7,12 @@ import { useEffect, useState} from "react";
 
 
 function Board({ isTurn, cardData, onSelectedCards, onSelectedFig}) {
-    const formedFigs  = getFormedFig(); 
     const { selectedCards, handlerSelectedCard } = useSelectedCards(isTurn);
+    const formedFigs  = getFormedFig(); 
 
     useEffect(() => {
         onSelectedCards(selectedCards);
     }, [selectedCards, onSelectedCards]);
-
 
     const isHighlighted = (x, y) => {
         const fig = formedFigs.find(fig => 

@@ -15,56 +15,59 @@ import WinnerExists from "../../../../services/Game/Winner/winnerExists.js";
 import passTurn from "../../../../services/Game/TurnPlayer/passTurn.js";
 import getCurrentTurnPlayer from "../../../../services/Game/TurnPlayer/getCurrentTurnPlayer.js";
 import renewBoard from "../../../../services/Game/Board/renewBoard.js";
+import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
 import discardMove from "../../../../services/Game/Cards/discardMove.js";
 import discardFig from "../../../../services/Game/Cards/discardFig.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
+import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
 import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
 import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
 import { WS_GAME } from "../../../../utils/Constants.js";
-import {checkMov} from "../../../../utils/logics/Game/checkMov.js";
+import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
 
 function Game() {
-  const navigate = useNavigate();
-  const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
-  const localPlayerName = localStorage.getItem("username");
-  const gameId = localStorage.getItem("game_id");
+    const navigate = useNavigate();
+    const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
+    const localPlayerName = localStorage.getItem("username");
+    const gameId = localStorage.getItem("game_id");
 
-  const ws = getWsGameInstance(WS_GAME + gameId);
+    const ws = getWsGameInstance(WS_GAME + gameId);
 
-  const { currentPlayer, playerId, fetchTurnData } =
-    getCurrentTurnPlayer(gameId);
-  const { winnerName, getWinner } = WinnerExists(gameId);
-  const { mov_cards, fig_cards, fetchFigs, fetchMovs } =
-    renewAllCards(localPlayerId);
-  const { boxCards, fetchBoxCards } = renewBoard(gameId);
+    const { currentPlayer, playerId, fetchTurnData } = getCurrentTurnPlayer(gameId);
+    const { winnerName, getWinner } = WinnerExists(gameId);
+    const { mov_cards, fig_cards, fetchFigs, fetchMovs } = renewAllCards(localPlayerId);
+    const { boxCards, fetchBoxCards, isMovParcial } = renewBoard(gameId);
+    const [ labelMovPacial, setLabelMovParcial ] = useState(false);
+    const [selectedCards, setSelectedCards] = useState([]);
+    const [selectedMov, setSelectedMov] = useState(null);
+    const [selectedFig, setSelectedFig] = useState(null);
+    const [selecFormedFig, setSelecFormedFig] = useState([]);
 
-  const [selectedCards, setSelectedCards] = useState([]);
-  const [selectedMov, setSelectedMov] = useState(null);
-  const [selectedFig, setSelectedFig] = useState(null);
-  const [selecFormedFig, setSelecFormedFig] = useState([]);
+    wsGameHandler(
+        ws,
+        fetchTurnData,
+        getWinner,
+        fetchFigs,
+        fetchMovs,
+        fetchBoxCards,
+        setLabelMovParcial,
+    );
 
-  wsGameHandler(
-    ws,
-    fetchTurnData,
-    getWinner,
-    fetchFigs,
-    fetchMovs,
-    fetchBoxCards
-  );
+    const handleEndTurn = async () => {
+        setLabelMovParcial(false);
+        await passTurn();
+    };
 
-  const handleEndTurn = async () => {
-    await passTurn();
-  };
-
-  const handleLeave = async () => {
-    await passTurn();
-    await LeaveGame(navigate);
-  };
+    const handleLeave = async () => {
+        await passTurn();
+        await LeaveGame(navigate);
+    };
 
   const handleUseMov = async () => {
 
     if (checkMov(selectedMov, selectedCards)) {
       await discardMove(localPlayerId, selectedMov, selectedCards);
+      setLabelMovParcial(true);
       setSelectedMov(null);
       setSelectedCards([]);
     }
@@ -107,6 +110,9 @@ function Game() {
                 onSelectedCards={setSelectedCards}
                 onSelectedFig={setSelecFormedFig}
               />
+              <div className="labelMovParcial">
+                <LabelMovParcial isVisible={labelMovPacial}/>
+              </div>
             </div>
             <div className="Cards">
               <div className="Fig">
