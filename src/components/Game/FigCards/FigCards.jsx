@@ -1,24 +1,33 @@
 import React from "react";
 import "./FigCards.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function FigCards({ figs_ids }) {
+function FigCards({ fig_cards, onSelectedFig, isTurn }) {
   const [selectedIndex, setSelectedIndex] = useState(null); 
 
   // Manejador de clics para seleccionar una carta
   const handleCardClick = (index) => {
-    setSelectedIndex(index === selectedIndex ? null : index); 
+    if (!isTurn) return; 
+    setSelectedIndex(index === selectedIndex ? null : index);
+    onSelectedFig(index === selectedIndex ? null : fig_cards[index]);
   };
+
+  useEffect(() => {
+    if (!isTurn) {
+      setSelectedIndex(null);
+      onSelectedFig(null); 
+    }
+  }, [isTurn, onSelectedFig]);
 
   return (
     <div className="fig-cards-container">
       <div className="fig-card">
-        {figs_ids.slice(0, 3).map((Id, index) => {
-          const formattedId = Id.toString().padStart(2, "0"); // Convierte el número a cadena con dos dígitos
+        {fig_cards.slice(0, 3).map((card, index) => {
+          const formattedId = card.fig.toString().padStart(2, "0"); // Convierte el número a cadena con dos dígitos
           const isSelected = index === selectedIndex; 
           return (
             <div
-              key={index}
+              key={card.id}
               className={`Figures ${isSelected ? "selected" : ""}`} 
               onClick={() => handleCardClick(index)} 
             >

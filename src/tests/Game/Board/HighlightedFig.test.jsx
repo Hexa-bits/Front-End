@@ -1,4 +1,4 @@
-import { render, act, screen } from '@testing-library/react';
+import { render, act, screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import Board from '../../../components/Game/Board/Board';
 import { COLORMAP_BOXCARDS } from '../../../utils/Constants';

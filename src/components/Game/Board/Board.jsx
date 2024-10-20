@@ -5,7 +5,7 @@ import { COLORMAP_BOXCARDS } from "../../../utils/Constants";
 import { useEffect } from "react";
 
 
-function Board({ isTurn, cardData, onSelectedCards, formedFigs}) {
+function Board({ isTurn, cardData, onSelectedCards, formedFigs, onSelectedFig}) {
     const { selectedCards, handlerSelectedCard } = useSelectedCards(isTurn);
 
     useEffect(() => {
@@ -20,25 +20,37 @@ function Board({ isTurn, cardData, onSelectedCards, formedFigs}) {
         return fig ? COLORMAP_BOXCARDS[fig.find(pos => pos.x === x && pos.y === y).color] : null;
     };
 
+    const handleFigSelection = (x, y) => {
+        handlerSelectedCard(x, y);
+        const foundFig = formedFigs.find(fig => 
+          fig.some(pos => pos.x === x && pos.y === y)
+        );
+        if (foundFig) { onSelectedFig(foundFig); } 
+    };
+
     return (
         <div className="Board">
-            <div className="BoxCards">
-                {cardData.map(({ x, y, color }) => {
-                const index = `${x}-${y}`;
-                const highlightColor = isHighlighted(x, y) ? COLORMAP_BOXCARDS[color] : null;
-                const isSelected = selectedCards.some(card => card.x === x && card.y === y);
-                return (
-                    <BoxCard
-                        key={index}
-                        color={color}
-                        isSelected={isSelected}
-                        isHighlighted={!!highlightColor}
-                        highlightColor={highlightColor}
-                        onClick={() => handlerSelectedCard(x, y)}
-                    />
-                );
-                })}
-            </div>
+          <div className="BoxCards">
+              {cardData.map(({ x, y, color }) => {
+              const index = `${x}-${y}`;
+              const highlightColor = isHighlighted(x, y) ? COLORMAP_BOXCARDS[color] : null;
+              const isSelected = selectedCards.some(card => card.x === x && card.y === y);
+              const inFig = formedFigs.some(fig => fig.some(pos => pos.x === x && pos.y === y));
+              return (
+                  <BoxCard
+                      key={index}
+                      color={color}
+                      isSelected={isSelected}
+                      isHighlighted={!!highlightColor}
+                      highlightColor={highlightColor}
+                      onClick={inFig 
+                        ? () => handleFigSelection(x, y) 
+                        : () => handlerSelectedCard(x, y)
+                     }
+                  />
+              );
+              })}
+          </div>
         </div>
     );
 }
