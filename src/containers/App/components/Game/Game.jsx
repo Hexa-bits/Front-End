@@ -18,6 +18,7 @@ import renewBoard from "../../../../services/Game/Board/renewBoard.js";
 import useMovCard from "../../../../services/Game/Cards/useMovCard.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
 import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
+import getFormedFig from "../../../../services/Game/Board/Highlight Figs/formedFig.js";
 import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
 import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
 import { WS_GAME } from "../../../../utils/Constants.js";
@@ -38,6 +39,7 @@ function Game() {
     const [ labelMovPacial, setLabelMovParcial ] = useState(false);
     const [selectedCards, setSelectedCards] = useState([]);
     const [selectedMov, setSelectedMov] = useState(null);
+    const { formedFigs, fetchFormedFigs } = getFormedFig(); 
 
     wsGameHandler(
         ws,
@@ -47,6 +49,7 @@ function Game() {
         fetchMovs,
         fetchBoxCards,
         setLabelMovParcial,
+        fetchFormedFigs
     );
 
     const handleEndTurn = async () => {
@@ -100,7 +103,7 @@ function Game() {
                         cardData={boxCards} 
                         onSelectedCards={setSelectedCards}
                         isMovParcial={isMovParcial}
-                        game_id={gameId}
+                        formedFigs={formedFigs}
                     />
                     <div className="labelMovParcial">
                         <LabelMovParcial isVisible={labelMovPacial}/>

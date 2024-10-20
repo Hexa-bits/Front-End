@@ -8,6 +8,7 @@ const wsGameHandler = (
   fetchMovs,
   fetchBoxCards,
   setLabelMovParcial,
+  fetchFormedFigs
 ) => {
   useEffect(() => {
     if (!ws) return;
@@ -28,9 +29,10 @@ const wsGameHandler = (
       } else if (message === "Hay modificación de Tablero") {
         fetchBoxCards();
         setLabelMovParcial(true);
+        fetchFormedFigs();
       }
     };
-  }, [ws, fetchTurnData, getWinner, fetchFigs, fetchMovs, fetchBoxCards, setLabelMovParcial]);
+  }, [ws, fetchTurnData, getWinner, fetchFigs, fetchMovs, fetchBoxCards, setLabelMovParcial, fetchFormedFigs]);
 };
 
 export default wsGameHandler;
