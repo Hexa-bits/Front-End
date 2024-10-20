@@ -1,11 +1,10 @@
 import { USE_FIG_CARD } from "../../../utils/Constants";
 
 const discardFig = async ( playerId, selectedFig, selectedFigCard ) => {
-    // if (selectedFig.length > 0 && selectedFig !== null)
     
     const fig_card_id = parseInt(selectedFigCard.id, 10);
     const fichas = selectedFig.map((card) => {
-        return { x: card.x, y: card.y };
+        return { x_pos: card.x, y_pos: card.y };
     });
 
     try {
@@ -18,7 +17,7 @@ const discardFig = async ( playerId, selectedFig, selectedFigCard ) => {
             body: JSON.stringify({
                 player_id: playerId,
                 id_fig_card: fig_card_id,
-                fichas : fichas
+                figura : fichas
             }),
         });
         if (!response.ok) {

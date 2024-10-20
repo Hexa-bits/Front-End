@@ -45,23 +45,23 @@ function Game() {
     const [selecFormedFig, setSelecFormedFig] = useState([]);
 
     wsGameHandler(
-        ws,
-        fetchTurnData,
-        getWinner,
-        fetchFigs,
-        fetchMovs,
-        fetchBoxCards,
-        setLabelMovParcial,
+      ws,
+      fetchTurnData,
+      getWinner,
+      fetchFigs,
+      fetchMovs,
+      fetchBoxCards,
+      setLabelMovParcial,
     );
 
     const handleEndTurn = async () => {
-        setLabelMovParcial(false);
-        await passTurn();
+      setLabelMovParcial(false);
+      await passTurn();
     };
 
     const handleLeave = async () => {
-        await passTurn();
-        await LeaveGame(navigate);
+      await passTurn();
+      await LeaveGame(navigate);
     };
 
   const handleUseMov = async () => {
