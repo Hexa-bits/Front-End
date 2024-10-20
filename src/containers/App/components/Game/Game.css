@@ -86,13 +86,13 @@
     height: auto;
     margin: 0px 20px 0 0;
 }
+
 .labelMovParcial{
     display: flex;
     flex-direction: column;
     height: 400px;
     width: auto;
 }
-
 
 .Mov{
     margin-right: 20px;

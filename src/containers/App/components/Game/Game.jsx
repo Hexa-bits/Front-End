@@ -22,9 +22,9 @@ import getCurrentTurnPlayer from "../../../../services/Game/TurnPlayer/getCurren
 import renewBoard from "../../../../services/Game/Board/renewBoard.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
 import getOthersInfo from "../../../../services/Game/Cards/getOthersInfo.js";
+import getFormedFig from "../../../../services/Game/Board/HighlightFigs/formedFig.js";
 import discardMove from "../../../../services/Game/Cards/discardMove.js";
 import discardFig from "../../../../services/Game/Cards/discardFig.js";
-
 import { WS_GAME } from "../../../../utils/Constants.js";
 import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
 
@@ -44,6 +44,7 @@ function Game() {
     const [ labelMovPacial, setLabelMovParcial ] = useState(false);
     const [selectedCards, setSelectedCards] = useState([]);
     const [selectedMov, setSelectedMov] = useState(null);
+    const { formedFigs, fetchFormedFigs } = getFormedFig(); 
     const [selectedFig, setSelectedFig] = useState(null);
     const [selecFormedFig, setSelecFormedFig] = useState([]);
 
@@ -55,7 +56,8 @@ function Game() {
       fetchMovs,
       fetchBoxCards,
       fetchInfoPlayers,
-      setLabelMovParcial
+      setLabelMovParcial,
+      fetchFormedFigs
     );
 
     const handleEndTurn = async () => {
@@ -102,11 +104,24 @@ function Game() {
           <VictoryBox winnerName={winnerName} onLeave={handleLeave} />
         </>
       )}
+
+      <div className="game-header">
+        <div className="seePlayer">
+          <SeePlayer player={currentPlayer || "??????"} />
+        </div>
+        <div className="PlayerInfo-Area">
+          <PlayerName label={"USUARIO"} player={localPlayerName} />
+        </div>
+      </div>
+
       <div className="game-container">
         <div className="left-box">
-          <div className="seePlayer">
-            <SeePlayer player={currentPlayer || "??????"} />
-          </div>
+
+          <div className="Game_Others_Area">
+            <OtherPlayers 
+              players={infoPlayers} 
+            />
+          </div> 
           <div className="Game_Area">
             <div className="board">
               <Board 
@@ -114,6 +129,7 @@ function Game() {
                 cardData={boxCards} 
                 onSelectedCards={setSelectedCards}
                 onSelectedFig={setSelecFormedFig}
+                formedFigs={formedFigs}
               />
               <div className="labelMovParcial">
                 <LabelMovParcial isVisible={labelMovPacial}/>
