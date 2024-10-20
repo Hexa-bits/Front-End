@@ -23,6 +23,7 @@ export const GAME_PASS_URL = `http://localhost:${PORT}${GAME}/end-turn`;
 export const GAME_BOARD_URL = `http://localhost:${PORT}${GAME}/board?game_id=`;
 export const USE_MOV_CARD = `http://localhost:${PORT}${GAME}/use-mov-card`;
 export const CANCEL_TURN_URL = `http://localhost:${PORT}${GAME}/cancel-mov`;
+export const USE_FIG_CARD = `http://localhost:${PORT}${GAME}/use-fig-card`;
 export const HIGHLIGHT_FIGS = `http://localhost:${PORT}${GAME}/highlight-figures?game_id=`;
 
 /** WEBSOCKETS */
@@ -32,6 +33,12 @@ export const WS_HOME = `ws://localhost:${PORT}${HOME}`;
 /** MENSAJES */
 export const LoginHelpText = "Debe tener entre 1 y 10 caracteres.";
 export const GAME_INFO_WS = `ws://localhost:${PORT}${GAME}/info`;
+
+export const TURN_ENDED = "Terminó turno";
+export const WINNER = "Hay Ganador";
+export const BOARD_CHANGED = "Hay modificación de Tablero";
+export const FIGS_UPD = "Actualizar cartas de figuras";
+export const MOVS_UPD = "Actualizar cartas de movimientos";
 
 /** Otras constantes */
 export const MAX_PLAYERS = 4;

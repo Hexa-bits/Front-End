@@ -11,7 +11,7 @@ function LobbyButtons({ isOwner, onLeaveGame, onStartGame, oneJoined }) {
             label="ABANDONAR"
             onClick={onLeaveGame}
             className="btn-leave"
-            disabled={true}
+            disabled={false}
           />
           <Button
             label="INICIAR"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import "./Game.css";
 import { useNavigate } from "react-router-dom";
@@ -12,15 +12,18 @@ import PlayerName from "../../../../components/Game/PlayerName/PlayerName.jsx";
 import Board from "../../../../components/Game/Board/Board.jsx";
 import renewMovCards from "../../../../services/Game/Cards/renewMovCards.js";
 import renewFigCards from "../../../../services/Game/Cards/renewFigCards.js";
+import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
+import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
+import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
 import WinnerExists from "../../../../services/Game/Winner/winnerExists.js";
 import passTurn from "../../../../services/Game/TurnPlayer/passTurn.js";
 import getCurrentTurnPlayer from "../../../../services/Game/TurnPlayer/getCurrentTurnPlayer.js";
 import renewBoard from "../../../../services/Game/Board/renewBoard.js";
-import useMovCard from "../../../../services/Game/Cards/useMovCard.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
-import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
-import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
+import discardMove from "../../../../services/Game/Cards/discardMove.js";
+import discardFig from "../../../../services/Game/Cards/discardFig.js";
 import postPlayer from "../../../../services/Game/TurnPlayer/cancelMov.js";
+
 import { WS_GAME } from "../../../../utils/Constants.js";
 import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
 
@@ -37,9 +40,11 @@ function Game() {
   const { winnerName, getWinner } = WinnerExists(gameId);
   const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
   const { figs_ids, fetchFigs } = renewFigCards(localPlayerId);
-  const { boxCards, fetchBoxCards } = renewBoard(gameId);
+  const { boxCards, fetchBoxCards, isMovParcial } = renewBoard(gameId);
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectedMov, setSelectedMov] = useState(null);
+  const [selectedFig, setSelectedFig] = useState(null);
+  const [selecFormedFig, setSelecFormedFig] = useState([]);
 
   wsGameHandler(
     ws,
@@ -47,10 +52,12 @@ function Game() {
     getWinner,
     fetchFigs,
     fetchMovs,
-    fetchBoxCards
+    fetchBoxCards,
+    setLabelMovParcial
   );
 
   const handleEndTurn = async () => {
+    setLabelMovParcial(false);
     await passTurn();
   };
 
@@ -61,12 +68,19 @@ function Game() {
 
   const handleUseMov = async () => {
     if (checkMov(selectedMov, selectedCards)) {
-      await useMovCard(localPlayerId, selectedMov, selectedCards);
+      await discardMove(localPlayerId, selectedMov, selectedCards);
+      setLabelMovParcial(true);
       setSelectedMov(null);
       setSelectedCards([]);
     } else {
       console.log("Movimiento no valido");
     }
+  };
+
+  const useFig = async () => {
+    await discardFig(localPlayerId, selecFormedFig, selectedFig);
+    setSelectedFig(null);
+    setSelecFormedFig([]);
   };
 
   const handleCancel = async () => {
@@ -101,12 +115,19 @@ function Game() {
                 isTurn={localPlayerId === playerId}
                 cardData={boxCards}
                 onSelectedCards={setSelectedCards}
-                game_id={gameId}
+                onSelectedFig={setSelecFormedFig}
               />
+              <div className="labelMovParcial">
+                <LabelMovParcial isVisible={labelMovPacial} />
+              </div>
             </div>
             <div className="Cards">
               <div className="Fig">
-                <FigCards figs_ids={figs_ids} />
+                <FigCards
+                  fig_cards={fig_cards}
+                  onSelectedFig={setSelectedFig}
+                  isTurn={localPlayerId === playerId}
+                />
               </div>
               <div className="Mov">
                 <MovCards
@@ -141,6 +162,23 @@ function Game() {
               </div>
             </div>
             <div className="Buttdown">
+              <div className="end">
+                <Button
+                  label="TERMINAR TURNO"
+                  onClick={handleEndTurn}
+                  disabled={localPlayerId !== playerId}
+                />
+              </div>
+              <div className="leav">
+                <LeaveButton onLeave={handleLeave} />
+              </div>
+              <div className="useFig">
+                <Button
+                  label="DESCARTAR FIGURA"
+                  onClick={useFig}
+                  disabled={localPlayerId !== playerId}
+                />
+              </div>
               <div className="end">
                 <Button
                   label="TERMINAR TURNO"

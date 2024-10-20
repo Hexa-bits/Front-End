@@ -1,10 +1,11 @@
-import { render, act, screen } from '@testing-library/react';
+import { render, act, screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
-import getFormedFig from '../../../services/Game/Board/Highlight Figs/formedFig';
+import getFormedFig from '../../../services/Game/Board/HighlightFigs/formedFig';
+// import { wait } from '@testing-library/user-event/dist/cjs/utils/index.js';
 
 // Crea un componente de prueba que utilice el hook
-function TestComponent({ game_id }) {
-    const formedFig = getFormedFig(game_id);
+function TestComponent() {
+    const formedFig = getFormedFig();
     return (
         <div>
             {formedFig.map((fig, index) => (
@@ -30,17 +31,17 @@ describe('getFormedFig', () => {
             json: vi.fn().mockResolvedValueOnce(mockData),
         });
 
-        await act(async () => {
-            render(<TestComponent game_id={game_id} />);
-        });
+        render(<TestComponent />);
 
-        expect(await screen.findByText('figura1')).toBeInTheDocument();
-        expect(await screen.findByText('figura2')).toBeInTheDocument();
+        waitFor(() => {
+            expect(screen.getByText('figura1')).toBeInTheDocument();
+            expect(screen.getByText('figura2')).toBeInTheDocument();
+        });
     });
 
     it('No debe intentar buscar figuras si game_id no está definido', async () => {
         await act(async () => {
-            render(<TestComponent game_id={null} />);
+            render(<TestComponent />);
         });
         expect(fetch).not.toHaveBeenCalled();
     });
@@ -55,7 +56,7 @@ describe('getFormedFig', () => {
         });
 
         await act(async () => {
-            const { queryByText } = render(<TestComponent game_id={game_id} />);
+            const { queryByText } = render(<TestComponent />);
             expect(queryByText('figura1')).not.toBeInTheDocument();
             expect(queryByText('figura2')).not.toBeInTheDocument();
         });

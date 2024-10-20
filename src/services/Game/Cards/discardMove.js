@@ -1,6 +1,6 @@
 import { USE_MOV_CARD  } from "../../../utils/Constants";
 
-const useMovCard = async ( playerId, selectedMov, selectedCards ) => {
+const discardMove = async ( playerId, selectedMov, selectedCards ) => {
     
     const card_id = parseInt(selectedMov.id, 10);
     const fichas = selectedCards.map((card) => {
@@ -21,19 +21,19 @@ const useMovCard = async ( playerId, selectedMov, selectedCards ) => {
         });
         if (!response.ok) {
             if (response.status === 400) {
-                throw new Error("Movimiento no valido");
+                console.log("Movimiento no valido");
             }
             else if (response.status === 500) {
-                throw new Error("Fallo en la base de datos");
+                console.log("Fallo en la base de datos");
             }
             else {
-                throw new Error("Error al usar movimiento");
+                console.log("Error al usar movimiento");
             }
         }
         console.log("Movimiento realizado con exito");
     } catch (error) {
-        console.error("Error al usar movimiento:", error);
+        console.log(error);
     }
 }
 
-export default useMovCard;
+export default discardMove;

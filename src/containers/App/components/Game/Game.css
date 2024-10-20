@@ -60,6 +60,14 @@
     align-items: center;
 }
 
+.labelMovParcial{
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    width: auto;
+}
+
+
 .Mov{
     height: 100%;
     margin-bottom: 10px;
