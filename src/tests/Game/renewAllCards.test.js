@@ -26,7 +26,12 @@ describe("renewAllCards", () => {
     mockFigsFetch = vi.fn(() =>
       Promise.resolve({
         ok: true,
-        json: () => Promise.resolve({ id_fig_card: [4, 5, 6] }),
+        json: () => Promise.resolve({ 
+          fig_cards: [
+            {"id": 4, "fig": 10},
+            {"id": 5, "fig": 11},
+            {"id": 6, "fig": 12}
+          ]}),
       })
     );
     global.fetch = mockMovsFetch;
@@ -43,7 +48,7 @@ describe("renewAllCards", () => {
   it("Initializes with default values", () => {
     const { result } = renderHook(() => renewAllCards(playerId));
     expect(result.current.mov_cards).toEqual([]);
-    expect(result.current.figs_ids).toEqual([]);
+    expect(result.current.fig_cards).toEqual([]);
   });
 
   it("fetches cards correctly", async () => {
@@ -66,7 +71,13 @@ describe("renewAllCards", () => {
           {"id": 3, "move": 3}
         ] 
       );
-      expect(result.current.figs_ids).toEqual([4, 5, 6]);
+      expect(result.current.fig_cards).toEqual(
+        [
+          {"id": 4, "fig": 10},
+          {"id": 5, "fig": 11},
+          {"id": 6, "fig": 12}
+        ]
+      );
     });
   });
 
@@ -85,7 +96,7 @@ describe("renewAllCards", () => {
 
     waitFor(() => {
       expect(result.current.mov_cards).toBe(null);
-      expect(result.current.figs_ids).toBe(null);
+      expect(result.current.fig_cards).toBe(null);
       expect(console.error).toHaveBeenCalledWith(
         "Error al obtener las cartas de movimientos del jugador:",
         expect.any(Error)
