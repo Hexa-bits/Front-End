@@ -72,9 +72,7 @@ function Game() {
   };
 
   const useFig = async () => {
-    console.log("selectedFig", selectedFig);
-    console.log("selecFormedFig", selecFormedFig.map((fig) => fig));
-    //await discardFig(localPlayerId, selecFormedFig, selectedFig);
+    await discardFig(localPlayerId, selecFormedFig, selectedFig);
     setSelectedFig(null);
     setSelecFormedFig([]);  
   };
