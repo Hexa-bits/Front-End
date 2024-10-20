@@ -14,6 +14,7 @@ function Home() {
   const username = localStorage.getItem("username");
   const navigate = useNavigate();
   const [filter, setFilter] = useState("");
+  const [search, setSearch] = useState(false);
 
   const { ws } = WsHomeService(WS_HOME);
 
@@ -27,8 +28,9 @@ function Home() {
   const handleJoin = (gameId) => {
     joinGame(gameId, playerId);
   };
-  const handleSwitch = () => 
-
+  const handleChecked = (e) => {
+    setSearch(e.target.checked);
+  };
 
   return (
     <div className="Home">
@@ -48,24 +50,35 @@ function Home() {
       </section>
       <div className="Gaming-container">
         <section className="Form__Home">
-          <input className="form-check" type="checkbox" role = "switch" 
-          id = "flexSwitchCheckDefault" onChange={handleSwitch}/>
+          <div className="form-check form-switch"></div>
+          <input
+            className={`form-check-input ${search ? "clicked" : "unclicked"} `}
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckDefault"
+            onChange={handleChecked}
+          />
+          <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+            Búsqueda por cantidad de jugadores
+          </label>
           <Form
-            placeholder={"Buscar partida por nombre"}
+            placeholder={
+              search ? "Buscar por cantidad de jugadores" : "Buscar por nombre"
+            }
             onChange={(e) => setFilter(e.target.value)}
             value={filter}
           />
         </section>
         <section className="GameList__Home">
-          <GameList games={games} handleJoin={handleJoin} filter={filter} />
+          <GameList
+            games={games}
+            handleJoin={handleJoin}
+            filter={filter}
+            search={search}
+          />
         </section>
       </div>
     </div>
   );
 }
 export default Home;
-
-
-
-// tener un switch. que el switch tenga un handle q me cambie la createTestScheduler, y q la
-// cte se la pase al gamelist

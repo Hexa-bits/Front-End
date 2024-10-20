@@ -3,9 +3,9 @@ import Game_Item from "../Game_Item/Game_Item.jsx";
 import "./Game_List.css";
 import Fuse from "fuse.js";
 
-function GameList({ games = [], handleJoin, filter }) {
+function GameList({ games = [], handleJoin, filter, search }) {
   const fuseOptions = {
-    keys: ["game_name", "max_players"],
+    keys: search ? ["max_players"] : ["game_name"],
     threshold: 0.3,
   };
   const fuse = new Fuse(games, fuseOptions);
