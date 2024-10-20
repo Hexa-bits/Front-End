@@ -10,7 +10,6 @@ import LeaveButton from "../../../../components/Game/LeaveButton/LeaveButton.jsx
 import SeePlayer from "../../../../components/Game/seePlayer_Turn/seePlayer.jsx";
 import PlayerName from "../../../../components/Game/PlayerName/PlayerName.jsx";
 import Board from "../../../../components/Game/Board/Board.jsx";
-import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
 
 import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
 import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
@@ -20,9 +19,10 @@ import passTurn from "../../../../services/Game/TurnPlayer/passTurn.js";
 import getCurrentTurnPlayer from "../../../../services/Game/TurnPlayer/getCurrentTurnPlayer.js";
 import renewBoard from "../../../../services/Game/Board/renewBoard.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
+import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
+import getFormedFig from "../../../../services/Game/Board/Highlight Figs/formedFig.js";
 import discardMove from "../../../../services/Game/Cards/discardMove.js";
 import discardFig from "../../../../services/Game/Cards/discardFig.js";
-
 import { WS_GAME } from "../../../../utils/Constants.js";
 import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
 
@@ -41,17 +41,19 @@ function Game() {
     const [ labelMovPacial, setLabelMovParcial ] = useState(false);
     const [selectedCards, setSelectedCards] = useState([]);
     const [selectedMov, setSelectedMov] = useState(null);
+    const { formedFigs, fetchFormedFigs } = getFormedFig(); 
     const [selectedFig, setSelectedFig] = useState(null);
     const [selecFormedFig, setSelecFormedFig] = useState([]);
 
     wsGameHandler(
-      ws,
-      fetchTurnData,
-      getWinner,
-      fetchFigs,
-      fetchMovs,
-      fetchBoxCards,
-      setLabelMovParcial,
+        ws,
+        fetchTurnData,
+        getWinner,
+        fetchFigs,
+        fetchMovs,
+        fetchBoxCards,
+        setLabelMovParcial,
+        fetchFormedFigs
     );
 
     const handleEndTurn = async () => {
@@ -110,6 +112,7 @@ function Game() {
                 cardData={boxCards} 
                 onSelectedCards={setSelectedCards}
                 onSelectedFig={setSelecFormedFig}
+                formedFigs={formedFigs}
               />
               <div className="labelMovParcial">
                 <LabelMovParcial isVisible={labelMovPacial}/>
