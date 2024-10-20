@@ -1,7 +1,6 @@
 import "./Board.css";
 import BoxCard from "./BoxCard/BoxCard";
 import useSelectedCards from "../../../services/Game/Board/useSelectedCards";
-import getFormedFig from "../../../services/Game/Board/Highlight Figs/formedFig";
 import { COLORMAP_BOXCARDS } from "../../../utils/Constants";
 import { useEffect } from "react";
 
@@ -13,7 +12,7 @@ function Board({ isTurn, cardData, onSelectedCards, formedFigs}) {
         onSelectedCards(selectedCards);
     }, [selectedCards, onSelectedCards]);
 
-    const isHighlighted = (x, y) => {
+    const isHighlighted = (x, y) => {        
         const fig = formedFigs.find(fig => 
             fig.some(pos => pos.x === x && pos.y === y)
         );
