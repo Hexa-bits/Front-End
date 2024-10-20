@@ -112,6 +112,10 @@
     border-radius: 20px;
 }
 
+.form-check-input {
+    margin: 20px 20px 0px 20px; 
+}
+
 .GameList__Home{
     height: auto;
     display: flex;
