@@ -20,9 +20,9 @@ import passTurn from "../../../../services/Game/TurnPlayer/passTurn.js";
 import getCurrentTurnPlayer from "../../../../services/Game/TurnPlayer/getCurrentTurnPlayer.js";
 import renewBoard from "../../../../services/Game/Board/renewBoard.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
+import postPlayer from "../../../../services/Game/TurnPlayer/cancelMov.js";
 import discardMove from "../../../../services/Game/Cards/discardMove.js";
 import discardFig from "../../../../services/Game/Cards/discardFig.js";
-import postPlayer from "../../../../services/Game/TurnPlayer/cancelMov.js";
 
 import { WS_GAME } from "../../../../utils/Constants.js";
 import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
@@ -35,14 +35,15 @@ function Game() {
 
   const ws = getWsGameInstance(WS_GAME + gameId);
 
+  const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
+  const { fig_cards, fetchFigs } = renewFigCards(localPlayerId);
+  const [selectedCards, setSelectedCards] = useState([]);
+  const [selectedMov, setSelectedMov] = useState(null);
   const { currentPlayer, playerId, fetchTurnData } =
     getCurrentTurnPlayer(gameId);
   const { winnerName, getWinner } = WinnerExists(gameId);
-  const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
-  const { figs_ids, fetchFigs } = renewFigCards(localPlayerId);
   const { boxCards, fetchBoxCards, isMovParcial } = renewBoard(gameId);
-  const [selectedCards, setSelectedCards] = useState([]);
-  const [selectedMov, setSelectedMov] = useState(null);
+  const [labelMovPacial, setLabelMovParcial] = useState(false);
   const [selectedFig, setSelectedFig] = useState(null);
   const [selecFormedFig, setSelecFormedFig] = useState([]);
 
@@ -178,16 +179,6 @@ function Game() {
                   onClick={useFig}
                   disabled={localPlayerId !== playerId}
                 />
-              </div>
-              <div className="end">
-                <Button
-                  label="TERMINAR TURNO"
-                  onClick={handleEndTurn}
-                  disabled={localPlayerId !== playerId}
-                />
-              </div>
-              <div className="leav">
-                <LeaveButton onLeave={handleLeave} />
               </div>
             </div>
           </div>
