@@ -14,7 +14,6 @@ const wsGameHandler = (
   fetchFigs,
   fetchMovs,
   fetchBoxCards,
-  setLabelMovParcial,
   fetchFormedFigs
 ) => {
   useEffect(() => {
@@ -25,18 +24,17 @@ const wsGameHandler = (
 
       switch (message) {
         case TURN_ENDED:
-          setLabelMovParcial(false);
           fetchTurnData();
           fetchFigs();
           fetchMovs();
           fetchBoxCards();
+          fetchFormedFigs();
           break;
         case WINNER:
           getWinner();
           break;
         case BOARD_CHANGED:
           fetchBoxCards();
-          setLabelMovParcial(true);
           fetchFormedFigs();
           break;
         case FIGS_UPD:
@@ -56,7 +54,6 @@ const wsGameHandler = (
     fetchFigs,
     fetchMovs,
     fetchBoxCards,
-    setLabelMovParcial,
     fetchFormedFigs,
   ]);
 };
