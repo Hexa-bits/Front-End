@@ -14,7 +14,7 @@ function Home() {
   const username = localStorage.getItem("username");
   const navigate = useNavigate();
   const [filter, setFilter] = useState("");
-
+  const [search, setSearch] = useState(false);
 
   const { ws } = WsHomeService(WS_HOME);
 
@@ -27,6 +27,9 @@ function Home() {
   const { joinGame } = JoinGame(ws);
   const handleJoin = (gameId) => {
     joinGame(gameId, playerId);
+  };
+  const handleChecked = (e) => {
+    setSearch(e.target.checked);
   };
 
   return (
@@ -47,18 +50,37 @@ function Home() {
       </section>
       <div className="Gaming-container">
         <section className="Form__Home">
-          <Form 
-            placeholder={"Buscar partida por nombre"} 
-            onChange={(e) => setFilter(e.target.value)} 
+          <div className="form-check form-switch"></div>
+          <input
+            className={`form-check-input ${search ? "clicked" : "unclicked"} `}
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckDefault"
+            onChange={handleChecked}
+          />
+          <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+            Búsqueda por cantidad máxima de jugadores
+          </label>
+          <Form
+            placeholder={
+              search
+                ? "Buscar por cantidad máxima de jugadores"
+                : "Buscar por nombre"
+            }
+            onChange={(e) => setFilter(e.target.value)}
             value={filter}
           />
         </section>
         <section className="GameList__Home">
-          <GameList games={games} handleJoin={handleJoin} filter={filter} />
+          <GameList
+            games={games}
+            handleJoin={handleJoin}
+            filter={filter}
+            search={search}
+          />
         </section>
       </div>
     </div>
   );
 }
-
 export default Home;
