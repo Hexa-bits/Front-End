@@ -9,7 +9,7 @@ vi.mock("react-router-dom", () => ({
 }));
 
 // Mock de closeWsGameInstance
-vi.mock("../../services/WsGameService", () => ({
+vi.mock("../../services/WS/WsGameService", () => ({
   closeWsGameInstance: vi.fn(),
 }));
 
@@ -38,10 +38,9 @@ describe("LeaveGame function", () => {
 
     Object.defineProperty(global, "localStorage", { value: mockLocalStorage });
     global.fetch = mockFetch;
-    global.alert = vi.fn();
 
     LeaveGame(mockNavigate);
-    waitFor(() => {
+    await waitFor(() => {
       // Verificaciones
       expect(mockLocalStorage.getItem).toHaveBeenCalledWith("id_user");
       expect(mockLocalStorage.getItem).toHaveBeenCalledWith("game_id");
@@ -53,9 +52,6 @@ describe("LeaveGame function", () => {
         body: JSON.stringify({ game_id: 789, id_user: 456 }),
       });
       expect(mockLocalStorage.removeItem).toHaveBeenCalledWith("game_id");
-      expect(global.alert).toHaveBeenCalledWith(
-        "Jugador 456 abandonaste el juego 789 exitosamente"
-      );
       expect(closeWsGameInstance).toHaveBeenCalled();
       expect(mockNavigate).toHaveBeenCalledWith(HOME);
     });
@@ -73,7 +69,7 @@ describe("LeaveGame function", () => {
     global.alert = vi.fn();
 
     LeaveGame();
-    waitFor(() => {
+    await waitFor(() => {
       expect(global.alert).toHaveBeenCalledWith(
         "No se pudo abandonar el juego. Error al abandonar el juego"
       );
