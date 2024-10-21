@@ -1,6 +1,9 @@
-
+.players-container {
+    margin-top: 60px;
+}
 
 .each-player {
+
     padding-left: 5vh;
     padding-bottom: 3vh;
 }

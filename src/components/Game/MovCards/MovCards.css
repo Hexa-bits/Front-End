@@ -6,7 +6,6 @@
     align-items: center; 
     height: auto;  
     width: auto; 
-    background-color: var(--claro2);
 }
 
 .mov-card {
@@ -22,7 +21,6 @@
     padding: 1px;
     background-color: white;
     border-radius: 10px;
-    border: 2px solid transparent; 
     display: inline-block;
     cursor: pointer; 
     transition: transform 0.1s ease, border-color 0.1s ease;

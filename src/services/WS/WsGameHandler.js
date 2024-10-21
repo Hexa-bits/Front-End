@@ -1,5 +1,11 @@
 import { useEffect } from "react";
-import { BOARD_CHANGED, FIGS_UPD, MOVS_UPD, TURN_ENDED, WINNER } from "../../utils/Constants";
+import {
+  BOARD_CHANGED,
+  FIGS_UPD,
+  MOVS_UPD,
+  TURN_ENDED,
+  WINNER,
+} from "../../utils/Constants";
 // Esta función se encarga de manejar todos los mensajes que llegan por websocket
 const wsGameHandler = (
   ws,
@@ -8,6 +14,7 @@ const wsGameHandler = (
   fetchFigs,
   fetchMovs,
   fetchBoxCards,
+  fetchInfoPlayers,
   setLabelMovParcial,
   fetchFormedFigs
 ) => {
@@ -16,7 +23,7 @@ const wsGameHandler = (
 
     ws.onmessage = (event) => {
       const message = event.data;
-      
+
       switch (message) {
         case TURN_ENDED:
           setLabelMovParcial(false);
@@ -25,6 +32,7 @@ const wsGameHandler = (
           fetchMovs();
           fetchBoxCards();
           fetchFormedFigs();
+          fetchInfoPlayers();
           break;
         case WINNER:
           getWinner();
@@ -36,15 +44,27 @@ const wsGameHandler = (
           break;
         case FIGS_UPD:
           fetchFigs();
+          fetchInfoPlayers();
           break;
         case MOVS_UPD:
           fetchMovs();
+          fetchInfoPlayers();
           break;
         default:
           break;
       }
     };
-  }, [ws, fetchTurnData, getWinner, fetchFigs, fetchMovs, fetchBoxCards, setLabelMovParcial, fetchFormedFigs]);
+  }, [
+    ws,
+    fetchTurnData,
+    getWinner,
+    fetchFigs,
+    fetchMovs,
+    fetchBoxCards,
+    fetchInfoPlayers,
+    setLabelMovParcial,
+    fetchFormedFigs,
+  ]);
 };
 
 export default wsGameHandler;
