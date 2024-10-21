@@ -1,16 +1,16 @@
 import { describe, it, vi, expect, beforeEach } from "vitest";
 import { renderHook, waitFor, act } from "@testing-library/react";
 import useLobby from "../../services/Lobby/useLobby";
+import { LOBBY_URL } from "../../utils/Constants";
 
 // Mock para useNavigate de React Router
 vi.mock("react-router-dom", () => ({
   useNavigate: () => vi.fn(),
 }));
 
-const gameId = "123";
-const LOBBY_URL = "/home/lobby?game_id=123";
 
 describe("useLobby hook", () => {
+  const gameId = "123";
   let mockFetch;
   let mockWs;
 
@@ -46,12 +46,17 @@ describe("useLobby hook", () => {
     const { result } = renderHook(() => useLobby(mockWs, gameId));
 
     // Espera que el hook actualice el estado
-    waitFor(() => {
+    await waitFor(() => {
       // Verifica que se haya llamado a fetch con el URL correcto
-      expect(fetchMock).toHaveBeenCalledWith(LOBBY_URL, { method: "GET" });
+      expect(mockFetch).toHaveBeenCalledWith(LOBBY_URL + gameId, { 
+        method: "GET", 
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-      expect(result.current.players).toEqual(["player1", "player2"]);
-      expect(result.current.gameName).toBe("Test Game");
+      expect(result.current.players).toEqual(["Jugador 1", "Jugador 2"]);
+      expect(result.current.gameName).toBe("Partida Test");
       expect(result.current.maxPlayers).toBe(4);
       expect(result.current.activeGame).toBe(false);
       expect(result.current.cancelGame).toBe(false);
@@ -64,13 +69,13 @@ describe("useLobby hook", () => {
     act(() => {
       mockWs.onmessage({ data: "Se unió/abandonó jugador en lobby" });
     });
-    waitFor(() => {
-      expect(fetchMock).toHaveBeenCalledTimes(2);
+    await waitFor(() => {
+      expect(mockFetch).toHaveBeenCalledTimes(2);
     });
   });
 
   it('Correcto manejo de mensaje de WebSocket "La partida inició"', () => {
-    const { result } = renderHook(() => useLobby(mockWs, "game123"));
+    const { result } = renderHook(() => useLobby(mockWs, gameId));
     act(() => {
       mockWs.onmessage({ data: "La partida inició" });
     });
@@ -78,7 +83,7 @@ describe("useLobby hook", () => {
   });
 
   it('Correcto manejo de mensaje de WebSocket "La partida se canceló"', () => {
-    const { result } = renderHook(() => useLobby(mockWs, "game123"));
+    const { result } = renderHook(() => useLobby(mockWs, gameId));
     act(() => {
       mockWs.onmessage({ data: "La partida se canceló" });
     });

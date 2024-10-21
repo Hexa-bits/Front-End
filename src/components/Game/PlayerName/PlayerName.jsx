@@ -1,9 +1,9 @@
 import './PlayerName.css';
 
-function PlayerName({ player }) {
+function PlayerName({ label, player }) {
     return (
         <div className="Player">
-                USUARIO: { player }
+                {label} : { player }
         </div>
     );
 }

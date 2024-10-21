@@ -1,9 +1,9 @@
 import { describe, it, vi, expect, beforeEach } from "vitest";
 import { renderHook, waitFor, act } from "@testing-library/react";
 import WinnerExists from "../../services/Game/Winner/winnerExists";
+import { GET_WINNER_URL } from "../../utils/Constants";
 
 const gameId = "123";
-const GET_WINNER_URL = "/game/winner?game_id=123";
 
 describe("WinnerExists hook", () => {
   let mockFetch;
@@ -13,9 +13,7 @@ describe("WinnerExists hook", () => {
       Promise.resolve({
         ok: true,
         json: () =>
-          Promise.resolve({
-            name_player: "Jugador 1",
-          }),
+          Promise.resolve({ name_player: "Jugador 1" }),
       })
     );
 
@@ -38,7 +36,8 @@ describe("WinnerExists hook", () => {
     const { result } = renderHook(() => WinnerExists(gameId));
     const { getWinner } = result.current;
     await getWinner();
-    waitFor(() => {
+
+    await waitFor(() => {
       expect(mockFetch).toHaveBeenCalledWith(GET_WINNER_URL + gameId, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -55,7 +54,7 @@ describe("WinnerExists hook", () => {
     const { getWinner } = result.current;
     await getWinner();
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(result.current.winnerName).toBe(null);
       expect(console.error).toHaveBeenCalledWith(
         "Error fetching winner:",
