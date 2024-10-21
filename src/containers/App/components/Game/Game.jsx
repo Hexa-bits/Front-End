@@ -88,7 +88,6 @@ function Game() {
 
   const handleCancel = async () => {
     await postPlayer(localPlayerId, gameId);
-    await renewBoard(gameId);
   };
 
   return (
