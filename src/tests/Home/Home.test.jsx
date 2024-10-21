@@ -52,7 +52,7 @@ describe("Home", () => {
       </MemoryRouter>
     );
     const checkbox = screen.getByLabelText(
-      "Búsqueda por cantidad de jugadores"
+      "Búsqueda por cantidad máxima de jugadores"
     );
     expect(checkbox).toBeInTheDocument();
   });
@@ -64,7 +64,9 @@ describe("Home", () => {
       </MemoryRouter>
     );
 
-    const checkbox = getByLabelText("Búsqueda por cantidad de jugadores");
+    const checkbox = getByLabelText(
+      "Búsqueda por cantidad máxima de jugadores"
+    );
     const input = getByPlaceholderText("Buscar por nombre");
 
     // Cambia el estado del checkbox
@@ -72,7 +74,7 @@ describe("Home", () => {
     expect(checkbox).toBeChecked();
 
     // Verifica que el placeholder cambie
-    expect(input.placeholder).toBe("Buscar por cantidad de jugadores");
+    expect(input.placeholder).toBe("Buscar por cantidad máxima de jugadores");
 
     // Cambia el estado del checkbox de nuevo
     fireEvent.click(checkbox);
