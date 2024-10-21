@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Home from "../../containers/App/components/Home/Home.jsx";
 import useGames from "../../services/Home/useGames.js";
@@ -43,6 +43,45 @@ describe("Home", () => {
     expect(
       screen.getByRole("button", { name: /CREAR PARTIDA/i })
     ).toBeInTheDocument();
+  });
+
+  it("Renderiza el label del checkbox", () => {
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>
+    );
+    const checkbox = screen.getByLabelText(
+      "Búsqueda por cantidad máxima de jugadores"
+    );
+    expect(checkbox).toBeInTheDocument();
+  });
+
+  it("Cambia el filtro segun el estado del checckbox", () => {
+    const { getByLabelText, getByPlaceholderText } = render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>
+    );
+
+    const checkbox = getByLabelText(
+      "Búsqueda por cantidad máxima de jugadores"
+    );
+    const input = getByPlaceholderText("Buscar por nombre");
+
+    // Cambia el estado del checkbox
+    fireEvent.click(checkbox);
+    expect(checkbox).toBeChecked();
+
+    // Verifica que el placeholder cambie
+    expect(input.placeholder).toBe("Buscar por cantidad máxima de jugadores");
+
+    // Cambia el estado del checkbox de nuevo
+    fireEvent.click(checkbox);
+    expect(checkbox).not.toBeChecked();
+
+    // Verifica que el placeholder del input vuelva a cambiar
+    expect(input.placeholder).toBe("Buscar por nombre");
   });
 
   it("Debería renderizar los juegos disponibles en GameList", () => {
