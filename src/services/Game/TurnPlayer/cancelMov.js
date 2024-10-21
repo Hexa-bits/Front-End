@@ -16,7 +16,7 @@ const postPlayer = async (player_id, game_id) => {
       }),
     });
 
-    if (response.status === 404) {
+    if (response.status === 404 || response.status === 400) {
       alert("No quedan movimientos por deshacer");
     }
     if (!response.ok) {
