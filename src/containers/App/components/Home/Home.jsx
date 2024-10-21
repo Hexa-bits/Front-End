@@ -59,11 +59,13 @@ function Home() {
             onChange={handleChecked}
           />
           <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
-            Búsqueda por cantidad de jugadores
+            Búsqueda por cantidad máxima de jugadores
           </label>
           <Form
             placeholder={
-              search ? "Buscar por cantidad de jugadores" : "Buscar por nombre"
+              search
+                ? "Buscar por cantidad máxima de jugadores"
+                : "Buscar por nombre"
             }
             onChange={(e) => setFilter(e.target.value)}
             value={filter}
