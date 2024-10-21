@@ -5,6 +5,7 @@ import {
   MOVS_UPD,
   TURN_ENDED,
   WINNER,
+  OTHERS_UPD,
 } from "../../utils/Constants";
 // Esta función se encarga de manejar todos los mensajes que llegan por websocket
 const wsGameHandler = (
@@ -14,6 +15,7 @@ const wsGameHandler = (
   fetchFigs,
   fetchMovs,
   fetchBoxCards,
+  fetchInfoPlayers,
   fetchFormedFigs
 ) => {
   useEffect(() => {
@@ -29,6 +31,7 @@ const wsGameHandler = (
           fetchMovs();
           fetchBoxCards();
           fetchFormedFigs();
+          fetchInfoPlayers();
           break;
         case WINNER:
           getWinner();
@@ -39,10 +42,15 @@ const wsGameHandler = (
           break;
         case FIGS_UPD:
           fetchFigs();
+          fetchInfoPlayers();
           break;
         case MOVS_UPD:
           fetchMovs();
+          fetchInfoPlayers();
           break;
+        case OTHERS_UPD:
+          fetchInfoPlayers();
+          break; 
         default:
           break;
       }
@@ -54,6 +62,7 @@ const wsGameHandler = (
     fetchFigs,
     fetchMovs,
     fetchBoxCards,
+    fetchInfoPlayers,
     fetchFormedFigs,
   ]);
 };

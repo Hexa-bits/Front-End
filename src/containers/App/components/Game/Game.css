@@ -1,54 +1,88 @@
 @import "../../../../utils/colores.css";
 
-.game-container {
-    background-color: var(--claro2);
-    min-height: 100vh;
-    min-width: 100vw;
-    height: 100%;
-    height: 100%;
+.game-header, 
+.game-container  {
+    background-color: #D0C5AD;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 2000 1500'%3E%3Cdefs%3E%3Crect stroke='%23D0C5AD' stroke-width='.5' width='1' height='1' id='s'/%3E%3Cpattern id='a' width='3' height='3' patternUnits='userSpaceOnUse' patternTransform='scale(50) translate(-980 -735)'%3E%3Cuse fill='%23cec3ab' href='%23s' y='2'/%3E%3Cuse fill='%23cec3ab' href='%23s' x='1' y='2'/%3E%3Cuse fill='%23ccc1aa' href='%23s' x='2' y='2'/%3E%3Cuse fill='%23ccc1aa' href='%23s'/%3E%3Cuse fill='%23cabfa8' href='%23s' x='2'/%3E%3Cuse fill='%23cabfa8' href='%23s' x='1' y='1'/%3E%3C/pattern%3E%3Cpattern id='b' width='7' height='11' patternUnits='userSpaceOnUse' patternTransform='scale(50) translate(-980 -735)'%3E%3Cg fill='%23c8bda6'%3E%3Cuse href='%23s'/%3E%3Cuse href='%23s' y='5' /%3E%3Cuse href='%23s' x='1' y='10'/%3E%3Cuse href='%23s' x='2' y='1'/%3E%3Cuse href='%23s' x='2' y='4'/%3E%3Cuse href='%23s' x='3' y='8'/%3E%3Cuse href='%23s' x='4' y='3'/%3E%3Cuse href='%23s' x='4' y='7'/%3E%3Cuse href='%23s' x='5' y='2'/%3E%3Cuse href='%23s' x='5' y='6'/%3E%3Cuse href='%23s' x='6' y='9'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='h' width='5' height='13' patternUnits='userSpaceOnUse' patternTransform='scale(50) translate(-980 -735)'%3E%3Cg fill='%23c8bda6'%3E%3Cuse href='%23s' y='5'/%3E%3Cuse href='%23s' y='8'/%3E%3Cuse href='%23s' x='1' y='1'/%3E%3Cuse href='%23s' x='1' y='9'/%3E%3Cuse href='%23s' x='1' y='12'/%3E%3Cuse href='%23s' x='2'/%3E%3Cuse href='%23s' x='2' y='4'/%3E%3Cuse href='%23s' x='3' y='2'/%3E%3Cuse href='%23s' x='3' y='6'/%3E%3Cuse href='%23s' x='3' y='11'/%3E%3Cuse href='%23s' x='4' y='3'/%3E%3Cuse href='%23s' x='4' y='7'/%3E%3Cuse href='%23s' x='4' y='10'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='c' width='17' height='13' patternUnits='userSpaceOnUse' patternTransform='scale(50) translate(-980 -735)'%3E%3Cg fill='%23c5bba4'%3E%3Cuse href='%23s' y='11'/%3E%3Cuse href='%23s' x='2' y='9'/%3E%3Cuse href='%23s' x='5' y='12'/%3E%3Cuse href='%23s' x='9' y='4'/%3E%3Cuse href='%23s' x='12' y='1'/%3E%3Cuse href='%23s' x='16' y='6'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='d' width='19' height='17' patternUnits='userSpaceOnUse' patternTransform='scale(50) translate(-980 -735)'%3E%3Cg fill='%23D0C5AD'%3E%3Cuse href='%23s' y='9'/%3E%3Cuse href='%23s' x='16' y='5'/%3E%3Cuse href='%23s' x='14' y='2'/%3E%3Cuse href='%23s' x='11' y='11'/%3E%3Cuse href='%23s' x='6' y='14'/%3E%3C/g%3E%3Cg fill='%23c3b9a2'%3E%3Cuse href='%23s' x='3' y='13'/%3E%3Cuse href='%23s' x='9' y='7'/%3E%3Cuse href='%23s' x='13' y='10'/%3E%3Cuse href='%23s' x='15' y='4'/%3E%3Cuse href='%23s' x='18' y='1'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='e' width='47' height='53' patternUnits='userSpaceOnUse' patternTransform='scale(50) translate(-980 -735)'%3E%3Cg fill='%23D0C5AD'%3E%3Cuse href='%23s' x='2' y='5'/%3E%3Cuse href='%23s' x='16' y='38'/%3E%3Cuse href='%23s' x='46' y='42'/%3E%3Cuse href='%23s' x='29' y='20'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='f' width='59' height='71' patternUnits='userSpaceOnUse' patternTransform='scale(50) translate(-980 -735)'%3E%3Cg fill='%23D0C5AD'%3E%3Cuse href='%23s' x='33' y='13'/%3E%3Cuse href='%23s' x='27' y='54'/%3E%3Cuse href='%23s' x='55' y='55'/%3E%3C/g%3E%3C/pattern%3E%3Cpattern id='g' width='139' height='97' patternUnits='userSpaceOnUse' patternTransform='scale(50) translate(-980 -735)'%3E%3Cg fill='%23D0C5AD'%3E%3Cuse href='%23s' x='11' y='8'/%3E%3Cuse href='%23s' x='51' y='13'/%3E%3Cuse href='%23s' x='17' y='73'/%3E%3Cuse href='%23s' x='99' y='57'/%3E%3C/g%3E%3C/pattern%3E%3C/defs%3E%3Crect fill='url(%23a)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23b)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23h)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23c)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23d)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23e)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23f)' width='100%25' height='100%25'/%3E%3Crect fill='url(%23g)' width='100%25' height='100%25'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.game-header {
+    width: 100vw;
+    padding: 1vw;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
+}
+.game-header .seePlayer{
+    display: flex;
+    margin-left: 2vh;
+    justify-content: flex-start;
+    align-items: center;
+    width: 50%;
+}
+
+.game-header .PlayerInfo-Area{
+    width: 20%;
+    margin-right: 2vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.game-container {
+    background-color: var(--claro2);
+    height: 92vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
     overflow: hidden;
     position: relative;
-}
+}   
+
 
 /* Parte Izquierda */
 .left-box{
-    width: 60%;
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+
+.Game_Others_Area {
+    /* margin-top: 80px; */
+    width: 35%;
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 
-.seePlayer{
+.leav button{
+    height: 60px;
+    width: 150px;
+    margin-left: 30px;
+    margin-bottom: 40px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin-top: 10px;
-    width: 100%;
-    height: auto;
+    justify-content: flex-end;
+    position: sticky;
+    bottom: 0;
 }
+
+
 
 .Game_Area{
+    width: 65%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    height: 100%;
-}
-
-.Cards{
-    height: auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.Fig{
-    height: auto;
-    margin: 0px 20px 0 0;
+    /* width: 100%; */
+    /* height: 100%; */
 }
 
 .board{
@@ -58,7 +92,35 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 70px;
 }
+
+.Cards{
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 60px;
+}
+
+.Fig {
+    margin-top: 20px;
+    margin-right: 20px;
+    height: auto;
+}
+
+.Fig button {
+    width: 150px;
+    border: none;
+}
+
+.useFig {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
 
 .labelMovParcial{
     display: flex;
@@ -67,128 +129,96 @@
     width: auto;
 }
 
-
 .Mov{
+    margin-right: 20px;
     height: 100%;
     margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 10px;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mov-butt {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.cancel button{
+    height: 60px;
+    width: 150px;
+    border: none;
+    background-color: #f47914;
+    color: rgb(255, 255, 255);
+}
+
+.cancel button:hover {
+    background-color: #ffae00;
+    border: 1px solid rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
+}
+
+.cancel button:disabled {
+    background-color: #ffae00;
+    color: rgb(255, 255, 255);
+}
+
+
+.useMov button, 
+.useFig button {
+    height: 60px;
+    width: 150px;
+    border: none;
+    background-color: var(--verde);
+}
+
+
+.useMov button:hover, 
+.useFig button:hover {
+    background-color: var(--verde);
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.useMov button:disabled, 
+.useFig button:disabled {
+    background-color: #8ec935;
+    border: none;
 }
 
 
 /* Parte Derecha */
 .right-box{
-    width: 40%;
+    width: 30%;
+    height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     flex-direction: column;
+    align-items: flex-end;
+
 }
 
-.PlayerInfo-Area{
-    width: 100%;
-    height: 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.Buttdown{
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap:10px;
-    margin-bottom: 20px;
-    margin-right: 10px;
-    }
-
-
-.Buttdown button{
+.end button {
     height: 60px;
     width: 150px;
     border: none;
-    background-color: var(--marronBoard);
+    margin-right: 30px;
+    margin-bottom: 40px;
+    position: sticky;
+    bottom: 0;
+    background-color: var(--celeste);
 }
 
-.Buttdown button:hover, .Buttdown button:disabled{
-    background-color: var(--marron4);
-    border: none;
+.end button:hover {
+    background-color: rgb(0, 153, 255);
+    border: 1px solid rgb(255, 255, 255);
 }
 
-.Buttup{
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap:10px;
-    margin-bottom: 20px;
-    margin-right: 10px;
-    }
-
-
-.Buttup button{
-    height: 60px;
-    width: 150px;
-    border: none;
-    background-color: var(--marronBoard);
-}
-
-.Buttup button:hover, .Buttdown button:disabled{
-    background-color: var(--marron4);
-    border: none;
-}
-
-.Buttup{
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap:10px;
-    margin-bottom: 20px;
-    margin-right: 10px;
-    }
-
-
-.Buttup button{
-    height: 60px;
-    width: 150px;
-    border: none;
-    background-color: var(--marronBoard);
-}
-
-.Buttup button:hover, .Buttup button:disabled{
-    background-color: var(--marron4);
-    border: none;
-}
-
-/*cancelar movimiento*/
-
-.cancel button{
-    background-color: #f47914;
-    border: 2px solid rgb(255, 255, 255);
-    color: rgb(255, 255, 255);
-}
-
-.cancel button:hover {
-    transform: none; /* Elimina cualquier transformación */
-}
-
-.cancel button:active {
-    transform: none; /* Elimina cualquier transformación al hacer clic */
-}
-
-.cancel button:focus {
-    outline: none;
-    transform: none;
+.end button:disabled {
+    background-color: rgba(0, 102, 255, 0.801);
 }
 
 

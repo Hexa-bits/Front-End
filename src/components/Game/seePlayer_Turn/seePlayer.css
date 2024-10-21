@@ -1,6 +1,8 @@
 .playerTurn .text{
     background-color: white;
-    padding: 10px;
+    padding: 10px 70px;
     border-radius: 20px;
     text-align: center;
+    box-shadow: 0 0 13px 2px rgb(248, 245, 229); 
+
 }

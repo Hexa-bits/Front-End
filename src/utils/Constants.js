@@ -25,6 +25,7 @@ export const USE_MOV_CARD = `http://localhost:${PORT}${GAME}/use-mov-card`;
 export const CANCEL_TURN_URL = `http://localhost:${PORT}${GAME}/cancel-mov`;
 export const USE_FIG_CARD = `http://localhost:${PORT}${GAME}/use-fig-card`;
 export const HIGHLIGHT_FIGS = `http://localhost:${PORT}${GAME}/highlight-figures?game_id=`;
+export const GET_PLAYERS_INFO = `http://localhost:${PORT}${GAME}/others-cards?`;
 
 /** WEBSOCKETS */
 export const WS_GAME = `ws://localhost:${PORT}${GAME}?game_id=`;
@@ -39,6 +40,7 @@ export const WINNER = "Hay Ganador";
 export const BOARD_CHANGED = "Hay modificación de Tablero";
 export const FIGS_UPD = "Actualizar cartas de figuras";
 export const MOVS_UPD = "Actualizar cartas de movimientos";
+export const OTHERS_UPD = "Actualizar cartas de otros jugadores";
 
 /** Otras constantes */
 export const MAX_PLAYERS = 4;

@@ -6,7 +6,7 @@ function getFormedFig() {
     if (!game_id) return [];
     
     const [formedFigs, setFormedFigs] = useState([]);
-    
+
     const fetchFormedFigs = useCallback (async () => {
         if (!game_id) return [];
         try {
