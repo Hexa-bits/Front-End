@@ -1,11 +1,12 @@
 import getOthersInfo from "../../services/Game/Cards/getOthersInfo";
 import { renderHook, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, expect, vi } from "vitest";
+import { GET_PLAYERS_INFO } from "../../utils/Constants";
 
 const playerId = 1;
 const gameId = 2;
 
-const url = `game_id=${gameId}&player_id=${playerId}`;
+const url = `${GET_PLAYERS_INFO}game_id=${gameId}&player_id=${playerId}`;
 
 describe ("getOthersInfo", () => {
     let mockPlayers;
@@ -56,10 +57,10 @@ describe ("getOthersInfo", () => {
         const { fetchInfoPlayers } = result.current;
         await fetchInfoPlayers();
         
-        waitFor(() => {
+        await waitFor(() => {
             expect(mockPlayers).toHaveBeenCalledWith(url, { method: "GET", });
-            expect(result.current.infoPlayers).toEqual([
-                {
+            expect(result.current.infoPlayers).toEqual({
+                0: {
                     nombre: "Player1", 
                     fig_cards: [
                         {id: 1, fig: 4},
@@ -68,7 +69,7 @@ describe ("getOthersInfo", () => {
                     ], 
                     mov_cant: 1
                 },
-                {
+                1: {
                     nombre: "Player2", 
                     fig_cards: [
                         {id: 4, fig: 7},
@@ -77,15 +78,15 @@ describe ("getOthersInfo", () => {
                     ], 
                     mov_cant: 3
                 }
-            ]);
+            });
         });
     });
+
 
     it ("Handles fetch error gracefully", async () => {
         mockPlayers = vi.fn(() => 
             Promise.resolve({
                 ok: false,
-                json: () => Promise.resolve({ error: "Error al obtener la información de los otros jugadores." }),
             })
         );
 
@@ -95,9 +96,9 @@ describe ("getOthersInfo", () => {
         const { fetchInfoPlayers } = result.current;
         await fetchInfoPlayers();
 
-        waitFor(() => {
+        await waitFor(() => {
             expect(mockPlayers).toHaveBeenCalledWith(url, { method: "GET", });
-            expect().toHaveBeenCalledWith("Error al obtener la información de los otros jugadores.");
+            expect(console.log).toHaveBeenCalledWith("Error en la petición");
         });
     });
 

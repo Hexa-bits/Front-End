@@ -11,13 +11,13 @@ function getOthersInfo (gameId, playerId) {
         try{
             const response = await fetch(url, { method: "GET" });
             if (!response.ok) {
-                throw new Error("Error al obtener la información de los otros jugadores.");
+                console.log("Error en la petición");
             }
             const data = await response.json();
             setInfoPlayers(data);
 
         } catch (error) {
-            console.error("Error al obtener la información de los otros jugadores:", error);
+            console.log(error);
         }
     }, [playerId] );
 
