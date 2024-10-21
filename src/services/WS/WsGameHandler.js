@@ -14,7 +14,8 @@ const wsGameHandler = (
   fetchFigs,
   fetchMovs,
   fetchBoxCards,
-  setLabelMovParcial
+  setLabelMovParcial,
+  fetchFormedFigs
 ) => {
   useEffect(() => {
     if (!ws) return;
@@ -36,6 +37,7 @@ const wsGameHandler = (
         case BOARD_CHANGED:
           fetchBoxCards();
           setLabelMovParcial(true);
+          fetchFormedFigs();
           break;
         case FIGS_UPD:
           fetchFigs();
@@ -55,6 +57,7 @@ const wsGameHandler = (
     fetchMovs,
     fetchBoxCards,
     setLabelMovParcial,
+    fetchFormedFigs,
   ]);
 };
 

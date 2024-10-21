@@ -13,6 +13,7 @@ import Board from "../../../../components/Game/Board/Board.jsx";
 import renewMovCards from "../../../../services/Game/Cards/renewMovCards.js";
 import renewFigCards from "../../../../services/Game/Cards/renewFigCards.js";
 import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
+
 import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
 import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
 import WinnerExists from "../../../../services/Game/Winner/winnerExists.js";
@@ -21,9 +22,9 @@ import getCurrentTurnPlayer from "../../../../services/Game/TurnPlayer/getCurren
 import renewBoard from "../../../../services/Game/Board/renewBoard.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
 import postPlayer from "../../../../services/Game/TurnPlayer/cancelMov.js";
+import getFormedFig from "../../../../services/Game/Board/Highlight Figs/formedFig.js";
 import discardMove from "../../../../services/Game/Cards/discardMove.js";
 import discardFig from "../../../../services/Game/Cards/discardFig.js";
-
 import { WS_GAME } from "../../../../utils/Constants.js";
 import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
 
@@ -34,16 +35,16 @@ function Game() {
   const gameId = localStorage.getItem("game_id");
 
   const ws = getWsGameInstance(WS_GAME + gameId);
-
-  const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
-  const { fig_cards, fetchFigs } = renewFigCards(localPlayerId);
-  const [selectedCards, setSelectedCards] = useState([]);
-  const [selectedMov, setSelectedMov] = useState(null);
   const { currentPlayer, playerId, fetchTurnData } =
     getCurrentTurnPlayer(gameId);
   const { winnerName, getWinner } = WinnerExists(gameId);
+  const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
+  const { fig_cards, fetchFigs } = renewFigCards(localPlayerId);
   const { boxCards, fetchBoxCards, isMovParcial } = renewBoard(gameId);
   const [labelMovPacial, setLabelMovParcial] = useState(false);
+  const [selectedCards, setSelectedCards] = useState([]);
+  const [selectedMov, setSelectedMov] = useState(null);
+  const { formedFigs, fetchFormedFigs } = getFormedFig();
   const [selectedFig, setSelectedFig] = useState(null);
   const [selecFormedFig, setSelecFormedFig] = useState([]);
 
@@ -54,7 +55,8 @@ function Game() {
     fetchFigs,
     fetchMovs,
     fetchBoxCards,
-    setLabelMovParcial
+    setLabelMovParcial,
+    fetchFormedFigs
   );
 
   const handleEndTurn = async () => {
@@ -117,6 +119,7 @@ function Game() {
                 cardData={boxCards}
                 onSelectedCards={setSelectedCards}
                 onSelectedFig={setSelecFormedFig}
+                formedFigs={formedFigs}
               />
               <div className="labelMovParcial">
                 <LabelMovParcial isVisible={labelMovPacial} />
