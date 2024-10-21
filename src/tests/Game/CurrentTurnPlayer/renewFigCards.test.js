@@ -28,7 +28,7 @@ describe("renewFigCards", () => {
 
     // Espera a que figs_ids se actualice
     await waitFor(() =>
-      expect(result.current.fig_cards).toEqual(mockResponse.fig_cards)
+      expect(result.current.fig_cards).toEqual(["fig1", "fig2"])
     );
   });
 

@@ -15,7 +15,10 @@ function renewMovCards(playerId) {
         );
       }
       const data = await response.json();
-      console.log("Movimientos: ", data.mov_cards.move);
+      // console.log(
+      //   "Movimientos: ",
+      //   data.mov_cards.map((card) => card.move)
+      // );
       setMovCards(data.mov_cards);
     } catch (error) {
       console.error(
