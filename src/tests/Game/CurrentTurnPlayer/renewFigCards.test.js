@@ -14,11 +14,11 @@ describe("renewFigCards", () => {
 
   it("Inicializa con valores por defecto", () => {
     const { result } = renderHook(() => renewFigCards(playerId));
-    expect(result.current.figs_ids).toEqual([]);
+    expect(result.current.fig_cards).toEqual([]);
   });
 
   it("Fetch exitoso", async () => {
-    const mockResponse = { id_fig_card: ["fig1", "fig2"] };
+    const mockResponse = { fig_cards: ["fig1", "fig2"] };
     fetch.mockResolvedValueOnce({
       ok: true,
       json: vi.fn().mockResolvedValueOnce(mockResponse),
@@ -28,7 +28,7 @@ describe("renewFigCards", () => {
 
     // Espera a que figs_ids se actualice
     await waitFor(() =>
-      expect(result.current.figs_ids).toEqual(mockResponse.id_fig_card)
+      expect(result.current.fig_cards).toEqual(mockResponse.fig_cards)
     );
   });
 
@@ -38,6 +38,6 @@ describe("renewFigCards", () => {
     const { result } = renderHook(() => renewFigCards(playerId));
 
     // Espera a que el efecto se ejecute
-    await waitFor(() => expect(result.current.figs_ids).toEqual([])); // Verifica que el estado no cambie
+    await waitFor(() => expect(result.current.fig_cards).toEqual([])); // Verifica que el estado no cambie
   });
 });
