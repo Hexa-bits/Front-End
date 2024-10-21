@@ -12,8 +12,6 @@ import PlayerName from "../../../../components/Game/PlayerName/PlayerName.jsx";
 import Board from "../../../../components/Game/Board/Board.jsx";
 import renewMovCards from "../../../../services/Game/Cards/renewMovCards.js";
 import renewFigCards from "../../../../services/Game/Cards/renewFigCards.js";
-import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
-
 import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
 import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
 import WinnerExists from "../../../../services/Game/Winner/winnerExists.js";
@@ -27,6 +25,7 @@ import discardMove from "../../../../services/Game/Cards/discardMove.js";
 import discardFig from "../../../../services/Game/Cards/discardFig.js";
 import { WS_GAME } from "../../../../utils/Constants.js";
 import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
+import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
 
 function Game() {
   const navigate = useNavigate();
@@ -35,12 +34,13 @@ function Game() {
   const gameId = localStorage.getItem("game_id");
 
   const ws = getWsGameInstance(WS_GAME + gameId);
+
   const { currentPlayer, playerId, fetchTurnData } =
     getCurrentTurnPlayer(gameId);
   const { winnerName, getWinner } = WinnerExists(gameId);
+  const { boxCards, fetchBoxCards, isMovParcial } = renewBoard(gameId);
   const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
   const { fig_cards, fetchFigs } = renewFigCards(localPlayerId);
-  const { boxCards, fetchBoxCards, isMovParcial } = renewBoard(gameId);
   const [labelMovPacial, setLabelMovParcial] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectedMov, setSelectedMov] = useState(null);
@@ -88,6 +88,7 @@ function Game() {
 
   const handleCancel = async () => {
     await postPlayer(localPlayerId, gameId);
+    await renewBoard(gameId);
   };
 
   return (
