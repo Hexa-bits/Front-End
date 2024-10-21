@@ -27,8 +27,8 @@ describe("renewMovCards", () => {
     const { result } = renderHook(() => renewMovCards(playerId));
 
     // Espera a que mov_cards se actualice
-    await waitFor(() =>
-      expect(result.current.mov_cards).toEqual(mockResponse.mov_cards)
+    await waitFor(
+      () => expect(result.current.mov_cards).toEqual(["move1", "move2"]) //tendria q darme lo mismo q la mock response
     );
   });
 
