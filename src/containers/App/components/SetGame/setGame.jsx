@@ -14,10 +14,10 @@ function Start() {
 
   return (
     <div className="setGame__container">
-      {/* <Button 
+      <Button 
         onClick={() => navigate(HOME)} 
         className="back-btn" 
-      /> */}
+      />
       <div className="setGame">
         <ConfigGame
           handleOnChange={(e) => setGameName(e.target.value)}

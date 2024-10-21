@@ -31,17 +31,16 @@ function Home() {
 
   return (
     <div className="Home">
-      {/* <Button 
-        onClick={() => navigate(LOGIN)} 
-        className="back-btn" 
-      /> */}
       <section className="NombreUsuario">
+        <Button 
+          onClick={() => navigate(LOGIN)} 
+          className="back-btn" 
+        />
         <div className="dataUser">
           <div className="user">USUARIO: {username}</div>
           <div className="id_user"> ID: {playerId}</div>
         </div>
       </section>
-
       <section className="CrearPartida">
         <Button label="CREAR PARTIDA" onClick={handleCrearPartida} />
       </section>
