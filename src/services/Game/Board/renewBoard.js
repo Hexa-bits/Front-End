@@ -3,6 +3,7 @@ import { GAME_BOARD_URL } from "../../../utils/Constants.js";
 
 function renewBoard(gameId) {
   const [boxCards, setBoxCards] = useState([]);
+  const  [movisParcial, setMovisParcial] = useState(false);
   const fetchBoxCards = useCallback(async () => {
     const gameId = parseInt(localStorage.getItem("game_id"));
     try {
@@ -13,8 +14,11 @@ function renewBoard(gameId) {
       if (!response.ok) {
         throw new Error("Error al obtener las fichas del juego.");
       }
-      const data = await response.json(); //fichas: [ { x: int, y: int, color: int}
-      setBoxCards(data.fichas); //o seria data fichas[index].color y ahi obtengo del color 1 al 36?
+      const data = await response.json();
+      console.log("Tablero:", data);
+      setBoxCards(data.fichas); 
+      setMovisParcial(data.parcial);
+      // console.log("Mov. Parcial -> ", data.parcial);
     } catch (error) {
       console.error("Error al obtener las fichas:", error);
     }
@@ -24,6 +28,6 @@ function renewBoard(gameId) {
     fetchBoxCards();
   }, [fetchBoxCards]);
 
-  return { boxCards, fetchBoxCards };
+  return { boxCards, movisParcial, fetchBoxCards };
 }
 export default renewBoard;

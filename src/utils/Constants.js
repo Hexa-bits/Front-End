@@ -22,6 +22,8 @@ export const GET_TURN_PLAYER_URL = `http://localhost:${PORT}${GAME}/current-turn
 export const GAME_PASS_URL = `http://localhost:${PORT}${GAME}/end-turn`;
 export const GAME_BOARD_URL = `http://localhost:${PORT}${GAME}/board?game_id=`;
 export const USE_MOV_CARD = `http://localhost:${PORT}${GAME}/use-mov-card`;
+export const CANCEL_TURN_URL = `http://localhost:${PORT}${GAME}/cancel-mov`;
+export const USE_FIG_CARD = `http://localhost:${PORT}${GAME}/use-fig-card`;
 export const HIGHLIGHT_FIGS = `http://localhost:${PORT}${GAME}/highlight-figures?game_id=`;
 
 /** WEBSOCKETS */
@@ -32,53 +34,59 @@ export const WS_HOME = `ws://localhost:${PORT}${HOME}`;
 export const LoginHelpText = "Debe tener entre 1 y 10 caracteres.";
 export const GAME_INFO_WS = `ws://localhost:${PORT}${GAME}/info`;
 
+export const TURN_ENDED = "Terminó turno";
+export const WINNER = "Hay Ganador";
+export const BOARD_CHANGED = "Hay modificación de Tablero";
+export const FIGS_UPD = "Actualizar cartas de figuras";
+export const MOVS_UPD = "Actualizar cartas de movimientos";
+
 /** Otras constantes */
 export const MAX_PLAYERS = 4;
 export const MIN_PLAYERS = 1;
 
 export const COLORMAP_BOXCARDS = {
-    1: '#DC143C',    // rojo carmesí
-    2: '#50C878',  // verde esmeralda
-    3: '#FFD700',  // oro claro
-    4: '#4169E1'   // azul real
+  1: "#DC143C", // rojo carmesí
+  2: "#50C878", // verde esmeralda
+  3: "#FFD700", // oro claro
+  4: "#4169E1", // azul real
 };
 
 //A modo de Ejemplo
 export const cardData = [
-    { x: 0, y: 0, color: 'red' },
-    { x: 0, y: 1, color: 'red' },
-    { x: 0, y: 2, color: 'red' },
-    { x: 0, y: 3, color: 'red' },
-    { x: 0, y: 4, color: 'red' },
-    { x: 0, y: 5, color: 'red' },
-    { x: 1, y: 0, color: 'blue' },
-    { x: 1, y: 1, color: 'blue' },
-    { x: 1, y: 2, color: 'blue' },
-    { x: 1, y: 3, color: 'blue' },
-    { x: 1, y: 4, color: 'blue' },
-    { x: 1, y: 5, color: 'blue' },
-    { x: 2, y: 0, color: 'green' },
-    { x: 2, y: 1, color: 'green' },
-    { x: 2, y: 2, color: 'green' },
-    { x: 2, y: 3, color: 'green' },
-    { x: 2, y: 4, color: 'green' },
-    { x: 2, y: 5, color: 'green' },
-    { x: 3, y: 0, color: 'yellow' },
-    { x: 3, y: 1, color: 'yellow' },
-    { x: 3, y: 2, color: 'yellow' },
-    { x: 3, y: 3, color: 'yellow' },
-    { x: 3, y: 4, color: 'yellow' },
-    { x: 3, y: 5, color: 'yellow' },
-    { x: 4, y: 0, color: 'red' },
-    { x: 4, y: 1, color: 'red' },
-    { x: 4, y: 2, color: 'red' },
-    { x: 4, y: 3, color: 'red' },
-    { x: 4, y: 4, color: 'red' },
-    { x: 4, y: 5, color: 'red' },
-    { x: 5, y: 0, color: 'blue' },
-    { x: 5, y: 1, color: 'blue' },
-    { x: 5, y: 2, color: 'blue' },
-    { x: 5, y: 3, color: 'blue' },
-    { x: 5, y: 4, color: 'blue' },
-    { x: 5, y: 5, color: 'blue' },
+  { x: 0, y: 0, color: "red" },
+  { x: 0, y: 1, color: "red" },
+  { x: 0, y: 2, color: "red" },
+  { x: 0, y: 3, color: "red" },
+  { x: 0, y: 4, color: "red" },
+  { x: 0, y: 5, color: "red" },
+  { x: 1, y: 0, color: "blue" },
+  { x: 1, y: 1, color: "blue" },
+  { x: 1, y: 2, color: "blue" },
+  { x: 1, y: 3, color: "blue" },
+  { x: 1, y: 4, color: "blue" },
+  { x: 1, y: 5, color: "blue" },
+  { x: 2, y: 0, color: "green" },
+  { x: 2, y: 1, color: "green" },
+  { x: 2, y: 2, color: "green" },
+  { x: 2, y: 3, color: "green" },
+  { x: 2, y: 4, color: "green" },
+  { x: 2, y: 5, color: "green" },
+  { x: 3, y: 0, color: "yellow" },
+  { x: 3, y: 1, color: "yellow" },
+  { x: 3, y: 2, color: "yellow" },
+  { x: 3, y: 3, color: "yellow" },
+  { x: 3, y: 4, color: "yellow" },
+  { x: 3, y: 5, color: "yellow" },
+  { x: 4, y: 0, color: "red" },
+  { x: 4, y: 1, color: "red" },
+  { x: 4, y: 2, color: "red" },
+  { x: 4, y: 3, color: "red" },
+  { x: 4, y: 4, color: "red" },
+  { x: 4, y: 5, color: "red" },
+  { x: 5, y: 0, color: "blue" },
+  { x: 5, y: 1, color: "blue" },
+  { x: 5, y: 2, color: "blue" },
+  { x: 5, y: 3, color: "blue" },
+  { x: 5, y: 4, color: "blue" },
+  { x: 5, y: 5, color: "blue" },
 ];

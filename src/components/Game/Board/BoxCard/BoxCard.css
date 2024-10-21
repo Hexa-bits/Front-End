@@ -30,6 +30,13 @@
     animation: pulse 1.4s infinite;
 }
 
+.BoxCard.selected.highlighted {
+    border: 2px solid gold; 
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8); 
+}
+
 /* Animación de pulsación */
 @keyframes pulse {
     0% {

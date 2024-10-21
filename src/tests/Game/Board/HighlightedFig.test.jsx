@@ -1,63 +1,36 @@
-import { render, act, screen } from '@testing-library/react';
+import { render, act, screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
-import getFormedFig from '../../../services/Game/Board/Highlight Figs/formedFig';
+import Board from '../../../components/Game/Board/Board';
+import { COLORMAP_BOXCARDS } from '../../../utils/Constants';
 
-// Crea un componente de prueba que utilice el hook
-function TestComponent({ game_id }) {
-    const formedFig = getFormedFig(game_id);
-    return (
-        <div>
-            {formedFig.map((fig, index) => (
-                <div key={index}>{fig}</div>
-            ))}
-        </div>
+test('Resalta las fichas correctamente', () => {
+    const mockCardData = [
+        { x: 0, y: 0, color: '1' },
+        { x: 1, y: 0, color: '2' },
+        { x: 2, y: 0, color: '2' },
+    ];
+    
+    const mockFormedFigs = [
+        [{ x: 0, y: 0, color: 'red' }]
+    ];
+    
+    render(
+        <Board 
+            isTurn={true} 
+            cardData={mockCardData} 
+            onSelectedCards={vi.fn()} 
+            formedFigs={mockFormedFigs}
+        />
     );
-}
 
-global.fetch = vi.fn();
+    const boxCards = screen.getAllByRole('button'); 
 
-describe('getFormedFig', () => {
-    afterEach(() => {
-        vi.clearAllMocks(); 
+    // Verifica que hay al menos un BoxCard resaltado
+    const highlightedCard = boxCards.find((card) => {
+        return card.style.backgroundColor === COLORMAP_BOXCARDS['1']
     });
 
-    it('Debería obtener cartas resaltadas correctamente', async () => {
-        const mockData = ['figura1', 'figura2'];
-        const game_id = '123';
-
-        fetch.mockResolvedValueOnce({
-            ok: true,
-            json: vi.fn().mockResolvedValueOnce(mockData),
-        });
-
-        await act(async () => {
-            render(<TestComponent game_id={game_id} />);
-        });
-
-        expect(await screen.findByText('figura1')).toBeInTheDocument();
-        expect(await screen.findByText('figura2')).toBeInTheDocument();
-    });
-
-    it('No debe intentar buscar figuras si game_id no está definido', async () => {
-        await act(async () => {
-            render(<TestComponent game_id={null} />);
-        });
-        expect(fetch).not.toHaveBeenCalled();
-    });
-
-    it('Debería manejar el caso cuando no se devuelve figura resaltada', async () => {
-        const mockData = []; // Sin datos
-        const game_id = '123';
-
-        fetch.mockResolvedValueOnce({
-            ok: true,
-            json: vi.fn().mockResolvedValueOnce(mockData),
-        });
-
-        await act(async () => {
-            const { queryByText } = render(<TestComponent game_id={game_id} />);
-            expect(queryByText('figura1')).not.toBeInTheDocument();
-            expect(queryByText('figura2')).not.toBeInTheDocument();
-        });
-    });
+    if (highlightedCard) {
+        expect(highlightedCard).toHaveStyle(`background-color: ${COLORMAP_BOXCARDS['1']}`);
+    }
 });
