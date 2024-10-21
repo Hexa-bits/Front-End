@@ -22,7 +22,7 @@ import getCurrentTurnPlayer from "../../../../services/Game/TurnPlayer/getCurren
 import renewBoard from "../../../../services/Game/Board/renewBoard.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
 import getOthersInfo from "../../../../services/Game/Cards/getOthersInfo.js";
-import getFormedFig from "../../../../services/Game/Board/HighlightFigs/formedFig.js";
+import getFormedFig from "../../../../services/Game/Board/Highlight Figs/formedFig.js";
 import discardMove from "../../../../services/Game/Cards/discardMove.js";
 import discardFig from "../../../../services/Game/Cards/discardFig.js";
 import { WS_GAME } from "../../../../utils/Constants.js";
@@ -39,15 +39,16 @@ function Game() {
     const { currentPlayer, playerId, fetchTurnData } = getCurrentTurnPlayer(gameId);
     const { winnerName, getWinner } = WinnerExists(gameId);
     const { mov_cards, fig_cards, fetchFigs, fetchMovs } = renewAllCards(localPlayerId);
-    const { infoPlayers, fetchInfoPlayers } = getOthersInfo(gameId, localPlayerId);
     const { boxCards, fetchBoxCards, isMovParcial } = renewBoard(gameId);
-    const [ labelMovPacial, setLabelMovParcial ] = useState(false);
-    const [selectedCards, setSelectedCards] = useState([]);
-    const [selectedMov, setSelectedMov] = useState(null);
+    const { infoPlayers, fetchInfoPlayers } = getOthersInfo(gameId, localPlayerId);
     const { formedFigs, fetchFormedFigs } = getFormedFig(); 
-    const [selectedFig, setSelectedFig] = useState(null);
-    const [selecFormedFig, setSelecFormedFig] = useState([]);
-
+    
+    const [ labelMovPacial, setLabelMovParcial ] = useState(false);
+    const [ selectedCards, setSelectedCards] = useState([]);
+    const [ selectedMov, setSelectedMov] = useState(null);
+    const [ selectedFig, setSelectedFig] = useState(null);
+    const [ selecFormedFig, setSelecFormedFig] = useState([]);
+    
     wsGameHandler(
       ws,
       fetchTurnData,
@@ -139,7 +140,7 @@ function Game() {
               <div className="Fig">
                 <FigCards 
                   fig_cards={fig_cards} 
-                  onSelectedFig={setSelectedFig}
+                  onSelectedCardFig={setSelectedFig}
                   isTurn={localPlayerId === playerId} 
                 />
               </div>
@@ -163,6 +164,13 @@ function Game() {
                 onClick={handleUseMov}
                 disabled={localPlayerId !== playerId}
               />
+            </div>
+            <div className="useFig">
+              <Button
+                label="DESCARTAR FIGURA"
+                onClick={useFig}
+                disabled={localPlayerId !== playerId}
+                />
             </div>
             <div className="end">
               <Button

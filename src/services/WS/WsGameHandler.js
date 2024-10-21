@@ -24,6 +24,7 @@ const wsGameHandler = (
           fetchFigs();
           fetchMovs();
           fetchBoxCards();
+          fetchFormedFigs();
           break;
         case WINNER:
           getWinner();
