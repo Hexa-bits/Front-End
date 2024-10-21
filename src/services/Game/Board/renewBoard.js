@@ -18,6 +18,7 @@ function renewBoard(gameId) {
       console.log("Tablero:", data);
       setBoxCards(data.fichas); 
       setMovisParcial(data.parcial);
+      // console.log("Mov. Parcial -> ", data.parcial);
     } catch (error) {
       console.error("Error al obtener las fichas:", error);
     }
@@ -27,6 +28,6 @@ function renewBoard(gameId) {
     fetchBoxCards();
   }, [fetchBoxCards]);
 
-  return { boxCards, fetchBoxCards, movisParcial };
+  return { boxCards, movisParcial, fetchBoxCards };
 }
 export default renewBoard;

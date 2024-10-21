@@ -31,22 +31,21 @@ import { WS_GAME } from "../../../../utils/Constants.js";
 import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
 
 function Game() {
-  const navigate = useNavigate();
-  const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
-  const localPlayerName = localStorage.getItem("username");
-  const gameId = localStorage.getItem("game_id");
+    const navigate = useNavigate();
+    const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
+    const localPlayerName = localStorage.getItem("username");
+    const gameId = localStorage.getItem("game_id");
 
-  const ws = getWsGameInstance(WS_GAME + gameId);
+    const ws = getWsGameInstance(WS_GAME + gameId);
 
     const { currentPlayer, playerId, fetchTurnData } = getCurrentTurnPlayer(gameId);
     const { winnerName, getWinner } = WinnerExists(gameId);
     const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
     const { fig_cards, fetchFigs } = renewFigCards(localPlayerId);
-    const { boxCards, fetchBoxCards, isMovParcial } = renewBoard(gameId);
+    const { boxCards, movisParcial: isMovParcial ,fetchBoxCards } = renewBoard(gameId);
     const { infoPlayers, fetchInfoPlayers } = getOthersInfo(gameId, localPlayerId);
     const { formedFigs, fetchFormedFigs } = getFormedFig(); 
     
-    const [ labelMovPacial, setLabelMovParcial ] = useState(false);
     const [ selectedCards, setSelectedCards] = useState([]);
     const [ selectedMov, setSelectedMov] = useState(null);
     const [ selectedFig, setSelectedFig] = useState(null);
@@ -60,40 +59,38 @@ function Game() {
       fetchMovs,
       fetchBoxCards,
       fetchInfoPlayers,
-      setLabelMovParcial,
       fetchFormedFigs
     );
 
-  const handleEndTurn = async () => {
-    setLabelMovParcial(false);
-    await passTurn();
-  };
+    const handleEndTurn = async () => {
+        await passTurn();
+    };
 
-  const handleLeave = async () => {
-    await passTurn();
-    await LeaveGame(navigate);
-  };
+    const handleLeave = async () => {
+        await passTurn();
+        await LeaveGame(navigate);
+    };
 
-  const handleUseMov = async () => {
-    if (checkMov(selectedMov, selectedCards)) {
-      await discardMove(localPlayerId, selectedMov, selectedCards);
-      setLabelMovParcial(true);
-      setSelectedMov(null);
-      setSelectedCards([]);
-    } else {
-      console.log("Movimiento no valido");
-    }
-  };
+    const handleUseMov = async () => {
+        if (checkMov(selectedMov, selectedCards)) {
+        await discardMove(localPlayerId, selectedMov, selectedCards);
+        setSelectedMov(null);
+        setSelectedCards([]);
+        } else {
+        console.log("Movimiento no valido");
+        }
+    };
 
-  const useFig = async () => {
-    await discardFig(localPlayerId, selecFormedFig, selectedFig);
-    setSelectedFig(null);
-    setSelecFormedFig([]);
-  };
+    const useFig = async () => {
+        await discardFig(localPlayerId, selecFormedFig, selectedFig);
+        setSelectedFig(null);
+        setSelecFormedFig([]);
+    };
 
-  const handleCancel = async () => {
-    await postPlayer(localPlayerId, gameId);
-  };
+    const handleCancel = async () => {
+        await postPlayer(localPlayerId, gameId);
+    };
+
 
   return (
     <div>
@@ -142,7 +139,7 @@ function Game() {
                 formedFigs={formedFigs}
               />
               <div className="labelMovParcial">
-                <LabelMovParcial isVisible={labelMovPacial} />
+                <LabelMovParcial isVisible={isMovParcial} />
               </div>
             </div>
             <div className="Cards">
