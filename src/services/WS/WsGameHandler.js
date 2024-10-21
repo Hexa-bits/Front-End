@@ -5,6 +5,7 @@ import {
   MOVS_UPD,
   TURN_ENDED,
   WINNER,
+  OTHERS_UPD,
 } from "../../utils/Constants";
 // Esta función se encarga de manejar todos los mensajes que llegan por websocket
 const wsGameHandler = (
@@ -47,6 +48,9 @@ const wsGameHandler = (
           fetchMovs();
           fetchInfoPlayers();
           break;
+        case OTHERS_UPD:
+          fetchInfoPlayers();
+          break; 
         default:
           break;
       }

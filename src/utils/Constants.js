@@ -40,6 +40,7 @@ export const WINNER = "Hay Ganador";
 export const BOARD_CHANGED = "Hay modificación de Tablero";
 export const FIGS_UPD = "Actualizar cartas de figuras";
 export const MOVS_UPD = "Actualizar cartas de movimientos";
+export const OTHERS_UPD = "Actualizar cartas de otros jugadores";
 
 /** Otras constantes */
 export const MAX_PLAYERS = 4;
