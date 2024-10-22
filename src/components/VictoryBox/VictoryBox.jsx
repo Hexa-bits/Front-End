@@ -3,15 +3,15 @@ import LeaveButton from "../../components/Game/LeaveButton/LeaveButton.jsx";
 
 import './VictoryBox.css';
 
-function VictoryBox({ winnerName }) {
+function VictoryBox({ winnerName, onLeave }) {
     return (
       <div className="victory-overlay">
         <div className="victory-box">
           <div className="text">
-            ¡ {winnerName} es ganador !
+            ¡ {winnerName} ES GANADOR !
           </div>
           <div className="but">
-            <LeaveButton/>
+            <LeaveButton onLeave={onLeave}/>
           </div>
         </div>
       </div>

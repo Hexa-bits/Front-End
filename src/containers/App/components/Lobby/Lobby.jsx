@@ -1,45 +1,58 @@
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import "./Lobby.css";
 
-import React from "react";
-import './Lobby.css';
-
-import LobbyCard from "../../../../components/Lobby/Card/LobbyCard.jsx"
-import { useLobby } from "../../../../hooks/Lobby/useLobby.js";
-import { useGameIdUrl } from "../../../../hooks/Lobby/useGameId.js";
+import LobbyCard from "../../../../components/Lobby/Card/LobbyCard.jsx";
 import LobbyList from "../../../../components/Lobby/List/LobbyList.jsx";
 import LobbyButtons from "../../../../components/Lobby/Buttons/LobbyButtons.jsx";
-import { useLocation, useNavigate } from "react-router-dom";
-import { leaveGame } from "../../../../hooks/Lobby/useLeaveGame.js";
-import { startGame } from "../../../../hooks/Lobby/useStartGame.js";
+import useLobby from "../../../../services/Lobby/useLobby.js";
+import { LeaveGame } from "../../../../services/Lobby/leaveGame.jsx";
+import { StartGame } from "../../../../services/Lobby/startGame.jsx";
+import { HOME, GAME, WS_GAME } from "../../../../utils/Constants.js";
+import {
+  closeWsGameInstance,
+  createWsGameInstance,
+} from "../../../../services/WS/WsGameService.js";
 
 function Lobby() {
-    const location = useLocation();
-    const {isOwner, gameId} = location.state || {};
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { isOwner, gameId } = location.state || {};
 
-    const fullUrl = useGameIdUrl(gameId);
-    const {players, gameName, maxPlayers} = useLobby(fullUrl);
+  const ws = createWsGameInstance(WS_GAME + gameId);
+  const { players, gameName, maxPlayers, activeGame, cancelGame } = useLobby(
+    ws,
+    gameId
+  );
 
-    const navigate = useNavigate();
-    const handleLeaveGame = () => {
-        if (localStorage.getItem('game_id')) {
-            leaveGame(gameId, navigate);    
-        }
-    };
+  useEffect(() => {
+    if (activeGame) {
+      navigate(GAME);
+    }
+    if (cancelGame) {
+      closeWsGameInstance();
+      navigate(HOME);
+    }
+  }, [cancelGame, activeGame]);
 
-    const handleStartGame = () => {
-        if (localStorage.getItem('game_id')) {
-            startGame(gameId, navigate);
-        }
-    };
+  const handleLeave = async () => {
+    await LeaveGame(navigate);
+  };
 
-    return (
-        <div className="lobby-overlay">
-            <div className='lobby-container'>
-                <LobbyCard gameName={gameName} maxPlayers={maxPlayers} />
-                <LobbyList players={players} />
-                <LobbyButtons isOwner={isOwner} onLeaveGame={handleLeaveGame} onStartGame={handleStartGame}/>
-            </div>
-        </div>
-    );
+  return (
+    <div className="lobby-overlay">
+      <div className="lobby-container">
+        <LobbyCard gameName={gameName} maxPlayers={maxPlayers} />
+        <LobbyList players={players} />
+        <LobbyButtons
+          isOwner={isOwner}
+          onLeaveGame={handleLeave}
+          onStartGame={StartGame(navigate)}
+          oneJoined={players.length < 2}
+        />
+      </div>
+    </div>
+  );
 }
 
 export default Lobby;

@@ -1,45 +1,85 @@
-import './Home.css';
-import React from 'react';
-import useGames from '../../../../hooks/Home/useGames.js';
+import "./Home.css";
+import useGames from "../../../../services/Home/useGames.js";
 import Button from "../../../../components/Button/Button";
-import GameList from '../../../../components/Game_List/Game_List.jsx';
-import { useHomeLogic } from '../../../../utils/logics/Home/LogicJoinGame.js';
+import GameList from "../../../../components/Game_List/Game_List.jsx";
+import JoinGame from "../../../../utils/logics/Home/JoinGame.js";
+import WsHomeService from "../../../../services/WS/WsHomeService.js";
 import { useNavigate } from "react-router-dom";
+import { WS_HOME, LOGIN } from "../../../../utils/Constants.js";
+import Form from "../../../../components/Form/Form.jsx";
+import { useState } from "react";
 
 function Home() {
+  const playerId = parseInt(localStorage.getItem("id_user"), 10);
+  const username = localStorage.getItem("username");
   const navigate = useNavigate();
+  const [filter, setFilter] = useState("");
+  const [search, setSearch] = useState(false);
+
+  const { ws } = WsHomeService(WS_HOME);
+
+  const { games } = useGames(ws);
+
   const handleCrearPartida = () => {
     navigate("/home/create-config");
   };
 
-  const { games } = useGames();
-  const { handleJoin } = useHomeLogic(games);
-  const user = localStorage.getItem("username");
-  const user_id = localStorage.getItem("id_user");
-  return (
-      <div className="Home">
-        <section className="NombreUsuario">
-            <div className="dataUser">
-              <div className="user">Usuario: {user}</div>
-              <div className="id_user"> Id_Usuario: {user_id}</div>
-          </div>
-        </section>
+  const { joinGame } = JoinGame(ws);
+  const handleJoin = (gameId) => {
+    joinGame(gameId, playerId);
+  };
+  const handleChecked = (e) => {
+    setSearch(e.target.checked);
+  };
 
-        <section className="CrearPartida">
-          <Button 
-            label="Crear Partida" 
-            onClick={handleCrearPartida} 
+  return (
+    <div className="Home">
+      <section className="NombreUsuario">
+        <Button 
+          onClick={() => navigate(LOGIN)} 
+          className="back-btn" 
+        />
+        <div className="dataUser">
+          <div className="user">USUARIO: {username}</div>
+          <div className="id_user"> ID: {playerId}</div>
+        </div>
+      </section>
+      <section className="CrearPartida">
+        <Button label="CREAR PARTIDA" onClick={handleCrearPartida} />
+      </section>
+      <div className="Gaming-container">
+        <section className="Form__Home">
+          <div className="form-check form-switch"></div>
+          <input
+            className={`form-check-input ${search ? "clicked" : "unclicked"} `}
+            type="checkbox"
+            role="switch"
+            id="flexSwitchCheckDefault"
+            onChange={handleChecked}
+          />
+          <label className="form-check-label" htmlFor="flexSwitchCheckDefault">
+            Búsqueda por cantidad máxima de jugadores
+          </label>
+          <Form
+            placeholder={
+              search
+                ? "Buscar por cantidad máxima de jugadores"
+                : "Buscar por nombre"
+            }
+            onChange={(e) => setFilter(e.target.value)}
+            value={filter}
           />
         </section>
-        
         <section className="GameList__Home">
-            <GameList 
-            games={games} 
-            handleJoin={handleJoin} 
-            />
+          <GameList
+            games={games}
+            handleJoin={handleJoin}
+            filter={filter}
+            search={search}
+          />
         </section>
       </div>
+    </div>
   );
 }
-
 export default Home;

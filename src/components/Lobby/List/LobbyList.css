@@ -1,24 +1,45 @@
 @import "../../../utils/colores.css";
-.list-title {
-    color: black;
-    font-size: 17px;
-    margin-bottom: 10px;
-    text-align: center;
-    font-style: italic;
+
+.lobby-container .list-group { 
+    background: var(--amarillito);
+    background-color: var(--amarillito);
 }
 
-.list-group .list-group-item {
+.lobby-container .list-group .list-group-item {
     display: flex;
     flex-direction: column;
-    background: rgb(255, 248, 188);
+    text-align: center;
+    background: var(--amarillito);
+    background-color: var(--amarillito);
     width: 100%;
+    color: var(--violeta2);
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+}
+.list-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border-top: 1px solid var(--violetaClaro); */
 }
 
 .list-title {
-    color: black;
-    font-size: 17px;
+    color: var(--violeta2); 
+    font-size: 20px;
     margin-bottom: 10px;
     text-align: center;
     font-style: italic;
+    font-weight: bold;
+    margin-top: 2px;
 }
 
+.dots {
+    margin-top: 2px;
+    margin-left: 10px;
+}
+
+.emoji-owner {
+    width: 20px;
+    margin-left: 5px;   
+}

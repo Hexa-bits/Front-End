@@ -1,0 +1,55 @@
+.BoxCard {
+    width: 50px; 
+    height: 50px; 
+    margin: 5px; 
+    border-radius: 10px; 
+    background-color: #fff;
+    border: 1px solid #000;
+    padding: 3px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 
+        0 3px 0px rgba(0, 0, 0, 0.3), 
+        inset 0 -4px 0 rgba(0, 0, 0, 0.1); 
+    transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+}
+
+/* Estilo para la carta seleccionada */
+.BoxCard.selected {
+    border: 2px solid gold; 
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8); 
+}
+
+/* Estilo para la carta resaltada */
+.BoxCard.highlighted {
+    border: 1px solid; 
+    animation: pulse 1.4s infinite;
+}
+
+.BoxCard.selected.highlighted {
+    border: 2px solid gold; 
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8); 
+}
+
+/* Animación de pulsación */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.08);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.BoxCard:hover {
+    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="2" stroke-linejoin="round" d="M10 11V8.99c0-.88.59-1.64 1.44-1.86h.05A1.99 1.99 0 0 1 14 9.05V12v-2c0-.88.6-1.65 1.46-1.87h.05A1.98 1.98 0 0 1 18 10.06V13v-1.94a2 2 0 0 1 1.51-1.94h0A2 2 0 0 1 22 11.06V14c0 .6-.08 1.27-.21 1.97a7.96 7.96 0 0 1-7.55 6.48 54.98 54.98 0 0 1-4.48 0 7.96 7.96 0 0 1-7.55-6.48C2.08 15.27 2 14.59 2 14v-1.49c0-1.11.9-2.01 2.01-2.01h0a2 2 0 0 1 2.01 2.03l-.01.97v-10c0-1.1.9-2 2-2h0a2 2 0 0 1 2 2V11Z"></path></svg>'), auto;
+}

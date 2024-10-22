@@ -1,37 +1,45 @@
-import React from 'react';
-import './FigCards.css';
-import { useState } from 'react';
+import React from "react";
+import "./FigCards.css";
+import { useState, useEffect } from "react";
 
-function FigCards({ figsIds }) {
-    const [selectedIndex, setSelectedIndex] = useState(null); // Estado para la carta seleccionada
+function FigCards({ fig_cards, onSelectedCardFig, isTurn }) {
+  const [selectedIndex, setSelectedIndex] = useState(null); 
 
-    // Manejador de clics para seleccionar una carta
-    const handleCardClick = (index) => {
-        setSelectedIndex(index === selectedIndex ? null : index); // Desselecciona si ya está seleccionada
-    };
+  // Manejador de clics para seleccionar una carta
+  const handleCardClick = (index) => {
+    if (!isTurn) return; 
+    setSelectedIndex(index === selectedIndex ? null : index);
+    onSelectedCardFig(index === selectedIndex ? null : fig_cards[index]);
+  };
 
-    return (
-        <div className="fig-cards-container">
-            <div className='fig-card'>
-                {figsIds.slice(0,3).map((Id, index) => {
-                    const formattedId = Id.toString().padStart(2, '0'); // Convierte el número a cadena con dos dígitos
-                    const isSelected = index === selectedIndex; // Verifica si esta carta está seleccionada
-                    return (
-                        <div 
-                            key={index} 
-                            className={`Figures ${isSelected ? 'selected' : ''}`} // Añade 'selected' si está seleccionada
-                            onClick={() => handleCardClick(index)} // Añade el manejador de clic
-                        >
-                            <img 
-                                src={`/assets/Figures/fig${formattedId}.svg`} 
-                                alt={`fig${formattedId}`} 
-                            />
-                        </div>
-                    );
-                })}
+  useEffect(() => {
+    if (!isTurn) {
+      setSelectedIndex(null);
+    }
+  }, [isTurn, onSelectedCardFig]);
+
+  return (
+    <div className="fig-cards-container">
+      <div className="fig-card">
+        {fig_cards.slice(0, 3).map((card, index) => {
+          const formattedId = card.fig.toString().padStart(2, "0"); // Convierte el número a cadena con dos dígitos
+          const isSelected = index === selectedIndex; 
+          return (
+            <div
+              key={card.id}
+              className={`Figures ${isSelected ? "selected" : ""}`} 
+              onClick={() => handleCardClick(index)} 
+            >
+              <img
+                src={`/assets/Figures/fig${formattedId}.svg`}
+                alt={`fig${formattedId}`}
+              />
             </div>
-        </div>
-    );
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 export default FigCards;

@@ -1,35 +1,43 @@
-import React, { useState } from 'react';
-import './MovCards.css';
+import React, { useState, useEffect } from "react";
+import "./MovCards.css";
 
-function MovCards({ movsIds }) {
-    const [selectedIndex, setSelectedIndex] = useState(null); // Estado para la carta seleccionada
+function MovCards({ mov_cards , onSelectedMov, isTurn }) {
+  const [selectedIndex, setSelectedIndex] = useState(null);
 
-    // Manejador de clics para seleccionar una carta
-    const handleCardClick = (index) => {
-        setSelectedIndex(index === selectedIndex ? null : index); // Desselecciona si ya está seleccionada
-    };
+  const handleCardClick = (index) => {
+    if (!isTurn) return; 
+    setSelectedIndex(index === selectedIndex ? null : index);
+    onSelectedMov(index === selectedIndex ? null : mov_cards[index]);
+  };
 
-    return (
-        <div className="mov-cards-container">
-            <div className='mov-card'>
-                {movsIds.slice(0, 3).map((Id, index) => {
-                    const isSelected = index === selectedIndex; // Verifica si esta carta está seleccionada
-                    return (
-                        <div
-                            key={index}
-                            className={`Figures ${isSelected ? 'selected' : ''}`} // Añade 'selected' si está seleccionada
-                            onClick={() => handleCardClick(index)} // Añade el manejador de clic
-                        >
-                            <img 
-                                src={`../../../../assets/Movements/mov${Id}.svg`} 
-                                alt={`mov${Id}`} 
-                            />
-                        </div>
-                    );
-                })}
+  useEffect(() => {
+    if (!isTurn) {
+      setSelectedIndex(null); // Deselecciona la carta cuando termina el turno
+      onSelectedMov(null); // Notifica que no hay carta seleccionada
+    }
+  }, [isTurn, onSelectedMov]);
+
+  return (
+    <div className="mov-cards-container">
+      <div className="mov-card">
+        {mov_cards.slice(0, 3).map((card, index) => {
+          const isSelected = index === selectedIndex;
+          return (
+            <div
+              key={card.id}
+              className={`Movs ${isSelected ? "selected" : ""}`} 
+              onClick={() => handleCardClick(index)}
+            >
+              <img
+                src={`/assets/Movements/mov${card.move}.svg`}
+                alt={`mov${card.move}`}
+              />
             </div>
-        </div>
-    );
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 export default MovCards;

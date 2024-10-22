@@ -1,0 +1,45 @@
+/* Board.css */
+.Board {
+    background-color: #5b2726;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    width: 400px;
+    height: 400px;
+    padding: 10px;
+    z-index: 2;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border: 10px solid var(--marronBoard);
+    position: relative;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5), 
+                inset 0 5px 10px rgba(255, 255, 255, 0.1); 
+    background: linear-gradient(145deg, #5b2726, #3d1918);
+}
+
+.Board::before {
+    content: '';
+    position: absolute;
+    top: -10px; 
+    left: -10px; 
+    right: -10px; 
+    bottom: -10px;
+    border-radius: 20px;
+    pointer-events: none;
+}
+
+
+.BoxCards{
+    display: flex;
+    flex-wrap: wrap;
+    width: auto;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.BoardRow {
+    display: flex; 
+    flex-direction: row;
+    justify-content: center;
+}

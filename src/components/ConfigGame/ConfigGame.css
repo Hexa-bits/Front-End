@@ -12,19 +12,24 @@
 }
 
 .ConfigGame p{
-    font-size: 17px;
+    font-size: 21px;
     margin-bottom: 10px;
 }
 
 /* Form */
-.form-container{
+.ConfigGame .form-container{
     margin-top: 20px;
+    margin-bottom: 12px;
 }    
 
 .form-container .col-auto{
+    margin-top: 10px;
     text-align: center;
 }
 
+.form-container .col-auto .form-text{
+    font-size: 17px;
+}
 
 
 /* Count Players */
@@ -33,7 +38,7 @@
     flex-direction: row;
     justify-content: center;
     gap: 10px;
-    padding-top: 20px;
+    padding-top: 5px;
 }
 
 .count_players button{
@@ -41,8 +46,9 @@
 }
 
 .count_players button.selected {
-    background-color: red; /* Color cuando está seleccionado */
-    color: white; /* Cambiar color del texto si es necesario */
+    background-color: var(--verdecito); 
+    color: var(--marron4);
+    font-weight: bold; 
 }
 
 .count_players p{
