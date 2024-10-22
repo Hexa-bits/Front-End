@@ -5,7 +5,6 @@ function renewBoard(gameId) {
   const [boxCards, setBoxCards] = useState([]);
   const  [movisParcial, setMovisParcial] = useState(false);
   const fetchBoxCards = useCallback(async () => {
-    const gameId = parseInt(localStorage.getItem("game_id"));
     try {
       const response = await fetch(GAME_BOARD_URL + gameId, {
         method: "GET",

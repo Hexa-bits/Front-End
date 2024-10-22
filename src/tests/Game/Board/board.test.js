@@ -12,10 +12,13 @@ describe("renewBoard", () => {
       Promise.resolve({
         ok: true,
         json: () =>
-          Promise.resolve([
-            { x: 1, y: 1, color: 1 },
-            { x: 2, y: 2, color: 2 },
-          ]),
+          Promise.resolve({
+            fichas: [
+              { x: 1, y: 1, color: 1 },
+              { x: 2, y: 2, color: 2 },
+            ],
+            parcial: false,  // Simulando otro campo en el objeto
+          }),
       })
     );
     global.fetch = mockFetchBoxCards;
@@ -30,22 +33,21 @@ describe("renewBoard", () => {
 
   it("inicializa los valores", () => {
     const { result } = renderHook(() => renewBoard(gameId));
-    expect(result.current.boxCards).toEqual([]);
+    expect(result.current.boxCards).toEqual([]);  
   });
 
   it("hace el pedido al boxcards", async () => {
     const { result } = renderHook(() => renewBoard(gameId));
 
-    waitFor(() => {
+    await result.current.fetchBoxCards();  
+
+    await waitFor(() => {
       expect(mockFetchBoxCards).toHaveBeenCalledWith(GAME_BOARD_URL + gameId, {
         method: "GET",
       });
-    });
-
-    waitFor(() => {
       expect(result.current.boxCards).toEqual([
         { x: 1, y: 1, color: 1 },
-        { x: 2, y: 2, color: 2 },
+        { x: 2, y: 2, color: 2 }
       ]);
     });
   });
@@ -57,7 +59,7 @@ describe("renewBoard", () => {
     const { result } = renderHook(() => renewBoard());
 
     await waitFor(() => {
-      expect(result.current.boxCards).toEqual([]); // Se espera que boxCards siga vacío
+      expect(result.current.boxCards).toEqual([]);  // Verifica que boxCards sigue vacío tras error
       expect(console.error).toHaveBeenCalledWith(
         "Error al obtener las fichas:",
         expect.any(Error)
