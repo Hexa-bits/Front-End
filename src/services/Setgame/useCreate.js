@@ -1,6 +1,6 @@
 import { CONFIG_URL , LOBBY } from "../../utils/Constants.js";
 
-async function create(game_name, max_players, navigate) {
+async function create(game_name, game_password, max_players, navigate) {
   const id_user = parseInt(localStorage.getItem("id_user"),10); // Obtenemos el id del usuario
 
   try {
@@ -9,7 +9,7 @@ async function create(game_name, max_players, navigate) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id_user, game_name, max_players }),
+      body: JSON.stringify({ id_user, game_name, game_password, max_players }),
     });
 
     if (!response.ok) {

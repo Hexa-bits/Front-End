@@ -12,6 +12,7 @@
 }
 
 .ConfigGame p{
+    margin-top: 20px;
     font-size: 21px;
     margin-bottom: 10px;
 }
@@ -31,6 +32,24 @@
     font-size: 17px;
 }
 
+.ConfigGame .password {
+    width: 100%;
+}
+
+
+.ConfigGame .password .form-container {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    width: 100%;
+}
+
+.password .col-form-label-container {
+    height: 0px;
+}
+
+form-check:checked {
+    margin-bottom: 0px;
+}
 
 /* Count Players */
 .count_players{

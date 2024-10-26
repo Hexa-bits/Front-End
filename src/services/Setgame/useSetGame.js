@@ -4,12 +4,13 @@ import { checkInput, checkButtons } from "../../utils/logics/setGame/LogicSetGam
 
 export const useSetGame = (navigate) => {
     const [game_name, setGameName] = useState("");
+    const [game_password, setGamePassword] = useState("");
     const [max_players, setMaxPlayers] = useState(0);
   
     const handleClick = async () => {
       if (checkInput(game_name) && checkButtons(max_players)) {
         // Llamada a la función de creación del juego con los valores adecuados
-        create(game_name, max_players, navigate);
+        create(game_name, game_password, max_players, navigate);
       } else {
         // Validación de errores
         if (!checkInput(game_name)) {
@@ -21,8 +22,8 @@ export const useSetGame = (navigate) => {
     };
   
     return {
-      game_name,
       setGameName,
+      setGamePassword,
       max_players,
       setMaxPlayers,
       handleClick,
