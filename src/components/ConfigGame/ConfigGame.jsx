@@ -6,8 +6,15 @@ import Form from "../../components/Form/Form.jsx";
 import Button from "../../components/Button/Button.jsx";
 import React from "react";
 
-function ConfigGame({ handleName, handlePassword, maxPlayers, setPlayerAmnt}) {
-  const [isPrivate, setPrivate] = useState(false);
+function ConfigGame({ 
+        handleName, 
+        handlePassword, 
+        maxPlayers, 
+        setPlayerAmnt,
+        isPrivate,
+        setPrivate
+    }) {
+
   const [selectedPlayers, setSelectedPlayers] = useState(null);
 
   const handlePlayerSelect = (num) => {
@@ -19,7 +26,6 @@ function ConfigGame({ handleName, handlePassword, maxPlayers, setPlayerAmnt}) {
     <div className="ConfigGame">
       <Form
         label="NOMBRE DE PARTIDA"
-        helpText="Debe tener entre 1 y 10 caracteres"
         type="text"
         placeholder="Ingrese un nombre"
         id="gameid"
@@ -37,8 +43,7 @@ function ConfigGame({ handleName, handlePassword, maxPlayers, setPlayerAmnt}) {
       {isPrivate && (
         <div className="password">
           <Form
-            helpText="Debe tener entre 1 y 10 caracteres"
-            type="text"
+            type="password"
             placeholder="Ingresar contraseña"
             id="gameid"
             onChange={handlePassword}

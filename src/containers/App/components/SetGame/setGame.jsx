@@ -15,6 +15,8 @@ function Start() {
     setGamePassword, 
     max_players, 
     setMaxPlayers, 
+    isPrivate,
+    setIsPrivate,
     handleClick 
   } = useSetGame(navigate);
 
@@ -30,6 +32,8 @@ function Start() {
           handlePassword={(e) => setGamePassword(e.target.value)}
           maxPlayers={max_players}
           setPlayerAmnt={setMaxPlayers}
+          isPrivate={isPrivate}
+          setPrivate={setIsPrivate}
         />
         <Button label="CREAR PARTIDA" onClick={handleClick} />
       </div>
