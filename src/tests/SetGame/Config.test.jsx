@@ -7,6 +7,7 @@ describe('ConfigGame Component', () => {
   const handleName = vi.fn();
   const handlePassword = vi.fn();
   const setPlayerAmnt = vi.fn();
+  const setPrivate = vi.fn();
     
   test('Debe renderizar el componente ConfigGame.', () => {
     render(
@@ -15,6 +16,8 @@ describe('ConfigGame Component', () => {
         handlePassword={handlePassword}
         maxPlayers={0} 
         setPlayerAmnt={setPlayerAmnt} 
+        isPrivate={false}
+        setPrivate={setPrivate}
       />
     );
 
@@ -31,41 +34,45 @@ describe('ConfigGame Component', () => {
         handlePassword={handlePassword} 
         maxPlayers={0} 
         setPlayerAmnt={setPlayerAmnt} 
+        isPrivate={false}
+        setPrivate={setPrivate}
       />
     );
     const nameInput = screen.getByPlaceholderText("Ingrese un nombre");
     expect(nameInput).toBeInTheDocument();
   });
 
-  test('Muestra campo de contrasena al clickear checkBox', () => {
+  test('Se setea partida privada', () => {
     render(
       <ConfigGame 
         handleName={handleName} 
         handlePassword={handlePassword} 
         maxPlayers={0} 
         setPlayerAmnt={setPlayerAmnt} 
+        isPrivate={false}
+        setPrivate={setPrivate}
       />
     );
+
     const privateCheckbox = screen.getByLabelText("Partida privada");
     fireEvent.click(privateCheckbox);
+    expect(setPrivate).toHaveBeenCalledWith(true);
+  });
+
+  test('Se muestra el input de contraseña si la partida es privada', () => {
+    render(
+      <ConfigGame 
+        handleName={handleName} 
+        handlePassword={handlePassword} 
+        maxPlayers={0} 
+        setPlayerAmnt={setPlayerAmnt} 
+        isPrivate={true}
+        setPrivate={setPrivate}
+      />
+    );
     expect(screen.getByPlaceholderText("Ingresar contraseña")).toBeInTheDocument();
   });
 
-  test('Se actualiza la entrada de', () => {
-    render(
-      <ConfigGame 
-        handleName={handleName} 
-        handlePassword={handlePassword} 
-        maxPlayers={0} 
-        setPlayerAmnt={setPlayerAmnt} 
-      />
-    );
-    const privateCheckbox = screen.getByLabelText("Partida privada");
-    fireEvent.click(privateCheckbox);
-    const passwordInput = screen.getByPlaceholderText("Ingresar contraseña");
-    fireEvent.change(passwordInput, { target: { value: "12345" } });
-    expect(handlePassword).toHaveBeenCalled();
-  });
 
   test('Se muestran los botones de seleccion de cantidad de jugadores', () => {
     render(
@@ -74,6 +81,8 @@ describe('ConfigGame Component', () => {
         handlePassword={handlePassword} 
         maxPlayers={0} 
         setPlayerAmnt={setPlayerAmnt} 
+        isPrivate={false}
+        setPrivate={setPrivate}
       />
     );
     expect(screen.getByText("2")).toBeInTheDocument();
@@ -88,6 +97,8 @@ describe('ConfigGame Component', () => {
         handlePassword={handlePassword} 
         maxPlayers={3} 
         setPlayerAmnt={setPlayerAmnt} 
+        isPrivate={false}
+        setPrivate={setPrivate}
       />
     );
     expect(screen.getByTestId('player-count')).toHaveTextContent('Participantes: 3');
@@ -100,6 +111,8 @@ describe('ConfigGame Component', () => {
         handlePassword={handlePassword} 
         maxPlayers={0} 
         setPlayerAmnt={setPlayerAmnt} 
+        isPrivate={false}
+        setPrivate={setPrivate}
       />
     );
     const buttonTwoPlayers = screen.getByText("2");
