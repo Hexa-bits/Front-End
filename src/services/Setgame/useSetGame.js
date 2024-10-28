@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { create } from "./useCreate.js";
-import { checkInput, checkButtons } from "../../utils/logics/setGame/LogicSetGame.js";
+import { checkInput, checkButtons, checkPassword} from "../../utils/logics/setGame/LogicSetGame.js";
 
 export const useSetGame = (navigate) => {
     const [game_name, setGameName] = useState("");
@@ -15,6 +15,8 @@ export const useSetGame = (navigate) => {
         // Validación de errores
         if (!checkInput(game_name)) {
           alert("Error: el nombre debe tener entre 1 y 10 caracteres.");
+        } else if (!checkPassword(game_password)) {
+          alert("Error: la contraseña debe tener entre 1 y 15 caracteres.");
         } else if (!checkButtons(max_players)) {
           alert("Error: la cantidad de jugadores es inválida.");
         }
