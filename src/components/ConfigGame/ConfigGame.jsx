@@ -28,7 +28,7 @@ function ConfigGame({
         label="NOMBRE DE PARTIDA"
         type="text"
         placeholder="Ingrese un nombre"
-        id="gameid"
+        id="gameName"
         onChange={handleName}
       />
 
@@ -45,7 +45,7 @@ function ConfigGame({
           <Form
             type="password"
             placeholder="Ingresar contraseña"
-            id="gameid"
+            id="gamePassword"
             onChange={handlePassword}
           />
         </div>
