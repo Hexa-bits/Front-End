@@ -1,30 +1,42 @@
 import { useState } from "react";
 import { create } from "./useCreate.js";
-import { checkInput, checkButtons } from "../../utils/logics/setGame/LogicSetGame.js";
+import { checkInput, checkButtons, checkPassword} from "../../utils/logics/setGame/LogicSetGame.js";
 
 export const useSetGame = (navigate) => {
     const [game_name, setGameName] = useState("");
+    const [game_password, setGamePassword] = useState("");
     const [max_players, setMaxPlayers] = useState(0);
+    const [isPrivate, setIsPrivate] = useState(false);
   
     const handleClick = async () => {
-      if (checkInput(game_name) && checkButtons(max_players)) {
+      const isNameValid = checkInput(game_name);
+      const isPassValid = !isPrivate || checkPassword(game_password);
+      const isPlayerValid = checkButtons(max_players);
+
+      if (isNameValid && isPassValid && isPlayerValid) {
         // Llamada a la función de creación del juego con los valores adecuados
-        create(game_name, max_players, navigate);
+        create(game_name, isPrivate ? game_password : "", max_players, navigate);
       } else {
         // Validación de errores
-        if (!checkInput(game_name)) {
+        if (!isNameValid) {
           alert("Error: el nombre debe tener entre 1 y 10 caracteres.");
-        } else if (!checkButtons(max_players)) {
+        } 
+        else if (!isPassValid) {
+          alert("Error: la contraseña debe tener entre 1 y 15 caracteres.");
+        } 
+        else if (!isPlayerValid) {
           alert("Error: la cantidad de jugadores es inválida.");
         }
       }
     };
   
     return {
-      game_name,
       setGameName,
+      setGamePassword,
       max_players,
       setMaxPlayers,
+      isPrivate,
+      setIsPrivate,
       handleClick,
     };
   };
