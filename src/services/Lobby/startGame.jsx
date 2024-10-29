@@ -3,7 +3,7 @@ import { GAME_START_URL, GAME } from '../../utils/Constants.js';
 export const StartGame = (navigate) => { 
     
     const startGame = async () => {
-        const game_id = parseInt(localStorage.getItem("game_id"), 10);
+        const game_id = parseInt(sessionStorage.getItem("game_id"), 10);
     
         try {
             const response = await fetch(GAME_START_URL, {

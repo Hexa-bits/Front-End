@@ -2,14 +2,14 @@ import React from "react";
 import { LOGIN_URL } from "../../utils/Constants";
 
 
-export const useReg = async ( {username}) => {
+export const useReg = async ( { playerName }) => {
     try {            
         const response = await fetch(LOGIN_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username })  
+            body: JSON.stringify({ username : playerName })  
         });
         
         if (!response.ok) {
@@ -19,8 +19,8 @@ export const useReg = async ( {username}) => {
         const data = await response.json();
         const Id = data.id;
 
-        localStorage.setItem('username', username); 
-        localStorage.setItem('id_user', Id);
+        sessionStorage.setItem('player_name', playerName); 
+        sessionStorage.setItem('player_id', Id);
 
     } catch (error) {
         console.log(error);

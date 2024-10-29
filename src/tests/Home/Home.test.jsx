@@ -17,9 +17,9 @@ beforeEach(() => {
 // Prueba de renderización
 describe("Home", () => {
   it("Debería renderizar el nombre de usuario y el ID del jugador.", () => {
-    // Configura el localStorage para la prueba
-    localStorage.setItem("id_user", "1");
-    localStorage.setItem("username", "TestUser");
+    // Configura el sessionStorage para la prueba
+    sessionStorage.setItem("player_id", "1");
+    sessionStorage.setItem("player_name", "TestUser");
 
     render(
       <MemoryRouter>

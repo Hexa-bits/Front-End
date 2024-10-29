@@ -21,7 +21,7 @@ const  JoinGame = (ws) => {
 
             const data = await response.json();
             console.log("Unido a la partida con éxito:", data);
-            localStorage.setItem('game_id', gameId);
+            sessionStorage.setItem('game_id', gameId);
 
             // Lógica de navegación
             console.log("Navegando al lobby con gameId:", gameId);

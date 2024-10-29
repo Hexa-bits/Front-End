@@ -5,13 +5,13 @@ import GameList from "../../../../components/Game_List/Game_List.jsx";
 import JoinGame from "../../../../utils/logics/Home/JoinGame.js";
 import WsHomeService from "../../../../services/WS/WsHomeService.js";
 import { useNavigate } from "react-router-dom";
-import { WS_HOME, LOGIN } from "../../../../utils/Constants.js";
+import { WS_HOME, LOGIN, SETGAME } from "../../../../utils/Constants.js";
 import Form from "../../../../components/Form/Form.jsx";
 import { useState } from "react";
 
 function Home() {
-  const playerId = parseInt(localStorage.getItem("id_user"), 10);
-  const username = localStorage.getItem("username");
+  const playerId = parseInt(sessionStorage.getItem("player_id"), 10);
+  const playerName = sessionStorage.getItem("player_name");
   const navigate = useNavigate();
   const [filter, setFilter] = useState("");
   const [search, setSearch] = useState(false);
@@ -21,7 +21,7 @@ function Home() {
   const { games } = useGames(ws);
 
   const handleCrearPartida = () => {
-    navigate("/home/create-config");
+    navigate(SETGAME);
   };
 
   const { joinGame } = JoinGame(ws);
@@ -40,7 +40,7 @@ function Home() {
           className="back-btn" 
         />
         <div className="dataUser">
-          <div className="user">USUARIO: {username}</div>
+          <div className="user">USUARIO: {playerName}</div>
           <div className="id_user"> ID: {playerId}</div>
         </div>
       </section>

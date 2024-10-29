@@ -32,9 +32,9 @@ import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
 
 function Game() {
     const navigate = useNavigate();
-    const localPlayerId = parseInt(localStorage.getItem("id_user"), 10);
-    const localPlayerName = localStorage.getItem("username");
-    const gameId = localStorage.getItem("game_id");
+    const localPlayerId = parseInt(sessionStorage.getItem("player_id"), 10);
+    const localPlayerName = sessionStorage.getItem("player_name");
+    const gameId = sessionStorage.getItem("game_id");
 
     const ws = getWsGameInstance(WS_GAME + gameId);
 
