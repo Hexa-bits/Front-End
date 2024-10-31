@@ -50,6 +50,8 @@ function Game() {
     const [ selectedMov, setSelectedMov] = useState(null);
     const [ selectedFig, setSelectedFig] = useState(null);
     const [ selecFormedFig, setSelecFormedFig] = useState([]);
+    const [ selectPlayer, setSelectPlayer] = useState(null);
+    const [ figToBlock, setFigToBlock] = useState(null);
     
     wsGameHandler(
       ws,
@@ -124,6 +126,8 @@ function Game() {
           <div className="Game_Others_Area">
             <OtherPlayers 
               players={infoPlayers} 
+              onPlayerSelected={setSelectPlayer}
+              onSelectFigToBlock={setFigToBlock}
             />
             <div className="leav">
               <LeaveButton onLeave={handleLeave} />
