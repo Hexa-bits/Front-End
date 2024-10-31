@@ -1,7 +1,13 @@
 import FigCards from "../FigCards/FigCards";
 import PlayerName from "../PlayerName/PlayerName";
 import "./OtherPlayers.css";
-function OtherPlayers({players}) {
+function OtherPlayers({players, onPlayerSelected, onSelectFigToBlock}) {
+
+    const handleBlockFig = (playerId, figCard) => {
+        onPlayerSelected(playerId);
+        onSelectFigToBlock(figCard);
+    }
+    
     return ( 
         <div className="players-container">
             { players.map((player, playerIndex) => (
@@ -10,7 +16,10 @@ function OtherPlayers({players}) {
                         <PlayerName label={playerIndex} player={player.nombre} />   
                     </div>
                     <div className="player-figs"> 
-                        <FigCards fig_cards={player.fig_cards} />
+                        <FigCards 
+                            fig_cards={player.fig_cards} 
+                            onSelectedCardFig={(figCard) => handleBlockFig(player.id, figCard)}
+                        />
                     </div>
                     <div className="cant-mov-container">
                         {Array.from({ length: player.mov_cant }, (_, movIndex) => (
