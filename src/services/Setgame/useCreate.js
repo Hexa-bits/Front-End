@@ -1,7 +1,7 @@
 import { CONFIG_URL , LOBBY } from "../../utils/Constants.js";
 
 async function create(game_name, game_password, max_players, navigate) {
-  const id_user = parseInt(localStorage.getItem("id_user"),10); // Obtenemos el id del usuario
+  const player_id = parseInt(sessionStorage.getItem("player_id"),10); 
 
   try {
     const response = await fetch(CONFIG_URL, {
@@ -9,7 +9,7 @@ async function create(game_name, game_password, max_players, navigate) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id_user, game_name, game_password, max_players }),
+      body: JSON.stringify({ id_user: player_id, game_name, game_password, max_players }),
     });
 
     if (!response.ok) {
@@ -19,7 +19,7 @@ async function create(game_name, game_password, max_players, navigate) {
     const data = await response.json();
     const game_id  = data.id;
 
-    localStorage.setItem('game_id', game_id);
+    sessionStorage.setItem('game_id', game_id);
 
     // Navegamos a la página para unirse al juego
     const gameId = parseInt(game_id, 10);

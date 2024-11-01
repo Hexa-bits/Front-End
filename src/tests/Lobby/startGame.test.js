@@ -10,7 +10,7 @@ describe("StartGame function", () => {
   vi.spyOn(console, "log").mockImplementation(() => {});
 
   it("debería hacer la llamada para iniciar el juego y navegar", async () => {
-    // Mock para localStorage y fetch
+    // Mock para sessionStorage y fetch
     const mockNavigate = vi.fn();
     const mockFetch = vi.fn(() =>
       Promise.resolve({
@@ -22,7 +22,7 @@ describe("StartGame function", () => {
       getItem: vi.fn(() => "123"),
     };
 
-    Object.defineProperty(global, "localStorage", { value: mockLocalStorage });
+    Object.defineProperty(global, "sessionStorage", { value: mockLocalStorage });
     global.fetch = mockFetch;
     const consoleSpy = vi.spyOn(console, "log");
 
@@ -46,7 +46,7 @@ describe("StartGame function", () => {
   });
 
   it("debería manejar errores al intentar iniciar el juego", async () => {
-    // Mock para localStorage y fetch que lanza error
+    // Mock para sessionStorage y fetch que lanza error
     const mockFetch = vi.fn(() =>
       Promise.resolve({
         ok: false,

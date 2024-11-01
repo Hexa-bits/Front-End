@@ -18,10 +18,10 @@
 
 /* Estilo para la carta seleccionada */
 .BoxCard.selected {
-    border: 2px solid gold; 
+    border: 2px solid var(--boxCardsSelecc); 
     transform: scale(1.05);
     transition: all 0.3s ease;
-    box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8); 
+    box-shadow: 0 0 15px 5px var(--boxCardsSelecc); 
 }
 
 /* Estilo para la carta resaltada */
@@ -31,10 +31,10 @@
 }
 
 .BoxCard.selected.highlighted {
-    border: 2px solid gold; 
+    border: 2px solid var(--boxCardsSelecc); 
     transform: scale(1.05);
     transition: all 0.3s ease;
-    box-shadow: 0 0 15px 5px rgba(255, 215, 0, 0.8); 
+    box-shadow: 0 0 15px 5px var(--boxCardsSelecc); 
 }
 
 /* Animación de pulsación */

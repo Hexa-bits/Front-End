@@ -21,7 +21,7 @@ function BoxCard({ color, isSelected, isHighlighted, highlightColor, onClick }) 
     } else if (isSelected) {
         boxStyle = {
             ...boxStyle,
-            border: '2px solid gold',
+            border: '2px solid var(--boxCardsSelecc)',
             boxShadow: '0 0 15px 5px rgba(255, 215, 0, 0.8)',
         };
     }
