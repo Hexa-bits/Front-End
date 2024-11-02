@@ -1,7 +1,7 @@
 import { BLOCK_FIG_CARD } from "../../../utils/Constants";
 
-const blockFig = async (playerId, otherPlayerId, selectedFig, selectedFigCard) => {
-    const otherId = parseInt(otherPlayerId, 10);
+const blockFig = async (playerId, selectedFig, selectedFigCard) => {
+    
     const fig_card_id = parseInt(selectedFigCard.id, 10);
     const boxCards = selectedFig.map((card) => {
         return { x_pos: card.x, y_pos: card.y };
@@ -15,7 +15,6 @@ const blockFig = async (playerId, otherPlayerId, selectedFig, selectedFigCard) =
             },
             body: JSON.stringify({
                 player_id: playerId,
-                other_player_id: otherId,
                 id_fig_card: fig_card_id,
                 figura: boxCards,
             }),
