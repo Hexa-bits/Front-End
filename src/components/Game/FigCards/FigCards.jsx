@@ -27,11 +27,15 @@ function FigCards({ fig_cards, onSelectedCardFig, isTurn }) {
           return (
             <div
               key={card.id}
-              className={`Figures ${isSelected ? "selected" : ""}`} 
+              className={`Figures 
+                ${card.blocked ? "blocked" : (isSelected ? "selected" : "")}
+              `} 
               onClick={() => handleCardClick(index)} 
             >
               <img
-                src={`/assets/Figures/fig${formattedId}.svg`}
+                src={`
+                  ${card.blocked ? "assets/Figures/back-fig.svg" : `assets/Figures/fig${formattedId}.svg`}
+                `}
                 alt={`fig${formattedId}`}
               />
             </div>
