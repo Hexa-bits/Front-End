@@ -13,6 +13,7 @@ import Chat from "../../../../components/Game/Chat/Chat.jsx";
 import OtherPlayers from "../../../../components/Game/OtherPlayers/OtherPlayers.jsx";
 import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
 import Winner from "../../../../components/Game/Winner/Winner.jsx";
+import GameName from "../../../../components/Game/GameName/GameName.jsx";
 
 import renewFigCards from "../../../../services/Game/Cards/renewFigCards.js";
 import renewMovCards from "../../../../services/Game/Cards/renewMovCards.js";
@@ -113,6 +114,7 @@ function Game() {
 
 		<div className="mid-area">
 			<div className="optional">
+				<GameName />
 			</div>
 			<div className="Game_Area">
 				<div className="board">

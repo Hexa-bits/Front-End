@@ -1,10 +1,11 @@
 import './PlayerName.css';
 
-function PlayerName({ player }) {
+function PlayerName({ isOnlineOrb , player }) {
     return (
         <div className="Player">
-                { player }
-        </div>
+        <div className='online-orb'>{isOnlineOrb}</div>
+            <div className='name-player'>{player}</div>   
+      </div>
     );
 }
 

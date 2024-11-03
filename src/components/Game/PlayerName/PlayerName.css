@@ -1,12 +1,28 @@
 .Player{
+    width: 100%;
     background-color: #008bd0;
     padding: 10px;
     margin-top: 10px;
     border-radius: 20px;
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: 600;
+}
+
+.name-player{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 20px;
     color: white;
+}
+
+.right-box .online-orb{
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+    background-color: greenyellow;
+    border-radius: 50%;
+    transform: translateY(-1px);
 }
