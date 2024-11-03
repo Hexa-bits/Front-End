@@ -1,7 +1,12 @@
-.playerTurn .text{
+.playerTurn{
     background-color: white;
-    padding: 10px 70px;
     border-radius: 20px;
-    text-align: center;
+    width: 100%;
     box-shadow: 0 0 13px 2px rgb(248, 245, 229); 
+}
+
+.text{
+    width: 100%;
+    padding: 10px 10px;
+    text-align: center;
 }

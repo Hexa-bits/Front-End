@@ -1,5 +1,6 @@
 .players-container {
     margin-top: 40px;
+
 }
 
 .each-player {
@@ -25,7 +26,7 @@
 }
 
 .player-figs img {
-    width: 80px;
+    width: 60px;
     height: auto;
 }
 
@@ -41,15 +42,16 @@
     flex-direction: row;
     gap: 8px;
     justify-content: flex-end;
+    transform: translateX(50px) translateY(-30px);
+
 }
 
 .cant-mov-container .back-mov-image {
-    width: 2.8rem;
+    width: 2.7rem;
     padding: 1px;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 2px solid transparent; 
-    /* display: inline-block; */
     cursor: default; 
     border: 1px solid black;
     box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.2);

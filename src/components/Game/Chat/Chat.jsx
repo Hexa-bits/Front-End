@@ -11,7 +11,9 @@ function Chat() {
 
             <div className="chat__entries">
                 <Form
-                    placeholder={"Ingrese un mensaje"}/>
+                placeholder={"Ingrese un mensaje"}
+                />
+                <img src="../../../../assets/icons/send.svg"/>
             </div>
         </div>
     );

@@ -19,21 +19,27 @@
     height: 100%;
     margin: 20px 0px;
     border-radius: 20px;
-    background-color: wheat;
 }
 
 .chat__entries{
     display: flex;
     width: 100%;
     height: auto;
-    align-items: flex-end;
+    align-items: center;
+    gap:10px;
 }
 
 .chat__entries .form-container{
-    padding: 0px 20px 10px 20px;
+    padding: 0px 0px 10px 20px;
+}
+
+.chat__container img{
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px;
+    margin-right: 20px;
 }
 
 .chat__entries .form-container .col-form-label-container{
     display: none;
-    
 }
