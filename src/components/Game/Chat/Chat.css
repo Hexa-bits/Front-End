@@ -1,0 +1,29 @@
+.chat__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: white;
+    width: 70%;
+    height: 100%;
+    border-radius: 20px;
+}
+
+.chat__title{
+    margin:20px 0px;
+    font-size: 25px;
+}
+
+.chat__msj{
+    width: 90%;
+    height: 100%;
+    margin: 0px 20px;
+    border-radius: 20px;
+    background-color: wheat;
+}
+
+.chat__entries{
+    display: flex;
+    width: 100%;
+    align-items: flex-end;
+}

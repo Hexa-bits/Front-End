@@ -3,15 +3,16 @@ import Confetti from "react-confetti";
 import "./Game.css";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../components/Button/Button.jsx";
-import VictoryBox from "../../../../components/VictoryBox/VictoryBox.jsx";
 import FigCards from "../../../../components/Game/FigCards/FigCards.jsx";
 import MovCards from "../../../../components/Game/MovCards/MovCards.jsx";
 import LeaveButton from "../../../../components/Game/LeaveButton/LeaveButton.jsx";
 import SeePlayer from "../../../../components/Game/seePlayer_Turn/seePlayer.jsx";
 import PlayerName from "../../../../components/Game/PlayerName/PlayerName.jsx";
 import Board from "../../../../components/Game/Board/Board.jsx";
+import Chat from "../../../../components/Game/Chat/Chat.jsx";
 import OtherPlayers from "../../../../components/Game/OtherPlayers/OtherPlayers.jsx";
 import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
+import Winner from "../../../../components/Game/Winner/Winner.jsx";
 
 import renewFigCards from "../../../../services/Game/Cards/renewFigCards.js";
 import renewMovCards from "../../../../services/Game/Cards/renewMovCards.js";
@@ -94,20 +95,7 @@ function Game() {
 
   return (
     <div>
-      {winnerName && (
-        <>
-          <Confetti
-            width={2500}
-            height={1500}
-            numberOfPieces={300}
-            gravity={0.3}
-            wind={0.02}
-            recycle={false}
-            style={{ position: "fixed", top: 0, left: 0 }}
-          />
-          <VictoryBox winnerName={winnerName} onLeave={handleLeave} />
-        </>
-      )}
+      <Winner winnerName={winnerName} onLeave={handleLeave}/>
 
       <div className="game-header">
         <div className="seePlayer">
@@ -185,6 +173,12 @@ function Game() {
           </div>
         </div>
         <div className="right-box">
+
+          <div className="chat-container">
+            <Chat/>
+          </div>
+
+
           <div className="end">
             <Button
               label="TERMINAR TURNO"
