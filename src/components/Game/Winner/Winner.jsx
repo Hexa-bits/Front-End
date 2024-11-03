@@ -18,7 +18,6 @@ function Winner({ winnerName, onLeave }) {
             <VictoryBox winnerName={winnerName} onLeave={onLeave} />
         </>
         );
-    
 }
 
 export default Winner;
