@@ -1,11 +1,8 @@
-.players-container {
-    margin-top: 40px;
-
-}
-
-.each-player {
-    padding-left: 5vh;
-    padding-bottom: 2vh;
+.players-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .player-name .Player{
