@@ -25,6 +25,8 @@ function Lobby() {
     gameId
   );
 
+  sessionStorage.setItem('game_name', gameName);
+
   useEffect(() => {
     if (activeGame) {
       navigate(GAME);
