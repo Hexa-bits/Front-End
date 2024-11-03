@@ -99,7 +99,6 @@ function Game() {
       	<Winner winnerName={winnerName} onLeave={handleLeave}/>
       
 		<div className="left-area">
-
 			<div className="seePlayer">
 				<SeePlayer player={currentPlayer || "??????"} />
 			</div>
@@ -108,9 +107,8 @@ function Game() {
 			</div>
 			<div className="leav">
 					<LeaveButton onLeave={handleLeave} />
-				</div>		
+			</div>		
     	</div>
-
 
 		<div className="mid-area">
 			<div className="optional">
@@ -129,55 +127,49 @@ function Game() {
 						<LabelMovParcial isVisible={isMovParcial} />
 					</div>
 				</div>
-
 				<div className="Cards">
 					<div className="Fig">
 						<FigCards 
-						fig_cards={fig_cards} 
-						onSelectedCardFig={setSelectedFig}
-						isTurn={localPlayerId === playerId} 
+							fig_cards={fig_cards} 
+							onSelectedCardFig={setSelectedFig}
+							isTurn={localPlayerId === playerId} 
 						/>
 					</div>
 					<div className="Mov">
 						<MovCards
-						mov_cards={mov_cards}
-						onSelectedMov={setSelectedMov}
-						isTurn={localPlayerId === playerId}
+							mov_cards={mov_cards}
+							onSelectedMov={setSelectedMov}
+							isTurn={localPlayerId === playerId}
 						/>
 					</div>
 				</div>
-
 				<div className="button-panel">
 					<div className="useFig">
 						<Button
-						label="DESCARTAR FIGURA"
-						onClick={useFig}
-						disabled={localPlayerId !== playerId}
-					/>
+							label="DESCARTAR FIGURA"
+							onClick={useFig}
+							disabled={localPlayerId !== playerId}
+						/>
 					</div> 
-			
 					<div className="mov-butt">
 						<div className="useMov">
 							<Button
-							label="USAR MOVIMIENTO"
-							onClick={handleUseMov}
-							disabled={localPlayerId !== playerId}
+								label="USAR MOVIMIENTO"
+								onClick={handleUseMov}
+								disabled={localPlayerId !== playerId}
 							/>
 						</div>
 						<div className="cancel">
 							<Button
-							label="CANCELAR MOVIMIENTO"
-							onClick={handleCancel}
-							disabled={localPlayerId !== playerId}
+								label="CANCELAR MOVIMIENTO"
+								onClick={handleCancel}
+								disabled={localPlayerId !== playerId}
 							/>
 						</div>
 					</div>
 				</div>
-
-
 			</div>
-			</div>
-		<div/>
+		</div>
 
 		<div className="right-area">
 			<div className="right-box">
@@ -194,7 +186,7 @@ function Game() {
 				/>
 				</div>
 			</div>
-      </div>
+      	</div>
 	</div>
   );
 }
