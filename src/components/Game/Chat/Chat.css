@@ -33,12 +33,7 @@
     padding: 0px 0px 10px 20px;
 }
 
-.chat__container img{
-    width: 40px;
-    height: 40px;
-    margin-bottom: 10px;
-    margin-right: 20px;
-}
+
 
 .chat__entries .form-container .col-form-label-container{
     display: none;
@@ -49,3 +44,20 @@
     padding-left: 15px;
 }
 
+.chat__entries .btn-send{
+    background-color: #008bd0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 60%;
+    margin-bottom: 10px;
+    margin-right: 20px;
+    border-radius: 13px;
+}
+
+.chat__container .btn-send img{
+    width: 30px;
+    height: auto;
+    transform: translateX(-2px);
+}
