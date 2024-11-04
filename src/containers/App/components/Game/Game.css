@@ -1,4 +1,3 @@
-@import "../../../../utils/colores.css";
 
 .game-header, 
 .game-container  {
@@ -94,6 +93,12 @@
     align-items: center;
     margin-top: 70px;
 }
+.labelMovParcial{
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    width: auto;
+}
 
 .Cards{
     height: auto;
@@ -110,24 +115,20 @@
     height: auto;
 }
 
-.Fig button {
+.fig-butt {
+    margin-top: 45px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+/* .block button {
+    height: 60px;
     width: 150px;
     border: none;
-}
-
-.useFig {
-    margin-top: 50px;
-    display: flex;
-    justify-content: center;
-}
-
-
-.labelMovParcial{
-    display: flex;
-    flex-direction: column;
-    height: 400px;
-    width: auto;
-}
+    background-color: #f47914;
+    color: rgb(255, 255, 255);
+} */
 
 .Mov{
     margin-right: 20px;
@@ -148,7 +149,10 @@
     gap: 10px;
 }
 
-.cancel button{
+
+
+.block button,
+.cancel button {
     height: 60px;
     width: 150px;
     border: none;
@@ -156,12 +160,14 @@
     color: rgb(255, 255, 255);
 }
 
+.block button:hover,
 .cancel button:hover {
     background-color: #ffae00;
     border: 1px solid rgb(255, 255, 255);
     color: rgb(255, 255, 255);
 }
 
+.block button:disabled,
 .cancel button:disabled {
     background-color: #ffae00;
     color: rgb(255, 255, 255);
@@ -203,7 +209,7 @@
 
 .end button {
     height: 60px;
-    width: 150px;
+    width: 151.5px;
     border: none;
     margin-right: 30px;
     margin-bottom: 40px;

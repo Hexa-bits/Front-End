@@ -122,6 +122,11 @@
     margin: 20px 20px 0px 20px; 
 }
 
+.form-check-input:hover,
+.form-check-label:hover {
+    cursor: var(--pointer-cursor);
+}
+
 .GameList__Home{
     width: 100%;
     max-height: 50vh;

@@ -1,5 +1,3 @@
-@import "../../../utils/colores.css";
-
 .leav .btn-leave-game {
     background-color: var(--rojo);
     border: none;
