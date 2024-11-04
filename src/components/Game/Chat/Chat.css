@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     background-color: white;
     width: 100%;
     height: 100%;
@@ -16,9 +16,33 @@
 
 .chat__msj{
     width: 90%;
-    height: 100%;
     margin: 20px 0px;
     border-radius: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.chat__msj #messages{
+    max-height: 60vh;
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    height: auto;   
+    width: 100%;
+    font-size: 1.2em;
+    overflow-y: auto;
+    border-radius: 10px;
+}
+
+#messages > li {
+    padding: .5rem 1rem;
+    width: 100%;
+}
+
+#messages > li:nth-child(odd) {
+    background-color: #f9f9f9;
 }
 
 .chat__entries{
@@ -33,8 +57,6 @@
     padding: 0px 0px 10px 20px;
 }
 
-
-
 .chat__entries .form-container .col-form-label-container{
     display: none;
 }
@@ -42,6 +64,9 @@
 .chat__entries .form-container .col-auto input{
     text-align: left;
     padding-left: 15px;
+    width: 100%;
+    border-radius: 13px;
+    
 }
 
 .chat__entries .btn-send{
@@ -55,6 +80,8 @@
     margin-right: 20px;
     border-radius: 13px;
 }
+
+
 
 .chat__container .btn-send img{
     width: 30px;

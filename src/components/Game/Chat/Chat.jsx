@@ -2,15 +2,24 @@ import "./Chat.css";
 import Form from "../../../components/Form/Form.jsx";
 import Button from "../../Button/Button.jsx";
 import React, { useState } from "react";
+import WSMessages from "../../../services/WS/Chat/WSMessages.js";
 
-function Chat() {
+function Chat({ ws, playerId }) {
     const [message, setMessage] = useState("");
+    const [messages, setMessages] = useState([]); // Almacena todos los mensajes en un array
 
+    // Función para recibir mensajes del WebSocket
+    const handleIncomingMessage = (data) => {
+        setMessages((prevMessages) => [...prevMessages, data]);
+    };
+
+    // Inicializa WSMessages y obtiene la función para enviar mensajes
+    const { sendMessage: sendWSMessage } = WSMessages({ ws, onMessageReceived: handleIncomingMessage });
+
+    // Enviar mensaje al WebSocket y agregarlo a la lista
     const sendMessage = () => {
         if (!message) return;
-        const li = document.createElement('li');
-        li.textContent = message;
-        document.getElementById('messages').appendChild(li);
+        sendWSMessage(playerId, message);
         setMessage("");
     };
 
@@ -24,7 +33,11 @@ function Chat() {
     return (
         <div className="chat__container">
             <div className="chat__msj">
-                <ul id="messages"></ul>
+                <ul id="messages">
+                    {messages.map((msg, index) => (
+                        <li key={index}><strong>{msg.player_name}</strong>: {msg.msg}</li>
+                    ))}
+                </ul>
             </div>
 
             <div className="chat__entries">
