@@ -12,6 +12,7 @@ import Board from "../../../../components/Game/Board/Board.jsx";
 import Chat from "../../../../components/Game/Chat/Chat.jsx";
 import OtherPlayers from "../../../../components/Game/OtherPlayers/OtherPlayers.jsx";
 import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
+import LabelProhibitedColor from "../../../../components/Game/Board/LabelProhibitedColor/LabelProhibitedColor.jsx";
 import Winner from "../../../../components/Game/Winner/Winner.jsx";
 import GameName from "../../../../components/Game/GameName/GameName.jsx";
 
@@ -126,6 +127,7 @@ function Game() {
 					<div className="labelMovParcial">
 						<LabelMovParcial isVisible={isMovParcial} />
 					</div>
+					<LabelProhibitedColor color={4}/>
 				</div>
 				<div className="Cards">
 					<div className="Fig">
