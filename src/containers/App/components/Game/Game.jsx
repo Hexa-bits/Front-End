@@ -45,7 +45,7 @@ function Game() {
     const { winnerName, getWinner } = WinnerExists(gameId);
     const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
     const { fig_cards, fetchFigs } = renewFigCards(localPlayerId);
-    const { boxCards, movisParcial: isMovParcial ,fetchBoxCards } = renewBoard(gameId);
+    const { boxCards, movisParcial: isMovParcial, forbiddenColor ,fetchBoxCards } = renewBoard(gameId);
     const { infoPlayers, fetchInfoPlayers } = getOthersInfo(gameId, localPlayerId);
     const { formedFigs, fetchFormedFigs } = getFormedFig(); 
     
@@ -128,7 +128,7 @@ function Game() {
 						<LabelMovParcial isVisible={isMovParcial} />
 					</div>
 					<div className="labelProhibitedColor">
-						<LabelProhibitedColor color={0}/>
+						<LabelProhibitedColor color={forbiddenColor}/>
 					</div>
 				</div>
 				<div className="Cards">
