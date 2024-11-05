@@ -176,7 +176,12 @@ function Game() {
 				<div className="PlayerInfo-Area">
 					<PlayerName label={"USUARIO"} player={localPlayerName} />
 				</div>
-				<div className="chat-container"><Chat/></div>
+				<div className="chat-container">
+					<Chat
+						ws={ws}
+						playerId={localPlayerId}
+					/>
+				</div>
 
 				<div className="end">
 					<Button

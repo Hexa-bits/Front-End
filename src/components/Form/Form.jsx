@@ -1,7 +1,6 @@
 import "./Form.css";
-import React from "react";
 
-function Form ({label, type = "text", placeholder, helpText, id, onChange = undefined, value}) {
+function Form ({label, type = "text", placeholder, helpText, id, onChange = undefined, value, onKeyDown}) {
     return (
         <div className="form-container">
             <div className="col-form-label-container">
@@ -15,6 +14,7 @@ function Form ({label, type = "text", placeholder, helpText, id, onChange = unde
                     id={id}
                     onChange={onChange}   
                     value={value}
+                    onKeyDown={onKeyDown}
                 />
             </div>
             <div className="col-auto">
