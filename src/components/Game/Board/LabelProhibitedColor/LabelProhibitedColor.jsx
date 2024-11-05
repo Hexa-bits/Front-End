@@ -41,14 +41,15 @@ function LabelProhibitedColor({ color }) {
         <div
             className={`labelProhibitedColor ${visible ? 'visible' : ''} ${hiding ? 'hiding' : ''} ${flashing ? 'flash' : ''}`} // Añade la clase flash
             style={{
-                transform: visible ? 'translateY(-220px) translateX(120px)' : 'translateY(0) translateX(120px)',
+                transform: visible ? 'translateY(-20px) translateX(224px)' : 'translateY(-20px) translateX(0px)',
             }}
         >
             <div className="labelProhibitedColor__container">
-                <div
-                    className="labelProhibitedColor__box"
-                    style={boxStyle}
-                />
+                
+                <div className="labelProhibitedColor__box"
+                    style={boxStyle}>
+                Bloqueado
+                </div>
             </div>
         </div>
     );
