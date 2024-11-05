@@ -15,13 +15,13 @@ const mockWebSocket = {
     send: mockSendMessage,
     addEventListener: mockAddEventListener,
     removeEventListener: mockRemoveEventListener,
-    readyState: WebSocket.OPEN, // El WebSocket está abierto
+    readyState: WebSocket.OPEN, 
 };
 
 global.WebSocket = vi.fn(() => mockWebSocket);
 
 vi.mock('../../../services/WS/Chat/WSMessages', () => ({
-    __esModule: true, // Para indicar que es un módulo ES
+    __esModule: true,
     default: ({ ws, onMessageReceived }) => {
         useEffect(() => {
             if (!ws) return;
@@ -40,7 +40,7 @@ vi.mock('../../../services/WS/Chat/WSMessages', () => ({
             ws.addEventListener('message', handleMessage);
 
             return () => {
-                ws.removeEventListener('message', handleMessage); // Limpieza del listener
+                ws.removeEventListener('message', handleMessage);
             };
         }, [ws, onMessageReceived]);
 
@@ -56,10 +56,8 @@ describe('Chat Component', () => {
     it('Should render received messages correctly', async () => {
         render(<Chat ws={mockWebSocket} playerId="123" />);
 
-        // Esperar a que el mensaje se renderice
         const messageItem = await waitFor(() => screen.getByText('Hola'));
 
-        // Verificar que el mensaje aparezca en el DOM
         expect(messageItem).toBeInTheDocument();
         expect(messageItem).toHaveTextContent('Jugador 1');
     });
@@ -67,15 +65,12 @@ describe('Chat Component', () => {
     it('Should send a message when the send button is clicked.', () => {
         render(<Chat ws={mockWebSocket} playerId="123" />);
 
-        // Ingresar un mensaje en el input
         const input = screen.getByPlaceholderText('Escribe un mensaje...');
         fireEvent.change(input, { target: { value: 'Mensaje de prueba' } });
 
-        // Hacer clic en el botón de enviar
         const sendButton = screen.getByRole('button');
         fireEvent.click(sendButton);
 
-        // Verificar que sendMessage haya sido llamado con los argumentos correctos
         expect(mockSendMessage).toHaveBeenCalledWith('123', 'Mensaje de prueba');
         expect(input.value).toBe('');
     });
@@ -83,14 +78,11 @@ describe('Chat Component', () => {
     it('Should send a message when “Enter” is pressed."', () => {
         render(<Chat ws={mockWebSocket} playerId="123" />);
 
-        // Ingresar un mensaje en el input
         const input = screen.getByPlaceholderText('Escribe un mensaje...');
         fireEvent.change(input, { target: { value: 'Mensaje de prueba' } });
 
-        // Simular el evento 'Enter' en el input
         fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
 
-        // Verificar que sendMessage haya sido llamado con los argumentos correctos
         expect(mockSendMessage).toHaveBeenCalledWith('123', 'Mensaje de prueba');
         expect(input.value).toBe('');
     });
