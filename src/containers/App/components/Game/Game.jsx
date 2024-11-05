@@ -178,7 +178,9 @@ function Game() {
 				</div>
 				<div className="chat-container">
 					<Chat
-						ws={ws}/>
+						ws={ws}
+						playerId={localPlayerId}
+					/>
 				</div>
 
 				<div className="end">

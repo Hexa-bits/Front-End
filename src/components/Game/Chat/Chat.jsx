@@ -1,32 +1,51 @@
 import "./Chat.css";
-import Form from "../../../components/Form/Form.jsx";
-import Button from "../../Button/Button.jsx";
-import React, { useState } from "react";
-import WSMessages from "../../../services/WS/Chat/WSMessages.js";
+import { useState } from "react";
+import WSMessages from "../../../services/WS/Chat/WSMessages";
+import Button from "../../Button/Button";
+import { useEffect } from 'react';
 
 function Chat({ ws, playerId }) {
-    const [message, setMessage] = useState("");
-    const [messages, setMessages] = useState([]); // Almacena todos los mensajes en un array
+    const [input, setInput] = useState("");
+    const [messages, setMessages] = useState([]);
 
-    // Función para recibir mensajes del WebSocket
-    const handleIncomingMessage = (data) => {
-        setMessages((prevMessages) => [...prevMessages, data]);
-    };
+    useEffect(() => {
+        if (!ws) return;
 
-    // Inicializa WSMessages y obtiene la función para enviar mensajes
-    const { sendMessage: sendWSMessage } = WSMessages({ ws, onMessageReceived: handleIncomingMessage });
+        const handleMessage = (event) => {
+            console.log("SIN PARSEO -> ", event.data);
+            try {
+                const data = JSON.parse(event.data);
+                console.log("PARSEADO -> ", data);
+                if (data.type === "message") { // Verificamos que el tipo sea "message"
+                    setMessages(prevMessages => [...prevMessages, data.data]); // Actualiza los mensajes
+                }
+            } catch (error) {
+                console.error("Error al parsear el mensaje:", error);
+            }
+        };
 
-    // Enviar mensaje al WebSocket y agregarlo a la lista
-    const sendMessage = () => {
-        if (!message) return;
-        sendWSMessage(playerId, message);
-        setMessage("");
+        ws.addEventListener('message', handleMessage);
+
+        return () => {
+            ws.removeEventListener('message', handleMessage); // Limpieza del listener
+        };
+    }, [ws]); // Dependencia en ws para asegurarnos de que el efecto se ejecute cuando cambie
+
+    const handleSendMessage = (msg) => {
+        if (msg.trim()) { // Verifica que el mensaje no esté vacío
+            const message = JSON.stringify({
+                player_id: playerId,
+                msg: msg,
+            });
+            ws.send(message);
+            setInput(""); 
+        }
     };
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             event.preventDefault(); 
-            sendMessage();
+            handleSendMessage(input);
         }
     };
 
@@ -39,20 +58,24 @@ function Chat({ ws, playerId }) {
                     ))}
                 </ul>
             </div>
-
             <div className="chat__entries">
-                <Form
-                    id="form-chat"
-                    placeholder="Ingrese un mensaje"
-                    onChange={(e) => setMessage(e.target.value)} 
-                    value={message}
-                    onKeyDown={handleKeyDown}
-                />
-                <Button
-                    onClick={sendMessage}
-                    className="btn-send"
-                    label={<img src="../../../../assets/icons/send-.svg" alt="send icon" />}
-                />
+                <div className="form__container">
+                    <div className="form">
+                        <input
+                            type="text"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            placeholder="Escribe un mensaje..."
+                            className="input"
+                            onKeyDown={handleKeyDown}
+                        />
+                    </div>
+                    <Button
+                        onClick={() => handleSendMessage(input)}
+                        className="btn-send"
+                        label={<img src="../../../../assets/icons/send-.svg" alt="send icon" />}
+                    />
+                </div>
             </div>
         </div>
     );

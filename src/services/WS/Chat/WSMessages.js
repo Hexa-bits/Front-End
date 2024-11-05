@@ -4,29 +4,32 @@ function WSMessages({ ws, onMessageReceived }) {
     useEffect(() => {
         if (!ws) return;
 
-        // Escucha de mensajes entrantes del WebSocket
         ws.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-
-            // Verificamos que el mensaje tenga el formato correcto
-            if (data.type === "message" && data.data) {
-                onMessageReceived(data.data);
+            console.log("SIN PARSEO -> ", event.data);
+            try {
+                const data = JSON.parse(event.data);
+                console.log("PARSEADO -> ", data);
+                if (data.type === "message") { 
+                    onMessageReceived(data.data); 
+                }
+            } catch (error) {
+                console.error("Error al parsear el mensaje:", error);
             }
         };
 
         return () => {
-            ws.onmessage = null; // Limpia la escucha cuando el componente se desmonta
+            ws.onmessage = null;
         };
     }, [ws, onMessageReceived]);
 
-    // Función para enviar un mensaje
     const sendMessage = (playerId, msg) => {
         if (!ws || ws.readyState !== WebSocket.OPEN) return;
         const message = JSON.stringify({
-            type: "message",
-            data: { player_id: playerId, msg }
+            player_id: playerId,
+            msg: msg
         });
         ws.send(message);
+        console.log("WS enviado -> ", message);
     };
 
     return { sendMessage };
