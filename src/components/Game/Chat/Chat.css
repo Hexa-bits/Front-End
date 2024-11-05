@@ -1,0 +1,113 @@
+.chat__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+
+.chat__title{
+    margin:20px 0px;
+    font-size: 25px;
+}
+
+.chat__msj{
+    width: 90%;
+    margin: 20px 0px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.chat__msj #messages{
+    max-height: 60vh;
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    height: auto;   
+    width: 100%;
+    font-size: 1.2em;
+    overflow-y: auto;
+    border-radius: 10px;
+}
+
+#messages > li {
+    padding: .5rem 1rem;
+    width: 100%;
+}
+
+#messages > li:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.chat__entries {
+    width: 90%;
+    height: auto;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.chat__container .form__container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 50px;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.chat__entries .form {
+    width: 80%;
+    height: auto;
+}
+
+.chat__entries .form input{
+    text-align: left;
+    padding: 10px;
+    border-radius: 13px;
+    width: 100%;
+    height: 100%;
+    font-size: 17px;
+}
+
+.chat__entries .btn-send {
+    background-color: #008bd0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 100%;
+    margin: 0;
+    border-radius: 13px;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.chat__entries .btn-send:hover {
+    background-color: #005f99;
+}
+
+/* Definimos la animación de salto */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-5px); }
+    50% { transform: translateY(0); }
+    75% { transform: translateY(-3px); }
+}
+
+/* Aplicamos la animación a la imagen */
+.chat__container .btn-send img {
+    height: 30px;
+    transition: transform 0.3s ease;
+}
+
+.chat__container .btn-send:hover img {
+    animation: bounce 0.8s ease; /* Repetición infinita para crear el efecto */
+}

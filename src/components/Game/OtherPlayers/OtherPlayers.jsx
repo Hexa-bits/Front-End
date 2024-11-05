@@ -8,7 +8,7 @@ function OtherPlayers({players, onSelectFigToBlock, isTurn}) {
             { players.map((player, playerIndex) => (
                 <div className="each-player" key={playerIndex}>
                     <div className="player-name"> 
-                        <PlayerName label={playerIndex} player={player.nombre} />   
+                        <PlayerName player={player.nombre} />   
                     </div>
                     <div className={`player-figs ${isTurn ? "" : "notInTurn"}`}> 
                         <FigCards 

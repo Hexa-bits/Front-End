@@ -3,15 +3,17 @@ import Confetti from "react-confetti";
 import "./Game.css";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../components/Button/Button.jsx";
-import VictoryBox from "../../../../components/VictoryBox/VictoryBox.jsx";
 import FigCards from "../../../../components/Game/FigCards/FigCards.jsx";
 import MovCards from "../../../../components/Game/MovCards/MovCards.jsx";
 import LeaveButton from "../../../../components/Game/LeaveButton/LeaveButton.jsx";
 import SeePlayer from "../../../../components/Game/seePlayer_Turn/seePlayer.jsx";
 import PlayerName from "../../../../components/Game/PlayerName/PlayerName.jsx";
 import Board from "../../../../components/Game/Board/Board.jsx";
+import Chat from "../../../../components/Game/Chat/Chat.jsx";
 import OtherPlayers from "../../../../components/Game/OtherPlayers/OtherPlayers.jsx";
 import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
+import Winner from "../../../../components/Game/Winner/Winner.jsx";
+import GameName from "../../../../components/Game/GameName/GameName.jsx";
 
 import renewFigCards from "../../../../services/Game/Cards/renewFigCards.js";
 import renewMovCards from "../../../../services/Game/Cards/renewMovCards.js";
@@ -36,7 +38,6 @@ function Game() {
     const localPlayerId = parseInt(sessionStorage.getItem("player_id"), 10);
     const localPlayerName = sessionStorage.getItem("player_name");
     const gameId = sessionStorage.getItem("game_id");
-
     
     const ws = getWsGameInstance(WS_GAME + gameId);
     
@@ -85,7 +86,7 @@ function Game() {
       } 
     };
 
-    const useFig = async () => {
+    const handleUseFig = async () => {
       await discardFig(localPlayerId, selecFormedFig, selectedFig);
       setSelectedFig(null);
       setSelecFormedFig([]);
@@ -103,131 +104,115 @@ function Game() {
 
 
   return (
-    <div>
-      {winnerName && (
-        <>
-          <Confetti
-            width={2500}
-            height={1500}
-            numberOfPieces={300}
-            gravity={0.3}
-            wind={0.02}
-            recycle={false}
-            style={{ position: "fixed", top: 0, left: 0 }}
-          />
-          <VictoryBox winnerName={winnerName} onLeave={handleLeave} />
-        </>
-      )}
+    <div className="Game">
+        <Winner winnerName={winnerName} onLeave={handleLeave}/>
       
-      {/* Screen Header with labels */}
-      <div className="game-header">
-        <div className="seePlayer">
-          <SeePlayer player={currentPlayer || "??????"} />
-        </div>
-        <div className="PlayerInfo-Area">
-          <PlayerName label={"USUARIO"} player={localPlayerName} />
-        </div>
-      </div>
-
-      {/* Gaming Area */}
-      <div className="game-container">
-
-        <div className="left-box">
-
-          {/* Others Players info at the right Side */}
-          <div className="Game_Others_Area">
-            <OtherPlayers 
-              players={infoPlayers} 
-              onSelectFigToBlock={setFigToBlock}
-              isTurn={isTurn}
-            />
-            <div className="leav">
+		<div className="left-area">
+			<div className="seePlayer">
+				<SeePlayer player={currentPlayer || "??????"} />
+			</div>
+			<div className="Game_Others_Area">
+				<OtherPlayers 
+                    players={infoPlayers}
+                    onSelectFigToBlock={setFigToBlock}
+                    isTurn={isTurn}
+                />
+			</div>
+			<div className="leav">
               <LeaveButton onLeave={handleLeave} />
-            </div>
-          </div> 
+			</div>		
+    	</div>
 
-          <div className="Game_Area">
-          
-            {/* Board */}
-            <div className="board">
-              <Board
-                isTurn={isTurn}
-                cardData={boxCards}
-                onSelectedCards={setSelectedCards}
-                onSelectedFig={setSelecFormedFig}
-                formedFigs={formedFigs}
-              />
-              <div className="labelMovParcial">
-                <LabelMovParcial isVisible={isMovParcial} />
-              </div>
-            </div>
+		<div className="mid-area">
+			<div className="optional">
+				<GameName />
+			</div>
+			<div className="Game_Area">
+				<div className="board">
+					<Board
+						isTurn={isTurn}
+						cardData={boxCards}
+						onSelectedCards={setSelectedCards}
+						onSelectedFig={setSelecFormedFig}
+						formedFigs={formedFigs}
+					/>
+					<div className="labelMovParcial">
+						<LabelMovParcial isVisible={isMovParcial} />
+					</div>
+				</div>
+				<div className="Cards">
+					<div className="Fig">
+						<FigCards 
+							fig_cards={fig_cards} 
+							onSelectedCardFig={setSelectedFig}
+							isTurn={isTurn} 
+						/>
+					</div>
+					<div className="Mov">
+						<MovCards
+							mov_cards={mov_cards}
+							onSelectedMov={setSelectedMov}
+							isTurn={isTurn}
+						/>
+					</div>
+				</div>
+				<div className="button-panel">
+                    <div className="block">
+                        <Button
+                        label="BLOQUEAR OTRA FIGURA"
+                        onClick={blockPlayerFig}
+                        disabled={disabled}
+                        />
+                    </div>
+					<div className="useFig">
+						<Button
+							label="DESCARTAR FIGURA"
+							onClick={handleUseFig}
+							disabled={disabled}
+						/>
+					</div> 
+					<div className="mov-butt">
+						<div className="useMov">
+							<Button
+								label="USAR MOVIMIENTO"
+								onClick={handleUseMov}
+								disabled={disabled}
+							/>
+						</div>
+						<div className="cancel">
+							<Button
+								label="CANCELAR MOVIMIENTO"
+								onClick={handleCancel}
+								disabled={disabled}
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-            {/* My Cards and functional buttons */}
-            <div className="Cards">
-              <div className="Fig">
-                <FigCards 
-                  fig_cards={fig_cards} 
-                  onSelectedCardFig={setSelectedFig}
-                  isTurn={isTurn} 
-                />
+		<div className="right-area">
+			<div className="right-box">
+				<div className="PlayerInfo-Area">
+					<PlayerName label={"USUARIO"} player={localPlayerName} />
+				</div>
+				<div className="chat-container">
+					<Chat
+						ws={ws}
+						playerId={localPlayerId}
+					/>
+				</div>
 
-                <div className="fig-butt">
-                  <div className="block">
-                    <Button
-                      label="BLOQUEAR OTRA FIGURA"
-                      onClick={blockPlayerFig}
-                      disabled={disabled}
+				<div className="end">
+					<Button
+                        label="TERMINAR TURNO"
+                        onClick={handleEndTurn}
+                        disabled={disabled}
                     />
-                  </div>
-                  <div className="useFig">
-                    <Button
-                      label="DESCARTAR MI FIGURA"
-                      onClick={useFig}
-                      disabled={disabled}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="Mov">
-                <MovCards
-                  mov_cards={mov_cards}
-                  onSelectedMov={setSelectedMov}
-                  isTurn={isTurn}
-                />
-                <div className="mov-butt">
-                  <div className="useMov">
-                    <Button
-                      label="USAR MOVIMIENTO"
-                      onClick={handleUseMov}
-                      disabled={disabled}
-                    />
-                  </div>
-                  <div className="cancel">
-                    <Button
-                      label="CANCELAR MOVIMIENTO"
-                      onClick={handleCancel}
-                      disabled={disabled}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Right side of the screen */}
-        <div className="right-box">
-          <div className="end">
-            <Button
-              label="TERMINAR TURNO"
-              onClick={handleEndTurn}
-              disabled={localPlayerId !== playerId}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+				</div>
+			</div>
+      	</div>
+	</div>
   );
 }
 export default Game;

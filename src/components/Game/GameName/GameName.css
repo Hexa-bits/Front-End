@@ -1,0 +1,14 @@
+.gameName__container{
+    margin-top: 20px;
+    border-radius: 30px;
+    width: 60%;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, #5b2726, #3d1918);    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 30px;
+}
