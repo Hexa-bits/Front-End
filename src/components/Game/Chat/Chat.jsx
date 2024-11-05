@@ -2,42 +2,19 @@ import "./Chat.css";
 import { useState } from "react";
 import WSMessages from "../../../services/WS/Chat/WSMessages";
 import Button from "../../Button/Button";
-import { useEffect } from 'react';
 
-function Chat({ ws, playerId }) {
+    function Chat({ ws, playerId }) {
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState([]);
 
-    useEffect(() => {
-        if (!ws) return;
-
-        const handleMessage = (event) => {
-            console.log("SIN PARSEO -> ", event.data);
-            try {
-                const data = JSON.parse(event.data);
-                console.log("PARSEADO -> ", data);
-                if (data.type === "message") { // Verificamos que el tipo sea "message"
-                    setMessages(prevMessages => [...prevMessages, data.data]); // Actualiza los mensajes
-                }
-            } catch (error) {
-                console.error("Error al parsear el mensaje:", error);
-            }
-        };
-
-        ws.addEventListener('message', handleMessage);
-
-        return () => {
-            ws.removeEventListener('message', handleMessage); // Limpieza del listener
-        };
-    }, [ws]); // Dependencia en ws para asegurarnos de que el efecto se ejecute cuando cambie
+    // Llama a WSMessages y maneja la recepción de mensajes
+    const { sendMessage } = WSMessages({ ws, onMessageReceived: (data) => {
+        setMessages(prevMessages => [...prevMessages, data]);
+    }});
 
     const handleSendMessage = (msg) => {
-        if (msg.trim()) { // Verifica que el mensaje no esté vacío
-            const message = JSON.stringify({
-                player_id: playerId,
-                msg: msg,
-            });
-            ws.send(message);
+        if (msg.trim()) {
+            sendMessage(playerId, msg);
             setInput(""); 
         }
     };
@@ -49,12 +26,13 @@ function Chat({ ws, playerId }) {
         }
     };
 
+
     return (
         <div className="chat__container">
             <div className="chat__msj">
                 <ul id="messages">
                     {messages.map((msg, index) => (
-                        <li key={index}><strong>{msg.player_name}</strong>: {msg.msg}</li>
+                        <li key={index}><strong>{msg.player_name}</strong> <br/> {msg.msg}</li>
                     ))}
                 </ul>
             </div>

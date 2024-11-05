@@ -4,7 +4,7 @@ function WSMessages({ ws, onMessageReceived }) {
     useEffect(() => {
         if (!ws) return;
 
-        ws.onmessage = (event) => {
+        const handleMessage = (event) => {
             console.log("SIN PARSEO -> ", event.data);
             try {
                 const data = JSON.parse(event.data);
@@ -17,8 +17,10 @@ function WSMessages({ ws, onMessageReceived }) {
             }
         };
 
+        ws.addEventListener('message', handleMessage);
+
         return () => {
-            ws.onmessage = null;
+            ws.removeEventListener('message', handleMessage); // Limpieza del listener
         };
     }, [ws, onMessageReceived]);
 
