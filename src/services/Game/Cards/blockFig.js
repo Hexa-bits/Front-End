@@ -22,7 +22,8 @@ const blockFig = async (playerId, selectedFig, selectedFigCard) => {
         if (!response.ok) {
             console.log("Response was not ok.");
         }
-
+        console.log("Carta Figura bloqueada con exito.");
+        
     } catch (error) {
         console.log(error);
     }
