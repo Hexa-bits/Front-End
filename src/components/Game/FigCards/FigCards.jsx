@@ -28,6 +28,7 @@ function FigCards({ fig_cards, onSelectedCardFig, isTurn }) {
             <div
               key={card.id}
               className={`Figures 
+                ${isTurn ? '' : 'notInTurn'}
                 ${card.blocked ? "blocked" : (isSelected ? "selected" : "")}
               `} 
               onClick={() => handleCardClick(index)} 

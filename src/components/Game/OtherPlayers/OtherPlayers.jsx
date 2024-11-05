@@ -10,7 +10,7 @@ function OtherPlayers({players, onSelectFigToBlock, isTurn}) {
                     <div className="player-name"> 
                         <PlayerName label={playerIndex} player={player.nombre} />   
                     </div>
-                    <div className="player-figs"> 
+                    <div className={`player-figs ${isTurn ? "" : "notInTurn"}`}> 
                         <FigCards 
                             fig_cards={player.fig_cards} 
                             onSelectedCardFig={(figCard) => onSelectFigToBlock(figCard)}
