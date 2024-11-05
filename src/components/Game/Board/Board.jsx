@@ -47,6 +47,7 @@ function Board({ isTurn, cardData, onSelectedCards, formedFigs, onSelectedFig}) 
                         ? () => handleFigSelection(x, y) 
                         : () => handlerSelectedCard(x, y)
                      }
+                     disabled={!isTurn}
                   />
               );
               })}

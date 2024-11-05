@@ -29,14 +29,12 @@
     height: auto;
 }
 
-.player-figs .Figures.notInTurn img:hover {
-    cursor: var(--default-cursor);
-}
 
 .player-figs img:hover {
     cursor: var(--pointer-cursor);
 }
 
+.player-figs .Figures.disabled img:hover, 
 .player-figs .Figures.blocked img:hover {
     cursor: var(--default-cursor);
 }

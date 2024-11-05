@@ -32,10 +32,7 @@
     cursor: var(--pointer-cursor);
 }
 
-.Figures.notInTurn:hover {
-    cursor: var(--default-cursor);
-}
-
+.Figures.disabled:hover, 
 .Figures.blocked:hover {
     cursor: var(--default-cursor);
 } 

@@ -53,3 +53,7 @@
 .BoxCard:hover {
     cursor: var(--pointer-cursor);
 }
+
+.BoxCard.disabled:hover {
+    cursor: var(--default-cursor);
+}

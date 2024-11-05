@@ -53,6 +53,10 @@
     height: auto;
 }
 
+.Movs.disabled:hover {
+    cursor: var(--default-cursor);
+}
+
 /* Estilo para una carta seleccionada */
 .Movs.selected {
     border: 1px solid black; 
