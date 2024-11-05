@@ -127,7 +127,9 @@ function Game() {
 					<div className="labelMovParcial">
 						<LabelMovParcial isVisible={isMovParcial} />
 					</div>
-					<LabelProhibitedColor color={0}/>
+					<div className="labelProhibitedColor">
+						<LabelProhibitedColor color={0}/>
+					</div>
 				</div>
 				<div className="Cards">
 					<div className="Fig">
