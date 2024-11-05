@@ -1,5 +1,5 @@
 import "./Chat.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef} from "react";
 import WSMessages from "../../../services/WS/Chat/WSMessages";
 import Button from "../../Button/Button";
 
@@ -31,12 +31,16 @@ function Chat({ ws, playerId }) {
         }
     };
 
-    // Usar un efecto para hacer scroll hasta el final cuando se reciba un nuevo mensaje
     useEffect(() => {
-        if (messagesEndRef.current) {
-            messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-        }
+        const timer = setTimeout(() => {
+            if (messagesEndRef.current && typeof messagesEndRef.current.scrollIntoView === 'function') {
+                messagesEndRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+            }
+        }, 50);
+
+        return () => clearTimeout(timer);
     }, [messages]);
+
 
     return (
         <div className="chat__container">
@@ -45,7 +49,6 @@ function Chat({ ws, playerId }) {
                     {messages.map((msg, index) => (
                         <li key={index}><strong>{msg.player_name}</strong> <br/> {msg.msg}</li>
                     ))}
-                    {/* Este elemento vacío actúa como el punto de referencia para el scroll */}
                     <div ref={messagesEndRef} />
                 </ul>
             </div>

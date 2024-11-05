@@ -5,10 +5,8 @@ function WSMessages({ ws, onMessageReceived }) {
         if (!ws) return;
 
         const handleMessage = (event) => {
-            console.log("SIN PARSEO -> ", event.data);
             try {
                 const data = JSON.parse(event.data);
-                console.log("PARSEADO -> ", data);
                 if (data.type === "message") { 
                     onMessageReceived(data.data); 
                 }
@@ -31,7 +29,6 @@ function WSMessages({ ws, onMessageReceived }) {
             msg: msg
         });
         ws.send(message);
-        console.log("WS enviado -> ", message);
     };
 
     return { sendMessage };
