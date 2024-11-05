@@ -77,18 +77,37 @@
     font-size: 17px;
 }
 
-.chat__entries .btn-send{
+.chat__entries .btn-send {
     background-color: #008bd0;
     display: flex;
     align-items: center;
     justify-content: center;
     width: auto;
     height: 100%;
-    margin:0;
+    margin: 0;
     border-radius: 13px;
+    transition: background-color 0.3s ease;
+    position: relative;
 }
 
-.chat__container .btn-send img{
+.chat__entries .btn-send:hover {
+    background-color: #005f99;
+}
+
+/* Definimos la animación de salto */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-5px); }
+    50% { transform: translateY(0); }
+    75% { transform: translateY(-3px); }
+}
+
+/* Aplicamos la animación a la imagen */
+.chat__container .btn-send img {
     height: 30px;
-    transform: translateX(-2px);
+    transition: transform 0.3s ease;
+}
+
+.chat__container .btn-send:hover img {
+    animation: bounce 0.8s ease; /* Repetición infinita para crear el efecto */
 }
