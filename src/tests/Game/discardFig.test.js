@@ -13,7 +13,7 @@ describe("discardFig", () => {
     const fichas = selectedFig.map((card) => {
         return { x_pos: card.x, y_pos: card.y };
     });
-    const selectedFigCard = { id: 10 , fig: 3};
+    const selectedFigCard = { id: 10 , fig: 3, blocked: false};
 
     beforeEach(() => {
         mockFetch = vi.fn(() =>
