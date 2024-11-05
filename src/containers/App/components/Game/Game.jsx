@@ -82,9 +82,7 @@ function Game() {
         await discardMove(localPlayerId, selectedMov, selectedCards);
         setSelectedMov(null);
         setSelectedCards([]);
-      } else {
-        console.log("Movimiento no valido");
-      }
+      } 
     };
 
     const useFig = async () => {
@@ -120,7 +118,8 @@ function Game() {
           <VictoryBox winnerName={winnerName} onLeave={handleLeave} />
         </>
       )}
-
+      
+      {/* Screen Header with labels */}
       <div className="game-header">
         <div className="seePlayer">
           <SeePlayer player={currentPlayer || "??????"} />
@@ -130,19 +129,26 @@ function Game() {
         </div>
       </div>
 
+      {/* Gaming Area */}
       <div className="game-container">
+
         <div className="left-box">
 
+          {/* Others Players info at the right Side */}
           <div className="Game_Others_Area">
             <OtherPlayers 
               players={infoPlayers} 
               onSelectFigToBlock={setFigToBlock}
+              isTurn={isTurn}
             />
             <div className="leav">
               <LeaveButton onLeave={handleLeave} />
             </div>
           </div> 
+
           <div className="Game_Area">
+          
+            {/* Board */}
             <div className="board">
               <Board
                 isTurn={isTurn}
@@ -155,6 +161,8 @@ function Game() {
                 <LabelMovParcial isVisible={isMovParcial} />
               </div>
             </div>
+
+            {/* My Cards and functional buttons */}
             <div className="Cards">
               <div className="Fig">
                 <FigCards 
@@ -162,19 +170,25 @@ function Game() {
                   onSelectedCardFig={setSelectedFig}
                   isTurn={isTurn} 
                 />
-                <div className="useFig">
-                <Button
-                  label="DESCARTAR FIGURA"
-                  onClick={useFig}
-                  disabled={disabled}
-                />
-                <Button
-                  label="BLOQUEAR FIGURA"
-                  onClick={blockPlayerFig}
-                  disabled={disabled}
-                />
+
+                <div className="fig-butt">
+                  <div className="block">
+                    <Button
+                      label="BLOQUEAR OTRA FIGURA"
+                      onClick={blockPlayerFig}
+                      disabled={disabled}
+                    />
+                  </div>
+                  <div className="useFig">
+                    <Button
+                      label="DESCARTAR MI FIGURA"
+                      onClick={useFig}
+                      disabled={disabled}
+                    />
+                  </div>
+                </div>
               </div>
-              </div>
+
               <div className="Mov">
                 <MovCards
                   mov_cards={mov_cards}
@@ -196,12 +210,13 @@ function Game() {
                       disabled={disabled}
                     />
                   </div>
-                  
                 </div>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Right side of the screen */}
         <div className="right-box">
           <div className="end">
             <Button

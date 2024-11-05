@@ -1,3 +1,4 @@
+@import "../../../utils/variables.css";
 
 .lobby-container .list-group { 
     background: var(--amarillito);
