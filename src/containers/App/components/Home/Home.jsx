@@ -1,13 +1,16 @@
 import "./Home.css";
-import useGames from "../../../../services/Home/useGames.js";
-import Button from "../../../../components/Button/Button";
-import GameList from "../../../../components/Game_List/Game_List.jsx";
-import JoinGame from "../../../../utils/logics/Home/JoinGame.js";
-import WsHomeService from "../../../../services/WS/WsHomeService.js";
 import { useNavigate } from "react-router-dom";
-import { WS_HOME, LOGIN, SETGAME } from "../../../../utils/Constants.js";
-import Form from "../../../../components/Form/Form.jsx";
 import { useState } from "react";
+
+import Form from "../../../../components/Form/Form.jsx";
+import Button from "../../../../components/Button/Button";
+import GameList from "../../../../components/Home/Game_List/Game_List.jsx";
+import JoinForm from "../../../../components/Home/JoinForm/JoinForm.jsx";
+
+import useGames from "../../../../services/Home/useGames.js";
+import joinGame from "../../../../services/Home/JoinGame.js";
+import WsHomeService from "../../../../services/WS/WsHomeService.js";
+import { WS_HOME, LOGIN, SETGAME } from "../../../../utils/Constants.js";
 
 function Home() {
   const playerId = parseInt(sessionStorage.getItem("player_id"), 10);
@@ -16,18 +19,24 @@ function Home() {
   const [filter, setFilter] = useState("");
   const [search, setSearch] = useState(false);
 
-  const { ws } = WsHomeService(WS_HOME);
+  const [showForm, setShowForm] = useState(false);
+  const [gameId, setGameId] = useState(0);
 
+  const { ws } = WsHomeService(WS_HOME);
   const { games } = useGames(ws);
 
   const handleCrearPartida = () => {
     navigate(SETGAME);
   };
 
-  const { joinGame } = JoinGame(ws);
-  const handleJoin = (gameId) => {
-    joinGame(gameId, playerId);
+  const handleJoin = (game) => {
+    setShowForm(true);
+    setGameId=(game.id);
+    // if (game.isPrivate) { setShowForm(true); } 
+    // else { joinGame(game.id, playerId); }
   };
+
+
   const handleChecked = (e) => {
     setSearch(e.target.checked);
   };
@@ -79,6 +88,11 @@ function Home() {
           />
         </section>
       </div>
+      {showForm && (
+        <section className="JoinForm__Home">
+          <JoinForm gameId={gameId} playerId={playerId} setShowForm={setShowForm}/>
+        </section>
+      )}
     </div>
   );
 }
