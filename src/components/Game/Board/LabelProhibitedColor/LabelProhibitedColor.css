@@ -1,0 +1,23 @@
+.labelProhibitedColor {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s ease;
+}
+
+.labelProhibitedColor__box {
+    background-color: white;
+    writing-mode: vertical-lr;
+    padding:10px;
+    padding-right: 8px;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    border-radius: 0px 10px 10px 0px;
+    text-transform: uppercase;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+}
