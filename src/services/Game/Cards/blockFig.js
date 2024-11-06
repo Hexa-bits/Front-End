@@ -22,7 +22,7 @@ const blockFig = async (localPlayerId, selecFormedFig, figToBlock) => {
         if (!response.ok) {
             console.log("Response was not ok.");
         }
-        console.log("Carta Figura bloqueada con exito.");
+        console.log("Fig card blocked successfully.");
         
     } catch (error) {
         console.log(error);

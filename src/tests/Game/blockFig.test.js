@@ -44,7 +44,7 @@ describe ("blockFig", () => {
                 figura: boxCards
             }),
         });
-        expect(console.log).toHaveBeenCalledWith("Carta Figura bloqueada con exito.");
+        expect(console.log).toHaveBeenCalledWith("Fig card blocked successfully.");
     });
 
     it('Handles error correctily.', async () => {
@@ -59,6 +59,16 @@ describe ("blockFig", () => {
             expect(console.log).toHaveBeenCalledWith("Response was not ok.");
         });
 
-        //ver si agregar mas codigos de error, segun implementacion de back.
+        mockFetch.mockImplementationOnce(() =>
+            Promise.resolve({
+              ok: false,
+              status: 500,
+            })
+        );
+        await blockFig(playerId, selectedFig, selectedFigCard);
+        await waitFor(() => {
+            expect(console.log).toHaveBeenCalledWith("Response was not ok.");
+        });
+
     });
 });
