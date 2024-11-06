@@ -14,9 +14,9 @@ function LabelProhibitedColor({ color }) {
             setVisible(true);
             setHiding(false);
         } else {
+            setVisible(false);
             setHiding(true);
             const hideTimer = setTimeout(() => {
-                setVisible(false);
                 setHiding(false);
             }, 500);
             return () => clearTimeout(hideTimer);
