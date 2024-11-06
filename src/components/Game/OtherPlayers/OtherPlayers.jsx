@@ -1,7 +1,7 @@
 import FigCards from "../FigCards/FigCards";
 import PlayerName from "../PlayerName/PlayerName";
 import "./OtherPlayers.css";
-function OtherPlayers({players, onSelectFigToBlock, isTurn}) {
+function OtherPlayers({players, onSelecFigToBlock, isTurn}) {
     
     return ( 
         <div className="players-container">
@@ -13,7 +13,7 @@ function OtherPlayers({players, onSelectFigToBlock, isTurn}) {
                     <div className={`player-figs ${isTurn ? "" : "notInTurn"}`}> 
                         <FigCards 
                             fig_cards={player.fig_cards} 
-                            onSelectedCardFig={(figCard) => onSelectFigToBlock(figCard)}
+                            onSelecFigCard={(figCard) => onSelecFigToBlock(figCard)}
                             isTurn={isTurn}
                         />
                     </div>

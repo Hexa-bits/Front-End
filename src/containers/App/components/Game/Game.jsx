@@ -51,7 +51,7 @@ function Game() {
     
     const [ selectedCards, setSelectedCards] = useState([]);
     const [ selectedMov, setSelectedMov] = useState(null);
-    const [ selectedFig, setSelectedFig] = useState(null);
+    const [ selectedFig, setSelectedFigCard] = useState(null);
     const [ selecFormedFig, setSelecFormedFig] = useState([]);
     const [ figToBlock, setFigToBlock] = useState(null);
     
@@ -88,7 +88,7 @@ function Game() {
 
     const handleUseFig = async () => {
       await discardFig(localPlayerId, selecFormedFig, selectedFig);
-      setSelectedFig(null);
+      setSelectedFigCard(null);
       setSelecFormedFig([]);
     };
 
@@ -97,9 +97,12 @@ function Game() {
     };
 
     const blockPlayerFig = async () => {
-      await blockFig(playerId, selectedFig, figToBlock);
-      setSelectedFig(null);
-      setFigToBlock(null);
+		console.log(selectedFig);
+		console.log(figToBlock);
+		await blockFig(localPlayerId, selecFormedFig, figToBlock);
+
+		setSelecFormedFig([]);
+		setFigToBlock(null);
     }
 
 
@@ -114,7 +117,7 @@ function Game() {
 			<div className="Game_Others_Area">
 				<OtherPlayers 
                     players={infoPlayers}
-                    onSelectFigToBlock={setFigToBlock}
+                    onSelecFigToBlock={setFigToBlock}
                     isTurn={isTurn}
                 />
 			</div>
@@ -133,7 +136,7 @@ function Game() {
 						isTurn={isTurn}
 						cardData={boxCards}
 						onSelectedCards={setSelectedCards}
-						onSelectedFig={setSelecFormedFig}
+						onSelecFormedFig={setSelecFormedFig}
 						formedFigs={formedFigs}
 					/>
 					<div className="labelMovParcial">
@@ -144,7 +147,7 @@ function Game() {
 					<div className="Fig">
 						<FigCards 
 							fig_cards={fig_cards} 
-							onSelectedCardFig={setSelectedFig}
+							onSelecFigCard={setSelectedFigCard}
 							isTurn={isTurn} 
 						/>
 					</div>
@@ -166,7 +169,7 @@ function Game() {
                     </div>
 					<div className="useFig">
 						<Button
-							label="DESCARTAR FIGURA"
+							label="DESCARTAR MI FIGURA"
 							onClick={handleUseFig}
 							disabled={disabled}
 						/>

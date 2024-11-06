@@ -2,21 +2,21 @@ import React from "react";
 import "./FigCards.css";
 import { useState, useEffect } from "react";
 
-function FigCards({ fig_cards, onSelectedCardFig, isTurn }) {
+function FigCards({ fig_cards, onSelecFigCard, isTurn }) {
   const [selectedIndex, setSelectedIndex] = useState(null); 
 
   // Manejador de clics para seleccionar una carta
-  const handleCardClick = (index) => {
+  const handleCardClick = (card, index) => {
     if (!isTurn) return; 
     setSelectedIndex(index === selectedIndex ? null : index);
-    onSelectedCardFig(index === selectedIndex ? null : fig_cards[index]);
+    onSelecFigCard(card);
   };
 
   useEffect(() => {
     if (!isTurn) {
       setSelectedIndex(null);
     }
-  }, [isTurn, onSelectedCardFig]);
+  }, [isTurn, onSelecFigCard]);
 
   return (
     <div className="fig-cards-container">
@@ -31,7 +31,7 @@ function FigCards({ fig_cards, onSelectedCardFig, isTurn }) {
                 ${isTurn ? '' : 'disabled'}
                 ${card.blocked ? "blocked" : (isSelected ? "selected" : "")}
               `} 
-              onClick={() => handleCardClick(index)} 
+              onClick={() => handleCardClick(card, index)} 
             >
               <img
                 src={`

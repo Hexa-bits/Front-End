@@ -5,7 +5,7 @@ import { COLORMAP_BOXCARDS } from "../../../utils/Constants";
 import { useEffect } from "react";
 
 
-function Board({ isTurn, cardData, onSelectedCards, formedFigs, onSelectedFig}) {
+function Board({ isTurn, cardData, onSelectedCards, formedFigs, onSelecFormedFig}) {
     const { selectedCards, handlerSelectedCard } = useSelectedCards(isTurn);
 
     useEffect(() => {
@@ -25,7 +25,7 @@ function Board({ isTurn, cardData, onSelectedCards, formedFigs, onSelectedFig}) 
         const foundFig = formedFigs.find(fig => 
           fig.some(pos => pos.x === x && pos.y === y)
         );
-        if (foundFig) { onSelectedFig(foundFig); } 
+        if (foundFig) { onSelecFormedFig(foundFig); } 
     };
 
     return (
