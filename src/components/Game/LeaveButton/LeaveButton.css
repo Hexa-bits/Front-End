@@ -8,8 +8,9 @@
 }
 
 .leav .btn-leave-game:hover {
-    background-color: var(--rojo);
-    transform: scale(1.05);
+    background-color: rgb(255, 0, 0);
+    transform: scale(1.07);
+    border: 1px solid rgb(255, 255, 255);
 }
 
 
