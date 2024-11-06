@@ -79,6 +79,7 @@
     justify-content: center;
     margin-bottom: 35px;
     padding:2px;
+    gap: 80px;
 }
 
 .game-container {
@@ -132,19 +133,6 @@
     align-items: center;
 }
 
-.fig-butt {
-    margin-top: 45px;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-
-.useFig {
-    width: 50%;
-    display: flex;
-    justify-content: center;
-}
-
 .labelMovParcial{
     display: flex;
     flex-direction: column;
@@ -158,15 +146,23 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
 }
 
+.fig-butt,
 .mov-butt {
     width: 50%;
     display: flex;
-    justify-content: center;
     flex-direction: row;
     gap: 10px;
+}
+
+.fig-butt {
+    justify-content: flex-end;
+}
+
+.mov-butt {
+    justify-content: flex-start;
 }
 
 

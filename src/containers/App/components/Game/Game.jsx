@@ -160,19 +160,22 @@ function Game() {
 					</div>
 				</div>
 				<div className="button-panel">
-                    <div className="block">
-                        <Button
-                        label="BLOQUEAR OTRA FIGURA"
-                        onClick={blockPlayerFig}
-                        disabled={disabled}
-                        />
-                    </div>
-					<div className="useFig">
-						<Button
-							label="DESCARTAR MI FIGURA"
-							onClick={handleUseFig}
+					<div className="fig-butt">
+
+						<div className="block">
+							<Button
+							label="BLOQUEAR OTRA FIGURA"
+							onClick={blockPlayerFig}
 							disabled={disabled}
-						/>
+							/>
+						</div>
+						<div className="useFig">
+							<Button
+								label="DESCARTAR MI FIGURA"
+								onClick={handleUseFig}
+								disabled={disabled}
+							/>
+						</div>
 					</div> 
 					<div className="mov-butt">
 						<div className="useMov">
