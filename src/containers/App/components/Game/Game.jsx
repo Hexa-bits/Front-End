@@ -12,6 +12,7 @@ import Board from "../../../../components/Game/Board/Board.jsx";
 import Chat from "../../../../components/Game/Chat/Chat.jsx";
 import OtherPlayers from "../../../../components/Game/OtherPlayers/OtherPlayers.jsx";
 import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
+import LabelProhibitedColor from "../../../../components/Game/Board/LabelProhibitedColor/LabelProhibitedColor.jsx";
 import Winner from "../../../../components/Game/Winner/Winner.jsx";
 import GameName from "../../../../components/Game/GameName/GameName.jsx";
 
@@ -45,7 +46,7 @@ function Game() {
     const { winnerName, getWinner } = WinnerExists(gameId);
     const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
     const { fig_cards, fetchFigs } = renewFigCards(localPlayerId);
-    const { boxCards, movisParcial: isMovParcial ,fetchBoxCards } = renewBoard(gameId);
+    const { boxCards, movisParcial: isMovParcial, forbiddenColor ,fetchBoxCards } = renewBoard(gameId);
     const { infoPlayers, fetchInfoPlayers } = getOthersInfo(gameId, localPlayerId);
     const { formedFigs, fetchFormedFigs } = getFormedFig(); 
     
@@ -141,6 +142,9 @@ function Game() {
 					/>
 					<div className="labelMovParcial">
 						<LabelMovParcial isVisible={isMovParcial} />
+						<LabelProhibitedColor color={forbiddenColor}/>
+						<div className="labelProhibitedColor">
+						</div>
 					</div>
 				</div>
 				<div className="Cards">

@@ -136,8 +136,14 @@
     display: flex;
     flex-direction: column;
     height: 400px;
-    width: auto;
 }
+
+.labelProhibitedColor{
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+}
+
 
 .Mov{
     height: 100%;
