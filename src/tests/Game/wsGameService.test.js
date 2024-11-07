@@ -33,33 +33,32 @@ describe("createWsGameInstance", () => {
     expect(ws.url).toBe(url); // Verificamos que el WebSocket tiene el URL correcto
   });
 
-  //   describe("sendMessage", () => {
-  //     const ws = new WebSocket("ws://ejemplo.com");
-  //     global.ws = ws;
-  //     // global.ws.readyState = WebSocket.OPEN;
-  //     it("debería enviar el mensaje cuando el WebSocket está abierto", () => {
-  //       const message = "WS FUNCIONA";
+  describe("sendMessage", () => {
+    const ws = new WebSocket("ws://ejemplo.com");
+    global.ws = ws;
+    // it("debería enviar el mensaje cuando el WebSocket está abierto", () => {
+    //   const message = "WS FUNCIONA";
+    //   expect(global.ws.readyState).toBe(1);
+    //   // Llamamos a la función sendMessage con el mensaje
+    //   sendMessage(message);
 
-  //       // Llamamos a la función sendMessage con el mensaje
-  //       sendMessage(message);
+    //   // Verificamos que `ws.send` haya sido llamado con el mensaje correcto
+    //   expect(global.ws.send).toHaveBeenCalledWith(message);
+    // });
 
-  //       // Verificamos que `ws.send` haya sido llamado con el mensaje correcto
-  //       expect(global.ws.send).toHaveBeenCalledWith(message);
-  //     });
+    it("debería loguear un error si el WebSocket no está abierto", () => {
+      const consoleErrorSpy = vi.spyOn(console, "error");
+      ws.readyState = WebSocket.CLOSED;
 
-  //     it("debería loguear un error si el WebSocket no está abierto", () => {
-  //       const consoleErrorSpy = vi.spyOn(console, "error");
-  //       ws.readyState = WebSocket.CLOSED;
+      const message = "Hola, Mundo";
+      sendMessage(message);
 
-  //       const message = "Hola, Mundo";
-  //       sendMessage(message);
-
-  //       // Verificamos que `console.error` haya sido llamado con el mensaje adecuado
-  //       expect(consoleErrorSpy).toHaveBeenCalledWith(
-  //         "No se puede enviar el mensaje, Game WebSocket no está abierto."
-  //       );
-  //     });
-  //   });
+      // Verificamos que `console.error` haya sido llamado con el mensaje adecuado
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        "No se puede enviar el mensaje, Game WebSocket no está abierto."
+      );
+    });
+  });
 
   //no la mockeo pq todavia no la usamos entonces quiero preguntar bien como funciona.
 
