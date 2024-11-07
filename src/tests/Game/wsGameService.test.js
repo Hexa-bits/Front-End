@@ -36,15 +36,18 @@ describe("createWsGameInstance", () => {
   describe("sendMessage", () => {
     const ws = new WebSocket("ws://ejemplo.com");
     global.ws = ws;
-    // it("debería enviar el mensaje cuando el WebSocket está abierto", () => {
-    //   const message = "WS FUNCIONA";
-    //   expect(global.ws.readyState).toBe(1);
-    //   // Llamamos a la función sendMessage con el mensaje
-    //   sendMessage(message);
+    it("debería enviar el mensaje cuando el WebSocket está abierto", () => {
+      const message = "WS FUNCIONA";
+      //global.ws.onopen();
+      expect(global.ws.readyState).toBe(1);
+      // Llamamos a la función sendMessage con el mensaje
+      sendMessage(message);
 
-    //   // Verificamos que `ws.send` haya sido llamado con el mensaje correcto
-    //   expect(global.ws.send).toHaveBeenCalledWith(message);
-    // });
+      // Verificamos que `ws.send` haya sido llamado con el mensaje correcto
+      setTimeout(() => {
+        expect(global.ws.send).toBeCalledWith(message);
+      }, 50); //los ws tardan en comunicarse, entonces necesitamos un tiempito
+    });
 
     it("debería loguear un error si el WebSocket no está abierto", () => {
       const consoleErrorSpy = vi.spyOn(console, "error");
@@ -60,8 +63,6 @@ describe("createWsGameInstance", () => {
     });
   });
 
-  //no la mockeo pq todavia no la usamos entonces quiero preguntar bien como funciona.
-
   describe("closeWsGameInstance", () => {
     it("debería cambiar el `readyState` de WebSocket a CERRADO (3) después de cerrarlo", () => {
       const ws = new WebSocket("ws://ejemplo.com");
@@ -75,7 +76,7 @@ describe("createWsGameInstance", () => {
 
       setTimeout(() => {
         expect(global.ws.readyState).toBe(3); // 3 = WebSocket CLOSED
-      }, 10); // Como el ws tarda en cerrarse, espero
+      }, 50); // Como el ws tarda en cerrarse, espero
     });
   });
   describe("getWsGameInstance", () => {
