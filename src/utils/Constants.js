@@ -53,6 +53,9 @@ export const COLORMAP_BOXCARDS = {
   4: "#4169E1", // azul real
 };
 
+/** Key */
+export const SECRET_KEY = "4sw%E%S7*U2vEmg";
+
 //A modo de Ejemplo
 export const cardData = [
   { x: 0, y: 0, color: "red" },
