@@ -1,4 +1,4 @@
-
-.priv-form -form-container .col-form-label{
-    font-size: 1rem;
+.modal-header {
+    display: flex;
+    justify-content: flex-end;
 }

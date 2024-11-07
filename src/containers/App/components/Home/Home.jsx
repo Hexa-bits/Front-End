@@ -8,7 +8,6 @@ import GameList from "../../../../components/Home/Game_List/Game_List.jsx";
 import JoinForm from "../../../../components/Home/JoinForm/JoinForm.jsx";
 
 import useGames from "../../../../services/Home/useGames.js";
-import joinGame from "../../../../services/Home/JoinGame.js";
 import WsHomeService from "../../../../services/WS/WsHomeService.js";
 import { WS_HOME, LOGIN, SETGAME } from "../../../../utils/Constants.js";
 
@@ -31,11 +30,8 @@ function Home() {
 
   const handleJoin = (game) => {
     setShowForm(true);
-    setGameId=(game.id);
-    // if (game.isPrivate) { setShowForm(true); } 
-    // else { joinGame(game.id, playerId); }
+    setGameId(game.id);
   };
-
 
   const handleChecked = (e) => {
     setSearch(e.target.checked);
@@ -88,12 +84,12 @@ function Home() {
           />
         </section>
       </div>
+
       {showForm && (
-        <section className="JoinForm__Home">
-          <JoinForm gameId={gameId} playerId={playerId} setShowForm={setShowForm}/>
-        </section>
+        <JoinForm gameId={gameId} playerId={playerId} setShowForm={setShowForm}/>
       )}
     </div>
   );
 }
+
 export default Home;

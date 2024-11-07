@@ -3,8 +3,7 @@ import { LOBBY } from '../../utils/Constants';
 import { GAME_JOIN_URL } from '../../utils/Constants';
 
 //Devuelve la función joinGame que se encarga de unir al jugador a la partida
-const  joinGame = async (gameId, playerId, password = '') => {    
-    const navigate = useNavigate();
+const  joinGame = async (gameId, playerId, password = '', navigate) => {    
 
     try {
         const response = await fetch(GAME_JOIN_URL, {

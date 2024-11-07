@@ -2,30 +2,61 @@ import React, { useState } from 'react';
 import Form from '../../Form/Form';
 import joinGame from '../../../services/Home/JoinGame';
 import Button from '../../Button/Button';
+import { useNavigate } from 'react-router-dom';
+import "./JoinForm.css";
 
-function JoinForm( gameId, playerId, setShowForm ) {
+function JoinForm( {gameId, playerId, setShowForm} ) {
+    const navigate = useNavigate();
     const [ input_password, setPassword ] = useState('');
 
     const handleConfirm = async () => {
-        joinGame(gameId, playerId, input_password);
+        await joinGame(gameId, playerId, input_password, navigate);
         setShowForm(false);
     }
 
+    const handleClose = () => setShowForm(false);
+
     return (
-        <div className='private-container'>
-            <div className='priv-form'>
-                <Form 
-                    label={'Introduce la contraseña de la partida'}
-                    type={'password'}
-                    placeholder={'Contraseña'}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-            </div>
-            <div className='priv-confirm-btn'>
-                <Button 
-                    label={'Confirmar'}
-                    onClick={handleConfirm}
-                />
+
+        <div 
+            className="modal fade show" 
+            id="joinFormModal" 
+            tabindex="-1" 
+            role="dialog" 
+            aria-labelledby="exampleModalCenterTitle" 
+            aria-hidden="true"
+            style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+            onClick={handleClose}>
+
+            <div 
+                className="modal-dialog modal-dialog-centered" 
+                role="document"
+                onClick={(e) => e.stopPropagation()}>
+
+                <div className="modal-content">
+                    <div className="modal-header">
+                        {/* <h5 className="modal-title" id="exampleModalLongTitle">Ingresar a partida</h5> */}
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={handleClose}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    
+                    <div className="modal-body">
+                        <Form 
+                            label={'Introduce la contraseña'}
+                            type={'password'}
+                            placeholder={'Contraseña'}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <div className="modal-footer">
+                        <Button 
+                            data-dismiss="modal"
+                            label={'Confirmar'}
+                            onClick={handleConfirm}
+                        />
+                    </div>
+                </div>
             </div>
         </div>
     )
