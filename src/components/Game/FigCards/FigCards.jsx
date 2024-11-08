@@ -2,21 +2,21 @@ import React from "react";
 import "./FigCards.css";
 import { useState, useEffect } from "react";
 
-function FigCards({ fig_cards, onSelectedCardFig, isTurn }) {
+function FigCards({ fig_cards, onSelecFigCard, isTurn }) {
   const [selectedIndex, setSelectedIndex] = useState(null); 
 
   // Manejador de clics para seleccionar una carta
-  const handleCardClick = (index) => {
+  const handleCardClick = (card, index) => {
     if (!isTurn) return; 
     setSelectedIndex(index === selectedIndex ? null : index);
-    onSelectedCardFig(index === selectedIndex ? null : fig_cards[index]);
+    onSelecFigCard(card);
   };
 
   useEffect(() => {
     if (!isTurn) {
       setSelectedIndex(null);
     }
-  }, [isTurn, onSelectedCardFig]);
+  }, [isTurn, onSelecFigCard]);
 
   return (
     <div className="fig-cards-container">
@@ -27,11 +27,16 @@ function FigCards({ fig_cards, onSelectedCardFig, isTurn }) {
           return (
             <div
               key={card.id}
-              className={`Figures ${isSelected ? "selected" : ""}`} 
-              onClick={() => handleCardClick(index)} 
+              className={`Figures 
+                ${isTurn ? '' : 'disabled'}
+                ${card.blocked ? "blocked" : (isSelected ? "selected" : "")}
+              `} 
+              onClick={() => handleCardClick(card, index)} 
             >
               <img
-                src={`/assets/Figures/fig${formattedId}.svg`}
+                src={`
+                  ${card.blocked ? "assets/Figures/back-fig.svg" : `assets/Figures/fig${formattedId}.svg`}
+                `}
                 alt={`fig${formattedId}`}
               />
             </div>

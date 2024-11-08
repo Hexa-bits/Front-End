@@ -25,7 +25,10 @@ function MovCards({ mov_cards , onSelectedMov, isTurn }) {
           return (
             <div
               key={card.id}
-              className={`Movs ${isSelected ? "selected" : ""}`} 
+              className={`Movs 
+                ${isTurn ? "" : "disabled"}
+                ${isSelected ? "selected" : ""}
+              `} 
               onClick={() => handleCardClick(index)}
             >
               <img
