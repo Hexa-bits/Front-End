@@ -1,4 +1,58 @@
-.modal-header {
+.modal .modal-content {
+    border: 2px rgb(229, 39, 39);
+    background-color: var(--amarillito);
+}
+
+.modal .modal-header {
     display: flex;
     justify-content: flex-end;
+    border: none;
+    padding-bottom: 1px;
+}
+
+.modal-header .close {
+    background-image: url('/assets/icons/cruz.svg');
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 50px;
+    height: 35px;   
+    border: none;
+    background-color: var(--amarillito);
+}
+
+.modal-header .close:hover {
+    background-color: var(--amarillito);
+    transform: scale(1.2);
+}
+
+.modal .modal-body {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.modal-body .form-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.modal .modal-footer {
+    justify-content: center;
+    padding-bottom: 20px;
+    border: none;
+}
+
+.modal-footer button {
+    background-color: var(--verde);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.modal-footer button:hover {
+    background-color: rgba(101, 195, 29, 0.925);
+    border: 1px solid white;
+    transform: scale(0.97);
 }

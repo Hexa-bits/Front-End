@@ -36,9 +36,10 @@ function JoinForm( {gameId, playerId, setShowForm} ) {
                 <div className="modal-content">
                     <div className="modal-header">
                         {/* <h5 className="modal-title" id="exampleModalLongTitle">Ingresar a partida</h5> */}
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={handleClose}>
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <Button 
+                            className={'close'}
+                            onClick={handleClose}
+                        />
                     </div>
                     
                     <div className="modal-body">
