@@ -2,19 +2,19 @@ import { renderHook, waitFor } from "@testing-library/react";
 import fetchMock from "fetch-mock";
 import { describe, it, expect, afterEach, vi } from "vitest";
 import postPlayer from "../../../services/Game/TurnPlayer/cancelMov";
-import { CANCEL_TURN_URL } from "../../../utils/Constants";
+import { CANCEL_MOV_URL } from "../../../utils/Constants";
 
 describe("postPlayer", () => {
   const player_id = "123";
   const game_id = "456";
-  const url = CANCEL_TURN_URL;
+  const url = CANCEL_MOV_URL;
 
   afterEach(() => {
     fetchMock.restore();
     vi.restoreAllMocks(); // Limpia los mocks de Vitest
   });
 
-  it("Deberia hacer un put a CANCEL_TURN_URL", async () => {
+  it("Deberia hacer un put a CANCEL_MOV_URL", async () => {
     fetchMock.put(url, 200);
 
     await postPlayer(player_id, game_id);

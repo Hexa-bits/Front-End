@@ -1,11 +1,11 @@
-import { CANCEL_TURN_URL } from "../../../utils/Constants.js";
+import { CANCEL_MOV_URL } from "../../../utils/Constants.js";
 
 //enviar id y nombre del jugador en turno
 const postPlayer = async (player_id, game_id) => {
   //const playerId = sessionStorage.getItem("player_id");
 
   try {
-    const response = await fetch(CANCEL_TURN_URL, {
+    const response = await fetch(CANCEL_MOV_URL, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

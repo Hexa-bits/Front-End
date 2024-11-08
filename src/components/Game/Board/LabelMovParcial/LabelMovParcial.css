@@ -1,5 +1,6 @@
 .LabelMovParcial {
     position: absolute;
+    width: auto;
     writing-mode: vertical-lr;
     background-color: yellow;
     padding: 10px 10px 10px 3px;
@@ -9,10 +10,12 @@
     z-index: 1;
     transform: translateX(-100%); 
     transition: transform 0.5s ease; 
+    text-transform: uppercase;
+    border: 1px solid black;
 }
 
 .LabelMovParcial.visible {
-    transform: translateX(0);
+    transform: translateX(-2px);
 }
 
 .LabelMovParcial.hiding {
