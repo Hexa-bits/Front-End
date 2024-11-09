@@ -48,6 +48,7 @@ function JoinForm( {gameId, playerId, setShowForm} ) {
                             type={'password'}
                             placeholder={'Contraseña'}
                             onChange={(e) => setPassword(e.target.value)}
+                            icon="/assets/icons/clave.png"
                         />
                     </div>
                     <div className="modal-footer">
