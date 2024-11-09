@@ -47,6 +47,7 @@ function ConfigGame({
             placeholder="Ingresar contraseña"
             id="gamePassword"
             onChange={handlePassword}
+            icon="/assets/icons/clave.png"
           />
         </div>
       )}

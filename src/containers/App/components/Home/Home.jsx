@@ -73,6 +73,7 @@ function Home() {
             }
             onChange={(e) => setFilter(e.target.value)}
             value={filter}
+            icon="/assets/icons/buscar.png"
           />
         </section>
         <section className="GameList__Home">

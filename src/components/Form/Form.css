@@ -13,20 +13,23 @@
 .form-container .col-form-label {
     font-size: 2rem;
 }
-.form-container .col-form-label:hover {
-    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="2" d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z"></path></svg>'), auto;
-}
 
 .form-container .col-form-label:hover {
     cursor: var(--default-cursor);
 }
 
+
 /* Input style */
+
 .form-input {
     font-size: 1.25rem;
     width: 100%;
     cursor: var(--form-cursor);
 }
+.form-input .icon {
+    padding-right: 2rem;
+}
+
 .form-input::placeholder {
     font-style: italic;
     font-size: 1rem; 
@@ -38,4 +41,19 @@
     font-size: 1.1rem;
     margin-bottom: 0.5rem; 
     display: block; 
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Emoji style */
+.input-icon {
+    position: absolute;
+    right: 0.5rem; 
+    width: 1.5rem;
+    height: 1.5rem;
+    pointer-events: none; 
 }

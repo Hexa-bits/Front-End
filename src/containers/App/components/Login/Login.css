@@ -71,16 +71,19 @@
 }
 
 .card button {
-    width: 100%;
+    width: 93%;
     background-color: var(--violeta2);
     border: none;
     color: white;
     transition: none;
+    margin-top: 5px;
+    margin-bottom: 15px;
 
 }
 
 .card button:hover {
     background-color: var(--violeta2);
+    border: 1px solid white;
 }
 
 

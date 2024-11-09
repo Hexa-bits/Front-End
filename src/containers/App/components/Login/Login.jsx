@@ -31,6 +31,7 @@ function Login() {
                         id="inputPlayername"
                         onChange={handleChange}
                         value={playerName}
+                        icon="/assets/icons/usuario.png"
                     />
                     <Button className="btn btn-secondary" label="INGRESAR" onClick={handleInput} />
                 </div>
