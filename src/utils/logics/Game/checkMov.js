@@ -1,40 +1,29 @@
 
-// distancia relativa de los patrones de mov, no considero movs de un borde a otro, sí rotaciones 
+// distancia relativa de los patrones de mov, no considero movs de un borde a otro, sí rotaciones
+// cada par de coordenadas es un movimiento válido. [dx,dy]
 const relative_shifts = {
-    1: [{ dx: 2, dy:-2 }, {dx:-2, dy: 2 }, { dx: 2, dy: 2 }, {dx:-2, dy:-2 }], 
-    2: [{ dx: 2, dy: 0 }, {dx:-2, dy: 0 }, { dx: 0, dy: 2 }, {dx: 0, dy:-2 }],
-    3: [{ dx: 1, dy: 0 }, {dx:-1, dy: 0 }, { dx: 0, dy: 1 }, {dx: 0, dy:-1 }],
-    4: [{ dx: 1, dy: 1 }, {dx:-1, dy:-1 }, { dx: 1, dy:-1 }, {dx:-1, dy: 1 }],
-    5: [{ dx:-2, dy: 1 }, {dx: 2, dy:-1 }, { dx: 1, dy: 2 }, {dx:-1, dy:-2 }],
-    6: [{ dx: 2, dy: 1 }, {dx:-2, dy:-1 }, { dx:-1, dy: 2 }, {dx: 1, dy:-2 }],
-    7: [{ dx: 4, dy: 0 }, {dx:-4, dy: 0 }, { dx: 0, dy: 4 }, {dx: 0, dy:-4 }]
+    1: [[ 2,-2], [-2, 2], [ 2, 2], [-2,-2]], 
+    2: [[ 2, 0], [-2, 0], [ 0, 2], [ 0,-2]],
+    3: [[ 1, 0], [-1, 0], [ 0, 1], [ 0,-1]],
+    4: [[ 1, 1], [-1,-1], [ 1,-1], [-1, 1]],
+    5: [[-2, 1], [ 2,-1], [ 1, 2], [-1,-2]],
+    6: [[ 2, 1], [-2,-1], [-1, 2], [ 1,-2]],
+    7: [[ 4, 0], [-4, 0], [ 0, 4], [ 0,-4]]
 }
 
 export const checkMov = ( selectedMov, selectedCards ) => {
     if (!selectedMov || selectedCards.length !== 2) {
-        console.error("Error en seleccion. Faltan fichas o cartas.");
+        console.error(`Error en seleccion. Faltan ${!selectedMov ? "cartas" : "fichas"}`);
         return false;
     } 
 
-    const [card1, card2] = selectedCards;
-
-    const { x: x1, y: y1 } = card1;
-    const { x: x2, y: y2 } = card2;
-    
+    const [{ x: x1, y: y1 }, { x: x2, y: y2 }] = selectedCards;
     const dx = x2 - x1;
     const dy = y2 - y1;
     const movd = relative_shifts[selectedMov.move];
-    if (!movd) return false;
+    const valid = movd.some(([x, y]) => x === dx && y === dy);
+    if (!valid) { console.error(`Movimiento no valido.`); }
 
-    // console.log("dx: ", dx, "dy: ", dy);
-    const isValidMove = movd.some((shift) => {
-        if (shift.dx === dx && shift.dy === dy) {
-            // console.log(`dx: ${shift.dx}, dy: ${shift.dy}`);
-            return true;
-        }
-        return false;
-    });
-
-    return isValidMove;
+    return movd ? valid : false;
 }
 

@@ -12,6 +12,7 @@ import Board from "../../../../components/Game/Board/Board.jsx";
 import Chat from "../../../../components/Game/Chat/Chat.jsx";
 import OtherPlayers from "../../../../components/Game/OtherPlayers/OtherPlayers.jsx";
 import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/LabelMovParcial.jsx";
+import LabelProhibitedColor from "../../../../components/Game/Board/LabelProhibitedColor/LabelProhibitedColor.jsx";
 import Winner from "../../../../components/Game/Winner/Winner.jsx";
 import GameName from "../../../../components/Game/GameName/GameName.jsx";
 
@@ -31,27 +32,32 @@ import discardMove from "../../../../services/Game/Cards/discardMove.js";
 import discardFig from "../../../../services/Game/Cards/discardFig.js";
 import { WS_GAME } from "../../../../utils/Constants.js";
 import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
+import blockFig from "../../../../services/Game/Cards/blockFig.js";
 
 function Game() {
     const navigate = useNavigate();
     const localPlayerId = parseInt(sessionStorage.getItem("player_id"), 10);
     const localPlayerName = sessionStorage.getItem("player_name");
     const gameId = sessionStorage.getItem("game_id");
-
+    
     const ws = getWsGameInstance(WS_GAME + gameId);
-
+    
     const { currentPlayer, playerId, fetchTurnData } = getCurrentTurnPlayer(gameId);
     const { winnerName, getWinner } = WinnerExists(gameId);
     const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
     const { fig_cards, fetchFigs } = renewFigCards(localPlayerId);
-    const { boxCards, movisParcial: isMovParcial ,fetchBoxCards } = renewBoard(gameId);
+    const { boxCards, movisParcial: isMovParcial, forbiddenColor ,fetchBoxCards } = renewBoard(gameId);
     const { infoPlayers, fetchInfoPlayers } = getOthersInfo(gameId, localPlayerId);
     const { formedFigs, fetchFormedFigs } = getFormedFig(); 
     
     const [ selectedCards, setSelectedCards] = useState([]);
     const [ selectedMov, setSelectedMov] = useState(null);
-    const [ selectedFig, setSelectedFig] = useState(null);
+    const [ selectedFig, setSelectedFigCard] = useState(null);
     const [ selecFormedFig, setSelecFormedFig] = useState([]);
+    const [ figToBlock, setFigToBlock] = useState(null);
+    
+    const disabled = localPlayerId !== playerId;
+    const isTurn = localPlayerId === playerId;
     
     wsGameHandler(
       ws,
@@ -65,48 +71,59 @@ function Game() {
     );
 
     const handleEndTurn = async () => {
-        await passTurn();
+      await passTurn();
     };
 
     const handleLeave = async () => {
-        await passTurn();
-        await LeaveGame(navigate);
+      await passTurn();
+      await LeaveGame(navigate);
     };
 
     const handleUseMov = async () => {
-        if (checkMov(selectedMov, selectedCards)) {
+      if (checkMov(selectedMov, selectedCards)) {
         await discardMove(localPlayerId, selectedMov, selectedCards);
         setSelectedMov(null);
         setSelectedCards([]);
-        } else {
-        console.log("Movimiento no valido");
-        }
+      } 
     };
 
-    const useFig = async () => {
-        await discardFig(localPlayerId, selecFormedFig, selectedFig);
-        setSelectedFig(null);
-        setSelecFormedFig([]);
+    const handleUseFig = async () => {
+      await discardFig(localPlayerId, selecFormedFig, selectedFig);
+      setSelectedFigCard(null);
+      setSelecFormedFig([]);
     };
 
     const handleCancel = async () => {
-        await postPlayer(localPlayerId, gameId);
+      await postPlayer(localPlayerId, gameId);
     };
+
+    const blockPlayerFig = async () => {
+		console.log(selectedFig);
+		console.log(figToBlock);
+		await blockFig(localPlayerId, selecFormedFig, figToBlock);
+
+		setSelecFormedFig([]);
+		setFigToBlock(null);
+    }
 
 
   return (
     <div className="Game">
-      	<Winner winnerName={winnerName} onLeave={handleLeave}/>
+        <Winner winnerName={winnerName} onLeave={handleLeave}/>
       
 		<div className="left-area">
 			<div className="seePlayer">
 				<SeePlayer player={currentPlayer || "??????"} />
 			</div>
 			<div className="Game_Others_Area">
-				<OtherPlayers players={infoPlayers}/>
+				<OtherPlayers 
+                    players={infoPlayers}
+                    onSelecFigToBlock={setFigToBlock}
+                    isTurn={isTurn}
+                />
 			</div>
 			<div className="leav">
-					<LeaveButton onLeave={handleLeave} />
+              <LeaveButton onLeave={handleLeave} />
 			</div>		
     	</div>
 
@@ -117,53 +134,66 @@ function Game() {
 			<div className="Game_Area">
 				<div className="board">
 					<Board
-						isTurn={localPlayerId === playerId}
+						isTurn={isTurn}
 						cardData={boxCards}
 						onSelectedCards={setSelectedCards}
-						onSelectedFig={setSelecFormedFig}
+						onSelecFormedFig={setSelecFormedFig}
 						formedFigs={formedFigs}
 					/>
 					<div className="labelMovParcial">
 						<LabelMovParcial isVisible={isMovParcial} />
+						<LabelProhibitedColor color={forbiddenColor}/>
+						<div className="labelProhibitedColor">
+						</div>
 					</div>
 				</div>
 				<div className="Cards">
 					<div className="Fig">
 						<FigCards 
 							fig_cards={fig_cards} 
-							onSelectedCardFig={setSelectedFig}
-							isTurn={localPlayerId === playerId} 
+							onSelecFigCard={setSelectedFigCard}
+							isTurn={isTurn} 
 						/>
 					</div>
 					<div className="Mov">
 						<MovCards
 							mov_cards={mov_cards}
 							onSelectedMov={setSelectedMov}
-							isTurn={localPlayerId === playerId}
+							isTurn={isTurn}
 						/>
 					</div>
 				</div>
 				<div className="button-panel">
-					<div className="useFig">
-						<Button
-							label="DESCARTAR FIGURA"
-							onClick={useFig}
-							disabled={localPlayerId !== playerId}
-						/>
+					<div className="fig-butt">
+
+						<div className="block">
+							<Button
+							label="BLOQUEAR OTRA FIGURA"
+							onClick={blockPlayerFig}
+							disabled={disabled}
+							/>
+						</div>
+						<div className="useFig">
+							<Button
+								label="DESCARTAR MI FIGURA"
+								onClick={handleUseFig}
+								disabled={disabled}
+							/>
+						</div>
 					</div> 
 					<div className="mov-butt">
 						<div className="useMov">
 							<Button
 								label="USAR MOVIMIENTO"
 								onClick={handleUseMov}
-								disabled={localPlayerId !== playerId}
+								disabled={disabled}
 							/>
 						</div>
 						<div className="cancel">
 							<Button
 								label="CANCELAR MOVIMIENTO"
 								onClick={handleCancel}
-								disabled={localPlayerId !== playerId}
+								disabled={disabled}
 							/>
 						</div>
 					</div>
@@ -185,10 +215,10 @@ function Game() {
 
 				<div className="end">
 					<Button
-					label="TERMINAR TURNO"
-					onClick={handleEndTurn}
-					disabled={localPlayerId !== playerId}
-				/>
+                        label="TERMINAR TURNO"
+                        onClick={handleEndTurn}
+                        disabled={disabled}
+                    />
 				</div>
 			</div>
       	</div>
