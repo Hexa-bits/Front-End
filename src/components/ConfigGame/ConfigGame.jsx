@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 import "./ConfigGame.css";
 import { useState } from "react";
 import Form from "../../components/Form/Form.jsx";

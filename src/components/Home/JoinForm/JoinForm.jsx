@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import Form from '../../Form/Form';
 import joinGame from '../../../services/Home/JoinGame';
 import Button from '../../Button/Button';
+import { AES } from 'crypto-js';
 import { useNavigate } from 'react-router-dom';
+import { SECRET_KEY } from '../../../utils/Constants';
 import "./JoinForm.css";
 
 function JoinForm( {gameId, playerId, setShowForm} ) {
@@ -10,7 +12,8 @@ function JoinForm( {gameId, playerId, setShowForm} ) {
     const [ input_password, setPassword ] = useState('');
 
     const handleConfirm = async () => {
-        await joinGame(gameId, playerId, input_password, navigate);
+        const encryptedPass = AES.encrypt(input_password, SECRET_KEY).toString();
+        await joinGame(gameId, playerId, encryptedPass, navigate);
         setShowForm(false);
     }
 
