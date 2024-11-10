@@ -1,19 +1,22 @@
 import "./Chat.css";
-import { useState, useEffect, useRef} from "react";
-import WSMessages from "../../../services/WS/Chat/WSMessages";
+import { useState, useEffect, useRef } from "react";
+import WSChatHandler from "../../../services/WS/Chat/WSChatHandler";
 import Button from "../../Button/Button";
 
 function Chat({ ws, playerId }) {
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState([]);
-    
-    // Crear una referencia para el final de la lista de mensajes
     const messagesEndRef = useRef(null);
 
-    const { sendMessage } = WSMessages({
+    const { sendMessage } = WSChatHandler({
         ws,
         onMessageReceived: (data) => {
-            setMessages((prevMessages) => [...prevMessages, data]);
+            console.log("Mensaje recibido en Chat:", data); // Cuando se recibe un mensaje en Chat
+            setMessages((prevMessages) => [...prevMessages, { type: 'message', ...data }]);
+        },
+        onLogReceived: (log) => {
+            console.log("Log recibido en Chat:", log); // Cuando se recibe un log en Chat
+            setMessages((prevMessages) => [...prevMessages, { type: 'log', ...log }]);
         }
     });
 
@@ -41,13 +44,22 @@ function Chat({ ws, playerId }) {
         return () => clearTimeout(timer);
     }, [messages]);
 
-
     return (
         <div className="chat__container">
             <div className="chat__msj">
                 <ul id="messages">
-                    {messages.map((msg, index) => (
-                        <li key={index}><strong>{msg.player_name}</strong> <br/> {msg.msg}</li>
+                    {messages.map((item, index) => (
+                        <li key={index} className={item.type === 'log' ? "log" : "message-item"}>
+                            {item.type === 'message' ? (
+                                <>
+                                    <strong>{item.player_name}</strong> <br/> {item.msg}
+                                </>
+                            ) : (
+                                <>
+                                    <strong>{item.player_name}</strong> <br/> {item.event}
+                                </>
+                            )}
+                        </li>
                     ))}
                     <div ref={messagesEndRef} />
                 </ul>
