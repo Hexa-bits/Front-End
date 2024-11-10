@@ -14,7 +14,7 @@ function JoinForm( {gameId, playerId, setShowForm} ) {
     const handleConfirm = async () => {
         if (!input_password) { setError('Campo requerido !'); return; }
         const hashedPass = hashPassword(input_password);
-        console.log("hashedPass:", hashedPass);
+        
         const success = await joinGame(gameId, playerId, hashedPass, navigate);
         if (!success) { setError('Contraseña incorrecta !'); return; }
         

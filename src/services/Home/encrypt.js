@@ -1,6 +1,7 @@
-const crypto = require('crypto');
+import CryptoJS from 'crypto-js';
 
 export const hashPassword = (password) => {
-    const hash = crypto.createHash('sha256').update(password).digest();
-    return hash.toString('base64');
+    if (!password) return '';
+    const hash = CryptoJS.SHA256(password);
+    return hash.toString(CryptoJS.enc.Base64);
 }

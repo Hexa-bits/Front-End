@@ -13,8 +13,7 @@ export const useSetGame = (navigate) => {
         const isNameValid = checkInput(game_name);
         const isPassValid = !isPrivate || checkPassword(game_password);
         const isPlayerValid = checkButtons(max_players);
-
-        const hashedPass = hashPassword(input_password);
+        const hashedPass = hashPassword(game_password);
 
         if (isNameValid && isPassValid && isPlayerValid) {
             // Llamada a la función de creación del juego con los valores adecuados

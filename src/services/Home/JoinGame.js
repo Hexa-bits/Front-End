@@ -19,8 +19,7 @@ const joinGame = async (gameId, playerId, password, navigate) => {
             throw new Error(`Error al unirse a la partida: ${errorData.message || 'No se pudo unirse'}`);
         }
 
-        const data = await response.json();
-        console.log("Unido a la partida con éxito:", data);
+        console.log(`Unido a la partida ${gameId} con éxito`);
         sessionStorage.setItem('game_id', gameId);
 
         // Lógica de navegación
