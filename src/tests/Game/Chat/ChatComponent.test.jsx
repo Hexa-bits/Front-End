@@ -62,8 +62,6 @@ describe('Chat Component', () => {
         vi.restoreAllMocks(); // Restaurar los mocks después de cada prueba
     });
 
-    
-
     it('should log received messages correctly', async () => {
         render(<Chat ws={mockWebSocket} playerId="123" />);
 
@@ -74,6 +72,23 @@ describe('Chat Component', () => {
         expect(console.log).toHaveBeenCalledWith("Mensaje recibido en Chat:", { player_name: 'Jugador 1', msg: 'Hola' });
     });
 
+    it('Should send a message when “Enter” is pressed', async () => {
+        render(<Chat ws={mockWebSocket} playerId="123" />);
+        
+        const input = screen.getByPlaceholderText("Escribe un mensaje...");
+        fireEvent.change(input, { target: { value: "Mensaje de prueba" } });
+    
+        fireEvent.keyDown(input, { key: "Enter", code: "Enter", keyCode: 13 });
+    
+        await waitFor(() => {
+            // Ahora esperamos que se haya llamado a sendMessage con los dos parámetros: playerId y mensaje
+            expect(mockSendMessage).toHaveBeenCalledWith("123", "Mensaje de prueba");
+        });
+    
+        // Verificar que el input se haya limpiado
+        expect(input.value).toBe('');
+    });
+    
     it('should log received logs correctly', async () => {
         // Simular la recepción de un log
         render(<Chat ws={mockWebSocket} playerId="123" />);
