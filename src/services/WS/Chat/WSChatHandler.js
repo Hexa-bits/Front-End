@@ -32,7 +32,10 @@ function WSChatHandler({ ws, onMessageReceived, onLogReceived }) {
     }, [ws, onMessageReceived, onLogReceived]);
 
     const sendMessage = (playerId, msg) => {
-        if (!ws || ws.readyState !== WebSocket.OPEN) return;
+        if (!ws || ws.readyState !== WebSocket.OPEN) {
+            console.log("WebSocket no está listo para enviar mensajes.");
+            return;
+        }
         const message = JSON.stringify({
             type: "message",
             player_id: playerId,
