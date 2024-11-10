@@ -10,6 +10,7 @@ import JoinForm from "../../../../components/Home/JoinForm/JoinForm.jsx";
 import useGames from "../../../../services/Home/useGames.js";
 import WsHomeService from "../../../../services/WS/WsHomeService.js";
 import { WS_HOME, LOGIN, SETGAME } from "../../../../utils/Constants.js";
+import joinGame from "../../../../services/Home/JoinGame.js";
 
 function Home() {
   const playerId = parseInt(sessionStorage.getItem("player_id"), 10);
@@ -28,9 +29,11 @@ function Home() {
     navigate(SETGAME);
   };
 
-  const handleJoin = (game) => {
-    setShowForm(true);
-    setGameId(game.id);
+  const handleJoin = async(game) => {
+    
+    setGameId(game.game_id);
+    if (game.isPrivate) { setShowForm(true);} 
+    else {  await joinGame(game.game_id, playerId, '', navigate); }
   };
 
   const handleChecked = (e) => {
