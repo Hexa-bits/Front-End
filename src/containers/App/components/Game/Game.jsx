@@ -71,7 +71,8 @@ function Game() {
     fetchMovs,
     fetchBoxCards,
     fetchInfoPlayers,
-    fetchFormedFigs
+    fetchFormedFigs,
+    CountdownTimer
   );
 
   const handleEndTurn = async () => {
