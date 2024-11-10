@@ -10,13 +10,15 @@ const Completionist = () => (
 
 // Renderer callback con condiciones
 const CountdownTimer = () => {
-  //const [startTime, setStartTime] = useState(Date.now() + 120000); // Tiempo de inicio del temporizador (2 minutos)
-  const [isRunning, setIsRunning] = useState(true); // Estado para controlar si el temporizador está en ejecución
+  const [endTime, setEndTime] = useState(Date.now() + 120000); // 2 minutos desde ahora
 
+  // Función para reiniciar el temporizador
+  const handleComplete = () => {
+    setEndTime(Date.now() + 120000); // Actualiza el tiempo de finalización a 2 minutos a partir de ahora
+  };
   const renderer = ({ minutes, seconds, completed }) => {
     if (completed) {
-      return <Completionist />;
-      setIsRunning(false); // Detener el temporizador
+      handleComplete(); // quiero reiniciar el temporizador el temporizador
     } else {
       return (
         <span className="countdown-timer">
@@ -29,9 +31,11 @@ const CountdownTimer = () => {
 
   return (
     <Countdown
+      key={endTime}
       date={Date.now() + 120000}
       renderer={renderer}
-      autoStart={isRunning}
+      autoStart={true}
+      onComplete={handleComplete}
     />
   );
 };

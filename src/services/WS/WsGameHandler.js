@@ -7,6 +7,7 @@ import {
   WINNER,
   OTHERS_UPD,
 } from "../../utils/Constants";
+import CountdownTimer from "../../components/Game/Timer/timer";
 // Esta función se encarga de manejar todos los mensajes que llegan por websocket
 const wsGameHandler = (
   ws,
@@ -16,7 +17,8 @@ const wsGameHandler = (
   fetchMovs,
   fetchBoxCards,
   fetchInfoPlayers,
-  fetchFormedFigs
+  fetchFormedFigs,
+  CountdownTimer
 ) => {
   useEffect(() => {
     if (!ws) return;
@@ -32,6 +34,7 @@ const wsGameHandler = (
           fetchBoxCards();
           fetchFormedFigs();
           fetchInfoPlayers();
+          CountdownTimer();
           break;
         case WINNER:
           getWinner();
@@ -50,7 +53,7 @@ const wsGameHandler = (
           break;
         case OTHERS_UPD:
           fetchInfoPlayers();
-          break; 
+          break;
         default:
           break;
       }
@@ -64,6 +67,7 @@ const wsGameHandler = (
     fetchBoxCards,
     fetchInfoPlayers,
     fetchFormedFigs,
+    CountdownTimer,
   ]);
 };
 
