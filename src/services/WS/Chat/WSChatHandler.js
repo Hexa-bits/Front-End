@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 function WSChatHandler({ ws, onMessageReceived, onLogReceived }) {
+
     useEffect(() => {
         if (!ws) return;
 
@@ -18,8 +19,9 @@ function WSChatHandler({ ws, onMessageReceived, onLogReceived }) {
                     onLogReceived(data.data);
                 }
             } catch (error) {
-                console.error("Error al parsear el mensaje JSON:", error, "Mensaje:", messageData);
+                console.error("Error al parsear el mensaje:", error, "Mensaje:", messageData);
             }
+            
         };
         
         ws.addEventListener('message', handleMessage);

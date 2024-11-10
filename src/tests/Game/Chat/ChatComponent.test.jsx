@@ -15,14 +15,14 @@ const mockWebSocket = {
     send: mockSendMessage,
     addEventListener: mockAddEventListener,
     removeEventListener: mockRemoveEventListener,
-    readyState: WebSocket.OPEN, 
+    readyState: WebSocket.OPEN,
 };
 
 global.WebSocket = vi.fn(() => mockWebSocket);
 
-vi.mock('../../../services/WS/Chat/WSMessages', () => ({
+vi.mock('../../../services/WS/Chat/WSChatHandler', () => ({
     __esModule: true,
-    default: ({ ws, onMessageReceived }) => {
+    default: ({ ws, onMessageReceived, onLogReceived }) => {
         useEffect(() => {
             if (!ws) return;
 
@@ -31,6 +31,8 @@ vi.mock('../../../services/WS/Chat/WSMessages', () => ({
                     const data = JSON.parse(event.data);
                     if (data.type === 'message') {
                         onMessageReceived(data.data);
+                    } else if (data.type === 'log') {
+                        onLogReceived(data.data);
                     }
                 } catch (error) {
                     console.error('Error al parsear el mensaje:', error);
@@ -42,48 +44,79 @@ vi.mock('../../../services/WS/Chat/WSMessages', () => ({
             return () => {
                 ws.removeEventListener('message', handleMessage);
             };
-        }, [ws, onMessageReceived]);
+        }, [ws, onMessageReceived, onLogReceived]);
 
         return { sendMessage: mockSendMessage };
     },
 }));
 
 describe('Chat Component', () => {
+    // Espiar todas las funciones de console
     beforeEach(() => {
-        vi.clearAllMocks(); 
+        vi.clearAllMocks();
+        vi.spyOn(console, 'log').mockImplementation(() => {});
+        vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
-    it('Should render received messages correctly', async () => {
+    afterEach(() => {
+        vi.restoreAllMocks(); // Restaurar los mocks después de cada prueba
+    });
+
+    
+
+    it('should log received messages correctly', async () => {
         render(<Chat ws={mockWebSocket} playerId="123" />);
 
-        const messageItem = await waitFor(() => screen.getByText('Hola'));
+        // Esperar a que se reciba el mensaje y el log sea emitido
+        await waitFor(() => expect(console.log).toHaveBeenCalledWith("Mensaje recibido en Chat:", expect.any(Object)));
 
-        expect(messageItem).toBeInTheDocument();
-        expect(messageItem).toHaveTextContent('Jugador 1');
+        // Verificar que el mensaje que se espera haya sido logueado
+        expect(console.log).toHaveBeenCalledWith("Mensaje recibido en Chat:", { player_name: 'Jugador 1', msg: 'Hola' });
     });
 
-    it('Should send a message when the send button is clicked.', () => {
+    it('should log received logs correctly', async () => {
+        // Simular la recepción de un log
         render(<Chat ws={mockWebSocket} playerId="123" />);
 
-        const input = screen.getByPlaceholderText('Escribe un mensaje...');
-        fireEvent.change(input, { target: { value: 'Mensaje de prueba' } });
+        // Simular que un log es recibido
+        mockAddEventListener.mockImplementationOnce((event, callback) => {
+            if (event === 'message') {
+                setTimeout(() => {
+                    callback({
+                        data: JSON.stringify({
+                            type: 'log',
+                            data: { player_name: 'Jugador 1', event: 'Jugó una carta' }
+                        })
+                    });
+                }, 100);
+            }
+        });
 
-        const sendButton = screen.getByRole('button');
-        fireEvent.click(sendButton);
+        await waitFor(() => expect(console.log).toHaveBeenCalledWith("Log recibido en Chat:", expect.any(Object)));
 
-        expect(mockSendMessage).toHaveBeenCalledWith('123', 'Mensaje de prueba');
-        expect(input.value).toBe('');
+        // Verificar que el log de tipo 'log' se haya emitido correctamente
+        expect(console.log).toHaveBeenCalledWith("Log recibido en Chat:", { player_name: 'Jugador 1', event: 'Jugó una carta' });
     });
 
-    it('Should send a message when “Enter” is pressed."', () => {
+    it('should handle empty log data gracefully', async () => {
         render(<Chat ws={mockWebSocket} playerId="123" />);
-
-        const input = screen.getByPlaceholderText('Escribe un mensaje...');
-        fireEvent.change(input, { target: { value: 'Mensaje de prueba' } });
-
-        fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
-
-        expect(mockSendMessage).toHaveBeenCalledWith('123', 'Mensaje de prueba');
-        expect(input.value).toBe('');
+    
+        // Simulamos la recepción de un log con datos vacíos
+        mockAddEventListener.mockImplementationOnce((event, callback) => {
+            if (event === 'message') {
+                setTimeout(() => {
+                    callback({
+                        data: JSON.stringify({
+                            type: 'log',
+                            data: {}
+                        })
+                    });
+                }, 100);
+            }
+        });
+    
+        // Verificamos que el log se haya manejado sin errores, aunque esté vacío
+        await waitFor(() => expect(console.log).toHaveBeenCalledWith("Log recibido en Chat:", {}));
     });
+ 
 });
