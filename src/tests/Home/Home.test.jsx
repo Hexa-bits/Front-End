@@ -2,11 +2,11 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Home from "../../containers/App/components/Home/Home.jsx";
 import useGames from "../../services/Home/useGames.js";
-import JoinGame from "../../utils/logics/Home/JoinGame.js";
+import JoinGame from "../../services/Home/JoinGame.js";
 
 // Mockea los hooks y funciones que se usan en el componente
 vi.mock("../../services/Home/useGames.js");
-vi.mock("../../utils/logics/Home/JoinGame.js");
+vi.mock("../../services/Home/JoinGame.js");
 
 // Configura los mocks para los hooks
 beforeEach(() => {

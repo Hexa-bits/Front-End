@@ -26,7 +26,7 @@ import getCurrentTurnPlayer from "../../../../services/Game/TurnPlayer/getCurren
 import renewBoard from "../../../../services/Game/Board/renewBoard.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
 import getOthersInfo from "../../../../services/Game/Cards/getOthersInfo.js";
-import postPlayer from "../../../../services/Game/TurnPlayer/cancelMov.js";
+import cancelMovCard from "../../../../services/Game/TurnPlayer/cancelMov.js";
 import getFormedFig from "../../../../services/Game/Board/Highlight Figs/formedFig.js";
 import discardMove from "../../../../services/Game/Cards/discardMove.js";
 import discardFig from "../../../../services/Game/Cards/discardFig.js";
@@ -55,6 +55,11 @@ function Game() {
     const [ selectedFig, setSelectedFigCard] = useState(null);
     const [ selecFormedFig, setSelecFormedFig] = useState([]);
     const [ figToBlock, setFigToBlock] = useState(null);
+	const [ alert, setAlert ] = useState('');
+
+    useEffect(() => {
+        setTimeout(() => setAlert(''), 2000); 
+    }, [alert]);
     
     const disabled = localPlayerId !== playerId;
     const isTurn = localPlayerId === playerId;
@@ -80,27 +85,33 @@ function Game() {
 
     const handleUseMov = async () => {
       if (checkMov(selectedMov, selectedCards)) {
-        await discardMove(localPlayerId, selectedMov, selectedCards);
-        setSelectedMov(null);
+        const success = await discardMove(localPlayerId, selectedMov, selectedCards);
+      	if (!success) { setAlert('No se pudo mover ficha'); }
+        
+		setSelectedMov(null);
         setSelectedCards([]);
-      } 
+      } else { setAlert('Movimiento no permitido'); }
     };
 
     const handleUseFig = async () => {
-      await discardFig(localPlayerId, selecFormedFig, selectedFig);
-      setSelectedFigCard(null);
+      const success = await discardFig(localPlayerId, selecFormedFig, selectedFig);
+      if (!success) { setAlert('No se puede descartar esa figura'); }
+	  
+	  setSelectedFigCard(null);
       setSelecFormedFig([]);
     };
 
     const handleCancel = async () => {
-      await postPlayer(localPlayerId, gameId);
+      const success = await cancelMovCard(localPlayerId, gameId);
+	  if (!success) { setAlert('No se puede cancelar movimiento.'); }
     };
 
     const blockPlayerFig = async () => {
 		console.log(selectedFig);
 		console.log(figToBlock);
-		await blockFig(localPlayerId, selecFormedFig, figToBlock);
-
+		const success = await blockFig(localPlayerId, selecFormedFig, figToBlock,);
+		if (!success) {	setAlert('No se puede bloquear esa figura'); }
+		
 		setSelecFormedFig([]);
 		setFigToBlock(null);
     }
@@ -108,6 +119,7 @@ function Game() {
 
   return (
     <div className="Game">
+		
         <Winner winnerName={winnerName} onLeave={handleLeave}/>
       
 		<div className="left-area">
@@ -121,6 +133,11 @@ function Game() {
                     isTurn={isTurn}
                 />
 			</div>
+			{alert && (
+				<div className="alert alert-danger" role="alert">
+					{alert}
+			  	</div>
+			)}
 			<div className="leav">
               <LeaveButton onLeave={handleLeave} />
 			</div>		
@@ -220,6 +237,7 @@ function Game() {
                     />
 				</div>
 			</div>
+			
       	</div>
 	</div>
   );

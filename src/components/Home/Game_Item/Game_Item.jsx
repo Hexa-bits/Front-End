@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from '../Button/Button.jsx'
+import Button from '../../Button/Button.jsx'
 import './Game_Item.css'
 
 
@@ -15,7 +15,7 @@ function Game_Item({game, handleJoin}){
 
                         <Button 
                             label="UNIRSE" 
-                            onClick={() => handleJoin(game.game_id)}
+                            onClick={() => handleJoin(game)}
                             disabled={game.current_players >= game.max_players}/>
                     </div>
                 </div>

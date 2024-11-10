@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 import "./ConfigGame.css";
 import { useState } from "react";
 import Form from "../../components/Form/Form.jsx";
@@ -47,12 +45,13 @@ function ConfigGame({
             placeholder="Ingresar contraseña"
             id="gamePassword"
             onChange={handlePassword}
+            icon="/assets/icons/clave.png"
           />
         </div>
       )}
       
 
-      <p>Elige la cantidad de participantes</p>
+      <p>ELIGE CANTIDAD DE JUGADORES</p>
 
       <div className="count_players">
         <Button
@@ -73,7 +72,7 @@ function ConfigGame({
       </div>
       <div className="participants">
         <p data-testid="player-count">
-          {maxPlayers > 0 && `Participantes: ${maxPlayers}`}
+          {maxPlayers > 0 && `Jugadores: ${maxPlayers}`}
         </p>
       </div>
     </div>

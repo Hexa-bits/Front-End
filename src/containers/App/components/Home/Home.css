@@ -88,6 +88,7 @@
     border: none;
     font-weight: bold;
     color: white;
+    font-size: 1.25rem;
 }
 
 
@@ -116,6 +117,7 @@
     background: var(--amarillito);
     border-radius: 20px;
     padding: 10px;
+    font-size: 1.1rem;
 }
 
 .form-check-input {
@@ -149,3 +151,11 @@
     border: none;
 }
 
+.JoinForm__Home {
+    width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background-color: var(--amarillito);
+}

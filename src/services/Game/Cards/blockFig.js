@@ -21,11 +21,12 @@ const blockFig = async (localPlayerId, selecFormedFig, figToBlock) => {
         });
         if (!response.ok) {
             console.log("Response was not ok.");
-        }
-        console.log("Fig card blocked successfully.");
+            return false;
+        } else { console.log("Fig card blocked successfully."); return true; }
         
     } catch (error) {
         console.log(error);
+        return false;
     }
 };
 
