@@ -117,12 +117,11 @@
     75% { transform: translateY(-3px); }
 }
 
-/* Aplicamos la animación a la imagen */
 .chat__container .btn-send img {
     height: 30px;
     transition: transform 0.3s ease;
 }
 
 .chat__container .btn-send:hover img {
-    animation: bounce 0.8s ease; /* Repetición infinita para crear el efecto */
+    animation: bounce 0.8s ease; 
 }

@@ -11,11 +11,11 @@ function Chat({ ws, playerId }) {
     const { sendMessage } = WSChatHandler({
         ws,
         onMessageReceived: (data) => {
-            console.log("Mensaje recibido en Chat:", data); // Log cuando se recibe un mensaje en Chat
+            console.log("Mensaje recibido en Chat:", data); // Cuando se recibe un mensaje en Chat
             setMessages((prevMessages) => [...prevMessages, { type: 'message', ...data }]);
         },
         onLogReceived: (log) => {
-            console.log("Log recibido en Chat:", log); // Log cuando se recibe un log en Chat
+            console.log("Log recibido en Chat:", log); // Cuando se recibe un log en Chat
             setMessages((prevMessages) => [...prevMessages, { type: 'log', ...log }]);
         }
     });
