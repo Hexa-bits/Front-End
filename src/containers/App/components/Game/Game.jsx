@@ -75,7 +75,6 @@ function Game() {
     };
 
     const handleLeave = async () => {
-      await passTurn();
       await LeaveGame(navigate);
     };
 
