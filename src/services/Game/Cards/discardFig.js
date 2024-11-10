@@ -19,17 +19,26 @@ const discardFig = async (playerId, selectedFig, selectedFigCard) => {
       }),
     });
     if (!response.ok) {
-      if (response.status === 400) {
-        console.log("Carta no coincide con figura seleccionada");
-      } else if (response.status === 500) {
-        console.log("Fallo en la base de datos");
-      } else {
-        console.log("Error al descartar");
+      switch (response.status) {
+        case 400:
+          console.log("Carta no coincide con figura seleccionada");
+          break;
+        case 500:
+          console.log("Fallo en la base de datos");
+          break;
+        default:
+          console.log("Error al descartar");
+          break;
       }
+      return false;
     }
-    console.log("Carta Figura descartada con exito.");
+    else {
+      console.log("Carta Figura descartada con exito.");
+      return true;
+    }
   } catch (error) {
     console.log(error);
+    return false;
   }
 };
 

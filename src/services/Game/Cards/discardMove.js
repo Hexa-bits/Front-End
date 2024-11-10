@@ -29,10 +29,13 @@ const discardMove = async ( playerId, selectedMov, selectedCards ) => {
             else {
                 console.log("Error al usar movimiento");
             }
+            return false;
         }
         console.log("Movimiento realizado con exito");
+        return true;
     } catch (error) {
         console.log(error);
+        return false;
     }
 }
 
