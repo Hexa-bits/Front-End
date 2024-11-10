@@ -18,7 +18,7 @@ const wsGameHandler = (
   fetchBoxCards,
   fetchInfoPlayers,
   fetchFormedFigs,
-  CountdownTimer
+  setResetTimer
 ) => {
   useEffect(() => {
     if (!ws) return;
@@ -34,7 +34,7 @@ const wsGameHandler = (
           fetchBoxCards();
           fetchFormedFigs();
           fetchInfoPlayers();
-          CountdownTimer();
+          setResetTimer(true);
           break;
         case WINNER:
           getWinner();
@@ -67,7 +67,7 @@ const wsGameHandler = (
     fetchBoxCards,
     fetchInfoPlayers,
     fetchFormedFigs,
-    CountdownTimer,
+    setResetTimer,
   ]);
 };
 

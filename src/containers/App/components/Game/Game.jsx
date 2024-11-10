@@ -16,6 +16,7 @@ import LabelProhibitedColor from "../../../../components/Game/Board/LabelProhibi
 import Winner from "../../../../components/Game/Winner/Winner.jsx";
 import GameName from "../../../../components/Game/GameName/GameName.jsx";
 import CountdownTimer from "../../../../components/Game/Timer/timer.jsx";
+
 import renewFigCards from "../../../../services/Game/Cards/renewFigCards.js";
 import renewMovCards from "../../../../services/Game/Cards/renewMovCards.js";
 import { getWsGameInstance } from "../../../../services/WS/WsGameService.js";
@@ -62,6 +63,7 @@ function Game() {
   const [selectedMov, setSelectedMov] = useState(null);
   const [selectedFig, setSelectedFig] = useState(null);
   const [selecFormedFig, setSelecFormedFig] = useState([]);
+  const [resetTimer, setResetTimer] = useState(false); //funcion que va a resetear el timer solo cuando se pase el turno en el ws, sino se pasa el turno debe estar en false para q no se renderice
 
   wsGameHandler(
     ws,
@@ -72,7 +74,7 @@ function Game() {
     fetchBoxCards,
     fetchInfoPlayers,
     fetchFormedFigs,
-    CountdownTimer
+    setResetTimer
   );
 
   const handleEndTurn = async () => {
@@ -125,7 +127,10 @@ function Game() {
           <GameName />
         </div>
         <div className="timer">
-          <CountdownTimer />
+          <CountdownTimer
+            resetTimer={resetTimer}
+            onResetCompleted={() => setResetTimer(false)}
+          />
         </div>
         <div className="Game_Area">
           <div className="board">

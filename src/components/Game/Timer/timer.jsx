@@ -1,24 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Countdown from "react-countdown";
 import "./timer.css";
-import { useState } from "react";
 
-// Componente cuando el tiempo se acaba
 const Completionist = () => (
   <span className="completion">¡Se terminó el turno!</span>
 );
 
-// Renderer callback con condiciones
-const CountdownTimer = () => {
-  const [endTime, setEndTime] = useState(Date.now() + 120000); // 2 minutos desde ahora
+const CountdownTimer = ({ resetTimer, onResetCompleted }) => {
+  const [time, setTime] = useState(Date.now() + 120000); // 2 minutos
 
-  // Función para reiniciar el temporizador
-  const handleComplete = () => {
-    setEndTime(Date.now() + 120000); // Actualiza el tiempo de finalización a 2 minutos a partir de ahora
-  };
+  // Función para reiniciar el temporizador cuando se llama resetTimer externamente
+  useEffect(() => {
+    if (resetTimer) {
+      setTime(Date.now() + 120000);
+      onResetCompleted();
+    }
+  }, [resetTimer, onResetCompleted]);
+
   const renderer = ({ minutes, seconds, completed }) => {
     if (completed) {
-      handleComplete(); // quiero reiniciar el temporizador el temporizador
+      return <Completionist />;
     } else {
       return (
         <span className="countdown-timer">
@@ -30,13 +31,7 @@ const CountdownTimer = () => {
   };
 
   return (
-    <Countdown
-      key={endTime}
-      date={Date.now() + 120000}
-      renderer={renderer}
-      autoStart={true}
-      onComplete={handleComplete}
-    />
+    <Countdown key={time} date={time} renderer={renderer} autoStart={true} />
   );
 };
 
