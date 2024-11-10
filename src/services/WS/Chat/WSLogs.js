@@ -6,10 +6,14 @@ function WSLogs({ ws, onMessageReceived }) {
 
         const handleMessage = (event) => {
             try {
-                const log = JSON.parse(event.data);
-                console.log("Mensaje recibido:", log);
-                if (log.type === "log" && log.data && log.data.player_name && log.data.event) { 
-                    onMessageReceived(log.data);
+                const messageData = event.data.trim();
+                if (messageData.startsWith("{") || messageData.startsWith("[")) {
+                    const log = JSON.parse(messageData);
+                    if (log.type === "log" && log.data && log.data.player_name && log.data.event) {
+                        onMessageReceived(log.data);
+                    }
+                } else {
+                    console.warn("Mensaje no JSON recibido:", messageData);
                 }
             } catch (error) {
                 console.error("Error al parsear el mensaje:", error);
@@ -19,20 +23,11 @@ function WSLogs({ ws, onMessageReceived }) {
         ws.addEventListener('message', handleMessage);
 
         return () => {
-            ws.removeEventListener('message', handleMessage); 
+            ws.removeEventListener('message', handleMessage);
         };
     }, [ws, onMessageReceived]);
 
-    const sendMessage = (playerId, msg) => {
-        if (!ws || ws.readyState !== WebSocket.OPEN) return;
-        const message = JSON.stringify({
-            player_id: playerId,
-            msg: msg
-        });
-        ws.send(message);
-    };
-
-    return { sendMessage };
+    return {};
 }
 
 export default WSLogs;

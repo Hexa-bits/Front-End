@@ -1,11 +1,13 @@
 import "./Chat.css";
 import { useState, useEffect, useRef} from "react";
 import WSMessages from "../../../services/WS/Chat/WSMessages";
+import WSLogs from "../../../services/WS/Chat/WSLogs";
 import Button from "../../Button/Button";
 
 function Chat({ ws, playerId }) {
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState([]);
+    const [logs, setLogs] = useState([]);
     
     // Crear una referencia para el final de la lista de mensajes
     const messagesEndRef = useRef(null);
@@ -14,6 +16,13 @@ function Chat({ ws, playerId }) {
         ws,
         onMessageReceived: (data) => {
             setMessages((prevMessages) => [...prevMessages, data]);
+        }
+    });
+
+    WSLogs({
+        ws,
+        onMessageReceived: (log) => {
+            setLogs((prevLogs) => [...prevLogs, log]);
         }
     });
 
@@ -39,11 +48,18 @@ function Chat({ ws, playerId }) {
         }, 50);
 
         return () => clearTimeout(timer);
-    }, [messages]);
+    }, [messages, logs]);
 
 
     return (
         <div className="chat__container">
+            <div className="chat__logs">
+                <ul id="logs">
+                    {logs.map((log, index) => (
+                        <li key={index}><strong>{log.player_name}</strong>: {log.event}</li>
+                    ))}
+                </ul>
+            </div>
             <div className="chat__msj">
                 <ul id="messages">
                     {messages.map((msg, index) => (
