@@ -49,14 +49,14 @@ function Chat({ ws, playerId }) {
             <div className="chat__msj">
                 <ul id="messages">
                     {messages.map((item, index) => (
-                        <li key={index}>
+                        <li key={index} className={item.type === 'log' ? "log" : "message-item"}>
                             {item.type === 'message' ? (
                                 <>
                                     <strong>{item.player_name}</strong> <br/> {item.msg}
                                 </>
                             ) : (
                                 <>
-                                    <strong>{item.player_name}</strong>: {item.event}
+                                    <strong>{item.player_name}</strong> <br/> {item.event}
                                 </>
                             )}
                         </li>

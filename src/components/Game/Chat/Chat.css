@@ -10,7 +10,7 @@
 }
 
 .chat__title{
-    margin:20px 0px;
+    margin: 20px 0px;
     font-size: 25px;
 }
 
@@ -41,8 +41,23 @@
     width: 100%;
 }
 
+/* Fondo alternante para los mensajes */
 #messages > li:nth-child(odd) {
-    background-color: #f9f9f9;
+    background-color: #f0f0f0;
+}
+
+#messages > li:nth-child(even) {
+    background-color: #e0e0e0; 
+}
+
+#messages > li.log:nth-child(odd) {
+    background-color: var(--verdesito1); 
+    color: white; 
+}
+
+#messages > li.log:nth-child(even) {
+    background-color: var(--verdesito2); 
+    color: white; 
 }
 
 .chat__entries {

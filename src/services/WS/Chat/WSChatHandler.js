@@ -6,13 +6,11 @@ function WSChatHandler({ ws, onMessageReceived, onLogReceived }) {
 
         const handleMessage = (event) => {
             let messageData = event.data.trim();
-            console.log("Mensaje recibido en WebSocket:", messageData);
 
             messageData = messageData.replace(/'/g, '"');
 
             try {
                 const data = JSON.parse(messageData);
-                console.log("Mensaje JSON parseado correctamente:", data);
 
                 if (data.type === "message" && data.data) {
                     onMessageReceived(data.data);
@@ -38,7 +36,6 @@ function WSChatHandler({ ws, onMessageReceived, onLogReceived }) {
             player_id: playerId,
             msg: msg
         });
-        console.log("Mensaje enviado al WebSocket:", message);
         ws.send(message);
     };
 
