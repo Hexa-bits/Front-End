@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import Form from '../../Form/Form';
 import joinGame from '../../../services/Home/JoinGame';
 import Button from '../../Button/Button';
-import { AES } from 'crypto-js';
 import { useNavigate } from 'react-router-dom';
-import { SECRET_KEY } from '../../../utils/Constants';
+import { hashPassword } from '../../../services/Home/encrypt';
 import "./JoinForm.css";
 
 function JoinForm( {gameId, playerId, setShowForm} ) {
@@ -14,9 +13,9 @@ function JoinForm( {gameId, playerId, setShowForm} ) {
 
     const handleConfirm = async () => {
         if (!input_password) { setError('Campo requerido !'); return; }
-        const encryptedPass = AES.encrypt(input_password, SECRET_KEY).toString();
-
-        const success = await joinGame(gameId, playerId, encryptedPass, navigate);
+        const hashedPass = hashPassword(input_password);
+        console.log("hashedPass:", hashedPass);
+        const success = await joinGame(gameId, playerId, hashedPass, navigate);
         if (!success) { setError('Contraseña incorrecta !'); return; }
         
         setShowForm(false);
@@ -29,7 +28,7 @@ function JoinForm( {gameId, playerId, setShowForm} ) {
         <div 
             className="modal fade show" 
             id="joinFormModal" 
-            tabindex="-1" 
+            tabIndex="-1" 
             role="dialog" 
             aria-labelledby="exampleModalCenterTitle" 
             aria-hidden="true"
@@ -43,7 +42,6 @@ function JoinForm( {gameId, playerId, setShowForm} ) {
 
                 <div className="modal-content">
                     <div className="modal-header">
-                        {/* <h5 className="modal-title" id="exampleModalLongTitle">Ingresar a partida</h5> */}
                         <Button 
                             className={'close'}
                             onClick={handleClose}

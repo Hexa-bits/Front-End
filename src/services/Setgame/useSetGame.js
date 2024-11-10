@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { create } from "./useCreate.js";
 import { checkInput, checkButtons, checkPassword } from "../../utils/logics/setGame/LogicSetGame.js";
-import { AES } from 'crypto-js';
-import { SECRET_KEY } from "../../utils/Constants.js";
-
+import { hashPassword } from "../Home/encrypt.js";
 
 export const useSetGame = (navigate) => {
     const [game_name, setGameName] = useState("");
@@ -16,11 +14,11 @@ export const useSetGame = (navigate) => {
         const isPassValid = !isPrivate || checkPassword(game_password);
         const isPlayerValid = checkButtons(max_players);
 
-        const encryptedPass = AES.encrypt(game_password, SECRET_KEY).toString();
+        const hashedPass = hashPassword(input_password);
 
         if (isNameValid && isPassValid && isPlayerValid) {
             // Llamada a la función de creación del juego con los valores adecuados
-            create(game_name, isPrivate ? encryptedPass : "", max_players, navigate);
+            create(game_name, isPrivate ? hashedPass : "", max_players, navigate);
         } else {
             // Validación de errores
             if (!isNameValid) {

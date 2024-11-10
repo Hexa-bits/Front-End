@@ -1,6 +1,6 @@
 import { CONFIG_URL , LOBBY } from "../../utils/Constants.js";
 
-async function create(game_name, encryptedPass, max_players, navigate) {
+async function create(game_name, hashedPass, max_players, navigate) {
   const player_id = parseInt(sessionStorage.getItem("player_id"),10); 
   try {
     const response = await fetch(CONFIG_URL, {
@@ -11,7 +11,7 @@ async function create(game_name, encryptedPass, max_players, navigate) {
       body: JSON.stringify({ 
         id_user: player_id, 
         game_name, 
-        game_password: encryptedPass, 
+        game_password: hashedPass, 
         max_players }),
     });
 
