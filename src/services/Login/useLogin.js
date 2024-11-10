@@ -10,6 +10,7 @@ export const useLogin = () => {
 
     const navigate = useNavigate();
     const [playerName, setPlayerName] = useState('');    
+    const [error, setError] = useState('');
     
     const handleChange = (e) => { 
         setPlayerName(e.target.value); 
@@ -24,8 +25,8 @@ export const useLogin = () => {
                 navigate(HOME);
             }
             catch (error) { alert("Error al crear usuario. " + error.message); }
-        } else { alert("Nombre " + LoginHelpText);}
+        } else { setError("Debe tener entre 1 a 10 caracteres !");}
     };
 
-    return { playerName, handleChange, handleInput };
+    return { playerName, handleChange, handleInput, error };
 };

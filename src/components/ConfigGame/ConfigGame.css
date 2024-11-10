@@ -46,6 +46,9 @@
 .password .col-form-label-container {
     height: 0px;
 }
+.form-check {
+    font-size: 1.1rem;
+}
 
 form-check:checked {
     margin-bottom: 0px;
@@ -64,6 +67,10 @@ form-check:checked {
     margin: 0;
 }
 
+.count_players button:hover{
+    transform: scale(1.1);
+}
+
 .count_players button.selected {
     background-color: var(--verdecito); 
     color: var(--marron4);
@@ -75,5 +82,6 @@ form-check:checked {
 }
 
 .participants{
-    margin-top:20px
+    margin-top:0px
 }
+

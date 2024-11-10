@@ -27,12 +27,13 @@ import getCurrentTurnPlayer from "../../../../services/Game/TurnPlayer/getCurren
 import renewBoard from "../../../../services/Game/Board/renewBoard.js";
 import wsGameHandler from "../../../../services/WS/WsGameHandler.js";
 import getOthersInfo from "../../../../services/Game/Cards/getOthersInfo.js";
-import postPlayer from "../../../../services/Game/TurnPlayer/cancelMov.js";
+import cancelMovCard from "../../../../services/Game/TurnPlayer/cancelMov.js";
 import getFormedFig from "../../../../services/Game/Board/Highlight Figs/formedFig.js";
 import discardMove from "../../../../services/Game/Cards/discardMove.js";
 import discardFig from "../../../../services/Game/Cards/discardFig.js";
 import { WS_GAME } from "../../../../utils/Constants.js";
 import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
+import blockFig from "../../../../services/Game/Cards/blockFig.js";
 
 function Game() {
   const navigate = useNavigate();
@@ -61,9 +62,19 @@ function Game() {
 
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectedMov, setSelectedMov] = useState(null);
-  const [selectedFig, setSelectedFig] = useState(null);
+  const [selectedFig, setSelectedFigCard] = useState(null);
   const [selecFormedFig, setSelecFormedFig] = useState([]);
+  const [figToBlock, setFigToBlock] = useState(null);
+  const [alert, setAlert] = useState("");
   const [resetTimer, setResetTimer] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setAlert(""), 2000);
+  }, [alert]);
+
+  const disabled = localPlayerId !== playerId;
+  const isTurn = localPlayerId === playerId;
+
   wsGameHandler(
     ws,
     fetchTurnData,
@@ -81,28 +92,58 @@ function Game() {
   };
 
   const handleLeave = async () => {
-    await passTurn();
     await LeaveGame(navigate);
   };
 
   const handleUseMov = async () => {
     if (checkMov(selectedMov, selectedCards)) {
-      await discardMove(localPlayerId, selectedMov, selectedCards);
+      const success = await discardMove(
+        localPlayerId,
+        selectedMov,
+        selectedCards
+      );
+      if (!success) {
+        setAlert("No se pudo mover ficha");
+      }
+
       setSelectedMov(null);
       setSelectedCards([]);
     } else {
-      console.log("Movimiento no valido");
+      setAlert("Movimiento no permitido");
     }
   };
 
-  const useFig = async () => {
-    await discardFig(localPlayerId, selecFormedFig, selectedFig);
-    setSelectedFig(null);
+  const handleUseFig = async () => {
+    const success = await discardFig(
+      localPlayerId,
+      selecFormedFig,
+      selectedFig
+    );
+    if (!success) {
+      setAlert("No se puede descartar esa figura");
+    }
+
+    setSelectedFigCard(null);
     setSelecFormedFig([]);
   };
 
   const handleCancel = async () => {
-    await postPlayer(localPlayerId, gameId);
+    const success = await cancelMovCard(localPlayerId, gameId);
+    if (!success) {
+      setAlert("No se puede cancelar movimiento.");
+    }
+  };
+
+  const blockPlayerFig = async () => {
+    console.log(selectedFig);
+    console.log(figToBlock);
+    const success = await blockFig(localPlayerId, selecFormedFig, figToBlock);
+    if (!success) {
+      setAlert("No se puede bloquear esa figura");
+    }
+
+    setSelecFormedFig([]);
+    setFigToBlock(null);
   };
 
   return (
@@ -114,15 +155,24 @@ function Game() {
           <SeePlayer player={currentPlayer || "??????"} />
         </div>
         <div className="Game_Others_Area">
-          <OtherPlayers players={infoPlayers} />
+          <OtherPlayers
+            players={infoPlayers}
+            onSelecFigToBlock={setFigToBlock}
+            isTurn={isTurn}
+          />
         </div>
+        {alert && (
+          <div className="alert alert-danger" role="alert">
+            {alert}
+          </div>
+        )}
         <div className="leav">
           <LeaveButton onLeave={handleLeave} />
         </div>
       </div>
 
       <div className="mid-area">
-        <div className="gamename">
+        <div className="optional">
           <GameName />
         </div>
         <div className="timer">
@@ -134,10 +184,10 @@ function Game() {
         <div className="Game_Area">
           <div className="board">
             <Board
-              isTurn={localPlayerId === playerId}
+              isTurn={isTurn}
               cardData={boxCards}
               onSelectedCards={setSelectedCards}
-              onSelectedFig={setSelecFormedFig}
+              onSelecFormedFig={setSelecFormedFig}
               formedFigs={formedFigs}
             />
             <div className="labelMovParcial">
@@ -150,39 +200,48 @@ function Game() {
             <div className="Fig">
               <FigCards
                 fig_cards={fig_cards}
-                onSelectedCardFig={setSelectedFig}
-                isTurn={localPlayerId === playerId}
+                onSelecFigCard={setSelectedFigCard}
+                isTurn={isTurn}
               />
             </div>
             <div className="Mov">
               <MovCards
                 mov_cards={mov_cards}
                 onSelectedMov={setSelectedMov}
-                isTurn={localPlayerId === playerId}
+                isTurn={isTurn}
               />
             </div>
           </div>
           <div className="button-panel">
-            <div className="useFig">
-              <Button
-                label="DESCARTAR FIGURA"
-                onClick={useFig}
-                disabled={localPlayerId !== playerId}
-              />
+            <div className="fig-butt">
+              <div className="block">
+                <Button
+                  label="BLOQUEAR OTRA FIGURA"
+                  onClick={blockPlayerFig}
+                  disabled={disabled}
+                />
+              </div>
+              <div className="useFig">
+                <Button
+                  label="DESCARTAR MI FIGURA"
+                  onClick={handleUseFig}
+                  disabled={disabled}
+                />
+              </div>
             </div>
             <div className="mov-butt">
               <div className="useMov">
                 <Button
                   label="USAR MOVIMIENTO"
                   onClick={handleUseMov}
-                  disabled={localPlayerId !== playerId}
+                  disabled={disabled}
                 />
               </div>
               <div className="cancel">
                 <Button
                   label="CANCELAR MOVIMIENTO"
                   onClick={handleCancel}
-                  disabled={localPlayerId !== playerId}
+                  disabled={disabled}
                 />
               </div>
             </div>

@@ -1,4 +1,4 @@
-@import "../../../utils/colores.css";
+@import "../../../utils/constants.css";
 
 .lobby-container .list-group { 
     background: var(--amarillito);
