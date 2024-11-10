@@ -63,8 +63,7 @@ function Game() {
   const [selectedMov, setSelectedMov] = useState(null);
   const [selectedFig, setSelectedFig] = useState(null);
   const [selecFormedFig, setSelecFormedFig] = useState([]);
-  const [resetTimer, setResetTimer] = useState(false); //funcion que va a resetear el timer solo cuando se pase el turno en el ws, sino se pasa el turno debe estar en false para q no se renderice
-
+  const [resetTimer, setResetTimer] = useState(false);
   wsGameHandler(
     ws,
     fetchTurnData,
