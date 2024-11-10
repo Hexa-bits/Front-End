@@ -13,12 +13,12 @@ function JoinForm( {gameId, playerId, setShowForm} ) {
     const [ error, setError ] = useState('');
 
     const handleConfirm = async () => {
-        if (!input_password) {
-            setError('Campo requerido !');
-            return;
-        }
+        if (!input_password) { setError('Campo requerido !'); return; }
         const encryptedPass = AES.encrypt(input_password, SECRET_KEY).toString();
-        await joinGame(gameId, playerId, encryptedPass, navigate);
+
+        const success = await joinGame(gameId, playerId, encryptedPass, navigate);
+        if (!success) { setError('Contraseña incorrecta !'); return; }
+        
         setShowForm(false);
     }
 
