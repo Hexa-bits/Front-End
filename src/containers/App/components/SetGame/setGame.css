@@ -46,14 +46,26 @@
     font-size: 20px;
 }
 
-.setGame button{
+
+.setGame .count_players button{
     background-color: var(--violeta);  
     border: none;  
     width: 70%;
-    margin: 10px 0 20px 0;
+    margin: 10px 0 15px 0;
 }
 
-.setGame button:hover{
-    background-color: var(--violeta2);
-    transform: scale(1.03);
+.setGame .create-btn button {
+    background-color: var(--verde);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 19px;
+    font-weight: 600;
+    margin: 10px 0 30px 0;
 }
+
+.setGame .create-btn button:hover {
+    background-color: var(--verde);
+    border: 1px solid white;
+    transform: scale(1);
+} 

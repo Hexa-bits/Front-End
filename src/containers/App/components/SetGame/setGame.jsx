@@ -35,7 +35,9 @@ function Start() {
           isPrivate={isPrivate}
           setPrivate={setIsPrivate}
         />
-        <Button label="CREAR PARTIDA" onClick={handleClick} />
+        <div className="create-btn">
+          <Button label="CREAR PARTIDA" onClick={handleClick} />
+        </div>
       </div>
     </div>
   );

@@ -30,9 +30,13 @@
     padding-right: 2rem;
 }
 
+.form-input .error {
+    border: 2px solid red;
+}
+
 .form-input::placeholder {
     font-style: italic;
-    font-size: 1rem; 
+    font-size: 1.1rem; 
 }
 
 /* Help text style */
@@ -41,6 +45,13 @@
     font-size: 1.1rem;
     margin-bottom: 0.5rem; 
     display: block; 
+}
+
+.col-auto .error-text {
+    color: rgb(255, 18, 18);
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-style: italic;
 }
 
 .input-wrapper {
@@ -56,4 +67,8 @@
     width: 1.5rem;
     height: 1.5rem;
     pointer-events: none; 
+}
+
+.card .col-form-label {
+    margin-bottom: 12px;
 }

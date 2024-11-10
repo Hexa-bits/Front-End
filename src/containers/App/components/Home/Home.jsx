@@ -32,8 +32,9 @@ function Home() {
   const handleJoin = async(game) => {
     
     setGameId(game.game_id);
-    if (game.isPrivate) { setShowForm(true);} 
-    else {  await joinGame(game.game_id, playerId, '', navigate); }
+    setShowForm(true);
+    // if (game.isPrivate) { setShowForm(true);} 
+    // else {  await joinGame(game.game_id, playerId, '', navigate); }
   };
 
   const handleChecked = (e) => {

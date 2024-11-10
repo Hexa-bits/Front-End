@@ -10,8 +10,13 @@ import "./JoinForm.css";
 function JoinForm( {gameId, playerId, setShowForm} ) {
     const navigate = useNavigate();
     const [ input_password, setPassword ] = useState('');
+    const [ error, setError ] = useState('');
 
     const handleConfirm = async () => {
+        if (!input_password) {
+            setError('Campo requerido !');
+            return;
+        }
         const encryptedPass = AES.encrypt(input_password, SECRET_KEY).toString();
         await joinGame(gameId, playerId, encryptedPass, navigate);
         setShowForm(false);
@@ -52,6 +57,7 @@ function JoinForm( {gameId, playerId, setShowForm} ) {
                             placeholder={'Contraseña'}
                             onChange={(e) => setPassword(e.target.value)}
                             icon="/assets/icons/clave.png"
+                            error={error}
                         />
                     </div>
                     <div className="modal-footer">

@@ -24,7 +24,7 @@ describe('ConfigGame Component', () => {
     expect(screen.getByLabelText('NOMBRE DE PARTIDA')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('Ingrese un nombre')).toBeInTheDocument();
     expect(screen.getByText('Partida privada')).toBeInTheDocument();
-    expect(screen.getByText('Elige la cantidad de participantes')).toBeInTheDocument();
+    expect(screen.getByText('ELIGE CANTIDAD DE JUGADORES')).toBeInTheDocument();
   });
 
   test('Debe mostrar el nombre ingresado', () => {
@@ -101,7 +101,7 @@ describe('ConfigGame Component', () => {
         setPrivate={setPrivate}
       />
     );
-    expect(screen.getByTestId('player-count')).toHaveTextContent('Participantes: 3');
+    expect(screen.getByTestId('player-count')).toHaveTextContent('Jugadores: 3');
   });
 
   test('Se actualiza la seleccion de maxPlayers.', () => {

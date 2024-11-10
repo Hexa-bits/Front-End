@@ -51,7 +51,7 @@ function ConfigGame({
       )}
       
 
-      <p>Elige la cantidad de participantes</p>
+      <p>ELIGE CANTIDAD DE JUGADORES</p>
 
       <div className="count_players">
         <Button
@@ -72,7 +72,7 @@ function ConfigGame({
       </div>
       <div className="participants">
         <p data-testid="player-count">
-          {maxPlayers > 0 && `Participantes: ${maxPlayers}`}
+          {maxPlayers > 0 && `Jugadores: ${maxPlayers}`}
         </p>
       </div>
     </div>
