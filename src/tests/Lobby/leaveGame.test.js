@@ -56,4 +56,23 @@ describe("LeaveGame function", () => {
       expect(mockNavigate).toHaveBeenCalledWith(HOME);
     });
   });
+
+  it("debería manejar errores al intentar abandonar el juego", async () => {
+    // Mock para sessionStorage y fetch que lanza error
+    const mockFetch = vi.fn(() =>
+      Promise.resolve({
+        ok: false,
+        text: () => Promise.resolve("Error al abandonar el juego"),
+      })
+    );
+    global.fetch = mockFetch;
+    global.alert = vi.fn();
+
+    LeaveGame();
+    await waitFor(() => {
+      expect(global.alert).toHaveBeenCalledWith(
+        "No se pudo abandonar el juego. Error al abandonar el juego"
+      );
+    });
+  });
 });

@@ -15,6 +15,7 @@ import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/L
 import LabelProhibitedColor from "../../../../components/Game/Board/LabelProhibitedColor/LabelProhibitedColor.jsx";
 import Winner from "../../../../components/Game/Winner/Winner.jsx";
 import GameName from "../../../../components/Game/GameName/GameName.jsx";
+import CountdownTimer from "../../../../components/Game/Timer/timer.jsx";
 
 import renewFigCards from "../../../../services/Game/Cards/renewFigCards.js";
 import renewMovCards from "../../../../services/Game/Cards/renewMovCards.js";
@@ -35,211 +36,238 @@ import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
 import blockFig from "../../../../services/Game/Cards/blockFig.js";
 
 function Game() {
-    const navigate = useNavigate();
-    const localPlayerId = parseInt(sessionStorage.getItem("player_id"), 10);
-    const localPlayerName = sessionStorage.getItem("player_name");
-    const gameId = sessionStorage.getItem("game_id");
-    
-    const ws = getWsGameInstance(WS_GAME + gameId);
-    
-    const { currentPlayer, playerId, fetchTurnData } = getCurrentTurnPlayer(gameId);
-    const { winnerName, getWinner } = WinnerExists(gameId);
-    const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
-    const { fig_cards, fetchFigs } = renewFigCards(localPlayerId);
-    const { boxCards, movisParcial: isMovParcial, forbiddenColor ,fetchBoxCards } = renewBoard(gameId);
-    const { infoPlayers, fetchInfoPlayers } = getOthersInfo(gameId, localPlayerId);
-    const { formedFigs, fetchFormedFigs } = getFormedFig(); 
-    
-    const [ selectedCards, setSelectedCards] = useState([]);
-    const [ selectedMov, setSelectedMov] = useState(null);
-    const [ selectedFig, setSelectedFigCard] = useState(null);
-    const [ selecFormedFig, setSelecFormedFig] = useState([]);
-    const [ figToBlock, setFigToBlock] = useState(null);
-	const [ alert, setAlert ] = useState('');
+  const navigate = useNavigate();
+  const localPlayerId = parseInt(sessionStorage.getItem("player_id"), 10);
+  const localPlayerName = sessionStorage.getItem("player_name");
+  const gameId = sessionStorage.getItem("game_id");
 
-    useEffect(() => {
-        setTimeout(() => setAlert(''), 2000); 
-    }, [alert]);
-    
-    const disabled = localPlayerId !== playerId;
-    const isTurn = localPlayerId === playerId;
-    
-    wsGameHandler(
-      ws,
-      fetchTurnData,
-      getWinner,
-      fetchFigs,
-      fetchMovs,
-      fetchBoxCards,
-      fetchInfoPlayers,
-      fetchFormedFigs
+  const ws = getWsGameInstance(WS_GAME + gameId);
+
+  const { currentPlayer, playerId, fetchTurnData } =
+    getCurrentTurnPlayer(gameId);
+  const { winnerName, getWinner } = WinnerExists(gameId);
+  const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
+  const { fig_cards, fetchFigs } = renewFigCards(localPlayerId);
+  const {
+    boxCards,
+    movisParcial: isMovParcial,
+    forbiddenColor,
+    fetchBoxCards,
+  } = renewBoard(gameId);
+  const { infoPlayers, fetchInfoPlayers } = getOthersInfo(
+    gameId,
+    localPlayerId
+  );
+  const { formedFigs, fetchFormedFigs } = getFormedFig();
+
+  const [selectedCards, setSelectedCards] = useState([]);
+  const [selectedMov, setSelectedMov] = useState(null);
+  const [selectedFig, setSelectedFigCard] = useState(null);
+  const [selecFormedFig, setSelecFormedFig] = useState([]);
+  const [figToBlock, setFigToBlock] = useState(null);
+  const [alert, setAlert] = useState("");
+  const [resetTimer, setResetTimer] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setAlert(""), 2000);
+  }, [alert]);
+
+  const disabled = localPlayerId !== playerId;
+  const isTurn = localPlayerId === playerId;
+
+  wsGameHandler(
+    ws,
+    fetchTurnData,
+    getWinner,
+    fetchFigs,
+    fetchMovs,
+    fetchBoxCards,
+    fetchInfoPlayers,
+    fetchFormedFigs,
+    setResetTimer
+  );
+
+  const handleEndTurn = async () => {
+    await passTurn();
+  };
+
+  const handleLeave = async () => {
+    await LeaveGame(navigate);
+  };
+
+  const handleUseMov = async () => {
+    if (checkMov(selectedMov, selectedCards)) {
+      const success = await discardMove(
+        localPlayerId,
+        selectedMov,
+        selectedCards
+      );
+      if (!success) {
+        setAlert("No se pudo mover ficha");
+      }
+
+      setSelectedMov(null);
+      setSelectedCards([]);
+    } else {
+      setAlert("Movimiento no permitido");
+    }
+  };
+
+  const handleUseFig = async () => {
+    const success = await discardFig(
+      localPlayerId,
+      selecFormedFig,
+      selectedFig
     );
-
-    const handleEndTurn = async () => {
-      await passTurn();
-    };
-
-    const handleLeave = async () => {
-      await LeaveGame(navigate);
-    };
-
-    const handleUseMov = async () => {
-      if (checkMov(selectedMov, selectedCards)) {
-        const success = await discardMove(localPlayerId, selectedMov, selectedCards);
-      	if (!success) { setAlert('No se pudo mover ficha'); }
-        
-		setSelectedMov(null);
-        setSelectedCards([]);
-      } else { setAlert('Movimiento no permitido'); }
-    };
-
-    const handleUseFig = async () => {
-      const success = await discardFig(localPlayerId, selecFormedFig, selectedFig);
-      if (!success) { setAlert('No se puede descartar esa figura'); }
-	  
-	  setSelectedFigCard(null);
-      setSelecFormedFig([]);
-    };
-
-    const handleCancel = async () => {
-      const success = await cancelMovCard(localPlayerId, gameId);
-	  if (!success) { setAlert('No se puede cancelar movimiento.'); }
-    };
-
-    const blockPlayerFig = async () => {
-		console.log(selectedFig);
-		console.log(figToBlock);
-		const success = await blockFig(localPlayerId, selecFormedFig, figToBlock,);
-		if (!success) {	setAlert('No se puede bloquear esa figura'); }
-		
-		setSelecFormedFig([]);
-		setFigToBlock(null);
+    if (!success) {
+      setAlert("No se puede descartar esa figura");
     }
 
+    setSelectedFigCard(null);
+    setSelecFormedFig([]);
+  };
+
+  const handleCancel = async () => {
+    const success = await cancelMovCard(localPlayerId, gameId);
+    if (!success) {
+      setAlert("No se puede cancelar movimiento.");
+    }
+  };
+
+  const blockPlayerFig = async () => {
+    console.log(selectedFig);
+    console.log(figToBlock);
+    const success = await blockFig(localPlayerId, selecFormedFig, figToBlock);
+    if (!success) {
+      setAlert("No se puede bloquear esa figura");
+    }
+
+    setSelecFormedFig([]);
+    setFigToBlock(null);
+  };
 
   return (
     <div className="Game">
-		
-        <Winner winnerName={winnerName} onLeave={handleLeave}/>
-      
-		<div className="left-area">
-			<div className="seePlayer">
-				<SeePlayer player={currentPlayer || "??????"} />
-			</div>
-			<div className="Game_Others_Area">
-				<OtherPlayers 
-                    players={infoPlayers}
-                    onSelecFigToBlock={setFigToBlock}
-                    isTurn={isTurn}
+      <Winner winnerName={winnerName} onLeave={handleLeave} />
+
+      <div className="left-area">
+        <div className="seePlayer">
+          <SeePlayer player={currentPlayer || "??????"} />
+        </div>
+        <div className="Game_Others_Area">
+          <OtherPlayers
+            players={infoPlayers}
+            onSelecFigToBlock={setFigToBlock}
+            isTurn={isTurn}
+          />
+        </div>
+        {alert && (
+          <div className="alert alert-danger" role="alert">
+            {alert}
+          </div>
+        )}
+        <div className="leav">
+          <LeaveButton onLeave={handleLeave} />
+        </div>
+      </div>
+
+      <div className="mid-area">
+        <div className="optional">
+          <GameName />
+        </div>
+        <div className="timer">
+          <CountdownTimer
+            resetTimer={resetTimer}
+            onResetCompleted={() => setResetTimer(false)}
+          />
+        </div>
+        <div className="Game_Area">
+          <div className="board">
+            <Board
+              isTurn={isTurn}
+              cardData={boxCards}
+              onSelectedCards={setSelectedCards}
+              onSelecFormedFig={setSelecFormedFig}
+              formedFigs={formedFigs}
+            />
+            <div className="labelMovParcial">
+              <LabelMovParcial isVisible={isMovParcial} />
+              <LabelProhibitedColor color={forbiddenColor} />
+              <div className="labelProhibitedColor"></div>
+            </div>
+          </div>
+          <div className="Cards">
+            <div className="Fig">
+              <FigCards
+                fig_cards={fig_cards}
+                onSelecFigCard={setSelectedFigCard}
+                isTurn={isTurn}
+              />
+            </div>
+            <div className="Mov">
+              <MovCards
+                mov_cards={mov_cards}
+                onSelectedMov={setSelectedMov}
+                isTurn={isTurn}
+              />
+            </div>
+          </div>
+          <div className="button-panel">
+            <div className="fig-butt">
+              <div className="block">
+                <Button
+                  label="BLOQUEAR OTRA FIGURA"
+                  onClick={blockPlayerFig}
+                  disabled={disabled}
                 />
-			</div>
-			{alert && (
-				<div className="alert alert-danger" role="alert">
-					{alert}
-			  	</div>
-			)}
-			<div className="leav">
-              <LeaveButton onLeave={handleLeave} />
-			</div>		
-    	</div>
+              </div>
+              <div className="useFig">
+                <Button
+                  label="DESCARTAR MI FIGURA"
+                  onClick={handleUseFig}
+                  disabled={disabled}
+                />
+              </div>
+            </div>
+            <div className="mov-butt">
+              <div className="useMov">
+                <Button
+                  label="USAR MOVIMIENTO"
+                  onClick={handleUseMov}
+                  disabled={disabled}
+                />
+              </div>
+              <div className="cancel">
+                <Button
+                  label="CANCELAR MOVIMIENTO"
+                  onClick={handleCancel}
+                  disabled={disabled}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-		<div className="mid-area">
-			<div className="optional">
-				<GameName />
-			</div>
-			<div className="Game_Area">
-				<div className="board">
-					<Board
-						isTurn={isTurn}
-						cardData={boxCards}
-						onSelectedCards={setSelectedCards}
-						onSelecFormedFig={setSelecFormedFig}
-						formedFigs={formedFigs}
-					/>
-					<div className="labelMovParcial">
-						<LabelMovParcial isVisible={isMovParcial} />
-						<LabelProhibitedColor color={forbiddenColor}/>
-						<div className="labelProhibitedColor">
-						</div>
-					</div>
-				</div>
-				<div className="Cards">
-					<div className="Fig">
-						<FigCards 
-							fig_cards={fig_cards} 
-							onSelecFigCard={setSelectedFigCard}
-							isTurn={isTurn} 
-						/>
-					</div>
-					<div className="Mov">
-						<MovCards
-							mov_cards={mov_cards}
-							onSelectedMov={setSelectedMov}
-							isTurn={isTurn}
-						/>
-					</div>
-				</div>
-				<div className="button-panel">
-					<div className="fig-butt">
+      <div className="right-area">
+        <div className="right-box">
+          <div className="PlayerInfo-Area">
+            <PlayerName label={"USUARIO"} player={localPlayerName} />
+          </div>
+          <div className="chat-container">
+            <Chat ws={ws} playerId={localPlayerId} />
+          </div>
 
-						<div className="block">
-							<Button
-							label="BLOQUEAR OTRA FIGURA"
-							onClick={blockPlayerFig}
-							disabled={disabled}
-							/>
-						</div>
-						<div className="useFig">
-							<Button
-								label="DESCARTAR MI FIGURA"
-								onClick={handleUseFig}
-								disabled={disabled}
-							/>
-						</div>
-					</div> 
-					<div className="mov-butt">
-						<div className="useMov">
-							<Button
-								label="USAR MOVIMIENTO"
-								onClick={handleUseMov}
-								disabled={disabled}
-							/>
-						</div>
-						<div className="cancel">
-							<Button
-								label="CANCELAR MOVIMIENTO"
-								onClick={handleCancel}
-								disabled={disabled}
-							/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div className="right-area">
-			<div className="right-box">
-				<div className="PlayerInfo-Area">
-					<PlayerName label={"USUARIO"} player={localPlayerName} />
-				</div>
-				<div className="chat-container">
-					<Chat
-						ws={ws}
-						playerId={localPlayerId}
-					/>
-				</div>
-
-				<div className="end">
-					<Button
-                        label="TERMINAR TURNO"
-                        onClick={handleEndTurn}
-                        disabled={disabled}
-                    />
-				</div>
-			</div>
-			
-      	</div>
-	</div>
+          <div className="end">
+            <Button
+              label="TERMINAR TURNO"
+              onClick={handleEndTurn}
+              disabled={localPlayerId !== playerId}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 export default Game;

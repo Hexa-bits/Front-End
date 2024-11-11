@@ -13,9 +13,6 @@ function GameList({ games = [], handleJoin, filter, search }) {
     ? fuse.search(filter).map((result) => result.item)
     : games;
 
-  const startedGames = filteredGames.filter(game => game.started);
-  const notStartedGames = filteredGames.filter(game => !game.started);
-
   return (
     <div className="GameList">
       {filteredGames.length === 0 ? (
@@ -23,32 +20,13 @@ function GameList({ games = [], handleJoin, filter, search }) {
           <li className="list-group-item">No se encontraron partidas.</li>
         </ul>
       ) : (
-        <>
-          {startedGames.length > 0 && (
-            <div className="started_List">
-              <h3>Mis partidas comenzadas</h3>
-              <ul className="list-group">
-                {startedGames.map(game => (
-                  <li className="started-games list-group-item" key={game.game_id}>
-                    <Game_Item game={game} handleJoin={handleJoin} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          {notStartedGames.length > 0 && (
-            <div className="notStarted_List">
-              <h3>Otras partidas </h3>
-              <ul className="list-group">
-                {notStartedGames.map(game => (
-                  <li className="list-group-item" key={game.game_id}>
-                    <Game_Item game={game} handleJoin={handleJoin} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </>
+        <ul className="list-group">
+          {filteredGames.map((game, index) => (
+            <li className="list-group-item" key={game.game_id}>
+              <Game_Item game={game} handleJoin={handleJoin} />
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
