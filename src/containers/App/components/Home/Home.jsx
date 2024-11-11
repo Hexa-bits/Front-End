@@ -47,8 +47,10 @@ function Home() {
           className="back-btn" 
         />
         <div className="dataUser">
-          <div className="user">USUARIO: {playerName}</div>
-          <div className="id_user"> ID: {playerId}</div>
+          <div className="user">  
+            <img src="/assets/icons/usuario.png" className='usser-icon'/>
+            {playerName}
+          </div>
         </div>
       </section>
       <section className="CrearPartida">
