@@ -11,7 +11,7 @@ export const SETGAME = "/home/create-config";
 export const LOGIN_URL = `http://localhost:${PORT}${LOGIN}`;
 export const LOBBY_URL = `http://localhost:${PORT}${LOBBY}?game_id=`;
 export const CONFIG_URL = `http://localhost:${PORT}/home/create-config`;
-export const HOME_URL = `http://localhost:${PORT}${HOME}/get-lobbies`;
+export const HOME_URL = `http://localhost:${PORT}${HOME}/get-lobbies?username=`;
 
 export const GAME_JOIN_URL = `http://localhost:${PORT}${GAME}/join`;
 export const GAME_LEAVE_URL = `http://localhost:${PORT}${GAME}/leave`;
@@ -32,6 +32,7 @@ export const CANCEL_MOV_URL = `http://localhost:${PORT}${GAME}/cancel-mov`;
 export const USE_FIG_CARD = `http://localhost:${PORT}${GAME}/use-fig-card`;
 export const BLOCK_FIG_CARD = `http://localhost:${PORT}${GAME}/block-fig-card`;
 
+
 /** WEBSOCKETS */
 export const WS_GAME = `ws://localhost:${PORT}${GAME}?game_id=`;
 export const WS_HOME = `ws://localhost:${PORT}${HOME}`;
@@ -46,7 +47,6 @@ export const BOARD_CHANGED = "Hay modificación de Tablero";
 export const FIGS_UPD = "Actualizar cartas de figuras";
 export const MOVS_UPD = "Actualizar cartas de movimientos";
 export const OTHERS_UPD = "Actualizar cartas de otros jugadores";
-export const START_GAME = "Inició la partida";
 
 /** Otras constantes */
 export const MAX_PLAYERS = 4;
