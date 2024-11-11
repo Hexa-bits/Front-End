@@ -21,8 +21,7 @@ export const useReg = async ( { playerName }) => {
 
         sessionStorage.setItem('player_name', playerName); 
         sessionStorage.setItem('player_id', Id);
-        sessionStorage.setItem('orig_player_id', Id);
-        
+
     } catch (error) {
         console.log(error);
     }

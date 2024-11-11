@@ -32,14 +32,13 @@ function Game_Item({ game, handleJoin }){
                         {game.current_players}/{game.max_players}
                     </div>
 
-                    <Button 
-                        label="UNIRSE" 
-                        onClick={() => handleJoin(game)}
-                        disabled={!game.started & game.current_players >= game.max_players}
-                    />
+                        <Button 
+                            label="UNIRSE" 
+                            onClick={() => handleJoin(game)}
+                            disabled={game.current_players >= game.max_players}/>
+                    </div>
                 </div>
             </div>
-        </div>
     )
 }
 

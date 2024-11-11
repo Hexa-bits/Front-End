@@ -21,6 +21,7 @@
     "inflight": "^1.0.6",
     "jsdom": "^25.0.1",
     "react-confetti": "^6.1.0",
+    "react-countdown": "^2.3.6",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2"
   },
