@@ -28,7 +28,7 @@ function Home() {
   const [gameId, setGameId] = useState(0);
   
   const { ws } = WsHomeService(WS_HOME);
-  const { games } = useGames(ws);
+  const { games } = useGames(ws, playerName);
   
 
   const handleCrearPartida = () => {
