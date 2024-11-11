@@ -23,22 +23,24 @@ function Home() {
   const navigate = useNavigate();
   const [filter, setFilter] = useState("");
   const [search, setSearch] = useState(false);
-  
+
   const [showForm, setShowForm] = useState(false);
   const [gameId, setGameId] = useState(0);
-  
+
   const { ws } = WsHomeService(WS_HOME);
   const { games } = useGames(ws, playerName);
-  
 
   const handleCrearPartida = () => {
     navigate(SETGAME);
   };
 
-  const handleJoin = async(game) => {
+  const handleJoin = async (game) => {
     setGameId(game.game_id);
-    if (game.isPrivate) { setShowForm(true);} 
-    else {  await joinGame(game, playerId, '', navigate); }
+    if (game.isPrivate) {
+      setShowForm(true);
+    } else {
+      await joinGame(game, playerId, "", navigate);
+    }
   };
 
   const handleChecked = (e) => {
@@ -48,13 +50,10 @@ function Home() {
   return (
     <div className="Home">
       <section className="NombreUsuario">
-        <Button 
-          onClick={() => navigate(LOGIN)} 
-          className="back-btn" 
-        />
+        <Button onClick={() => navigate(LOGIN)} className="back-btn" />
         <div className="dataUser">
-          <div className="user">  
-            <img src="/assets/icons/usuario.png" className='user-icon'/>
+          <div className="user">
+            <img src="/assets/icons/usuario.png" className="user-icon" />
             {playerName}
           </div>
         </div>
@@ -97,7 +96,7 @@ function Home() {
       </div>
 
       {showForm && (
-        <JoinForm game={game} playerId={playerId} setShowForm={setShowForm}/>
+        <JoinForm game={games} playerId={playerId} setShowForm={setShowForm} />
       )}
     </div>
   );
