@@ -25,8 +25,8 @@ function Home() {
   const [search, setSearch] = useState(false);
   
   const [showForm, setShowForm] = useState(false);
-  const [gameId, setGameId] = useState(0);
-  
+  const [game, setGame] = useState({});
+
   const { ws } = WsHomeService(WS_HOME);
   const { games } = useGames(ws, playerName);
   
@@ -36,7 +36,7 @@ function Home() {
   };
 
   const handleJoin = async(game) => {
-    setGameId(game.game_id);
+    setGame(game);
     if (game.isPrivate) { setShowForm(true);} 
     else {  await joinGame(game, playerId, '', navigate); }
   };
