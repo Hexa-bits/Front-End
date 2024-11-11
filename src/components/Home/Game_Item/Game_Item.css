@@ -21,8 +21,9 @@
 .game .config__left {
     width: 100%;
     gap: 10px;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1.2rem;
+    margin-left: 10px;
 }
 
 .config__left .lock{
@@ -43,6 +44,7 @@
 
 
 .game .config__right{
+    
     gap: 10%;
     width: 30%;
     margin: 0px 10px 0px 10px;
@@ -59,4 +61,9 @@
     border-radius: 5px;
     color:black;
     background-color: white;
+}
+
+.started-icon {
+    width: 20px;
+    margin-left: 5px;
 }

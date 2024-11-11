@@ -6,34 +6,26 @@ function Game_Item({game, handleJoin, isPrivate}){
     isPrivate = game.isPrivate
     return(
         <div className="List__Items">
-                <div className="game">
-                    <div className="config__left">
-
-                        {isPrivate && 
-                            <div className="lock">
-                                <img src='../../../../assets/icons/lock.svg'/>
-                                {game.game_name}
-                            </div>
-                            }
-
-                        {!isPrivate && 
-                            <div className="non-lock">
-                                {game.game_name}
-                            </div>
-                        }
+            <div className={`game ${game.started ? "started" : ""}`}>
+                <div className="config__left">
+                    {game.game_name}
+                    {game.started ? 
+                        <img src="/assets/icons/usuario.png" className='started-icon'/>
+                    : ""}
+                </div>
+                <div className="config__right">
+                    <div className="range_players">
+                        {game.current_players}/{game.max_players}
                     </div>
-                    <div className="config__right">
-                        <div className="range_players">
-                            {game.current_players}/{game.max_players}
-                        </div>
 
-                        <Button 
-                            label="UNIRSE" 
-                            onClick={() => handleJoin(game)}
-                            disabled={game.current_players >= game.max_players}/>
-                    </div>
+                    <Button 
+                        label="UNIRSE" 
+                        onClick={() => handleJoin(game)}
+                        disabled={!game.started & game.current_players >= game.max_players}
+                    />
                 </div>
             </div>
+        </div>
     )
 }
 
