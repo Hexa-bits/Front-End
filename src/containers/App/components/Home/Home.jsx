@@ -14,16 +14,22 @@ import joinGame from "../../../../services/Home/JoinGame.js";
 
 function Home() {
   const playerId = parseInt(sessionStorage.getItem("player_id"), 10);
+  const origId = parseInt(sessionStorage.getItem("orig_player_id"), 10);
+  if (playerId !== origId) {
+    sessionStorage.setItem("player_id", origId);
+  }
+
   const playerName = sessionStorage.getItem("player_name");
   const navigate = useNavigate();
   const [filter, setFilter] = useState("");
   const [search, setSearch] = useState(false);
-
+  
   const [showForm, setShowForm] = useState(false);
   const [gameId, setGameId] = useState(0);
-
+  
   const { ws } = WsHomeService(WS_HOME);
   const { games } = useGames(ws);
+  
 
   const handleCrearPartida = () => {
     navigate(SETGAME);
@@ -48,7 +54,7 @@ function Home() {
         />
         <div className="dataUser">
           <div className="user">  
-            <img src="/assets/icons/usuario.png" className='usser-icon'/>
+            <img src="/assets/icons/usuario.png" className='user-icon'/>
             {playerName}
           </div>
         </div>
