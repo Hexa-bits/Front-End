@@ -18,12 +18,29 @@
     justify-content: space-around;
 }
 
-.game .config__left{
+.game .config__left {
     width: 100%;
+    gap: 10px;
     font-weight: 500;
-    margin-left: 10px;
     font-size: 1.2rem;
 }
+
+.config__left .lock{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.config__left .lock img {
+    width: 25px;
+    height: 25px;
+}
+
+.config__left .non-lock{
+    margin-left: 40px;
+}
+
+
 
 .game .config__right{
     gap: 10%;
