@@ -6,6 +6,7 @@ import {
   TURN_ENDED,
   WINNER,
   OTHERS_UPD,
+  START_GAME,
 } from "../../utils/Constants";
 import CountdownTimer from "../../components/Game/Timer/timer";
 // Esta función se encarga de manejar todos los mensajes que llegan por websocket

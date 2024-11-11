@@ -32,7 +32,6 @@ export const CANCEL_MOV_URL = `http://localhost:${PORT}${GAME}/cancel-mov`;
 export const USE_FIG_CARD = `http://localhost:${PORT}${GAME}/use-fig-card`;
 export const BLOCK_FIG_CARD = `http://localhost:${PORT}${GAME}/block-fig-card`;
 
-
 /** WEBSOCKETS */
 export const WS_GAME = `ws://localhost:${PORT}${GAME}?game_id=`;
 export const WS_HOME = `ws://localhost:${PORT}${HOME}`;
@@ -47,6 +46,7 @@ export const BOARD_CHANGED = "Hay modificación de Tablero";
 export const FIGS_UPD = "Actualizar cartas de figuras";
 export const MOVS_UPD = "Actualizar cartas de movimientos";
 export const OTHERS_UPD = "Actualizar cartas de otros jugadores";
+export const START_GAME = "La partida inició";
 
 /** Otras constantes */
 export const MAX_PLAYERS = 4;
