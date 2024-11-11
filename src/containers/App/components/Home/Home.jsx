@@ -38,7 +38,7 @@ function Home() {
   const handleJoin = async(game) => {
     setGameId(game.game_id);
     if (game.isPrivate) { setShowForm(true);} 
-    else {  await joinGame(game.game_id, playerId, '', navigate); }
+    else {  await joinGame(game, playerId, '', navigate); }
   };
 
   const handleChecked = (e) => {
@@ -97,7 +97,7 @@ function Home() {
       </div>
 
       {showForm && (
-        <JoinForm gameId={gameId} playerId={playerId} setShowForm={setShowForm}/>
+        <JoinForm game={game} playerId={playerId} setShowForm={setShowForm}/>
       )}
     </div>
   );
