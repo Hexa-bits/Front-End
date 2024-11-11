@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { HOME_URL } from "../../utils/Constants.js";
 
-function useGames(ws) {
+function useGames(ws, playerName) {
   const [games, setGames] = useState([]);
 
   const getListGames = async () => {
     try {
-      const response = await fetch(HOME_URL, {
+      const response = await fetch(HOME_URL + playerName, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -18,6 +18,7 @@ function useGames(ws) {
       const data = await response.json();
       console.log("Se pidió por GET: ", data);
       setGames(data);
+
     } catch (error) {
       console.error("Error fetching lobbies:", error);
     }
@@ -27,7 +28,7 @@ function useGames(ws) {
     if (!ws) return; // Verificamos que el WebSocket esté definido
 
     console.log("Primer llamado a getListGames");
-    getListGames(); // Cargar juegos inicialmente
+    getListGames(); 
 
     // Establecer los manejadores de eventos del WebSocket
     ws.onmessage = (event) => {
@@ -35,7 +36,7 @@ function useGames(ws) {
       console.log("Mensaje recibido:", message);
       if (message && message === "Actualizar lista de partidas") {
         console.log("Llamado de mensajes de actualización.");
-        getListGames(); // Refrescar la lista si se recibe la notificación de actualización
+        getListGames(); 
       }
     };
 

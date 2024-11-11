@@ -14,16 +14,22 @@ import joinGame from "../../../../services/Home/JoinGame.js";
 
 function Home() {
   const playerId = parseInt(sessionStorage.getItem("player_id"), 10);
+  const origId = parseInt(sessionStorage.getItem("orig_player_id"), 10);
+  if (playerId !== origId) {
+    sessionStorage.setItem("player_id", origId);
+  }
+
   const playerName = sessionStorage.getItem("player_name");
   const navigate = useNavigate();
   const [filter, setFilter] = useState("");
   const [search, setSearch] = useState(false);
-
+  
   const [showForm, setShowForm] = useState(false);
   const [gameId, setGameId] = useState(0);
-
+  
   const { ws } = WsHomeService(WS_HOME);
-  const { games } = useGames(ws);
+  const { games } = useGames(ws, playerName);
+  
 
   const handleCrearPartida = () => {
     navigate(SETGAME);
@@ -32,7 +38,7 @@ function Home() {
   const handleJoin = async(game) => {
     setGameId(game.game_id);
     if (game.isPrivate) { setShowForm(true);} 
-    else {  await joinGame(game.game_id, playerId, '', navigate); }
+    else {  await joinGame(game, playerId, '', navigate); }
   };
 
   const handleChecked = (e) => {
@@ -47,8 +53,10 @@ function Home() {
           className="back-btn" 
         />
         <div className="dataUser">
-          <div className="user">USUARIO: {playerName}</div>
-          <div className="id_user"> ID: {playerId}</div>
+          <div className="user">  
+            <img src="/assets/icons/usuario.png" className='user-icon'/>
+            {playerName}
+          </div>
         </div>
       </section>
       <section className="CrearPartida">
@@ -89,7 +97,7 @@ function Home() {
       </div>
 
       {showForm && (
-        <JoinForm gameId={gameId} playerId={playerId} setShowForm={setShowForm}/>
+        <JoinForm game={game} playerId={playerId} setShowForm={setShowForm}/>
       )}
     </div>
   );

@@ -3,6 +3,7 @@ import { MemoryRouter } from "react-router-dom";
 import Home from "../../containers/App/components/Home/Home.jsx";
 import useGames from "../../services/Home/useGames.js";
 import JoinGame from "../../services/Home/JoinGame.js";
+import { expect } from "vitest";
 
 // Mockea los hooks y funciones que se usan en el componente
 vi.mock("../../services/Home/useGames.js");
@@ -16,7 +17,7 @@ beforeEach(() => {
 
 // Prueba de renderización
 describe("Home", () => {
-  it("Debería renderizar el nombre de usuario y el ID del jugador.", () => {
+  it("Debería renderizar el nombre de usuario.", () => {
     // Configura el sessionStorage para la prueba
     sessionStorage.setItem("player_id", "1");
     sessionStorage.setItem("player_name", "TestUser");
@@ -27,9 +28,8 @@ describe("Home", () => {
       </MemoryRouter>
     );
 
-    // Verifica que el nombre de usuario y el ID de usuario se rendericen
-    expect(screen.getByText(/usuario: testuser/i)).toBeInTheDocument();
-    expect(screen.getByText(/ID: 1/i)).toBeInTheDocument();
+    // Verifica que el nombre de usuario se renderice
+    expect(screen.getByText(/testuser/i)).toBeInTheDocument();
   });
 
   it("Debería renderizar el botón Crear Partida", () => {
@@ -76,19 +76,17 @@ describe("Home", () => {
     // Verifica que el placeholder cambie
     expect(input.placeholder).toBe("Buscar por cantidad máxima de jugadores");
 
-    // Cambia el estado del checkbox de nuevo
     fireEvent.click(checkbox);
     expect(checkbox).not.toBeChecked();
 
-    // Verifica que el placeholder del input vuelva a cambiar
     expect(input.placeholder).toBe("Buscar por nombre");
   });
 
-  it("Debería renderizar los juegos disponibles en GameList", () => {
+  it("Renderiza mis partidas comenzadas en GameList", () => {
     // Configura juegos de prueba
     const mockGames = [
-      { game_id: 1, game_name: "Juego 1", current_players: 1, max_players: 4 },
-      { game_id: 2, game_name: "Juego 2", current_players: 0, max_players: 4 },
+      { game_id: 1, game_name: "Juego 1", current_players: 1, max_players: 4, isPrivate : true, started: true },
+      { game_id: 2, game_name: "Juego 2", current_players: 0, max_players: 4, isPrivate : false, started: true },
     ];
     useGames.mockReturnValue({ games: mockGames });
 
@@ -101,5 +99,56 @@ describe("Home", () => {
     // Verifica que se rendericen los nombres de los juegos
     expect(screen.getByText(/juego 1/i)).toBeInTheDocument();
     expect(screen.getByText(/juego 2/i)).toBeInTheDocument();
+    expect(screen.getByText(/1\/4/i)).toBeInTheDocument();
+    expect(screen.getByText(/0\/4/i)).toBeInTheDocument();
+    expect(screen.getByText("Mis partidas comenzadas")).toBeInTheDocument();
+    expect(screen.queryByText("Otras partidas")).not.toBeInTheDocument();
   });
+  
+  it("Renderiza las otras partidas disponibles en GameList", () => {
+    // Configura juegos de prueba
+    const mockGames = [
+      { game_id: 1, game_name: "Juego 1", current_players: 1, max_players: 4, isPrivate : true, started: false },
+      { game_id: 2, game_name: "Juego 2", current_players: 0, max_players: 4, isPrivate : false, started: false },
+    ];
+    useGames.mockReturnValue({ games: mockGames });
+
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>
+    );
+
+    // Verifica que se rendericen los nombres de los juegos
+    expect(screen.getByText(/juego 1/i)).toBeInTheDocument();
+    expect(screen.getByText(/juego 2/i)).toBeInTheDocument();
+    expect(screen.getByText(/1\/4/i)).toBeInTheDocument();
+    expect(screen.getByText(/0\/4/i)).toBeInTheDocument();
+    expect(screen.queryByText("Mis partidas comenzadas")).not.toBeInTheDocument();
+    expect(screen.getByText("Otras partidas")).toBeInTheDocument();
+  });
+
+  it("Renderiza todas las partidas disponibles en GameList", () => {
+    // Configura juegos de prueba
+    const mockGames = [
+      { game_id: 1, game_name: "Juego 1", current_players: 1, max_players: 4, isPrivate : true, started: true },
+      { game_id: 2, game_name: "Juego 2", current_players: 0, max_players: 4, isPrivate : false, started: false },
+    ];
+    useGames.mockReturnValue({ games: mockGames });
+
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>
+    );
+
+    // Verifica que se rendericen los nombres de los juegos
+    expect(screen.getByText(/juego 1/i)).toBeInTheDocument();
+    expect(screen.getByText(/juego 2/i)).toBeInTheDocument();
+    expect(screen.getByText(/1\/4/i)).toBeInTheDocument();
+    expect(screen.getByText(/0\/4/i)).toBeInTheDocument();
+    expect(screen.getByText("Mis partidas comenzadas")).toBeInTheDocument();
+    expect(screen.getByText("Otras partidas")).toBeInTheDocument();
+  });
+
 });
