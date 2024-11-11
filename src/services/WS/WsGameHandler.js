@@ -28,6 +28,9 @@ const wsGameHandler = (
       const message = event.data;
 
       switch (message) {
+        case START_GAME:
+          setResetTimer(true);
+          break;
         case TURN_ENDED:
           fetchTurnData();
           fetchFigs();

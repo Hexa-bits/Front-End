@@ -21,6 +21,7 @@ export const LeaveGame = async (navigate) => {
 
     // (`Jugador ${playerId} abandonaste el juego ${gameId} exitosamente`);
     sessionStorage.removeItem("game_id");
+    sessionStorage.removeItem("countdownTime");
     closeWsGameInstance();
     navigate(HOME);
   } catch (error) {

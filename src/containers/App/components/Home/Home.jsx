@@ -13,6 +13,7 @@ import { WS_HOME, LOGIN, SETGAME } from "../../../../utils/Constants.js";
 import joinGame from "../../../../services/Home/JoinGame.js";
 
 function Home() {
+  sessionStorage.removeItem("countdownTimer");
   const playerId = parseInt(sessionStorage.getItem("player_id"), 10);
   const playerName = sessionStorage.getItem("player_name");
   const navigate = useNavigate();
@@ -29,10 +30,13 @@ function Home() {
     navigate(SETGAME);
   };
 
-  const handleJoin = async(game) => {
+  const handleJoin = async (game) => {
     setGameId(game.game_id);
-    if (game.isPrivate) { setShowForm(true);} 
-    else {  await joinGame(game.game_id, playerId, '', navigate); }
+    if (game.isPrivate) {
+      setShowForm(true);
+    } else {
+      await joinGame(game.game_id, playerId, "", navigate);
+    }
   };
 
   const handleChecked = (e) => {
@@ -42,10 +46,7 @@ function Home() {
   return (
     <div className="Home">
       <section className="NombreUsuario">
-        <Button 
-          onClick={() => navigate(LOGIN)} 
-          className="back-btn" 
-        />
+        <Button onClick={() => navigate(LOGIN)} className="back-btn" />
         <div className="dataUser">
           <div className="user">USUARIO: {playerName}</div>
           <div className="id_user"> ID: {playerId}</div>
@@ -89,7 +90,11 @@ function Home() {
       </div>
 
       {showForm && (
-        <JoinForm gameId={gameId} playerId={playerId} setShowForm={setShowForm}/>
+        <JoinForm
+          gameId={gameId}
+          playerId={playerId}
+          setShowForm={setShowForm}
+        />
       )}
     </div>
   );
