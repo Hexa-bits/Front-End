@@ -27,6 +27,7 @@ const joinGame = async (game, playerId, password, navigate) => {
 
         if (data.player_id ) {
             sessionStorage.setItem('player_id', data.player_id);
+            sessionStorage.setItem('countdownTime', data.left_timer);
             
             console.log("Navegando al juego");
             navigate(GAME);
