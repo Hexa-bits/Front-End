@@ -14,17 +14,13 @@ export const LeaveGame = async (navigate) => {
       body: JSON.stringify({ game_id: gameId, id_user: playerId }),
     });
 
-    if (!response.ok) {
-      const errorMessage = await response.text();
-      throw new Error(errorMessage || response.statusText);
-    }
-
-    // (`Jugador ${playerId} abandonaste el juego ${gameId} exitosamente`);
+    `Jugador ${playerId} abandonaste el juego ${gameId} exitosamente`;
     sessionStorage.removeItem("game_id");
     sessionStorage.removeItem("countdownTime");
+    sessionStorage.removeItem("game_name");
     closeWsGameInstance();
     navigate(HOME);
   } catch (error) {
-    alert("No se pudo abandonar el juego. " + error.message);
+    alert("Ocurrio un error. " + error.message + "Abandonando igualmente...");
   }
 };

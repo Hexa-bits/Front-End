@@ -1,8 +1,12 @@
 
-.GameList{
+.started_List, .notStarted_List{
+    width: 100%;
+}
+
+.GameList {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column; 
+    align-items: flex-start;
     width: 100%;
 }
 
@@ -17,4 +21,26 @@
 .list-group{
     width: 100%;
     height: auto;
+}
+
+.started_List h3,
+.notStarted_List h3 {
+    margin-left: 20px;
+    font-size: 1.1rem; 
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+    border-radius: 10px;
+    padding: 0.3rem 1rem;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.started_List h3 {
+    margin-top: 5px;
+    background-color: rgb(119, 60, 247);
+}
+
+.notStarted_List h3  {
+    margin-top: 18px;
+    background-color: rgb(247, 126, 60);
 }
