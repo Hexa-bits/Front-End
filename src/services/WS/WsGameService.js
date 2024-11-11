@@ -1,6 +1,5 @@
-import { WS_GAME } from "../../utils/Constants";
 let ws = null;
-const game_id = sessionStorage.getItem("game_id");
+
 export const createWsGameInstance = (url) => {
   if (!ws) {
     ws = new WebSocket(url);
@@ -42,9 +41,9 @@ export const sendMessage = (message) => {
   }
 };
 
-export const getWsGameInstance = () => {
+export const getWsGameInstance = (url) => {
   if (!ws) {
-    createWsGameInstance(WS_GAME + game_id);
+    createWsGameInstance(url);
   }
   return ws;
 };
