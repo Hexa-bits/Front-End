@@ -11,7 +11,7 @@ export const SETGAME = "/home/create-config";
 export const LOGIN_URL = `http://localhost:${PORT}${LOGIN}`;
 export const LOBBY_URL = `http://localhost:${PORT}${LOBBY}?game_id=`;
 export const CONFIG_URL = `http://localhost:${PORT}/home/create-config`;
-export const HOME_URL = `http://localhost:${PORT}${HOME}/get-lobbies?username=`;
+export const HOME_URL = `http://localhost:${PORT}${HOME}/get-lobbies`;
 
 export const GAME_JOIN_URL = `http://localhost:${PORT}${GAME}/join`;
 export const GAME_LEAVE_URL = `http://localhost:${PORT}${GAME}/leave`;

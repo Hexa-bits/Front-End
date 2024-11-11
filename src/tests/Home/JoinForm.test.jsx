@@ -21,7 +21,7 @@ vi.mock('../../services/Home/JoinGame.js', () => ({
 describe('JoinForm Component', () => {
     const mockNavigate = vi.fn();
     const setShowForm = vi.fn();
-    const game = { game_id: '1234', game_name: 'Game Name', started: false, current_players: 2, max_players: 4 };
+    const game_id = '1234';
     const player_id = '5678';
 
     useNavigate.mockReturnValue(mockNavigate);
@@ -31,14 +31,14 @@ describe('JoinForm Component', () => {
     });
 
     test('Debe renderizar el modal JoinForm.', () => {
-        render(<JoinForm game={game} playerId={player_id} setShowForm={setShowForm} />);
+        render(<JoinForm gameId={game_id} playerId={player_id} setShowForm={setShowForm} />);
         expect(screen.getByText('Introduce la contraseña')).toBeInTheDocument();
         expect(screen.getByPlaceholderText('Contraseña')).toBeInTheDocument();
         expect(screen.getByText('Confirmar')).toBeInTheDocument();
     });
 
     test('Debe mostrar mensaje de error si el campo de contraseña está vacío y se intenta confirmar.', async () => {
-        render(<JoinForm game={game} playerId={player_id} setShowForm={setShowForm} />);
+        render(<JoinForm gameId={game_id} playerId={player_id} setShowForm={setShowForm} />);
 
         const confirmButton = screen.getByText('Confirmar');
         fireEvent.click(confirmButton);
@@ -47,7 +47,7 @@ describe('JoinForm Component', () => {
     });
 
     test('Debe llamar a la función joinGame con la contraseña encriptada al confirmar.', async () => {
-        render(<JoinForm game={game} playerId={player_id} setShowForm={setShowForm} />);
+        render(<JoinForm gameId={game_id} playerId={player_id} setShowForm={setShowForm} />);
 
         const passwordInput = screen.getByPlaceholderText('Contraseña');
         fireEvent.change(passwordInput, { target: { value: 'mi_contrasena' } });
@@ -57,13 +57,13 @@ describe('JoinForm Component', () => {
         
         await waitFor(()=> {
             const hashedPass = hashPassword(passwordInput.value);
-            expect(joinGame).toHaveBeenCalledWith(game, player_id, hashedPass, mockNavigate);
+            expect(joinGame).toHaveBeenCalledWith(game_id, player_id, hashedPass, mockNavigate);
         });
     });
 
     test('Debe mostrar mensaje de error si la contraseña es incorrecta.', async () => {
         joinGame.mockReturnValue(false); 
-        render(<JoinForm game={game} playerId={player_id} setShowForm={setShowForm} />);
+        render(<JoinForm gameId={game_id} playerId={player_id} setShowForm={setShowForm} />);
 
         const passwordInput = screen.getByPlaceholderText('Contraseña');
         fireEvent.change(passwordInput, { target: { value: 'incorrecta' } });
@@ -75,7 +75,7 @@ describe('JoinForm Component', () => {
     });
 
     test('Debe cerrar el modal al hacer clic en el botón de cerrar.', () => {
-        render(<JoinForm game={game} playerId={player_id} setShowForm={setShowForm} />);
+        render(<JoinForm gameId={game_id} playerId={player_id} setShowForm={setShowForm} />);
 
         const closeButton = document.querySelector('.btn.close');
         fireEvent.click(closeButton);

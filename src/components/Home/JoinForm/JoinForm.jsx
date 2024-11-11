@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { hashPassword } from '../../../services/Home/encrypt';
 import "./JoinForm.css";
 
-function JoinForm( {game, playerId, setShowForm} ) {
+function JoinForm( {gameId, playerId, setShowForm} ) {
     const navigate = useNavigate();
     const [ input_password, setPassword ] = useState('');
     const [ error, setError ] = useState('');
@@ -15,7 +15,7 @@ function JoinForm( {game, playerId, setShowForm} ) {
         if (!input_password) { setError('Campo requerido !'); return; }
         const hashedPass = hashPassword(input_password);
         
-        const success = await joinGame(game, playerId, hashedPass, navigate);
+        const success = await joinGame(gameId, playerId, hashedPass, navigate);
         if (!success) { setError('Contraseña incorrecta !'); return; }
         
         setShowForm(false);
