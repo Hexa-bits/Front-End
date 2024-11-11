@@ -27,6 +27,7 @@ const joinGame = async (gameId, playerId, password, navigate) => {
             
             console.log("Navegando al juego");
             navigate(GAME);
+            return true;
         }
 
         // Lógica de navegación
