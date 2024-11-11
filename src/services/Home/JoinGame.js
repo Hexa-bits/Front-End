@@ -1,4 +1,4 @@
-import { LOBBY } from '../../utils/Constants';
+import { GAME, LOBBY } from '../../utils/Constants';
 import { GAME_JOIN_URL } from '../../utils/Constants';
 
 //Devuelve la función joinGame que se encarga de unir al jugador a la partida
@@ -19,11 +19,15 @@ const joinGame = async (gameId, playerId, password, navigate) => {
             throw new Error(`Error al unirse a la partida: ${errorData.message || 'No se pudo unirse'}`);
         }
         const data = await response.json();
-        if (data.player_id ) {
-            sessionStorage.setItem('player_id', data.player_id);
-        }
         console.log(`Unido a la partida ${gameId} con éxito`);
         sessionStorage.setItem('game_id', gameId);
+
+        if (data.player_id ) {
+            sessionStorage.setItem('player_id', data.player_id);
+            
+            console.log("Navegando al juego");
+            navigate(GAME);
+        }
 
         // Lógica de navegación
         console.log("Navegando al lobby");
