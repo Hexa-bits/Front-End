@@ -1,42 +1,26 @@
-import React, { useEffect, useState } from "react";
-import Countdown from "react-countdown";
-import "./timer.css";
+import { render, screen } from "@testing-library/react";
+import { vi } from "vitest";
+import CountdownTimer from "../../../components/Game/Timer"; // Ajusta la ruta si es necesario
 
-const CountdownTimer = ({ resetTimer, onResetCompleted }) => {
-  const storedTime = sessionStorage.getItem("countdownTime"); // Busco el tiempo guardado si es que hay
-  const initialTime = storedTime
-    ? parseInt(storedTime, 10) //si hay stored time lo pienso como inicial, sino establezco un nuevo tiempo inicial
-    : Date.now() + 120000; // 2 minutos = 120.000 milisegundps
+describe("CountdownTimer", () => {
+  let mockSessionStorage;
 
-  const [time, setTime] = useState(initialTime);
+  beforeEach(() => {
+    mockSessionStorage = vi.spyOn(global.sessionStorage, "getItem");
+  });
 
-  // Función para reiniciar el temporizador cuando se llama resetTimer externamente
-  useEffect(() => {
-    if (resetTimer) {
-      const newTime = Date.now() + 120000;
-      setTime(newTime);
-      sessionStorage.setItem("countdownTime", newTime); // Guarda el nuevo tiempo reiniciadp en sessionstorage
-      onResetCompleted();
-    }
-  }, [resetTimer, onResetCompleted]);
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
 
-  const renderer = ({ minutes, seconds, completed }) => {
-    return (
-      <span className="countdown-timer">
-        {minutes < 10 ? `0${minutes}` : minutes}:
-        {seconds < 10 ? `0${seconds}` : seconds}
-      </span>
-    );
-  };
+  it("debería inicializar el temporizador con el tiempo guardado en sessionStorage", () => {
+    const storedTime = Date.now() + 120000; // Establece un tiempo guardado de 2 minutos
+    mockSessionStorage.mockReturnValue(storedTime.toString()); // Simula que hay un tiempo guardado
 
-  useEffect(() => {
-    // Cada vez que el tiempo cambia,se gguarda en sessionstorage
-    sessionStorage.setItem("countdownTime", time);
-  }, [time]);
+    render(<CountdownTimer resetTimer={false} onResetCompleted={vi.fn()} />);
 
-  return (
-    <Countdown key={time} date={time} renderer={renderer} autoStart={true} />
-  );
-};
-
-export default CountdownTimer;
+    // Verifica que el temporizador está mostrando el tiempo guardado
+    const timerElement = screen.getByText(/^02:00$/); // Esperamos el formato 02:00 para 2 minutos
+    expect(timerElement).toBeInTheDocument();
+  });
+});
