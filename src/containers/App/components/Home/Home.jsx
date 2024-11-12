@@ -1,6 +1,6 @@
 import "./Home.css";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 import Form from "../../../../components/Form/Form.jsx";
 import Button from "../../../../components/Button/Button";
@@ -13,14 +13,21 @@ import { WS_HOME, LOGIN, SETGAME } from "../../../../utils/Constants.js";
 import joinGame from "../../../../services/Home/JoinGame.js";
 
 function Home() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  
   const playerId = parseInt(sessionStorage.getItem("player_id"), 10);
   const origId = parseInt(sessionStorage.getItem("orig_player_id"), 10);
   if (playerId !== origId) {
     sessionStorage.setItem("player_id", origId);
   }
+  const [playerName , setPlayerName] = useState('');
+  useEffect(() => {
+    const storage_name = sessionStorage.getItem("player_name");
+    const location_name = location.state?.playerName;
+    setPlayerName(storage_name || location_name || '');
+  }, [location.state]);
 
-  const playerName = sessionStorage.getItem("player_name");
-  const navigate = useNavigate();
   const [filter, setFilter] = useState("");
   const [search, setSearch] = useState(false);
   
