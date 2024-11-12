@@ -1,7 +1,7 @@
 import { GAME_PASS_URL } from "../../../utils/Constants";
 
 const passTurn = async () => {
-  const game_id = localStorage.getItem("game_id");
+  const game_id = sessionStorage.getItem("game_id");
   try {
     const response = await fetch(GAME_PASS_URL, {
       method: "PUT",

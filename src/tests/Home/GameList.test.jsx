@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import GameList from '../../components/Game_List/Game_List';
+import GameList from '../../components/Home/Game_List/Game_List';
 import { describe, it, expect, vi} from 'vitest';
 
 const games = [

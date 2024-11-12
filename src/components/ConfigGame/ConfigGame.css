@@ -12,6 +12,7 @@
 }
 
 .ConfigGame p{
+    margin-top: 20px;
     font-size: 21px;
     margin-bottom: 10px;
 }
@@ -31,6 +32,27 @@
     font-size: 17px;
 }
 
+.ConfigGame .password {
+    width: 100%;
+}
+
+
+.ConfigGame .password .form-container {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    width: 100%;
+}
+
+.password .col-form-label-container {
+    height: 0px;
+}
+.form-check {
+    font-size: 1.1rem;
+}
+
+form-check:checked {
+    margin-bottom: 0px;
+}
 
 /* Count Players */
 .count_players{
@@ -45,6 +67,10 @@
     margin: 0;
 }
 
+.count_players button:hover{
+    transform: scale(1.1);
+}
+
 .count_players button.selected {
     background-color: var(--verdecito); 
     color: var(--marron4);
@@ -56,5 +82,6 @@
 }
 
 .participants{
-    margin-top:20px
+    margin-top:0px
 }
+

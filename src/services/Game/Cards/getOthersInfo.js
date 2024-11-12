@@ -3,7 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import { GET_PLAYERS_INFO } from "../../../utils/Constants";
 
 function getOthersInfo (gameId, playerId) {
-    
+
     const [infoPlayers, setInfoPlayers] = useState([]);
     const url = `${GET_PLAYERS_INFO}game_id=${gameId}&player_id=${playerId}`;
     

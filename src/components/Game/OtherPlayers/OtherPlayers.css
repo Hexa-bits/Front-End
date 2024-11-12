@@ -1,10 +1,8 @@
-.players-container {
-    margin-top: 40px;
-}
-
-.each-player {
-    padding-left: 5vh;
-    padding-bottom: 2vh;
+.players-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .player-name .Player{
@@ -25,13 +23,51 @@
 }
 
 .player-figs img {
-    width: 80px;
+    width: 75px;
     height: auto;
 }
 
+
 .player-figs img:hover {
-    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="2" d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z"></path></svg>'), auto;
+    cursor: var(--pointer-cursor);
 }
+
+.player-figs .Figures.disabled img:hover, 
+.player-figs .Figures.blocked img:hover {
+    cursor: var(--default-cursor);
+}
+
+.players-container .DeckFig {
+    background-color: white;
+    width: 50px;
+    height: 50px;
+
+}
+
+.players-container .DeckFig .Fig_Cant{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    border: 1px solid black;
+    z-index: 1;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.players-container .DeckFig img {
+    position: absolute;
+    width: 40px;
+    height: auto;
+    object-fit: cover;
+    z-index: 0;
+}
+
+
 
 .cant-mov-container {
     height: 65px;
@@ -41,15 +77,16 @@
     flex-direction: row;
     gap: 8px;
     justify-content: flex-end;
+    transform: translateX(50px) translateY(-30px);
+
 }
 
 .cant-mov-container .back-mov-image {
-    width: 2.8rem;
+    width: 2.7rem;
     padding: 1px;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 2px solid transparent; 
-    /* display: inline-block; */
     cursor: default; 
     border: 1px solid black;
     box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.2);
@@ -73,5 +110,5 @@
 }
 
 .back-mov-image:hover {
-    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="2" d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z"></path></svg>'), auto;
+    cursor: var(--default-cursor);
 }

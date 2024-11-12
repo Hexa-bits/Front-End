@@ -2,8 +2,8 @@ import { closeWsGameInstance } from "../../services/WS/WsGameService.js";
 import { HOME, GAME_LEAVE_URL } from "../../utils/Constants.js";
 
 export const LeaveGame = async (navigate) => {
-  const playerId = parseInt(localStorage.getItem("id_user"), 10);
-  const gameId = parseInt(localStorage.getItem("game_id"), 10);
+  const playerId = parseInt(sessionStorage.getItem("player_id"), 10);
+  const gameId = parseInt(sessionStorage.getItem("game_id"), 10);
 
   try {
     const response = await fetch(GAME_LEAVE_URL, {
@@ -14,16 +14,14 @@ export const LeaveGame = async (navigate) => {
       body: JSON.stringify({ game_id: gameId, id_user: playerId }),
     });
 
-    if (!response.ok) {
-      const errorMessage = await response.text();
-      throw new Error(errorMessage || response.statusText);
-    }
-
-    // (`Jugador ${playerId} abandonaste el juego ${gameId} exitosamente`);
-    localStorage.removeItem("game_id");
+    (`Jugador ${playerId} abandonaste el juego ${gameId} exitosamente`);
+    sessionStorage.removeItem("game_id");
+    sessionStorage.removeItem("game_name");
+    sessionStorage.removeItem("countdownTime");
     closeWsGameInstance();
     navigate(HOME);
+
   } catch (error) {
-    alert("No se pudo abandonar el juego. " + error.message);
+    alert("Ocurrio un error. " + error.message + "Abandonando igualmente...");
   }
 };

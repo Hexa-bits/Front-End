@@ -19,18 +19,18 @@ describe ("getOthersInfo", () => {
                     0: {
                         nombre: "Player1", 
                         fig_cards: [
-                            {id: 1, fig: 4},
-                            {id: 2, fig: 5},
-                            {id: 3, fig: 6}
+                            {id: 1, fig: 4, blocked: false},
+                            {id: 2, fig: 5, blocked: true},
+                            {id: 3, fig: 6, blocked: false}
                         ], 
                         mov_cant: 1
                     },
                     1: {
                         nombre: "Player2", 
                         fig_cards: [
-                            {id: 4, fig: 7},
-                            {id: 5, fig: 8},
-                            {id: 6, fig: 9}
+                            {id: 4, fig: 7, blocked: true},
+                            {id: 5, fig: 8, blocked: false},
+                            {id: 6, fig: 9, blocked: false}
                         ], 
                         mov_cant: 3
                     }
@@ -63,18 +63,18 @@ describe ("getOthersInfo", () => {
                 0: {
                     nombre: "Player1", 
                     fig_cards: [
-                        {id: 1, fig: 4},
-                        {id: 2, fig: 5},
-                        {id: 3, fig: 6}
-                    ], 
+                        {id: 1, fig: 4, blocked: false},
+                        {id: 2, fig: 5, blocked: true},
+                        {id: 3, fig: 6, blocked: false}
+                    ],
                     mov_cant: 1
                 },
                 1: {
                     nombre: "Player2", 
                     fig_cards: [
-                        {id: 4, fig: 7},
-                        {id: 5, fig: 8},
-                        {id: 6, fig: 9}
+                        {id: 4, fig: 7, blocked: true},
+                        {id: 5, fig: 8, blocked: false},
+                        {id: 6, fig: 9, blocked: false}
                     ], 
                     mov_cant: 3
                 }

@@ -7,3 +7,7 @@ export const checkButtons = (input) => {
     // va a chequear q la cant de jugadores se ingreso
     return input > 1;
 };
+
+export const checkPassword = (input) => {
+    return input.length > 0 && input.length <= 15;
+}

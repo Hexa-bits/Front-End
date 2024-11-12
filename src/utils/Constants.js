@@ -8,24 +8,32 @@ export const LOBBY = "/home/lobby";
 export const SETGAME = "/home/create-config";
 
 /** URLS */
-export const CONFIG_URL = `http://localhost:${PORT}/home/create-config`;
 export const LOGIN_URL = `http://localhost:${PORT}${LOGIN}`;
 export const LOBBY_URL = `http://localhost:${PORT}${LOBBY}?game_id=`;
-export const HOME_URL = `http://localhost:${PORT}${HOME}/get-lobbies`;
+export const CONFIG_URL = `http://localhost:${PORT}/home/create-config`;
+export const HOME_URL = `http://localhost:${PORT}${HOME}/get-lobbies?username=`;
+
 export const GAME_JOIN_URL = `http://localhost:${PORT}${GAME}/join`;
 export const GAME_LEAVE_URL = `http://localhost:${PORT}${GAME}/leave`;
 export const GAME_START_URL = `http://localhost:${PORT}${GAME}/start-game`;
+
+export const GAME_BOARD_URL = `http://localhost:${PORT}${GAME}/board?game_id=`;
+export const GAME_PASS_URL = `http://localhost:${PORT}${GAME}/end-turn`;
+export const GET_TURN_PLAYER_URL = `http://localhost:${PORT}${GAME}/current-turn?game_id=`;
 export const GET_MOVEMENTS_URL = `http://localhost:${PORT}${GAME}/my-mov-card?player_id=`;
 export const GET_FIGURES_URL = `http://localhost:${PORT}${GAME}/my-fig-card?player_id=`;
-export const GET_WINNER_URL = `http://localhost:${PORT}${GAME}/get-winner?game_id=`;
-export const GET_TURN_PLAYER_URL = `http://localhost:${PORT}${GAME}/current-turn?game_id=`;
-export const GAME_PASS_URL = `http://localhost:${PORT}${GAME}/end-turn`;
-export const GAME_BOARD_URL = `http://localhost:${PORT}${GAME}/board?game_id=`;
-export const USE_MOV_CARD = `http://localhost:${PORT}${GAME}/use-mov-card`;
-export const CANCEL_TURN_URL = `http://localhost:${PORT}${GAME}/cancel-mov`;
-export const USE_FIG_CARD = `http://localhost:${PORT}${GAME}/use-fig-card`;
-export const HIGHLIGHT_FIGS = `http://localhost:${PORT}${GAME}/highlight-figures?game_id=`;
 export const GET_PLAYERS_INFO = `http://localhost:${PORT}${GAME}/others-cards?`;
+export const HIGHLIGHT_FIGS = `http://localhost:${PORT}${GAME}/highlight-figures?game_id=`;
+export const GET_WINNER_URL = `http://localhost:${PORT}${GAME}/get-winner?game_id=`;
+export const GET_TIMER_LEFT = `http://localhost:${PORT}${GAME}/timer-left?game_id=`;
+
+
+export const USE_MOV_CARD = `http://localhost:${PORT}${GAME}/use-mov-card`;
+export const CANCEL_MOV_URL = `http://localhost:${PORT}${GAME}/cancel-mov`;
+
+export const USE_FIG_CARD = `http://localhost:${PORT}${GAME}/use-fig-card`;
+export const BLOCK_FIG_CARD = `http://localhost:${PORT}${GAME}/block-fig-card`;
+
 
 /** WEBSOCKETS */
 export const WS_GAME = `ws://localhost:${PORT}${GAME}?game_id=`;
@@ -41,6 +49,7 @@ export const BOARD_CHANGED = "Hay modificación de Tablero";
 export const FIGS_UPD = "Actualizar cartas de figuras";
 export const MOVS_UPD = "Actualizar cartas de movimientos";
 export const OTHERS_UPD = "Actualizar cartas de otros jugadores";
+export const START_GAME = "Inició la partida";
 
 /** Otras constantes */
 export const MAX_PLAYERS = 4;
@@ -52,6 +61,9 @@ export const COLORMAP_BOXCARDS = {
   3: "#FFD700", // oro claro
   4: "#4169E1", // azul real
 };
+
+/** Key */
+export const SECRET_KEY = "4sw%E%S7*U2vEmg";
 
 //A modo de Ejemplo
 export const cardData = [

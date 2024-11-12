@@ -4,7 +4,14 @@ import Form from "../../components/Form/Form.jsx";
 import Button from "../../components/Button/Button.jsx";
 import React from "react";
 
-function ConfigGame({ handleOnChange, maxPlayers, setPlayerAmnt}) {
+function ConfigGame({ 
+        handleName, 
+        handlePassword, 
+        maxPlayers, 
+        setPlayerAmnt,
+        isPrivate,
+        setPrivate
+    }) {
 
   const [selectedPlayers, setSelectedPlayers] = useState(null);
 
@@ -17,14 +24,34 @@ function ConfigGame({ handleOnChange, maxPlayers, setPlayerAmnt}) {
     <div className="ConfigGame">
       <Form
         label="NOMBRE DE PARTIDA"
-        helpText="Debe tener entre 1 y 10 caracteres"
         type="text"
         placeholder="Ingrese un nombre"
-        id="gameid"
-        onChange={handleOnChange}
+        id="gameName"
+        onChange={handleName}
       />
 
-      <p>Elige la cantidad de participantes</p>
+      <div className="form-check">
+        <input className="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+          onChange={(e)=> setPrivate(e.target.checked)}
+        />
+        <label className="form-check-label" htmlFor="flexCheckDefault">
+          Partida privada
+        </label>
+      </div>
+      {isPrivate && (
+        <div className="password">
+          <Form
+            type="password"
+            placeholder="Ingresar contraseña"
+            id="gamePassword"
+            onChange={handlePassword}
+            icon="/assets/icons/clave.png"
+          />
+        </div>
+      )}
+      
+
+      <p>ELIGE CANTIDAD DE JUGADORES</p>
 
       <div className="count_players">
         <Button
@@ -45,7 +72,7 @@ function ConfigGame({ handleOnChange, maxPlayers, setPlayerAmnt}) {
       </div>
       <div className="participants">
         <p data-testid="player-count">
-          {maxPlayers > 0 && `Participantes: ${maxPlayers}`}
+          {maxPlayers > 0 && `Jugadores: ${maxPlayers}`}
         </p>
       </div>
     </div>

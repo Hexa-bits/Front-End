@@ -7,7 +7,7 @@ import { useLogin } from "../../../../services/Login/useLogin.js";
 import './Login.css';
 
 function Login() {
-    const { username, handleChange, handleInput } = useLogin();
+    const { playerName, handleChange, handleInput, error } = useLogin();
     const [isTitleVisible, setIsTitleVisible] = useState(false);
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -27,10 +27,11 @@ function Login() {
                         label="INGRESA UN NOMBRE"
                         type="text"
                         placeholder="Ingresar nombre de usuario"
-                        helpText={LoginHelpText}
-                        id="inputUsername"
+                        id="inputPlayername"
                         onChange={handleChange}
-                        value={username}
+                        value={playerName}
+                        icon="/assets/icons/usuario.png"
+                        error={error}
                     />
                     <Button className="btn btn-secondary" label="INGRESAR" onClick={handleInput} />
                 </div>

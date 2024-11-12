@@ -29,7 +29,7 @@ describe("Component Start", () => {
       screen.getByPlaceholderText("Ingrese un nombre")
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Elige la cantidad de participantes")
+      screen.getByText("ELIGE CANTIDAD DE JUGADORES")
     ).toBeInTheDocument();
     expect(screen.getByText("CREAR PARTIDA")).toBeInTheDocument();
   });

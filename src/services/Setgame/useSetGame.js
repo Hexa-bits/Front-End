@@ -1,30 +1,44 @@
 import { useState } from "react";
 import { create } from "./useCreate.js";
-import { checkInput, checkButtons } from "../../utils/logics/setGame/LogicSetGame.js";
+import { checkInput, checkButtons, checkPassword } from "../../utils/logics/setGame/LogicSetGame.js";
+import { hashPassword } from "../Home/encrypt.js";
 
 export const useSetGame = (navigate) => {
     const [game_name, setGameName] = useState("");
+    const [game_password, setGamePassword] = useState("");
     const [max_players, setMaxPlayers] = useState(0);
-  
+    const [isPrivate, setIsPrivate] = useState(false);
+
     const handleClick = async () => {
-      if (checkInput(game_name) && checkButtons(max_players)) {
-        // Llamada a la función de creación del juego con los valores adecuados
-        create(game_name, max_players, navigate);
-      } else {
-        // Validación de errores
-        if (!checkInput(game_name)) {
-          alert("Error: el nombre debe tener entre 1 y 10 caracteres.");
-        } else if (!checkButtons(max_players)) {
-          alert("Error: la cantidad de jugadores es inválida.");
+        const isNameValid = checkInput(game_name);
+        const isPassValid = !isPrivate || checkPassword(game_password);
+        const isPlayerValid = checkButtons(max_players);
+        const hashedPass = hashPassword(game_password);
+
+        if (isNameValid && isPassValid && isPlayerValid) {
+            // Llamada a la función de creación del juego con los valores adecuados
+            create(game_name, isPrivate ? hashedPass : "", max_players, navigate);
+        } else {
+            // Validación de errores
+            if (!isNameValid) {
+                alert("Error: el nombre debe tener entre 1 y 10 caracteres.");
+            }
+            else if (!isPassValid) {
+                alert("Error: la contraseña debe tener entre 1 y 15 caracteres.");
+            }
+            else if (!isPlayerValid) {
+                alert("Error: la cantidad de jugadores es inválida.");
+            }
         }
-      }
     };
-  
+
     return {
-      game_name,
-      setGameName,
-      max_players,
-      setMaxPlayers,
-      handleClick,
+        setGameName,
+        setGamePassword,
+        max_players,
+        setMaxPlayers,
+        isPrivate,
+        setIsPrivate,
+        handleClick,
     };
-  };
+};

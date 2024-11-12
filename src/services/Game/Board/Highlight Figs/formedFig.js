@@ -2,7 +2,7 @@ import { HIGHLIGHT_FIGS } from '../../../../utils/Constants';
 import { useCallback, useEffect, useState } from 'react';
 
 function getFormedFig() {
-    const game_id = localStorage.getItem('game_id');
+    const game_id = sessionStorage.getItem('game_id');
     if (!game_id) return [];
     
     const [formedFigs, setFormedFigs] = useState([]);
