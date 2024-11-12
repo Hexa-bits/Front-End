@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import "./Game.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Button from "../../../../components/Button/Button.jsx";
 import FigCards from "../../../../components/Game/FigCards/FigCards.jsx";
 import MovCards from "../../../../components/Game/MovCards/MovCards.jsx";
@@ -15,6 +15,7 @@ import LabelMovParcial from "../../../../components/Game/Board/LabelMovParcial/L
 import LabelProhibitedColor from "../../../../components/Game/Board/LabelProhibitedColor/LabelProhibitedColor.jsx";
 import Winner from "../../../../components/Game/Winner/Winner.jsx";
 import GameName from "../../../../components/Game/GameName/GameName.jsx";
+import CountdownTimer from "../../../../components/Game/Timer/timer.jsx";
 
 import renewFigCards from "../../../../services/Game/Cards/renewFigCards.js";
 import renewMovCards from "../../../../services/Game/Cards/renewMovCards.js";
@@ -35,10 +36,14 @@ import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
 import blockFig from "../../../../services/Game/Cards/blockFig.js";
 
 function Game() {
+	const gameId = sessionStorage.getItem("game_id");
     const navigate = useNavigate();
+	const location = useLocation();
+	const samePlayer = location.state?.samePlayer;
+
+
     const localPlayerId = parseInt(sessionStorage.getItem("player_id"), 10);
     const localPlayerName = sessionStorage.getItem("player_name");
-    const gameId = sessionStorage.getItem("game_id");
     
     const ws = getWsGameInstance(WS_GAME + gameId);
     
@@ -56,6 +61,7 @@ function Game() {
     const [ selecFormedFig, setSelecFormedFig] = useState([]);
     const [ figToBlock, setFigToBlock] = useState(null);
 	const [ alert, setAlert ] = useState('');
+	const [resetTimer, setResetTimer] = useState(false);
 
     useEffect(() => {
         setTimeout(() => setAlert(''), 2000); 
@@ -72,7 +78,8 @@ function Game() {
       fetchMovs,
       fetchBoxCards,
       fetchInfoPlayers,
-      fetchFormedFigs
+      fetchFormedFigs,
+	  setResetTimer
     );
 
     const handleEndTurn = async () => {
@@ -144,10 +151,17 @@ function Game() {
     	</div>
 
 		<div className="mid-area">
-			<div className="optional">
-				<GameName />
+        	<div className="optional">
+          		<GameName />
 			</div>
-			<div className="Game_Area">
+			<div className="timer">
+				<CountdownTimer
+					resetTimer={resetTimer}
+					onResetCompleted={() => setResetTimer(false)}
+					samePlayer={samePlayer}
+				/>
+			</div>
+        <div className="Game_Area">
 				<div className="board">
 					<Board
 						isTurn={isTurn}

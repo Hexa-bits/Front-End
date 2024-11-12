@@ -25,6 +25,8 @@ export const GET_FIGURES_URL = `http://localhost:${PORT}${GAME}/my-fig-card?play
 export const GET_PLAYERS_INFO = `http://localhost:${PORT}${GAME}/others-cards?`;
 export const HIGHLIGHT_FIGS = `http://localhost:${PORT}${GAME}/highlight-figures?game_id=`;
 export const GET_WINNER_URL = `http://localhost:${PORT}${GAME}/get-winner?game_id=`;
+export const GET_TIMER_LEFT = `http://localhost:${PORT}${GAME}/timer-left?game_id=`;
+
 
 export const USE_MOV_CARD = `http://localhost:${PORT}${GAME}/use-mov-card`;
 export const CANCEL_MOV_URL = `http://localhost:${PORT}${GAME}/cancel-mov`;
@@ -47,6 +49,7 @@ export const BOARD_CHANGED = "Hay modificación de Tablero";
 export const FIGS_UPD = "Actualizar cartas de figuras";
 export const MOVS_UPD = "Actualizar cartas de movimientos";
 export const OTHERS_UPD = "Actualizar cartas de otros jugadores";
+export const START_GAME = "Inició la partida";
 
 /** Otras constantes */
 export const MAX_PLAYERS = 4;
