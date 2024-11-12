@@ -41,7 +41,6 @@ function Game() {
 	const location = useLocation();
 	const samePlayer = location.state?.samePlayer;
 
-
     const localPlayerId = parseInt(sessionStorage.getItem("player_id"), 10);
     const localPlayerName = sessionStorage.getItem("player_name");
     
