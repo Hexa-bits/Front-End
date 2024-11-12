@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import "./Game.css";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../../../../components/Button/Button.jsx";
 import FigCards from "../../../../components/Game/FigCards/FigCards.jsx";
 import MovCards from "../../../../components/Game/MovCards/MovCards.jsx";
@@ -36,130 +36,142 @@ import { checkMov } from "../../../../utils/logics/Game/checkMov.js";
 import blockFig from "../../../../services/Game/Cards/blockFig.js";
 
 function Game() {
-	const gameId = sessionStorage.getItem("game_id");
-    const navigate = useNavigate();
-	const location = useLocation();
-	const samePlayer = location.state?.samePlayer;
+  const navigate = useNavigate();
+  const localPlayerId = parseInt(sessionStorage.getItem("player_id"), 10);
+  const localPlayerName = sessionStorage.getItem("player_name");
+  const gameId = sessionStorage.getItem("game_id");
 
-    const localPlayerId = parseInt(sessionStorage.getItem("player_id"), 10);
-    const localPlayerName = sessionStorage.getItem("player_name");
-    
-    const ws = getWsGameInstance(WS_GAME + gameId);
-    
-    const { currentPlayer, playerId, fetchTurnData } = getCurrentTurnPlayer(gameId);
-    const { winnerName, getWinner } = WinnerExists(gameId);
-    const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
-    const { fig_cards, fig_cant,fetchFigs } = renewFigCards(localPlayerId);
-    const { boxCards, movisParcial: isMovParcial, forbiddenColor ,fetchBoxCards } = renewBoard(gameId);
-    const { infoPlayers, fetchInfoPlayers } = getOthersInfo(gameId, localPlayerId);
-    const { formedFigs, fetchFormedFigs } = getFormedFig(); 
-    
-    const [ selectedCards, setSelectedCards] = useState([]);
-    const [ selectedMov, setSelectedMov] = useState(null);
-    const [ selectedFig, setSelectedFigCard] = useState(null);
-    const [ selecFormedFig, setSelecFormedFig] = useState([]);
-    const [ figToBlock, setFigToBlock] = useState(null);
-	const [ alert, setAlert ] = useState('');
-	const [resetTimer, setResetTimer] = useState(false);
+  const ws = getWsGameInstance(WS_GAME + gameId);
 
-    useEffect(() => {
-        setTimeout(() => setAlert(''), 2000); 
-    }, [alert]);
-    
-    const disabled = localPlayerId !== playerId;
-    const isTurn = localPlayerId === playerId;
-    
-    wsGameHandler(
-      ws,
-      fetchTurnData,
-      getWinner,
-      fetchFigs,
-      fetchMovs,
-      fetchBoxCards,
-      fetchInfoPlayers,
-      fetchFormedFigs,
-	  setResetTimer
+  const { currentPlayer, playerId, fetchTurnData } = getCurrentTurnPlayer(gameId);
+  const { winnerName, getWinner } = WinnerExists(gameId);
+  const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
+  const { fig_cards, fig_cant, fetchFigs } = renewFigCards(localPlayerId);
+  const { boxCards, movisParcial: isMovParcial, forbiddenColor, fetchBoxCards } = renewBoard(gameId);
+  const { infoPlayers, fetchInfoPlayers } = getOthersInfo( gameId, localPlayerId);
+  const { formedFigs, fetchFormedFigs } = getFormedFig();
+
+  const [selectedCards, setSelectedCards] = useState([]);
+  const [selectedMov, setSelectedMov] = useState(null);
+  const [selectedFig, setSelectedFigCard] = useState(null);
+  const [selecFormedFig, setSelecFormedFig] = useState([]);
+  const [figToBlock, setFigToBlock] = useState(null);
+  const [alert, setAlert] = useState("");
+  const [resetTimer, setResetTimer] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setAlert(""), 2000);
+  }, [alert]);
+
+  const disabled = localPlayerId !== playerId;
+  const isTurn = localPlayerId === playerId;
+
+  wsGameHandler(
+    ws,
+    fetchTurnData,
+    getWinner,
+    fetchFigs,
+    fetchMovs,
+    fetchBoxCards,
+    fetchInfoPlayers,
+    fetchFormedFigs,
+    setResetTimer
+  );
+
+  const handleEndTurn = async () => {
+    await passTurn();
+  };
+
+  const handleLeave = async () => {
+    await LeaveGame(navigate);
+  };
+
+  const handleUseMov = async () => {
+    if (checkMov(selectedMov, selectedCards)) {
+      const success = await discardMove(
+        localPlayerId,
+        selectedMov,
+        selectedCards
+      );
+      if (!success) {
+        setAlert("No se pudo mover ficha");
+      }
+
+      setSelectedMov(null);
+      setSelectedCards([]);
+    } else {
+      setAlert("Movimiento no permitido");
+    }
+  };
+
+  const handleUseFig = async () => {
+    const success = await discardFig(
+      localPlayerId,
+      selecFormedFig,
+      selectedFig
     );
-
-    const handleEndTurn = async () => {
-      await passTurn();
-    };
-
-    const handleLeave = async () => {
-      await LeaveGame(navigate);
-    };
-
-    const handleUseMov = async () => {
-      if (checkMov(selectedMov, selectedCards)) {
-        const success = await discardMove(localPlayerId, selectedMov, selectedCards);
-      	if (!success) { setAlert('No se pudo mover ficha'); }
-        
-		setSelectedMov(null);
-        setSelectedCards([]);
-      } else { setAlert('Movimiento no permitido'); }
-    };
-
-    const handleUseFig = async () => {
-      const success = await discardFig(localPlayerId, selecFormedFig, selectedFig);
-      if (!success) { setAlert('No se puede descartar esa figura'); }
-	  
-	  setSelectedFigCard(null);
-      setSelecFormedFig([]);
-    };
-
-    const handleCancel = async () => {
-      const success = await cancelMovCard(localPlayerId, gameId);
-	  if (!success) { setAlert('No se puede cancelar movimiento.'); }
-    };
-
-    const blockPlayerFig = async () => {
-		console.log(selectedFig);
-		console.log(figToBlock);
-		const success = await blockFig(localPlayerId, selecFormedFig, figToBlock,);
-		if (!success) {	setAlert('No se puede bloquear esa figura'); }
-		
-		setSelecFormedFig([]);
-		setFigToBlock(null);
+    if (!success) {
+      setAlert("No se puede descartar esa figura");
     }
 
+    setSelectedFigCard(null);
+    setSelecFormedFig([]);
+  };
+
+  const handleCancel = async () => {
+    const success = await cancelMovCard(localPlayerId, gameId);
+    if (!success) {
+      setAlert("No se puede cancelar movimiento.");
+    }
+  };
+
+  const blockPlayerFig = async () => {
+    console.log(selectedFig);
+    console.log(figToBlock);
+    const success = await blockFig(localPlayerId, selecFormedFig, figToBlock);
+    if (!success) {
+      setAlert("No se puede bloquear esa figura");
+    }
+
+    setSelecFormedFig([]);
+    setFigToBlock(null);
+  };
 
   return (
     <div className="Game">
-		
-        <Winner winnerName={winnerName} onLeave={handleLeave}/>
-      
-		<div className="left-area">
-			<div className="seePlayer">
-				<SeePlayer player={currentPlayer || "??????"} />
-			</div>
-			<div className="Game_Others_Area">
-				<OtherPlayers 
-                    players={infoPlayers}
-                    onSelecFigToBlock={setFigToBlock}
-                    isTurn={isTurn}
-                />
-			</div>
-			{alert && (
-				<div className="alert alert-danger" role="alert">
-					{alert}
-			  	</div>
-			)}
-			<div className="leav">
-              <LeaveButton onLeave={handleLeave} />
-			</div>		
-    	</div>
+      <Winner winnerName={winnerName} onLeave={handleLeave} />
 
-		<div className="mid-area">
-        	<div className="optional">
-          		<GameName />
-			</div>
-			<div className="timer">
-				<CountdownTimer
-					resetTimer={resetTimer}
-					onResetCompleted={() => setResetTimer(false)}
-					samePlayer={samePlayer}
-				/>
-			</div>
+      <div className="left-area">
+        <div className="seePlayer">
+          <SeePlayer player={currentPlayer || "??????"} />
+        </div>
+        <div className="Game_Others_Area">
+          <OtherPlayers
+            players={infoPlayers}
+            onSelecFigToBlock={setFigToBlock}
+            isTurn={isTurn}
+          />
+        </div>
+        {alert && (
+          <div className="alert alert-danger" role="alert">
+            {alert}
+          </div>
+        )}
+        <div className="leav">
+          <LeaveButton onLeave={handleLeave} />
+        </div>
+      </div>
+
+      <div className="mid-area">
+        <div className="optional">
+          <GameName />
+        </div>
+        <div className="timer">
+          <CountdownTimer
+            resetTimer={resetTimer}
+            onResetCompleted={() => setResetTimer(false)}
+          />
+        </div>
         <div className="Game_Area">
 				<div className="board">
 					<Board
