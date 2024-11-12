@@ -54,6 +54,10 @@
     bottom: 0;
 }
 
+.alert{
+    margin-left: 30px;
+}
+
 
 /* Parte central */
 .mid-area{
