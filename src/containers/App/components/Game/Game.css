@@ -132,6 +132,7 @@
 
 .Fig {
     height: 100%;
+    min-width: 334px;
     display: flex;
     align-items: center;
 }
@@ -151,6 +152,7 @@
 
 .Mov{
     height: 100%;
+    min-width: 334px;
     display: flex;
     align-items: center;
     justify-content: center;
