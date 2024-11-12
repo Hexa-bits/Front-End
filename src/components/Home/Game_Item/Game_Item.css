@@ -26,37 +26,36 @@
     margin-left: 10px;
 }
 
-.config__left .lock{
+.config__left .lock, .config__left .non-lock {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.config__left .lock img {
-    width: 25px;
-    height: 25px;
+.config__left .lock .lock-icon, 
+.config__left .non-lock .unlock-icon {
+    width: 30px;
+    height: 30px;
 }
 
-.config__left .non-lock{
-    display: flex;
-    align-items: center;
-    gap: 2px;
-}
-
-.non-lock .online-orb{
+.game .config__left img {
     width: 20px;
-    height: 20px;
-    margin-right: 10px;
-    border: 1px solid black;
-    background-color: greenyellow;
-    border-radius: 50%;
-    transform: translateX(1px);
+    height: auto;
+    transform: translateX(5px);
 }
 
 
+.lock .lock-icon{
+    border-radius: 50%;
+    background-color: #ff615d;
+}
+
+.non-lock .unlock-icon {
+    background-color: #2cbe56;
+    border-radius: 50%;
+}
 
 .game .config__right{
-    
     gap: 10%;
     width: 30%;
     margin: 0px 10px 0px 10px;
@@ -76,7 +75,9 @@
 }
 
 .started-icon {
-    width: 20px;
+    width: 50px;
     margin-left: 5px;
-    transform: translateY(-1px);
+    background-color: #242377;
+    border-radius: 50%;
+    padding: 5px
 }

@@ -9,21 +9,19 @@ function Game_Item({ game, handleJoin }){
                 <div className="config__left">
                     {game.isPrivate && 
                         <div className="lock">
-                            <img src='../../../../assets/icons/lock.svg'/>
+                            <div className="lock-icon">
+                                <img src='../../../../assets/icons/lock.png'/>  
+                            </div>
                             {game.game_name}
-                            {game.started ? 
-                                <img src="/assets/icons/usuario.png" className='started-icon'/>
-                            : ""}
                         </div>
                     }
 
                     {!game.isPrivate && 
                         <div className="non-lock">
-                            <div className='online-orb'></div>
+                            <div className="unlock-icon">
+                                <img src="/assets/icons/unlock.png"/>
+                            </div>
                             {game.game_name}
-                            {game.started ? 
-                                <img src="/assets/icons/usuario.png" className='started-icon'/>
-                            : ""}
                         </div>
                     }
                 </div>
@@ -31,18 +29,11 @@ function Game_Item({ game, handleJoin }){
                     <div className="range_players">
                         {game.current_players}/{game.max_players}
                     </div>
-
                         <Button 
                             label="UNIRSE" 
                             onClick={() => handleJoin(game)}
-                            disabled={game.current_players >= game.max_players}/>
+                            disabled={game.current_players >= game.max_players && !game.started}/>
                     </div>
-
-                    <Button 
-                        label="UNIRSE" 
-                        onClick={() => handleJoin(game)}
-                        disabled={!game.started & game.current_players >= game.max_players}
-                    />
                 </div>
             </div>
     )
