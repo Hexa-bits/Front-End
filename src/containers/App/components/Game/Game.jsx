@@ -49,7 +49,7 @@ function Game() {
     const { currentPlayer, playerId, fetchTurnData } = getCurrentTurnPlayer(gameId);
     const { winnerName, getWinner } = WinnerExists(gameId);
     const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
-    const { fig_cards, fetchFigs } = renewFigCards(localPlayerId);
+    const { fig_cards, fig_cant,fetchFigs } = renewFigCards(localPlayerId);
     const { boxCards, movisParcial: isMovParcial, forbiddenColor ,fetchBoxCards } = renewBoard(gameId);
     const { infoPlayers, fetchInfoPlayers } = getOthersInfo(gameId, localPlayerId);
     const { formedFigs, fetchFormedFigs } = getFormedFig(); 
@@ -190,6 +190,12 @@ function Game() {
 							onSelectedMov={setSelectedMov}
 							isTurn={isTurn}
 						/>
+					</div>
+					<div className="DeckFig">
+						<div className="Fig_Cant">
+							{fig_cant}
+						</div>
+						<img src="../../../../assets/Figures/back-fig.svg"/>
 					</div>
 				</div>
 				<div className="button-panel">

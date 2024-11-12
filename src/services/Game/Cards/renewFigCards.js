@@ -3,6 +3,7 @@ import { GET_FIGURES_URL } from "../../../utils/Constants.js";
 
 function renewFigCards(playerId) {
   const [fig_cards, setFigCards] = useState([]);
+  const [fig_cant, setFigCant] = useState(0);
 
   const fetchFigs = useCallback(async () => {
     try {
@@ -14,8 +15,9 @@ function renewFigCards(playerId) {
         throw new Error("Error al obtener las cartas de figuras del jugador.");
       }
       const data = await response.json();
-      //console.log("Figuras: ", data.id_fig_card);
+      console.log("Figuras: ", data);
       setFigCards(data.fig_cards);
+      setFigCant(data.fig_cant);
     } catch (error) {
       console.error(
         "Error al obtener las cartas de figuras del jugador:",
@@ -28,6 +30,6 @@ function renewFigCards(playerId) {
     fetchFigs();
   }, [fetchFigs]);
 
-  return { fig_cards, fetchFigs };
+  return { fig_cards, fig_cant, fetchFigs };
 }
 export default renewFigCards;

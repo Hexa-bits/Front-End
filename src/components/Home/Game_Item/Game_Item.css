@@ -18,16 +18,44 @@
     justify-content: space-around;
 }
 
-
-.game .config__left{
+.game .config__left {
     width: 100%;
+    gap: 10px;
     font-weight: 600;
-    margin-left: 10px;
     font-size: 1.2rem;
+    margin-left: 10px;
+}
+
+.config__left .lock, .config__left .non-lock {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.config__left .lock .lock-icon, 
+.config__left .non-lock .unlock-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.game .config__left img {
+    width: 20px;
+    height: auto;
+    transform: translateX(5px);
+}
+
+
+.lock .lock-icon{
+    border-radius: 50%;
+    background-color: #ff615d;
+}
+
+.non-lock .unlock-icon {
+    background-color: #2cbe56;
+    border-radius: 50%;
 }
 
 .game .config__right{
-    
     gap: 10%;
     width: 30%;
     margin: 0px 10px 0px 10px;
@@ -47,6 +75,9 @@
 }
 
 .started-icon {
-    width: 20px;
+    width: 50px;
     margin-left: 5px;
+    background-color: #242377;
+    border-radius: 50%;
+    padding: 5px
 }
