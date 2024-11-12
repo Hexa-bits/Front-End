@@ -34,5 +34,5 @@ npm run dev
 ## Testing
 
 ```bash
-npm vitest 
+npx vitest 
 ```
