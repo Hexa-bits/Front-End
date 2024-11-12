@@ -43,21 +43,12 @@ function Game() {
 
   const ws = getWsGameInstance(WS_GAME + gameId);
 
-  const { currentPlayer, playerId, fetchTurnData } =
-    getCurrentTurnPlayer(gameId);
+  const { currentPlayer, playerId, fetchTurnData } = getCurrentTurnPlayer(gameId);
   const { winnerName, getWinner } = WinnerExists(gameId);
   const { mov_cards, fetchMovs } = renewMovCards(localPlayerId);
-  const { fig_cards, fetchFigs } = renewFigCards(localPlayerId);
-  const {
-    boxCards,
-    movisParcial: isMovParcial,
-    forbiddenColor,
-    fetchBoxCards,
-  } = renewBoard(gameId);
-  const { infoPlayers, fetchInfoPlayers } = getOthersInfo(
-    gameId,
-    localPlayerId
-  );
+  const { fig_cards, fig_cant, fetchFigs } = renewFigCards(localPlayerId);
+  const { boxCards, movisParcial: isMovParcial, forbiddenColor, fetchBoxCards } = renewBoard(gameId);
+  const { infoPlayers, fetchInfoPlayers } = getOthersInfo( gameId, localPlayerId);
   const { formedFigs, fetchFormedFigs } = getFormedFig();
 
   const [selectedCards, setSelectedCards] = useState([]);
@@ -182,92 +173,104 @@ function Game() {
           />
         </div>
         <div className="Game_Area">
-          <div className="board">
-            <Board
-              isTurn={isTurn}
-              cardData={boxCards}
-              onSelectedCards={setSelectedCards}
-              onSelecFormedFig={setSelecFormedFig}
-              formedFigs={formedFigs}
-            />
-            <div className="labelMovParcial">
-              <LabelMovParcial isVisible={isMovParcial} />
-              <LabelProhibitedColor color={forbiddenColor} />
-              <div className="labelProhibitedColor"></div>
-            </div>
-          </div>
-          <div className="Cards">
-            <div className="Fig">
-              <FigCards
-                fig_cards={fig_cards}
-                onSelecFigCard={setSelectedFigCard}
-                isTurn={isTurn}
-              />
-            </div>
-            <div className="Mov">
-              <MovCards
-                mov_cards={mov_cards}
-                onSelectedMov={setSelectedMov}
-                isTurn={isTurn}
-              />
-            </div>
-          </div>
-          <div className="button-panel">
-            <div className="fig-butt">
-              <div className="block">
-                <Button
-                  label="BLOQUEAR OTRA FIGURA"
-                  onClick={blockPlayerFig}
-                  disabled={disabled}
-                />
-              </div>
-              <div className="useFig">
-                <Button
-                  label="DESCARTAR MI FIGURA"
-                  onClick={handleUseFig}
-                  disabled={disabled}
-                />
-              </div>
-            </div>
-            <div className="mov-butt">
-              <div className="useMov">
-                <Button
-                  label="USAR MOVIMIENTO"
-                  onClick={handleUseMov}
-                  disabled={disabled}
-                />
-              </div>
-              <div className="cancel">
-                <Button
-                  label="CANCELAR MOVIMIENTO"
-                  onClick={handleCancel}
-                  disabled={disabled}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+				<div className="board">
+					<Board
+						isTurn={isTurn}
+						cardData={boxCards}
+						onSelectedCards={setSelectedCards}
+						onSelecFormedFig={setSelecFormedFig}
+						formedFigs={formedFigs}
+					/>
+					<div className="labelMovParcial">
+						<LabelMovParcial isVisible={isMovParcial} />
+						<LabelProhibitedColor color={forbiddenColor}/>
+						<div className="labelProhibitedColor">
+						</div>
+					</div>
+				</div>
+				<div className="Cards">
+					<div className="Fig">
+						<FigCards 
+							fig_cards={fig_cards} 
+							onSelecFigCard={setSelectedFigCard}
+							isTurn={isTurn} 
+						/>
+					</div>
+					<div className="Mov">
+						<MovCards
+							mov_cards={mov_cards}
+							onSelectedMov={setSelectedMov}
+							isTurn={isTurn}
+						/>
+					</div>
+					<div className="DeckFig">
+						<div className="Fig_Cant">
+							{fig_cant}
+						</div>
+						<img src="../../../../assets/Figures/back-fig.svg"/>
+					</div>
+				</div>
+				<div className="button-panel">
+					<div className="fig-butt">
 
-      <div className="right-area">
-        <div className="right-box">
-          <div className="PlayerInfo-Area">
-            <PlayerName label={"USUARIO"} player={localPlayerName} />
-          </div>
-          <div className="chat-container">
-            <Chat ws={ws} playerId={localPlayerId} />
-          </div>
+						<div className="block">
+							<Button
+							label="BLOQUEAR OTRA FIGURA"
+							onClick={blockPlayerFig}
+							disabled={disabled}
+							/>
+						</div>
+						<div className="useFig">
+							<Button
+								label="DESCARTAR MI FIGURA"
+								onClick={handleUseFig}
+								disabled={disabled}
+							/>
+						</div>
+					</div> 
+					<div className="mov-butt">
+						<div className="useMov">
+							<Button
+								label="USAR MOVIMIENTO"
+								onClick={handleUseMov}
+								disabled={disabled}
+							/>
+						</div>
+						<div className="cancel">
+							<Button
+								label="CANCELAR MOVIMIENTO"
+								onClick={handleCancel}
+								disabled={disabled}
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-          <div className="end">
-            <Button
-              label="TERMINAR TURNO"
-              onClick={handleEndTurn}
-              disabled={localPlayerId !== playerId}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+		<div className="right-area">
+			<div className="right-box">
+				<div className="PlayerInfo-Area">
+					<PlayerName label={"USUARIO"} player={localPlayerName} />
+				</div>
+				<div className="chat-container">
+					<Chat
+						ws={ws}
+						playerId={localPlayerId}
+					/>
+				</div>
+
+				<div className="end">
+					<Button
+                        label="TERMINAR TURNO"
+                        onClick={handleEndTurn}
+                        disabled={disabled}
+                    />
+				</div>
+			</div>
+			
+      	</div>
+	</div>
   );
 }
 export default Game;
