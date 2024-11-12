@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'; 
 import { useReg } from './useReg.js';
@@ -22,7 +21,7 @@ export const useLogin = () => {
         if (checkInput(playerName)) {
             try { 
                 useReg({ playerName });
-                navigate(HOME);
+                navigate(HOME, {state: {playerName: playerName}});
             }
             catch (error) { alert("Error al crear usuario. " + error.message); }
         } else { setError("Debe tener entre 1 a 10 caracteres !");}
