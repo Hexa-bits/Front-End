@@ -1,6 +1,7 @@
 import { GET_TIMER_LEFT } from "../../utils/Constants";
 
-export const getTimer = async (gameId) => {
+export const getTimer = async () => {
+    const gameId = sessionStorage.getItem('game_id');
     try {
         const response = await fetch(GET_TIMER_LEFT + gameId, { method: 'GET' });
 

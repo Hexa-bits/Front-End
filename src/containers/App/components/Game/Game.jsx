@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import "./Game.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Button from "../../../../components/Button/Button.jsx";
 import FigCards from "../../../../components/Game/FigCards/FigCards.jsx";
 import MovCards from "../../../../components/Game/MovCards/MovCards.jsx";
@@ -37,6 +37,8 @@ import blockFig from "../../../../services/Game/Cards/blockFig.js";
 
 function Game() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { samePlayer } = location.state || {};
   const localPlayerId = parseInt(sessionStorage.getItem("player_id"), 10);
   const localPlayerName = sessionStorage.getItem("player_name");
   const gameId = sessionStorage.getItem("game_id");
@@ -170,6 +172,7 @@ function Game() {
           <CountdownTimer
             resetTimer={resetTimer}
             onResetCompleted={() => setResetTimer(false)}
+            samePlayer={samePlayer}
           />
         </div>
         <div className="Game_Area">
@@ -262,10 +265,10 @@ function Game() {
 
 				<div className="end">
 					<Button
-                        label="TERMINAR TURNO"
-                        onClick={handleEndTurn}
-                        disabled={disabled}
-                    />
+              label="TERMINAR TURNO"
+              onClick={handleEndTurn}
+              disabled={disabled}
+          />
 				</div>
 			</div>
 			
